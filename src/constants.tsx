@@ -46,12 +46,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   },
   {
     title: 'Payment & Billing',
-    path: '/payment&billing',
+    path: '/payment',
     icon: <Icon icon="material-symbols:payments-outline-rounded" width="24" height="24" color='gray'/>,
   },
   {
-    title: 'Setting',
-    path: '/setting',
+    title: 'Settings',
+    path: '/settings',
     icon: <Icon icon="lucide:settings" width="24" height="24" color='gray'/>,
   },
   {
