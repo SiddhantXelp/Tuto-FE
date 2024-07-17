@@ -7,6 +7,7 @@ import { useSelectedLayoutSegment } from 'next/navigation';
 
 import useScroll from '@/hooks/use-scroll';
 import { cn } from '@/lib/utils';
+import { IoMdNotifications ,IoMdPersonAdd,} from "react-icons/io";
 
 const Header = () => {
   const scrolled = useScroll(5);
@@ -33,9 +34,27 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="hidden md:block">
+       
+        <div className="hidden md:block " >
+          <div className='flex flex-row gap-14' >
+        <div className='flex flex-row  gap-8  alignitem-center ' >
+          <div>
+            <span>Create new Class</span>
+          </div>
+          <div className='flex flex-row  justify-center content-center' >
+            <p>OnbordStudent </p>
+            <p className='mt-1'>
+            <IoMdPersonAdd  size={"18px"}/>
+            </p>
+          </div>
+          <div className='mt-1'>
+            <IoMdNotifications size={"20px"}/>
+          </div>
+
+        </div>
           <div className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center">
             <span className="font-semibold text-sm">HQ</span>
+          </div>
           </div>
         </div>
       </div>
