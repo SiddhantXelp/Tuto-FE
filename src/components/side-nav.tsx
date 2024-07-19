@@ -31,7 +31,6 @@ const SideNav = () => {
   );
 };
 
-
 export default SideNav;
 
 const MenuItem = ({ item }: { item: SideNavItem }) => {
@@ -40,6 +39,11 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
   const toggleSubMenu = () => {
     setSubMenuOpen(!subMenuOpen);
   };
+
+
+  // title: 'Student',
+  // path: '/student',
+  // icon: <Icon icon="ph:student-bold" width="24" height="24" color='gray'/>,
 
   return (
     <div className="">

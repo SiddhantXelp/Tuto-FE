@@ -8,6 +8,7 @@ import { useSelectedLayoutSegment } from 'next/navigation';
 import useScroll from '@/hooks/use-scroll';
 import { cn } from '@/lib/utils';
 import { IoMdNotifications ,IoMdPersonAdd,} from "react-icons/io";
+import { PiStepsFill } from "react-icons/pi";
 
 const Header = () => {
   const scrolled = useScroll(5);
@@ -38,15 +39,18 @@ const Header = () => {
         <div className="hidden md:block " >
           <div className='flex flex-row gap-14' >
         <div className='flex flex-row  gap-8  alignitem-center ' >
-          <div>
-            <span>Create new Class</span>
+          <div className='flex flex-row  justify-center content-center gap-1'>
+            <p>Create new Class</p>
+            <p className='mt-1'><PiStepsFill/></p>
           </div>
-          <div className='flex flex-row  justify-center content-center' >
+          <Link href='/onboarding'>
+          <div className='flex flex-row  justify-center content-center gap-1' >
             <p>OnbordStudent </p>
             <p className='mt-1'>
             <IoMdPersonAdd  size={"18px"}/>
             </p>
           </div>
+          </Link>
           <div className='mt-1'>
             <IoMdNotifications size={"20px"}/>
           </div>
