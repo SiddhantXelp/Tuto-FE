@@ -22,12 +22,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: 'Assignments',
     path: '/assignments',
-    icon: <Icon icon="material-symbols:assignment" width="24" height="24" color='gray' />,
+    icon: <Icon icon="material-symbols:assignment" width="20" height="20" color='gray' />,
   },
   {
     title: 'Inbox',
     path: '/inbox',
-    icon: <Icon icon="solar:inbox-bold" width="24" height="24" color='gray'/>,
+    icon: <Icon icon="solar:inbox-bold" width="20" height="20" color='gray'/>,
     // submenu: true,
     // subMenuItems: [
     //   { title: 'Account', path: '/settings/account' },
@@ -37,26 +37,26 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: 'Student',
     path: '/student',
-    icon: <Icon icon="ph:student-bold" width="24" height="24" color='gray'/>,
+    icon: <Icon icon="ph:student-bold" width="20" height="20" color='gray'/>,
   },
   {
     title: 'My Files',
     path: '/myFiles',
-    icon: <Icon icon="mdi:file" width="24" height="24" color='gray'/>,
+    icon: <Icon icon="mdi:file" width="20" height="20" color='gray'/>,
   },
   {
     title: 'Payment & Billing',
     path: '/payment',
-    icon: <Icon icon="material-symbols:payments-outline-rounded" width="24" height="24" color='gray'/>,
+    icon: <Icon icon="material-symbols:payments-outline-rounded" width="20" height="20" color='gray'/>,
   },
   {
     title: 'Settings',
     path: '/settings',
-    icon: <Icon icon="lucide:settings" width="24" height="24" color='gray'/>,
+    icon: <Icon icon="lucide:settings" width="20" height="20" color='gray'/>,
   },
   {
     title: 'Help',
     path: '/help',
-    icon: <Icon icon="lucide:help-circle" width="24" height="24" color='gray'/>,
+    icon: <Icon icon="lucide:help-circle" width="20" height="20" color='gray'/>,
   },
 ];
