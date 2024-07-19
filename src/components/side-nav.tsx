@@ -18,7 +18,7 @@ const SideNav = () => {
           className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full"
         >
           <span className="h-7 w-7 bg-zinc-300 rounded-lg" />
-          <span className=" text-xl hidden md:flex text-blue-600 font-bold">TutorNow</span>
+          <span className=" text-base hidden md:flex text-blue-600 font-bold">TutorNow</span>
         </Link>
 
         <div className="flex flex-col space-y-5  md:px-6 ">
@@ -91,7 +91,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
           }`}
         >
           {item.icon}
-          <span className="font-semibold text-base flex text-gray-500">{item.title}</span>
+          <span className="text-xs flex text-gray-500">{item.title}</span>
         </Link>
       )}
     </div>
