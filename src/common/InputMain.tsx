@@ -28,11 +28,11 @@ const InputMain: React.FC<InputMainProps> = ({
 }) => {
   return (
     <div className='flex flex-col mb-4'>
-      <label htmlFor={id} className='text-xl mb-2 text-gray-400'>{label}</label>
+      <label htmlFor={id} className='text-sm mb-2 text-buttonGray'>{label}</label>
       {type === 'radio' ? (
         <div className='flex flex-row space-x-4'>
           {radioOptions?.map((option) => (
-            <div key={option.value} className='flex items-center mr-4 text-gray-400 '>
+            <div key={option.value} className='flex items-center mr-4 text-buttonGray '>
               <input
                 type="radio"
                 name={name}
@@ -43,7 +43,7 @@ const InputMain: React.FC<InputMainProps> = ({
                 className='mr-2'
                
               />
-              <label htmlFor={option.value}  className='ml-2'>{option.label}</label>
+              <label htmlFor={option.value}  className='ml-2 text-sm'>{option.label}</label>
             </div>
           ))}
         </div>

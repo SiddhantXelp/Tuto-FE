@@ -11,7 +11,7 @@ const OnbordSubmit = () => {
       <table className="table-auto w-full">
       <thead>
       <tr className='bg-slate-100 h-40 w-full justify-center'>
-      <th className='text-4xl text-gray-400'>Yeshwanth</th>
+      <th className='text-3xl text-buttonGray'>Yeshwanth</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +19,7 @@ const OnbordSubmit = () => {
       <td className='h-12'>
         <div className='flex flex-row gap-5'>
         <FaVideo size={"25"} className='ml-2' color='gray'/>
-        <p>Zoom Call</p>
+        <p className='text-sm text-buttonGray'>Zoom Call</p>
         </div>
       </td>
     </tr>
@@ -27,11 +27,11 @@ const OnbordSubmit = () => {
       <td className='h-12'>
         <div className='flex flex-row gap-5'>
         <HiOutlineMenuAlt2 size={"25"} className='ml-2' color='gray'/>
-        <p>No.of subjects</p>
+        <p className='text-sm text-buttonGray'>No.of subjects</p>
         <td></td>
         <td></td>
         <td></td>
-        <td className=''>05</td>
+        <td className='text-sm text-buttonGray'>05</td>
         </div>
       </td>
     </tr>
@@ -39,14 +39,14 @@ const OnbordSubmit = () => {
       <td className='h-12'>
         <div className='flex flex-row gap-5'>
         <FaCalendar size={"25"} className='ml-2' color='gray'/>
-        <p>Days</p>
+        <p className='text-sm text-buttonGray'>Days</p>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td className=''>Sun,Mon,Fri</td>
+        <td className='text-sm text-buttonGray'>Sun,Mon,Fri</td>
         </div>
       </td>
     </tr>
@@ -54,13 +54,13 @@ const OnbordSubmit = () => {
       <td className='h-12'>
         <div className='flex flex-row gap-5'>
         <IoMdPricetag size={"25"} className='ml-2'color='gray'/>
-        <p>Pricing</p>
+        <p className='text-sm text-buttonGray'>Pricing</p>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td className=''>Monthly:$15000</td>
+        <td className='text-sm text-buttonGray'>Monthly:$15000</td>
         </div>
       </td>
     </tr>
@@ -68,10 +68,10 @@ const OnbordSubmit = () => {
       <td className='h-12'>
         <div className='flex flex-row gap-5'>
         <FaFileVideo size={"25"} className='ml-2' color='gray'/>
-        <p>VideoRecardings</p>
+        <p className='text-sm text-buttonGray'>VideoRecardings</p>
         <td></td>
         <td></td>
-        <td className=''>Available</td>
+        <td className='text-sm text-buttonGray'>Available</td>
         </div>
       </td>
     </tr>
