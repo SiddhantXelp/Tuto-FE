@@ -18,7 +18,7 @@ const OnbordSubmit = () => {
      <tr className='bg-white'>
       <td className='h-12'>
         <div className='flex flex-row gap-5'>
-        <FaVideo size={"25"} className='ml-2' color='gray.400'/>
+        <FaVideo size={"25"} className='ml-2' color='gray'/>
         <p>Zoom Call</p>
         </div>
       </td>

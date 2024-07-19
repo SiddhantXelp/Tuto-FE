@@ -33,7 +33,7 @@ interface RadioOption {
   value: string;
 }
 
-const Home: React.FC = () => {
+const CreatePacage: React.FC = () => {
   const [formData, setFormData] = useState({
     inputValue: '',
     selectedDays: [] as string[],
@@ -244,4 +244,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default CreatePacage;
