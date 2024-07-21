@@ -41,7 +41,7 @@ const Header: React.FC = () => {
         <div className="hidden md:block ">
           <div className='flex flex-row gap-14'>
             <div className='flex flex-row gap-8 alignitem-center items-center'>
-              <div className='flex flex-row justify-center align-center gap-1 items-center content-center'>
+              <div className='flex flex-row justify-center align-center gap-1 items-center content-center cursor-pointer	'>
                 <p className='text-xs text-buttonGray' onClick={dialogOpen}>Create new Class</p>
                 <p><PiStepsFill size={"16px"} color='gray' /></p>
               </div>

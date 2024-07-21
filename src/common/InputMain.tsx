@@ -54,7 +54,7 @@ const InputMain: React.FC<InputMainProps> = ({
           id={id}
           value={value}
           onChange={onChange}
-          className='h-10 border border-gray-700 rounded p-2'
+          className='h-14 border border-2 border-buttonGray rounded-md p-2'
         />
       )}
     </div>
