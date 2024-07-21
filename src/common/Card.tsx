@@ -534,11 +534,11 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
           </DialogPanel>
         ) : (
          <DialogPanel className="bg-white rounded-lg shadow-xl w-2/4 h-auto">
-          <div className="flex flex-row p-1 gap-1">
+          <div className="flex flex-row p-0 gap-1">
             {Tabbuttons.map((item) => (
               <button
                 key={item.id}
-                className={`h-20 w-full rounded-lg ${tabValue === item.name ? 'bg-buttonGray' : 'bg-white'}`}
+                className={`h-20 w-full rounded-lg ${tabValue === item.name ? 'bg-white' : 'bg-buttonGray'}`}
                 onClick={() => handleTabClick(item.name)}
               >
                 {item.name}
@@ -547,80 +547,141 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
           </div>
           <div className='p-5'>
             {tabValue === 'Create new class' && (
-              <form>
-                <div>
-                  <p className='text-buttonGray text-sm'>Virtual platform</p>
-                  <div className="grid grid-cols-5 gap-2">
-                    {buttons.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${
-                          formData.typeMeeting.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
-                        }`}
-                        onClick={() => handleCheckboxChange(item.name)}
-                      >
-                        <p className='text-sm text-buttonGray'>{item.name}</p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className='text-sm text-buttonGray'>Schedule</p>
-                  <div className='flex flex-row gap-5'>
-                    <div className='flex flex-row gap-4'>
+              // <form>
+              //   <div>
+              //     <p className='text-buttonGray text-sm'>Virtual platform</p>
+              //     <div className="grid grid-cols-5 gap-2">
+              //       {buttons.map((item) => (
+              //         <button
+              //           key={item.id}
+              //           type="button"
+              //           className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${
+              //             formData.typeMeeting.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
+              //           }`}
+              //           onClick={() => handleCheckboxChange(item.name)}
+              //         >
+              //           <p className='text-sm text-buttonGray'>{item.name}</p>
+              //         </button>
+              //       ))}
+              //     </div>
+              //   </div>
+              //   <div>
+              //     <p className='text-sm text-buttonGray'>Schedule</p>
+              //     <div className='flex flex-row gap-5'>
+              //       <div className='flex flex-row gap-4'>
                        
 
-                      <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
-                      <p className='text-sm text-buttonGray p-2'>June 7, 2023</p>  
+              //         <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
+              //         <p className='text-sm text-buttonGray p-2'>June 7, 2023</p>  
 
-                      </button>
-                      <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
-                      <p className='text-sm text-buttonGray p-2'>6:30pm</p>  
+              //         </button>
+              //         <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
+              //         <p className='text-sm text-buttonGray p-2'>6:30pm</p>  
 
-                      </button>
+              //         </button>
 
-                    </div>
-                    <div className='flex flex-row gap-4 ml-10'>
-                      <span className='p-2 text-buttonGray text-sm'>to</span>
+              //       </div>
+              //       <div className='flex flex-row gap-4 ml-10'>
+              //         <span className='p-2 text-buttonGray text-sm'>to</span>
                     
-                      <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
-                      <p className='text-sm text-buttonGray p-2'>7:30pm</p>  
+              //         <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
+              //         <p className='text-sm text-buttonGray p-2'>7:30pm</p>  
 
-                      </button>
+              //         </button>
 
-                      <div className="">
-                        <SelectWithCheckboxes
-                          options={options}
-                          selectedOptions={formData.selectedOptions || []}
-                          setSelectedOptions={handleSelectChange}
-                        />
-                      </div>
+              //         <div className="">
+              //           <SelectWithCheckboxes
+              //             options={options}
+              //             selectedOptions={formData.selectedOptions || []}
+              //             setSelectedOptions={handleSelectChange}
+              //           />
+              //         </div>
+              //       </div>
+              //     </div>
+              //   </div>
+              //   <div>
+              //     <p className='text-sm text-buttonGray'>Video call link</p>
+              //     <div className='w-full h-16 border-2 border-gray-400 bg-white rounded-md flex items-center p-2'>
+              //       <p className='text-sm text-buttonGray'>https://react-icons.github.io/react-icons/search/#q=cop</p>
+              //       <p className='ml-auto flex items-center'><MdOutlineContentCopy /></p>
+              //     </div>
+              //   </div>
+              //   <div className='mt-4'>
+              //     <span className='text-sm text-buttonGray'>Description</span>
+              //     <TextAreaInput
+              //       name="description"
+              //       value={formData.description || ''}
+              //       onChange={handleInputChange}
+              //       placeholder="Enter your text here..."
+              //       rows={6}
+              //       cols={60}
+              //     />
+              //   </div>
+              //   <div className='mt-8'>
+              //     <button type="submit" className='w-full bg-buttonGray h-12 rounded-md text-white'>Create</button>
+              //   </div>
+              // </form>
+              <form>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Class title</label>
+                <InputMain
+                  name="classTitle"
+                  value={formData.classTitle || ''}
+                  onChange={handleInputChange}
+                  placeholder="Enter class title"
+                />
+              </div>
+              <div className="mb-4">
+                {/* <label className="block text-gray-700 mb-2">Subject</label> */}
+                {SubjectOPtions.map((option) => (
+                  <SelectMain
+                    key={option.name}
+                    label={option.label}
+                    name={option.name}
+                    lablename={option.lablename}
+                    Optionlabel={option.Optionlabel}
+                    options={option.options}
+                    value={formData[option.name]}
+                    onChange={(value) => handleChange({ target: { name: option.name, value } })}
+                  />
+                ))}
+              </div>
+              <div className="mb-4 flex justify-between items-center">
+                <div className="w-full">
+                  <div className='flex flex-row'>
+                    {/* <label className="block text-gray-700 mb-2">Students</label> */}
+                    <div className="ml-auto text-blue-500 cursor-pointer">
+                      <span onClick={() => setShowNewContent(true)}>+ Add Student</span>
                     </div>
                   </div>
+                  {StudentOPtions.map((option) => (
+                    <SelectMain
+                      key={option.name}
+                      label={option.label}
+                      name={option.name}
+                      lablename={option.lablename}
+                      Optionlabel={option.Optionlabel}
+                      options={option.options}
+                      value={formData[option.name]}
+                      onChange={(value) => handleChange({ target: { name: option.name, value } })}
+                    />
+                  ))}
                 </div>
-                <div>
-                  <p className='text-sm text-buttonGray'>Video call link</p>
-                  <div className='w-full h-16 border-2 border-gray-400 bg-white rounded-md flex items-center p-2'>
-                    <p className='text-sm text-buttonGray'>https://react-icons.github.io/react-icons/search/#q=cop</p>
-                    <p className='ml-auto flex items-center'><MdOutlineContentCopy /></p>
-                  </div>
-                </div>
-                <div className='mt-4'>
-                  <span className='text-sm text-buttonGray'>Description</span>
-                  <TextAreaInput
-                    name="description"
-                    value={formData.description || ''}
-                    onChange={handleInputChange}
-                    placeholder="Enter your text here..."
-                    rows={6}
-                    cols={60}
+              </div>
+              <div className="mb-4 flex items-center">
+                <div className="w-full">
+                  <label className="block text-gray-700 mb-2">Material</label>
+                  <FileInputWithIcon
+                    icon={<MdOutlineContentCopy color='gray' />}
+                    placeholder="Upload or enter material name"
+                    onChange={handleFileChange}
+                    name="material"
                   />
                 </div>
-                <div className='mt-8'>
-                  <button type="submit" className='w-full bg-buttonGray h-12 rounded-md text-white'>Create</button>
-                </div>
-              </form>
+              </div>
+              <button type="submit" className="w-full bg-gray-500 text-white py-2 rounded">Next</button>
+            </form>
+
             )}
             {tabValue === 'Virtual platform' && (
               // <form>
@@ -679,66 +740,142 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
               //   </div>
               //   <button type="submit" className="w-full bg-buttonGray text-white py-2 rounded h-16">Next</button>
               // </form>
+
               <form>
-                <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Class title</label>
-                  <InputMain
-                    name="classTitle"
-                    value={formData.classTitle || ''}
-                    onChange={handleInputChange}
-                    placeholder="Enter class title"
-                  />
-                </div>
-                <div className="mb-4">
-                  {/* <label className="block text-gray-700 mb-2">Subject</label> */}
-                  {SubjectOPtions.map((option) => (
-                    <SelectMain
-                      key={option.name}
-                      label={option.label}
-                      name={option.name}
-                      lablename={option.lablename}
-                      Optionlabel={option.Optionlabel}
-                      options={option.options}
-                      value={formData[option.name]}
-                      onChange={(value) => handleChange({ target: { name: option.name, value } })}
-                    />
+              <div>
+                <p className='text-buttonGray text-sm'>Virtual platform</p>
+                <div className="grid grid-cols-5 gap-2">
+                  {buttons.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${
+                        formData.typeMeeting.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
+                      }`}
+                      onClick={() => handleCheckboxChange(item.name)}
+                    >
+                      <p className='text-sm text-buttonGray'>{item.name}</p>
+                    </button>
                   ))}
                 </div>
-                <div className="mb-4 flex justify-between items-center">
-                  <div className="w-full">
-                    <div className='flex flex-row'>
-                      {/* <label className="block text-gray-700 mb-2">Students</label> */}
-                      <div className="ml-auto text-blue-500 cursor-pointer">
-                        <span onClick={() => setShowNewContent(true)}>+ Add Student</span>
-                      </div>
-                    </div>
-                    {StudentOPtions.map((option) => (
-                      <SelectMain
-                        key={option.name}
-                        label={option.label}
-                        name={option.name}
-                        lablename={option.lablename}
-                        Optionlabel={option.Optionlabel}
-                        options={option.options}
-                        value={formData[option.name]}
-                        onChange={(value) => handleChange({ target: { name: option.name, value } })}
+              </div>
+              <div>
+                <p className='text-sm text-buttonGray'>Schedule</p>
+                <div className='flex flex-row gap-5'>
+                  <div className='flex flex-row gap-4'>
+                     
+
+                    <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
+                    <p className='text-sm text-buttonGray p-2'>June 7, 2023</p>  
+
+                    </button>
+                    <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
+                    <p className='text-sm text-buttonGray p-2'>6:30pm</p>  
+
+                    </button>
+
+                  </div>
+                  <div className='flex flex-row gap-4 ml-10'>
+                    <span className='p-2 text-buttonGray text-sm'>to</span>
+                  
+                    <button className='`border-buttonGray border-solid border-2 w-26 h-10 rounded-md'>
+                    <p className='text-sm text-buttonGray p-2'>7:30pm</p>  
+
+                    </button>
+
+                    <div className="">
+                      <SelectWithCheckboxes
+                        options={options}
+                        selectedOptions={formData.selectedOptions || []}
+                        setSelectedOptions={handleSelectChange}
                       />
-                    ))}
+                    </div>
                   </div>
                 </div>
-                <div className="mb-4 flex items-center">
-                  <div className="w-full">
-                    <label className="block text-gray-700 mb-2">Material</label>
-                    <FileInputWithIcon
-                      icon={<MdOutlineContentCopy color='gray' />}
-                      placeholder="Upload or enter material name"
-                      onChange={handleFileChange}
-                      name="material"
-                    />
-                  </div>
+              </div>
+              <div>
+                <p className='text-sm text-buttonGray'>Video call link</p>
+                <div className='w-full h-16 border-2 border-gray-400 bg-white rounded-md flex items-center p-2'>
+                  <p className='text-sm text-buttonGray'>https://react-icons.github.io/react-icons/search/#q=cop</p>
+                  <p className='ml-auto flex items-center'><MdOutlineContentCopy /></p>
                 </div>
-                <button type="submit" className="w-full bg-gray-500 text-white py-2 rounded">Next</button>
-              </form>
+              </div>
+              <div className='mt-4'>
+                <span className='text-sm text-buttonGray'>Description</span>
+                <TextAreaInput
+                  name="description"
+                  value={formData.description || ''}
+                  onChange={handleInputChange}
+                  placeholder="Enter your text here..."
+                  rows={6}
+                  cols={60}
+                />
+              </div>
+              <div className='mt-8'>
+                <button type="submit" className='w-full bg-buttonGray h-12 rounded-md text-white'>Create</button>
+              </div>
+            </form>
+
+              // <form>
+              //   <div className="mb-4">
+              //     <label className="block text-gray-700 mb-2">Class title</label>
+              //     <InputMain
+              //       name="classTitle"
+              //       value={formData.classTitle || ''}
+              //       onChange={handleInputChange}
+              //       placeholder="Enter class title"
+              //     />
+              //   </div>
+              //   <div className="mb-4">
+              //     {/* <label className="block text-gray-700 mb-2">Subject</label> */}
+              //     {SubjectOPtions.map((option) => (
+              //       <SelectMain
+              //         key={option.name}
+              //         label={option.label}
+              //         name={option.name}
+              //         lablename={option.lablename}
+              //         Optionlabel={option.Optionlabel}
+              //         options={option.options}
+              //         value={formData[option.name]}
+              //         onChange={(value) => handleChange({ target: { name: option.name, value } })}
+              //       />
+              //     ))}
+              //   </div>
+              //   <div className="mb-4 flex justify-between items-center">
+              //     <div className="w-full">
+              //       <div className='flex flex-row'>
+              //         {/* <label className="block text-gray-700 mb-2">Students</label> */}
+              //         <div className="ml-auto text-blue-500 cursor-pointer">
+              //           <span onClick={() => setShowNewContent(true)}>+ Add Student</span>
+              //         </div>
+              //       </div>
+              //       {StudentOPtions.map((option) => (
+              //         <SelectMain
+              //           key={option.name}
+              //           label={option.label}
+              //           name={option.name}
+              //           lablename={option.lablename}
+              //           Optionlabel={option.Optionlabel}
+              //           options={option.options}
+              //           value={formData[option.name]}
+              //           onChange={(value) => handleChange({ target: { name: option.name, value } })}
+              //         />
+              //       ))}
+              //     </div>
+              //   </div>
+              //   <div className="mb-4 flex items-center">
+              //     <div className="w-full">
+              //       <label className="block text-gray-700 mb-2">Material</label>
+              //       <FileInputWithIcon
+              //         icon={<MdOutlineContentCopy color='gray' />}
+              //         placeholder="Upload or enter material name"
+              //         onChange={handleFileChange}
+              //         name="material"
+              //       />
+              //     </div>
+              //   </div>
+              //   <button type="submit" className="w-full bg-gray-500 text-white py-2 rounded">Next</button>
+              // </form>
             )}
           </div>
         </DialogPanel>
