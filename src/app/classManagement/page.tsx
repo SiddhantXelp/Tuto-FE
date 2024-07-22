@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Card from './overView/Card';
 import ClassTable from './classes/page';
+import TimeTable from './timeTable/page';
+import Attendance from './attendence/page';
 
 
 type Tab = 'Overview' | 'Classes' | 'Time table' | 'Attendance';
@@ -23,9 +25,9 @@ const ClassManagementPage: React.FC = () => {
       case 'Classes':
         return <div className="w-full h-64 bg-gray-100 rounded-lg p-4"><ClassTable/></div>;
       case 'Time table':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg p-4">Time Table Content</div>;
+        return <div className="w-full h-64 bg-gray-100 rounded-lg p-4"><TimeTable/></div>;
       case 'Attendance':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg p-4">Attendance Content</div>;
+        return <div className="w-full h-64 bg-gray-100 rounded-lg p-4"><Attendance/></div>;
       default:
         return null;
     }
@@ -69,3 +71,4 @@ const ClassManagementPage: React.FC = () => {
 };
 
 export default ClassManagementPage;
+
