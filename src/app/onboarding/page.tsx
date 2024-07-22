@@ -91,7 +91,7 @@ const OnboardingPage: React.FC = () => {
           radioOptions={field.radioOptions}
         />
       ))}
-      <Link href="/studentrequirements">
+      <Link href="/studentRequirements">
        <div>
         <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Next</button>
         </div>

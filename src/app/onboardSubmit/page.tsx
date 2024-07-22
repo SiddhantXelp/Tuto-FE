@@ -3,7 +3,7 @@ import { FaVideo,FaCalendar,FaFileVideo } from "react-icons/fa6";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { IoMdPricetag } from "react-icons/io";
 
-const OnbordSubmit = () => {
+const OnboardSubmit = () => {
   return (
     <div className='flex justify-center items-center h-auto'>
       <div className='w-2/4 bg-gray-100 shadow-lg rounded p-0 mt-10 border-gray-300 border-solid border-2'>
@@ -87,4 +87,4 @@ const OnbordSubmit = () => {
   )
 }
 
-export default OnbordSubmit
+export default OnboardSubmit

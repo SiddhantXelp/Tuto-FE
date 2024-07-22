@@ -73,7 +73,7 @@ const StudentRequirementForm: React.FC = () => {
               onChange={handleChange}
             />
           ))}
-          <Link href="/createpacage">
+          <Link href="/createPackage">
             <div>
               <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Next</button>
             </div>

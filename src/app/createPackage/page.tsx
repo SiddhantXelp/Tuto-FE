@@ -33,7 +33,7 @@ interface RadioOption {
   value: string;
 }
 
-const CreatePacage: React.FC = () => {
+const CreatePackage: React.FC = () => {
   const [formData, setFormData] = useState({
     inputValue: '',
     selectedDays: [] as string[],
@@ -69,7 +69,7 @@ const CreatePacage: React.FC = () => {
     { id: 5, name: "Annually" },
   ];
 
-  const selectMainoption: SelectMainOption[] = [
+  const selectMainOption: SelectMainOption[] = [
     {
       name: "boardEducation",
       label: "Type of class",
@@ -80,7 +80,7 @@ const CreatePacage: React.FC = () => {
     },
   ];
 
-  const radiobuttons: RadioOption[] = [
+  const radioButtons: RadioOption[] = [
     { label: "Yes", value: "Yes" },
     { label: "No", value: "No" },
   ];
@@ -199,7 +199,7 @@ const CreatePacage: React.FC = () => {
           </div>
           <div className='mt-4'>
             <p className='text-buttonGray text-sm'>Which medium would you like to choose?</p>
-            {selectMainoption.map((option) => (
+            {selectMainOption.map((option) => (
               <SelectMain 
                 key={option.name}
                 name={option.name}  
@@ -214,7 +214,7 @@ const CreatePacage: React.FC = () => {
             <p className='text-buttonGray text-sm'>Recordings availability</p>
             <div className='border-gray-300 rounded-md'>
               <div className='flex gap-3'>
-                {radiobuttons.map((option) => (
+                {radioButtons.map((option) => (
                   <div key={option.value} className='bg-white flex py-2 text-gray-400 px-4 gap-8 justify-center align-middle border-2 border-gray-500 rounded-lg'>
                     <input
                       type="radio"
@@ -234,7 +234,7 @@ const CreatePacage: React.FC = () => {
             </div>
           </div>
         </div>
-        <Link href="/onbordsubmit">
+        <Link href="/onboardSubmit">
           <div className='mt-8'>
             <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Submit</button>
           </div>
@@ -244,4 +244,4 @@ const CreatePacage: React.FC = () => {
   );
 };
 
-export default CreatePacage;
+export default CreatePackage;
