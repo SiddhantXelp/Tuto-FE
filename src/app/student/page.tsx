@@ -1,4 +1,6 @@
-import React from 'react';
+"use client"
+import Link from 'next/link';
+import React, { useState } from 'react';
 import { GrAdd } from "react-icons/gr";
 const StudentPage = () => {
   const data = [
@@ -31,11 +33,13 @@ const StudentPage = () => {
     { name: 'Sandya', grade: '08th', subjects: 'English, maths, hindi', attendance: '22/22', parentContact: '+91 955458465', enrollmentDate: '24/07/2022', performance: '2% ↓' },
   ];
 
+ 
 
   return (
     <div className='w-full h-auto'>
       <div className='flex flex-row gap-10'>
-        <div>
+        <Link href="/noOfStudents">
+         <div>
           <span className='text-buttonGray text-sm'>No.of Students</span>
           <div className='w-72 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
           <div className='flex-grow flex items-center justify-center'>
@@ -50,6 +54,7 @@ const StudentPage = () => {
         </div>
          </div>
          </div>
+         </Link>
 
          <div>
           <span className='text-buttonGray text-sm'>Performance</span>
@@ -170,7 +175,6 @@ const StudentPage = () => {
       </tbody>
     </table>
   </div>
-
 
     </div>
   );
