@@ -88,7 +88,7 @@ const GroupBasedTable = () => {
               {option.label}
             </option>
           ))}
-        </select>
+        </select> 
       </div>  
      </div>
   <div className="mt-10 ">
