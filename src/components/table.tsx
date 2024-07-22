@@ -1,55 +1,55 @@
 // components/ClassTable.tsx
 
 import React from 'react';
+import { Icon } from '@iconify/react';
 
-interface ClassData {
-  classTitle: string;
-  subject: string;
-  student: string;
-  date: string;
-  time: string;
-  duration: string;
-  assignment: string;
-  material: string;
+interface Column {
+  header: string;
+  key: string;
+  isCheckbox?: boolean;
 }
 
 interface Props {
-  data: ClassData[];
+  columns: Column[];
+  data: any[];
+  includeCheckbox?: boolean;
 }
 
-const Table: React.FC<Props> = ({ data }) => {
+const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-200">
         <thead>
           <tr>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">
-              <input type="checkbox" />
-            </th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Class Title</th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Student</th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Assignment</th>
-            <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">Material</th>
+            {includeCheckbox && (
+              <th className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">
+                <input type="checkbox" />
+              </th>
+            )}
+            {columns.map((column, index) => (
+              <th key={index} className="px-4 py-2 text-left text-xxxs font-medium text-gray-500 uppercase tracking-wider">
+                {column.header}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
-            <tr key={index} className="border-t">
-              <td className="px-4 py-2">
-                <input type="checkbox" />
-              </td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.classTitle}</td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.subject}</td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.student}</td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.date}</td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.time}</td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.duration}</td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.assignment}</td>
-              <td className="px-4 py-2 text-xxxs text-gray-500">{item.material}</td>
+          {data.map((item, rowIndex) => (
+            <tr key={rowIndex} className="border-t">
+              {includeCheckbox && (
+                <td className="px-4 py-2">
+                  <input type="checkbox" />
+                </td>
+              )}
+              {columns.map((column, colIndex) => (
+                <td key={colIndex} className="px-4 py-2 text-xxxs text-gray-500">
+                  {column.isCheckbox ? (
+                    <input type="checkbox" />
+                  ) : (
+                    item[column.key]
+                  )}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>

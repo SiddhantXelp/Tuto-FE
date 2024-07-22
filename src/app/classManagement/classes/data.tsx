@@ -1,7 +1,6 @@
-// data/data.ts
 
-import { Icon } from '@iconify/react/dist/iconify.js';
-import React from 'react';
+
+import { Icon } from '@iconify/react';
 
 export const data = [
   {
@@ -12,7 +11,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -22,7 +21,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -32,7 +31,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -42,7 +41,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -52,7 +51,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -62,7 +61,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -72,7 +71,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -82,7 +81,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -92,7 +91,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -102,7 +101,7 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   {
     classTitle: "Math 101",
@@ -112,7 +111,19 @@ export const data = [
     time: "10:30 AM",
     duration: "2 hours",
     assignment: "Homework 1",
-    material: <Icon icon="ph:link-bold" width="18" height="18" color='gray'/>
+    material: <Icon icon="ph:link-bold" width="18" height="18" color="gray" />,
   },
   // Add more data as needed
 ];
+
+export const columns = [
+  { header: 'Class Title', key: 'classTitle' },
+  { header: 'Subject', key: 'subject' },
+  { header: 'Student', key: 'student' },
+  { header: 'Date', key: 'date' },
+  { header: 'Time', key: 'time' },
+  { header: 'Duration', key: 'duration' },
+  { header: 'Assignment', key: 'assignment' },
+  { header: 'Material', key: 'material' },
+];
+
