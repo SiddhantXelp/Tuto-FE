@@ -25,8 +25,8 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
       width: '100%',
       height:'50px',
       padding: '8px 40px 8px 8px',
-      border: '2px solid gray',
-      borderRadius: '4px',
+      border: '2px solid white',
+      borderRadius: '10px',
       boxSizing: 'border-box' as 'border-box',
     },
     searchIcon: {
