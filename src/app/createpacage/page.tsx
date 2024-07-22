@@ -145,11 +145,11 @@ const CreatePacage: React.FC = () => {
   return (
     <div className='flex justify-center items-center h-auto'>
       <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10 border-gray-300 border-solid border-2'>
-        <span className='font-medium text-2xl text-gray-400 block mb-4'>Create your package</span>
+        <span className='font-medium text-xl text-buttonGray block mb-4'>Create your package</span>
         <div>
-          <p>No. of Subjects you would like to offer?</p>
+          <p className='text-buttonGray text-sm'>No. of Subjects you would like to offer?</p>
           <InputWithIcon 
-            icon={<IoMdAdd />} 
+            icon={<IoMdAdd color='gray' />} 
             placeholder="Enter your name" 
             value={formData.inputValue} 
             onChange={handleChange} 
@@ -157,36 +157,36 @@ const CreatePacage: React.FC = () => {
           />
         </div>
         <div className='mt-5'>
-          <p>What days do you prefer?</p>
+          <p className='text-buttonGray text-sm'>What days do you prefer?</p>
           <div className="grid grid-cols-5 gap-2">
             {buttons.map((item) => (
               <button
                 key={item.id}
-                className={`border-gray-800 border-solid border-2 w-20 h-10 rounded-md ${
+                className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${
                   formData.selectedDays.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
                 }`}
                 onClick={() => handleButtonClick(item.name)}
               >
-                <p className='text-xs'>{item.name}</p>  
+                <p className='text-sm text-buttonGray'>{item.name}</p>  
               </button>
             ))}
           </div>
           <div className='mt-5'>
-            <p>Pricing categories</p>
+            <p className='text-buttonGray text-sm'>Pricing categories</p>
             <div>
               {PricingButtons.map((item) => (
                 <React.Fragment key={item.id}>
                   <button
-                    className={`border-gray-800 border-solid border-2 w-20 h-10 rounded-md ml-2 ${
+                    className={`border-buttonGray border-solid border-2 w-20 h-10 rounded-md ml-2 ${
                       formData.Pricing.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
                     }`}
                     onClick={() => handleButtonsClickforPricing(item.name)}
                   >
-                    <p className='text-sm'>{item.name}</p>  
+                    <p className='text-sm text-buttonGray'>{item.name}</p>  
                   </button>
                   {formData.Pricing.includes(item.name) && (
                     <InputWithIcon 
-                      icon={<RxCross2 />} 
+                      icon={<RxCross2  color='gray'/>} 
                       placeholder="Enter your name" 
                       value={formData.pricingInputs[item.name]} 
                       onChange={handleChange} 
@@ -198,7 +198,7 @@ const CreatePacage: React.FC = () => {
             </div>
           </div>
           <div className='mt-4'>
-            <p>Which medium would you like to choose?</p>
+            <p className='text-buttonGray text-sm'>Which medium would you like to choose?</p>
             {selectMainoption.map((option) => (
               <SelectMain 
                 key={option.name}
@@ -211,7 +211,7 @@ const CreatePacage: React.FC = () => {
             ))}
           </div>
           <div className='mt-4'>
-            <p>Recordings availability</p>
+            <p className='text-buttonGray text-sm'>Recordings availability</p>
             <div className='border-gray-300 rounded-md'>
               <div className='flex gap-3'>
                 {radiobuttons.map((option) => (
@@ -224,19 +224,19 @@ const CreatePacage: React.FC = () => {
                       checked={formData.radioValue === option.value} 
                       onChange={handleChange}
                     />
-                    <label htmlFor={option.value} className='text-xs mt-2'>{option.label}</label>
+                    <label htmlFor={option.value} className='text-sm text-buttonGray mt-1'>{option.label}</label>
                   </div>
                 ))}
               </div>
               <div>
-                <span className='mt-5 text-gray-400 text-xs'>Additional charge can be added to provide recordings</span>
+                <span className='mt-5 text-buttonGray text-sm'>Additional charge can be added to provide recordings</span>
               </div>
             </div>
           </div>
         </div>
         <Link href="/onbordsubmit">
           <div className='mt-8'>
-            <button className='w-full bg-gray-400 h-10 rounded-md text-white'>Submit</button>
+            <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Submit</button>
           </div>
         </Link>
       </div>
