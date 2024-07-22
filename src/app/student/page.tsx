@@ -33,11 +33,11 @@ const StudentPage = () => {
 
 
   return (
-    <div className='w-screen h-auto'>
+    <div className='w-full h-auto'>
       <div className='flex flex-row gap-10'>
         <div>
-          <span className='text-buttonGray'>No.of Students</span>
-          <div className='w-80 h-40 bg-white border rounded-md flex flex-col justify-between p-4'>
+          <span className='text-buttonGray text-sm'>No.of Students</span>
+          <div className='w-72 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
           <div className='flex-grow flex items-center justify-center'>
          <h1 className='text-4xl text-black-400 font-bold'>
             280
@@ -52,14 +52,14 @@ const StudentPage = () => {
          </div>
 
          <div>
-          <span className='text-buttonGray'>Performance</span>
-         <div className='w-80 h-40 bg-white border rounded-md flex flex-col justify-between p-4'>
+          <span className='text-buttonGray text-sm'>Performance</span>
+         <div className='w-72 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
          </div>
          </div>
 
          <div>
-          <span className='text-buttonGray'>Progress reports</span>
-         <div className='w-80 h-40 bg-white border rounded-md flex flex-col justify-between p-4'>
+          <span className='text-buttonGray text-sm'>Progress reports</span>
+         <div className='w-72 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
          <div className="flex flex-row flex-initial justify-between mt-3">
           <div >
             <p className='text-buttonGray text-sm'>01 Suresh</p>
@@ -78,8 +78,8 @@ const StudentPage = () => {
          </div>
 
          <div>
-          <span className='text-buttonGray'>Groups</span>
-         <div className='w-80 h-40 bg-white border rounded-md flex flex-col justify-between p-4'>
+          <span className='text-buttonGray text-sm'>Groups</span>
+         <div className='w-72 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
          <div className="flex flex-row flex-initial justify-between mt-3">
           <div >
             <p className='text-buttonGray text-sm'>Group A</p>
@@ -99,19 +99,19 @@ const StudentPage = () => {
 
        </div>
 
-   <div className='flex flex-row gap-5'>
+   <div className='flex flex-row gap-10 mt-10 '>
        {data.map((item, index) => (
-      <div>
+      <div className=''>
       <div className='flex flex-row justify-between'>
-      <span className='text-buttonGray'>{item.cardName}</span>
-      <span className='text-buttonGray mt-2'> 
+      <span className='text-buttonGray text-sm'>{item.cardName}</span>
+      <span className='text-buttonGray mt-1'> 
         <p className='text-xs'>
         {item.cardNameEnd}
          </p>
       </span>
       </div>
-      <div className='flex flex-wrap gap-4'>
-          <div key={index} className='w-80 h-40 bg-buttonGray border rounded-md flex flex-col justify-between p-4'>
+      <div className='flex flex-wrap gap-4 items-center '>
+          <div key={index} className='w-56 h-30 bg-buttonGray border rounded-md flex flex-col justify-between p-4'>
             <div>
               <h1 className='text-white text-2xl font-bold'>{item.subject}</h1>
               
@@ -127,7 +127,7 @@ const StudentPage = () => {
     </div>
   ))}
 
-<div className='w-52 h-40 bg-buttonGray border rounded-md mt-6 flex items-center justify-center'>
+<div className='w-44 h-30 bg-buttonGray border rounded-md mt-6 flex items-center justify-center'>
       <div className='flex flex-col items-center'>
         <GrAdd color='white' size={"50px"} />
         <p className='text-white text-xl'>Add Student</p>
@@ -136,40 +136,41 @@ const StudentPage = () => {
   </div>
 
 
-  <div className="p-2">
-      <h2 className="text-lg font-semibold mb-4">Recently added students</h2>
-      <div className="overflow-x-auto  rounded-lg border border-gray-200">
-        <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-          <thead>
-            <tr className='bg-slate-100'>
-              <th className="py-2 px-4 border-b text-left text-buttonGray">Student</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray">Grade</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray">Subjects</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray">Attendance</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray">Parent Contact</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray">Enrollment date</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray">Performance</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student, index) => (
-              <tr key={index} className="hover:bg-gray-100">
-                <td className="py-2 px-4 border-b flex items-center">
-                  <img src="/path/to/avatar.jpg" alt="avatar" className="w-8 h-8 rounded-full mr-2" />
-                  {student.name}
-                </td>
-                <td className="py-2 px-4 border-b text-buttonGray">{student.grade}</td>
-                <td className="py-2 px-4 border-b text-buttonGray">{student.subjects}</td>
-                <td className="py-2 px-4 border-b text-buttonGray">{student.attendance}</td>
-                <td className="py-2 px-4 border-b text-buttonGray">{student.parentContact}</td>
-                <td className="py-2 px-4 border-b text-buttonGray">{student.enrollmentDate}</td>
-                <td className="py-2 px-4 border-b text-buttonGray">{student.performance}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+  
+
+<div className="mt-10 ">
+  <h2 className="text-lg font-semibold mb-4">Recently added students</h2>
+    <table className=" w-11/12	 bg-white border border-gray-200 rounded-lg">
+      <thead>
+        <tr className="bg-slate-100">
+          <th className="py-2 px-4 border-b text-left text-buttonGray">Student</th>
+          <th className="py-2 px-4 border-b text-left text-buttonGray">Grade</th>
+          <th className="py-2 px-4 border-b text-left text-buttonGray">Subjects</th>
+          <th className="py-2 px-4 border-b text-left text-buttonGray">Attendance</th>
+          <th className="py-2 px-4 border-b text-left text-buttonGray">Parent Contact</th>
+          <th className="py-2 px-4 border-b text-left text-buttonGray">Enrollment date</th>
+          <th className="py-2 px-4 border-b text-left text-buttonGray">Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {students.map((student, index) => (
+          <tr key={index} className="hover:bg-gray-100">
+            <td className="py-2 px-4 border-b flex items-center">
+              <img src="/path/to/avatar.jpg" alt="avatar" className="w-8 h-8 rounded-full mr-2" />
+              {student.name}
+            </td>
+            <td className="py-2 px-4 border-b text-buttonGray">{student.grade}</td>
+            <td className="py-2 px-4 border-b text-buttonGray">{student.subjects}</td>
+            <td className="py-2 px-4 border-b text-buttonGray">{student.attendance}</td>
+            <td className="py-2 px-4 border-b text-buttonGray">{student.parentContact}</td>
+            <td className="py-2 px-4 border-b text-buttonGray">{student.enrollmentDate}</td>
+            <td className="py-2 px-4 border-b text-buttonGray">{student.performance}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
 
     </div>
   );
