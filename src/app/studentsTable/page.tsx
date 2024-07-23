@@ -34,7 +34,6 @@ const NumberStudents = () => {
   ],
 }
 ]
-
   const students = [
     { name: 'Shiva', grade: '03th', subjects: 'English,', attendance: '02/20', parentContact: '+91 955458465', Absent: '18', Remarks: '02' },
     { name: 'Srinu', grade: '04th', subjects: 'Telugu,', attendance: '02/20', parentContact: '+91 955458465', Absent: '16', Remarks: '30min' },

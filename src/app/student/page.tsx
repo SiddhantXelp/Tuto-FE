@@ -233,7 +233,8 @@ const StudentPage: React.FC = () => {
       router.push('/groupBasedTable'); 
     }
   };
-
+    
+  const columNames=["Student","Grade","Subjects","Attendance","Parent Contact","Enrollment date","Performance"]
   const students = [
     { name: 'Shiva', grade: '05th', subjects: 'English, maths, hindi', attendance: '02/20', parentContact: '+91 955458465', enrollmentDate: '24/07/2022', performance: '2% ↓' },
     { name: 'Santhosh', grade: '09th', subjects: 'English, maths, hindi', attendance: '22/22', parentContact: '+91 955458465', enrollmentDate: '24/07/2022', performance: '4% ↑' },
@@ -347,13 +348,9 @@ const StudentPage: React.FC = () => {
         <table className=" w-11/12 bg-white border border-gray-200 rounded-lg">
           <thead>
             <tr className="bg-slate-100">
-              <th className="py-2 px-4 border-b text-left text-buttonGray text-sm">Student</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray text-sm">Grade</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray text-sm">Subjects</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray text-sm">Attendance</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray text-sm">Parent Contact</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray text-sm">Enrollment date</th>
-              <th className="py-2 px-4 border-b text-left text-buttonGray text-sm">Performance</th>
+              {columNames.map((colum,index)=>(
+              <th key={index} className="py-2 px-4 border-b text-left text-buttonGray text-sm">{colum}</th>
+            ))}
             </tr>
           </thead>
           <tbody>
