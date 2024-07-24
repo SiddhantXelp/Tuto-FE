@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import { FiEdit3 } from "react-icons/fi";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 
@@ -33,7 +34,7 @@ const percentage = 60;
   <div className='grid grid-cols-3 gap-4'>
     <div>
       <span className='text-buttonGray text-sm'>Revenue Analytics</span>
-      <div className='w-96 h-72 bg-white shadow-lg border rounded-xl flex justify-center items-center'>
+      <div className='w-96 h-72 bg-white shadow-lg border rounded-xl flex justify-center items-center p-10'>
 
  <div style={{ width: 150, height: 150 }}>
  <div style={{ width: 150, height: 150, position: 'relative' }}>
@@ -50,23 +51,24 @@ const percentage = 60;
           backgroundColor: '#3e98c7',
         })}
       />
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, 20%)', textAlign: 'center',color:'#565656' }}>
-        {"children"}
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, 20%)', textAlign: 'center',color:'#565656' ,fontSize:"10px",marginTop:"8px"}}>
+        {"Payments done"}
       </div>
     </div>
     <div>
      <div className='flex flex-row gap-4 mt-4'>
-      <div style={{width:"20px",height:"20px",backgroundColor:"#1F78B4"}}>
+      <div style={{width:"15px",height:"15px",backgroundColor:"#1F78B4"}}>
       </div>
       <p className='text-buttonGray text-xxs mt-1'>60% Received Payment</p>
       </div>
       <div className='flex flex-row gap-4 mt-1'>
-      <div style={{width:"20px",height:"20px",backgroundColor:"#FFA0A0"}}>
+      <div style={{width:"15px",height:"15px",backgroundColor:"#FFA0A0"}}>
       </div>
       <p className='text-buttonGray text-xxs mt-1'>40% Pending Payment</p>
       </div>
     </div>
-</div>
+     </div>
+     <div className='ml-auto mt-56'><RiMoneyRupeeCircleFill size={20}/></div>
       </div>
     </div>
 
