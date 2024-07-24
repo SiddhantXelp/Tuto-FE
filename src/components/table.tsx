@@ -41,6 +41,7 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
                   <input type="checkbox" />
                 </td>
               )}
+              
               {columns.map((column, colIndex) => (
                 <td key={colIndex} className="px-4 py-2 text-xxxs text-gray-500">
                   {column.isCheckbox ? (
@@ -50,6 +51,9 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
                   )}
                 </td>
               ))}
+
+             
+
             </tr>
           ))}
         </tbody>

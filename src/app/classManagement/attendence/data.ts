@@ -230,3 +230,5 @@ export const StudentsData = [
     { header: 'Absent', key: 'absent' },
     { header: 'Remarks', key: 'remarks' },
  ];
+
+ 

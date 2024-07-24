@@ -1,3 +1,4 @@
+import { color } from 'framer-motion';
 import React, { useState, ChangeEvent } from 'react';
 import { IoSearch } from 'react-icons/io5';
 
@@ -23,7 +24,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
     },
     searchInput: {
       width: '100%',
-      height:'50px',
+      height:'40px',
       padding: '8px 40px 8px 8px',
       border: '2px solid white',
       borderRadius: '10px',
@@ -35,6 +36,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
       top: '50%',
       transform: 'translateY(-50%)',
       pointerEvents: 'none' as 'none',
+      color:"gray"
     },
   };
 
