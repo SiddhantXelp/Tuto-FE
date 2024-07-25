@@ -8,7 +8,6 @@ export const recentStudentColumns = [
     { header: 'Performance', key: 'performance' },
   
   ];
-  
   export const recentStudentsData = [
     {
         name: "Shiva",
@@ -56,4 +55,72 @@ export const recentStudentColumns = [
    
    
     // Add more data as needed
+  ]; 
+  export const dashBordTableColumns = [
+    { header: 'Student', key: 'student' },
+    { header: 'Type', key: 'type' },
+    { header: 'Subject', key: 'subject' },
+    { header: 'Date of Submission', key: 'DateofSubmission' },
+    { header: 'Status', key: 'status' },
+    { header: 'Download', key: 'download' },
   ];
+
+  
+  export const dashBordTableData =[
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:"<FiDownload />",
+    },
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:"<FiDownload />",
+    },
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:"<FiDownload />",
+    },
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:"<FiDownload />",
+    },
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:"<FiDownload/>",
+    },
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:"<FiDownload/>",
+    },
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:"<FiDownload/>",
+    },
+  ]
