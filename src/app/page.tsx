@@ -5,7 +5,6 @@ import { FaRegClock, FaBook } from "react-icons/fa";
 import Image from 'next/image';
 import Table from "@/components/table";
 import { dashBordTableColumns, dashBordTableData } from './student/data';
-import { FiDownload } from "react-icons/fi";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';

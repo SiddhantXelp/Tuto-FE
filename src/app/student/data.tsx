@@ -1,3 +1,6 @@
+
+import { BsDownload } from "react-icons/bs";
+
 export const recentStudentColumns = [
     { header: 'Student', key: 'name' },
     { header: 'Grade', key: 'grade' },
@@ -65,7 +68,6 @@ export const recentStudentColumns = [
     { header: 'Download', key: 'download' },
   ];
 
-  
   export const dashBordTableData =[
     {
         student:"Shiva",
@@ -73,7 +75,15 @@ export const recentStudentColumns = [
         subject:"Maths",
         DateofSubmission:"20-03-2023",
         status:"Pending",
-        download:"<FiDownload />",
+        download:<BsDownload   color="gray" size={13} />,
+ },
+    {
+        student:"Shiva",
+        type:"Written",
+        subject:"Maths",
+        DateofSubmission:"20-03-2023",
+        status:"Pending",
+        download:<BsDownload   color="gray" size={13} />,
     },
     {
         student:"Shiva",
@@ -81,7 +91,7 @@ export const recentStudentColumns = [
         subject:"Maths",
         DateofSubmission:"20-03-2023",
         status:"Pending",
-        download:"<FiDownload />",
+        download:<BsDownload   color="gray" size={13} />,
     },
     {
         student:"Shiva",
@@ -89,7 +99,7 @@ export const recentStudentColumns = [
         subject:"Maths",
         DateofSubmission:"20-03-2023",
         status:"Pending",
-        download:"<FiDownload />",
+        download:<BsDownload   color="gray" size={13} />,
     },
     {
         student:"Shiva",
@@ -97,7 +107,7 @@ export const recentStudentColumns = [
         subject:"Maths",
         DateofSubmission:"20-03-2023",
         status:"Pending",
-        download:"<FiDownload />",
+        download:<BsDownload   color="gray" size={13} />,
     },
     {
         student:"Shiva",
@@ -105,7 +115,7 @@ export const recentStudentColumns = [
         subject:"Maths",
         DateofSubmission:"20-03-2023",
         status:"Pending",
-        download:"<FiDownload/>",
+        download:<BsDownload   color="gray" size={13} />,
     },
     {
         student:"Shiva",
@@ -113,14 +123,6 @@ export const recentStudentColumns = [
         subject:"Maths",
         DateofSubmission:"20-03-2023",
         status:"Pending",
-        download:"<FiDownload/>",
-    },
-    {
-        student:"Shiva",
-        type:"Written",
-        subject:"Maths",
-        DateofSubmission:"20-03-2023",
-        status:"Pending",
-        download:"<FiDownload/>",
+        download:<BsDownload   color="gray" size={13} />,
     },
   ]
