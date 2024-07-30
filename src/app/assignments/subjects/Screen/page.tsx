@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react'
 import { GrAdd } from 'react-icons/gr';
 
@@ -40,6 +41,21 @@ const page = () => {
             details: ['20 Total', '10 Pending']
           },
       ];
+
+      const getLinkHref = (index:any) => {
+        switch (index) {
+          case 0:
+            return '/assignments/subjects';
+          case 1:
+            return '';
+        
+          default:
+            return '#';
+        }
+      };
+    
+
+
   return (
     <>
         <div className='flex flex-row justify-between items-center'>
@@ -55,8 +71,8 @@ const page = () => {
 
          <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 items-center mt-5 gap-5'>
          {data.map((item, index) => (
-        //   <Link href={getLinkHref(index)} key={index} passHref>
-          <div className={(index === 0 || index === 2) ? 'cursor-pointer' : ''} key={index} >
+         <Link href={getLinkHref(index)} key={index} passHref>
+          <div className={(index === 0 || index === 3) ? 'cursor-pointer' : ''} key={index} >
            
             <div className='flex flex-wrap gap-4 items-center'>
               <div className='sm:w-24 md:w-32 lg:w-40 xl:w-56 2xl:w-72 h-30 bg-buttonGray border rounded-md flex flex-col justify-between p-4'>
@@ -69,7 +85,7 @@ const page = () => {
               </div>
             </div>
           </div>
-        //   </Link>
+       </Link>
         ))}
       
       </div>

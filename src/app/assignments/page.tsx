@@ -96,12 +96,14 @@ const ClassManagementPage: React.FC = () => {
           </div>
           </Link>
         ))}
+        <Link href="/assignments/createAssignment">
         <div className='md:w-28  lg:w-32 xl:w-40 2xl:w-44 h-20 bg-white border rounded-md mt-2 flex items-center justify-center'>
           <div className='flex flex-col items-center'>
             <GrAdd color='black' size={"20px"} />
             <p className='text-black text-xxs'>Create Assigment</p>
           </div>
         </div>
+        </Link>
       </div>
     
       <div>

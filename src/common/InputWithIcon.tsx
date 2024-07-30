@@ -1,3 +1,4 @@
+import { type } from 'os';
 import React from 'react';
 
 interface InputWithIconProps {
@@ -5,14 +6,15 @@ interface InputWithIconProps {
   placeholder: string;
   value: any;
   name:string;
+  type:any;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputWithIcon: React.FC<InputWithIconProps> = ({ icon, placeholder, value,name, onChange }) => {
+const InputWithIcon: React.FC<InputWithIconProps> = ({ icon, placeholder,type, value,name, onChange }) => {
   return (
     <div style={styles.container}>
       <input 
-        type="text" 
+        type={type} 
         placeholder={placeholder} 
         value={value} 
         name={name}
