@@ -36,7 +36,7 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
           {data.map((item, rowIndex) => (
             <tr key={rowIndex} className="border-t">
               {includeCheckbox && (
-                <td className="px-4 py-3"> {/* Added vertical padding here */}
+                <td className="px-4 py-3"> 
                   <input type="checkbox" />
                 </td>
               )}
