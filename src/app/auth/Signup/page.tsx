@@ -1,0 +1,121 @@
+"use client";
+import React from 'react';
+import BackgroundComponent from '../../../common/BackgroundComponent';
+import Link from 'next/link';
+
+const HomePage: React.FC = () => {
+
+  return (
+    <BackgroundComponent className="flex items-center justify-center">
+      <div className="w-full max-w-md">
+        <h2
+          className="mb-6 text-center font-semibold"
+          style={{
+            fontSize: '32px',
+            lineHeight: '43px',
+            color: '#B404C8',
+            opacity: 1,
+          }}
+        >
+          TutorNow
+        </h2>
+        <h2 className="text-xl  mb-6 text-center text-gray-800">Sign Up</h2>
+
+        <div className="mb-4">
+          <label htmlFor="contact" className="block text-gray-700 mb-2 text-sm/[14px]">
+            Email ID or Mobile Number
+          </label>
+          <input
+            type="text"
+            id="contact"
+            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-gray-700 mb-2 text-sm/[14px]">
+            Create Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-700 mb-2 text-sm/[14px]">
+            Create Your Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="mb-6">
+          <label htmlFor="confirmPassword" className="block text-gray-700 mb-2 text-sm/[14px]">
+            Re-Enter Your Password
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <Link href="/">
+          <button
+            type="submit"
+            className="w-full text-white py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-300"
+            style={{ background: "#565656 0% 0% no-repeat padding-box" }}
+          >
+            Next
+          </button>
+        </Link>
+
+        <p className='text-center mt-5 text-sm/[14px]'>or sign up with</p>
+
+        <div className='flex justify-between mt-5 mx-5'>
+          <button
+            className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
+            style={{
+              borderColor: '#101415',
+              borderWidth: '0.6px',
+              borderRadius: '8px',
+              backgroundColor: 'transparent'
+            }}
+          >
+            Google
+          </button>
+          <button
+            className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
+            style={{
+              borderColor: '#101415',
+              borderWidth: '0.6px',
+              borderRadius: '8px',
+              backgroundColor: 'transparent'
+            }}
+          >
+            Apple Id
+          </button>
+
+        </div>
+        <Link href="/auth/Login">
+          <p className='text-center mt-5 text-sm/[14px]'>Already having account?  <b> Login here</b></p>
+
+        </Link>
+
+
+      </div>
+
+    </BackgroundComponent>
+  );
+};
+
+export default HomePage;
