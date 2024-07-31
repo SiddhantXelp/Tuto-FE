@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
 
-const Login: React.FC = () => {
+const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
     const router = useRouter();
 
     const [showLogin, setLogin] = useState(true);
@@ -22,6 +22,40 @@ const Login: React.FC = () => {
 
         }
     }, []);
+
+    // const login = useGoogleLogin({
+    //     onSuccess: async (response) => {
+    //         const accessToken = response?.access_token;
+
+    //         if (accessToken) {
+    //             try {
+    //                 const profileResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+    //                     headers: {
+    //                         Authorization: `Bearer ${accessToken}`,
+    //                     },
+    //                 });
+
+    //                 const profileData = await profileResponse.json();
+    //                 const userData = {
+    //                     name: profileData.name,
+    //                     email: profileData.email,
+    //                 };
+
+    //                 localStorage.setItem('userInfo', JSON.stringify(userData));
+    //                 setUserInfo(userData);
+
+    //                 router.push('/');
+    //                 window.location.reload();
+
+    //             } catch (error) {
+    //                 console.error('Failed to fetch user profile', error);
+    //             }
+    //         }
+    //     },
+    //     onError: (error) => {
+    //         console.error('Google login failed', error);
+    //     },
+    // });
 
     const login = useGoogleLogin({
         onSuccess: async (response) => {
@@ -42,9 +76,7 @@ const Login: React.FC = () => {
                     };
 
                     localStorage.setItem('userInfo', JSON.stringify(userData));
-                    setUserInfo(userData);
-                    router.push('/');
-
+                    onLoginSuccess();
                 } catch (error) {
                     console.error('Failed to fetch user profile', error);
                 }

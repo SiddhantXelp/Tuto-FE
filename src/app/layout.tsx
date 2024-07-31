@@ -36,17 +36,16 @@
 //             </MarginWidthWrapper>
 //           </main>
 //         </div>
-        
+
 //       </body>
 //     </html>
 //   );
 // }
-
-'use client';
 // src/app/layout.tsx
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Inter } from 'next/font/google';
-import GoogleSignInButton from '../common/GoogleSignInButton';
 import Header from '@/components/header';
 import HeaderMobile from '@/components/header-mobile';
 import MarginWidthWrapper from '@/components/margin-width-wrapper';
@@ -54,7 +53,7 @@ import PageWrapper from '@/components/page-wrapper';
 import SideNav from '@/components/side-nav';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import '../styles/globals.css';
-import Login from "../app/auth/Login/page"
+import Login from '../app/auth/Login/page';
 import { metadata } from './metadata';
 import { useRouter } from 'next/navigation';
 
@@ -65,12 +64,17 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
+
     const storedUserInfo = localStorage.getItem('userInfo');
-    if (storedUserInfo) {
-      router.push('/');
-  }
     setIsLoggedIn(!!storedUserInfo);
-  }, [router]);
+
+  }, []);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    router.push('/');
+  };
+
 
   return (
     <html lang="en">
@@ -79,27 +83,37 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="description" content={metadata.description} />
       </head>
       <body className={`bg-white ${inter.className}`}>
-        {isLoggedIn ? (
-          <div className="flex">
-            <SideNav />
-            <main className="flex-1">
-              <MarginWidthWrapper>
-                <Header />
-                <HeaderMobile />
-                <PageWrapper>{children}</PageWrapper>
-              </MarginWidthWrapper>
-            </main>
-          </div>
-        ) : (
-          <div>
-            <GoogleOAuthProvider clientId="1020761794196-ljge7kn6ircqd3ai4jmon6uamgog9nh9.apps.googleusercontent.com">
-              <Login />
-            </GoogleOAuthProvider>
-          </div>
-        )}
+        <GoogleOAuthProvider clientId="1020761794196-ljge7kn6ircqd3ai4jmon6uamgog9nh9.apps.googleusercontent.com">
+
+          {isLoggedIn ? (
+            <AuthenticatedLayout>{children}</AuthenticatedLayout>
+          ) : (
+            <UnauthenticatedLayout onLoginSuccess={handleLoginSuccess} />
+          )}
+        </GoogleOAuthProvider>
+
       </body>
     </html>
   );
 };
+
+const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex">
+    <SideNav />
+    <main className="flex-1">
+      <MarginWidthWrapper>
+        <Header />
+        <HeaderMobile />
+        <PageWrapper>{children}</PageWrapper>
+      </MarginWidthWrapper>
+    </main>
+  </div>
+);
+
+const UnauthenticatedLayout = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => (
+  <div>
+    <Login onLoginSuccess={onLoginSuccess} />
+  </div>
+);
 
 export default RootLayout;
