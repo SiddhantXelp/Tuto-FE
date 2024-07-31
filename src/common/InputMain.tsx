@@ -11,6 +11,7 @@ interface InputMainProps {
   label: string;
   type: string;
   name: string;
+  placeholder:string;
   id: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -23,6 +24,7 @@ const InputMain: React.FC<InputMainProps> = ({
   name,
   id,
   value,
+  placeholder,
   onChange,
   radioOptions
 }) => {
@@ -40,6 +42,7 @@ const InputMain: React.FC<InputMainProps> = ({
                 value={option.value}
                 checked={value === option.value}
                 onChange={onChange}
+                placeholder={placeholder}
                 className='mr-2'
                
               />
@@ -54,7 +57,7 @@ const InputMain: React.FC<InputMainProps> = ({
           id={id}
           value={value}
           onChange={onChange}
-          className='h-14 border border-2 border-buttonGray rounded-md p-2'
+          className='h-auto w-auto border-2 border-buttonGray rounded-md p-2'
         />
       )}
     </div>
