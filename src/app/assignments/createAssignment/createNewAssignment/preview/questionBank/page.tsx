@@ -1,8 +1,9 @@
 import React from 'react'
+import TabNavigator from "../../../../../TabNavigator/page";
 
 const QuestionBank = () => {
   return (
-    <div>QuestionBank</div>
+    <TabNavigator>QuestionBank</TabNavigator>
   )
 }
 

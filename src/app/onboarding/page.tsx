@@ -2,6 +2,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import InputMain from '@/common/InputMain';
 import Link from 'next/link';
+import TabNavigator from "../TabNavigator/page";
 
 interface Field {
   labelName: string;
@@ -75,32 +76,35 @@ const OnboardingPage: React.FC = () => {
   return (
 
 
- <div className='flex justify-center items-center h-auto'>
+    <TabNavigator>
 
-    <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10'>
-    <span className='font-medium text-xl text-buttonGray block mb-4'>Student details</span>
-      {fields.map((field) => (
-        <InputMain
-          key={field.id}
-          label={field.labelName}
-          type={field.type}
-          name={field.name}
-          id={field.id}
-          value={formData[field.name]}
-          onChange={handleInputChange}
-          radioOptions={field.radioOptions}
-        />
-      ))}
-      <Link href="/studentRequirements">
-       <div>
-        <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Next</button>
+      <div className='flex justify-center items-center h-auto'>
+
+        <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10'>
+          <span className='font-medium text-xl text-buttonGray block mb-4'>Student details</span>
+          {fields.map((field) => (
+            <InputMain
+              key={field.id}
+              label={field.labelName}
+              type={field.type}
+              name={field.name}
+              id={field.id}
+              value={formData[field.name]}
+              onChange={handleInputChange}
+              radioOptions={field.radioOptions}
+            />
+          ))}
+          <Link href="/studentRequirements">
+            <div>
+              <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Next</button>
+            </div>
+          </Link>
         </div>
-        </Link>
+
+
+
       </div>
-       
-    
-    
-    </div>
+    </TabNavigator>
   );
 };
 

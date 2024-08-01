@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { RecentClassesColumns, RecentClassesData, StudentColumns, StudentsData } from './data';
 import Table from '@/components/table';
+import TabNavigator from "../../TabNavigator/page";
 
 const Attendance: React.FC = () => {
 
@@ -21,7 +22,7 @@ const Attendance: React.FC = () => {
 
   const { columns, data } = getTableData();
   return (
-    <>
+    <TabNavigator>
       <div className="flex flex-wrap space-x-5">
         <div className="flex flex-col  w-full sm:w-[30%] md:w-[15%] mb-4">
           <h4 className="text-xxs font-bold text-gray-600 mb-1">Least attendance</h4>
@@ -95,7 +96,7 @@ const Attendance: React.FC = () => {
             onClick={() => handleOptionChange('option1')}
             className={`text-sm cursor-pointer mr-10 text-xxs ${selectedOption === 'option1' ? 'font-bold' : ''}`}
           >
-           Recent Classes
+            Recent Classes
           </span>
 
           {/* <span
@@ -114,7 +115,7 @@ const Attendance: React.FC = () => {
         </div>
         <Table columns={columns} data={data} includeCheckbox={false} />
       </div>
-    </>
+    </TabNavigator>
   );
 };
 

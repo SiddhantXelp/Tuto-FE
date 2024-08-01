@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react'
+import TabNavigator from "../../../../TabNavigator/page";
 
 const Preview = () => {
     const assignmentData = [
@@ -56,7 +57,7 @@ const Preview = () => {
 
 
     return (
-        <div >
+        <TabNavigator>
             <span>Create new assignment</span>
 
             <div className='grid grid-cols-10 h-full '>
@@ -150,7 +151,7 @@ const Preview = () => {
 
 
             </div>
-        </div>
+        </TabNavigator>
     )
 }
 

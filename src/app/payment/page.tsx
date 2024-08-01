@@ -4,7 +4,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
-import TabNavigator from "../TabNavigator/page";
+import TabNavigator from "../Dashboard/page";
 
 
 const PaymentPage = () => {
