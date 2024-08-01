@@ -4,6 +4,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
+import TabNavigator from "../TabNavigator/page";
 
 
 const PaymentPage = () => {
@@ -23,7 +24,7 @@ const PaymentPage = () => {
 const percentage = 60;
 
   return (
-    <>
+    <TabNavigator>
      <div className='w-full h-10 bg-white shadow-md flex flex-row gap-20 items-center'>
       {buttonNames.map((names)=>(
       <span className='text-buttonGray text-xs ml-4'>{names}</span>
@@ -213,7 +214,7 @@ const percentage = 60;
 </div>
 
 
-    </>
+    </TabNavigator>
   );
 };
 

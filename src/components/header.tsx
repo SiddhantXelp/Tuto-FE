@@ -8,15 +8,31 @@ import { cn } from '@/lib/utils';
 import { IoMdNotifications, IoMdPersonAdd } from "react-icons/io";
 import { PiStepsFill } from "react-icons/pi";
 import DialogComponent from '@/common/Card';
+import { useRouter } from 'next/navigation';
 
 const Header: React.FC = () => {
   const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const dialogOpen = () => {
     setOpen(true);
   };
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleToggleDropdown = () => {
+    setIsDropdownOpen(prevState => !prevState);
+  };
+
+  const handleLogout = () => {
+    console.log('Logged out');
+    localStorage.removeItem('userInfo');
+    router.push('/auth/Login');
+
+  };
+
 
   return (
     <div
@@ -57,9 +73,37 @@ const Header: React.FC = () => {
                 <IoMdNotifications size={"16px"} color='gray' />
               </div>
             </div>
-            <div className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center">
+            {/* <div className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center">
               <span className="font-semibold text-sm">HQ</span>
-            </div>
+            </div> */}
+            <button
+              id="dropdownDividerButton"
+              onClick={handleToggleDropdown}
+              className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center"
+              type="button"
+            >
+              <span className="font-semibold text-sm">HQ</span>
+            </button>
+            {isDropdownOpen && (
+              <div
+                id="dropdownDivider"
+                className="z-10 absolute right-0 mt-10  bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+              >
+                <ul
+                  className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownDividerButton"
+                >
+                  <li>
+                    <button
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
