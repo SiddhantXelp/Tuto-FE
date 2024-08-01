@@ -7,6 +7,7 @@ import { GrAdd } from "react-icons/gr";
 import Link from 'next/link';
 import { recentStudentColumns, recentStudentsData } from './data';
 import Table from '@/components/table';
+import PerformanceChart from '@/common/PerformanceChart';
 
 const StudentPage: React.FC = () => {
   const data = [
@@ -36,13 +37,13 @@ const StudentPage: React.FC = () => {
 
   const handleClick = (index: number) => {
     if (index === 0) {
-      router.push('/SubjectsBasedTable'); 
+      router.push('/SubjectsBasedTable');
     } else if (index === 2) {
-      router.push('/groupBasedTable'); 
+      router.push('/groupBasedTable');
     }
   };
-    
-  
+
+
 
   return (
     <div className='w-full h-auto'>
@@ -64,11 +65,16 @@ const StudentPage: React.FC = () => {
           </div>
         </Link>
 
+
         <div>
           <span className='text-buttonGray text-xs'>Performance</span>
-          <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
+          <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-center p-4'>
+            <div className='flex-grow flex items-center justify-center'>
+              <PerformanceChart />
+            </div>
           </div>
         </div>
+
 
         <div>
           <span className='text-buttonGray text-xs'>Progress reports</span>
@@ -147,8 +153,10 @@ const StudentPage: React.FC = () => {
 
       <div className="mt-10 ">
         <h2 className="text-xs font-semibold mb-4 text-buttonGray">Recently added students</h2>
-      <Table columns={recentStudentColumns} data={recentStudentsData} includeCheckbox={false} />
+        <Table columns={recentStudentColumns} data={recentStudentsData} includeCheckbox={false} />
       </div>
+
+
     </div>
   );
 };

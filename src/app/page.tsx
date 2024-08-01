@@ -12,6 +12,7 @@ import 'react-calendar/dist/Calendar.css';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Link from "next/link";
+import Stepper from "@/common/Stepper";
 
 
 
@@ -24,6 +25,7 @@ export default function Home() {
     const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     return weekdays[date.getDay()];
   };
+
 
 
   const data = [
@@ -57,11 +59,38 @@ export default function Home() {
       head: "Meeting with Mr. Mishra",
       time: "At 07:00pm - 8:00pm, Friday Aug 23 2023"
     },
-    {
-      head: "Telugu",
-      time: "17:00pm - 18:00"
-    },
+    
   ];
+
+  const [activeStep, setActiveStep] = useState(1);
+
+  const stepContents = [
+    <div>
+      <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
+        <span className="text-buttonGray text-xxs bg-white">Meeting with Mr. Mishra</span>
+        <span className="text-buttonGray text-xxxs">At 07:00pm - 8:00pm, Friday Aug 23 2023:00</span>
+      </div>
+    </div>,
+    <div>
+      <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
+        <span className="text-buttonGray text-xxs bg-white">Meeting with Mr. Mishra</span>
+        <span className="text-buttonGray text-xxxs">At 09:00pm - 10:00pm, Friday Aug 23 2023</span>
+      </div>
+    </div>,
+    <div>Content for Step 3</div>
+  ];
+
+  const steps = stepContents.map((_, index) => ({
+    label: `Step ${index + 1}`,
+    content: (
+      <div>
+        {stepContents.slice(0, index + 1).map((content, contentIndex) => (
+          <div key={contentIndex}>{content}</div>
+        ))}
+      </div>
+    )
+  }));
+
 
   return (
     <>
@@ -186,16 +215,18 @@ export default function Home() {
                 <span className="text-sm text-buttonGray" >Reminders</span>
                 <span className="text-xs text-buttonGray" >View All</span>
               </div>
-              <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full bg-white h-64 rounded-xl border-gray-400 flex flex-row gap-5 p-2 justify-evenly">
-                <div></div>
-                <div className="p-0 w-full">
+              <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full bg-white h-64 rounded-xl border-gray-400 flex flex-row gap-2 p-2 justify-evenly">
+                <div>
+                  <Stepper steps={steps} activeStep={activeStep} onStepChange={setActiveStep} />
+                </div>
+                {/* <div className="p-0 w-full">
                   {Reminders.map((item)=>(
                    <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
                     <span className="text-buttonGray text-xxs bg-white">{item.head}</span>
                     <span className="text-buttonGray text-xxxs">{item.time}</span>
                   </div>
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
             <Link href="/payment">
