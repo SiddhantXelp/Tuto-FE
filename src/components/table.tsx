@@ -1,7 +1,6 @@
 // components/ClassTable.tsx
 
 import React from 'react';
-import { Icon } from '@iconify/react';
 
 interface Column {
   header: string;
@@ -37,13 +36,12 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
           {data.map((item, rowIndex) => (
             <tr key={rowIndex} className="border-t">
               {includeCheckbox && (
-                <td className="px-4 py-2">
+                <td className="px-4 py-3"> 
                   <input type="checkbox" />
                 </td>
               )}
-              
               {columns.map((column, colIndex) => (
-                <td key={colIndex} className="px-4 py-2 text-xxxs text-gray-500">
+                <td key={colIndex} className="px-6 py-3 text-xxxs text-gray-500"> {/* Added vertical padding here */}
                   {column.isCheckbox ? (
                     <input type="checkbox" />
                   ) : (
@@ -51,9 +49,6 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
                   )}
                 </td>
               ))}
-
-             
-
             </tr>
           ))}
         </tbody>
