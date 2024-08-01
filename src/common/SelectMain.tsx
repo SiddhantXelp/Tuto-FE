@@ -18,7 +18,7 @@ interface SelectMainProps {
 const SelectMain: React.FC<SelectMainProps> = ({ label, name, options, lablename, value, onChange }) => {
   return (
     <div className='mb-4 border-gray'>
-      <label className="block text-buttonGray text-sm mb-2">{label}</label>
+      <label className="block text-buttonGray text-xs mb-2">{label}</label>
       <select
         name={name}
         value={value}

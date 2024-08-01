@@ -78,7 +78,7 @@ const OnboardingPage: React.FC = () => {
  <div className='flex justify-center items-center h-auto'>
 
     <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10'>
-    <span className='font-medium text-xl text-buttonGray block mb-4'>Student details</span>
+    <span className='font-medium text-sm text-buttonGray block mb-4'>Student details</span>
       {fields.map((field) => (
         <InputMain
           key={field.id}

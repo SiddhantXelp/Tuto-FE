@@ -144,10 +144,10 @@ const CreatePackage: React.FC = () => {
 
   return (
     <div className='flex justify-center items-center h-auto'>
-      <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10 border-gray-300 border-solid border-2'>
-        <span className='font-medium text-xl text-buttonGray block mb-4'>Create your package</span>
+      <div className='md:w-auto lg:w-auto bg-gray-100 shadow-lg rounded p-5 mt-10 border-gray-300 border-solid border-2'>
+        <span className='font-medium text-sm text-buttonGray block mb-4'>Create your package</span>
         <div>
-          <p className='text-buttonGray text-sm'>No. of Subjects you would like to offer?</p>
+          <p className='text-buttonGray text-xs'>No. of Subjects you would like to offer?</p>
           <InputWithIcon 
             icon={<IoMdAdd color='gray' />} 
             placeholder="Enter your name" 
@@ -157,22 +157,22 @@ const CreatePackage: React.FC = () => {
           />
         </div>
         <div className='mt-5'>
-          <p className='text-buttonGray text-sm'>What days do you prefer?</p>
+          <p className='text-buttonGray text-xs'>What days do you prefer?</p>
           <div className="grid grid-cols-5 gap-2">
             {buttons.map((item) => (
-              <button
+              <button 
                 key={item.id}
-                className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${
+                className={`border-buttonGray border-solid border-2 w-24 h-10 rounded-md ${
                   formData.selectedDays.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
                 }`}
                 onClick={() => handleButtonClick(item.name)}
               >
-                <p className='text-sm text-buttonGray'>{item.name}</p>  
+                <p className='text-xxs text-buttonGray'>{item.name}</p>  
               </button>
             ))}
           </div>
           <div className='mt-5'>
-            <p className='text-buttonGray text-sm'>Pricing categories</p>
+            <p className='text-buttonGray text-xs'>Pricing categories</p>
             <div>
               {PricingButtons.map((item) => (
                 <React.Fragment key={item.id}>
@@ -182,7 +182,7 @@ const CreatePackage: React.FC = () => {
                     }`}
                     onClick={() => handleButtonsClickforPricing(item.name)}
                   >
-                    <p className='text-sm text-buttonGray'>{item.name}</p>  
+                    <p className='text-xxs text-buttonGray'>{item.name}</p>  
                   </button>
                   {formData.Pricing.includes(item.name) && (
                     <InputWithIcon 
@@ -198,7 +198,7 @@ const CreatePackage: React.FC = () => {
             </div>
           </div>
           <div className='mt-4'>
-            <p className='text-buttonGray text-sm'>Which medium would you like to choose?</p>
+            <p className='text-buttonGray text-xs'>Which medium would you like to choose?</p>
             {selectMainOption.map((option) => (
               <SelectMain 
                 key={option.name}
@@ -211,7 +211,7 @@ const CreatePackage: React.FC = () => {
             ))}
           </div>
           <div className='mt-4'>
-            <p className='text-buttonGray text-sm'>Recordings availability</p>
+            <p className='text-buttonGray text-xs'>Recordings availability</p>
             <div className='border-gray-300 rounded-md'>
               <div className='flex gap-3'>
                 {radioButtons.map((option) => (
@@ -224,12 +224,13 @@ const CreatePackage: React.FC = () => {
                       checked={formData.radioValue === option.value} 
                       onChange={handleChange}
                     />
-                    <label htmlFor={option.value} className='text-sm text-buttonGray mt-1'>{option.label}</label>
+                    <label htmlFor={option.value} className='text-xs text-buttonGray mt-1'>{option.label}</label>
                   </div>
                 ))}
+                 <span className='mt-5 text-buttonGray text-xxs'>Additional charge can be added to provide recordings</span>
               </div>
               <div>
-                <span className='mt-5 text-buttonGray text-sm'>Additional charge can be added to provide recordings</span>
+                {/* <span className='mt-5 text-buttonGray text-xxs'>Additional charge can be added to provide recordings</span> */}
               </div>
             </div>
           </div>
