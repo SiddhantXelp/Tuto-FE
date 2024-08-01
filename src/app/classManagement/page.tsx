@@ -5,6 +5,7 @@ import Card from './overView/Card';
 import ClassTable from './classes/page';
 import TimeTable from './timeTable/page';
 import Attendance from './attendence/page';
+import TabNavigator from "../TabNavigator/page";
 
 
 type Tab = 'Overview' | 'Classes' | 'Time table' | 'Attendance';
@@ -34,7 +35,7 @@ const ClassManagementPage: React.FC = () => {
   };
 
   return (
-    <>
+    <TabNavigator>
       <div className="w-full h-12 flex space-x-20 pl-10 py-3 bg-white">
         <span
           className={`text-sm cursor-pointer text-xxs ${selectedTab === 'Overview' ? 'font-bold' : ''}`}
@@ -66,7 +67,7 @@ const ClassManagementPage: React.FC = () => {
       {renderContent()}
  
      
-    </>
+    </TabNavigator>
   );
 };
 

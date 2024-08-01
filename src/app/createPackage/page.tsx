@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { IoMdAdd } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import TabNavigator from "../TabNavigator/page";
 
 interface ButtonItem {
   id: number;
@@ -14,7 +15,7 @@ interface ButtonItem {
 
 interface PricingButtonItem {
   id: number;
-  name:string;
+  name: string;
 }
 
 interface SelectOption {
@@ -140,107 +141,107 @@ const CreatePackage: React.FC = () => {
     });
   };
   console.log(formData);
-  
+
 
   return (
-    <div className='flex justify-center items-center h-auto'>
-      <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10 border-gray-300 border-solid border-2'>
-        <span className='font-medium text-xl text-buttonGray block mb-4'>Create your package</span>
-        <div>
-          <p className='text-buttonGray text-sm'>No. of Subjects you would like to offer?</p>
-          <InputWithIcon 
-            icon={<IoMdAdd color='gray' />} 
-            placeholder="Enter your name" 
-            value={formData.inputValue} 
-            onChange={handleChange} 
-            name="inputValue"
-          />
-        </div>
-        <div className='mt-5'>
-          <p className='text-buttonGray text-sm'>What days do you prefer?</p>
-          <div className="grid grid-cols-5 gap-2">
-            {buttons.map((item) => (
-              <button
-                key={item.id}
-                className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${
-                  formData.selectedDays.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
-                }`}
-                onClick={() => handleButtonClick(item.name)}
-              >
-                <p className='text-sm text-buttonGray'>{item.name}</p>  
-              </button>
-            ))}
+    <TabNavigator>
+      <div className='flex justify-center items-center h-auto'>
+        <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10 border-gray-300 border-solid border-2'>
+          <span className='font-medium text-xl text-buttonGray block mb-4'>Create your package</span>
+          <div>
+            <p className='text-buttonGray text-sm'>No. of Subjects you would like to offer?</p>
+            <InputWithIcon
+              icon={<IoMdAdd color='gray' />}
+              placeholder="Enter your name"
+              value={formData.inputValue}
+              onChange={handleChange}
+              name="inputValue"
+            />
           </div>
           <div className='mt-5'>
-            <p className='text-buttonGray text-sm'>Pricing categories</p>
-            <div>
-              {PricingButtons.map((item) => (
-                <React.Fragment key={item.id}>
-                  <button
-                    className={`border-buttonGray border-solid border-2 w-20 h-10 rounded-md ml-2 ${
-                      formData.Pricing.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
+            <p className='text-buttonGray text-sm'>What days do you prefer?</p>
+            <div className="grid grid-cols-5 gap-2">
+              {buttons.map((item) => (
+                <button
+                  key={item.id}
+                  className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${formData.selectedDays.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
                     }`}
-                    onClick={() => handleButtonsClickforPricing(item.name)}
-                  >
-                    <p className='text-sm text-buttonGray'>{item.name}</p>  
-                  </button>
-                  {formData.Pricing.includes(item.name) && (
-                    <InputWithIcon 
-                      icon={<RxCross2  color='gray'/>} 
-                      placeholder="Enter your name" 
-                      value={formData.pricingInputs[item.name]} 
-                      onChange={handleChange} 
-                      name={item.name}
-                    />
-                  )}
-                </React.Fragment>
+                  onClick={() => handleButtonClick(item.name)}
+                >
+                  <p className='text-sm text-buttonGray'>{item.name}</p>
+                </button>
               ))}
             </div>
-          </div>
-          <div className='mt-4'>
-            <p className='text-buttonGray text-sm'>Which medium would you like to choose?</p>
-            {selectMainOption.map((option) => (
-              <SelectMain 
-                key={option.name}
-                name={option.name}  
-                options={option.options}  
-                value={formData.selectedOptions[option.name]}
-                onChange={handleChange}
-                label={option.label}
-              />
-            ))}
-          </div>
-          <div className='mt-4'>
-            <p className='text-buttonGray text-sm'>Recordings availability</p>
-            <div className='border-gray-300 rounded-md'>
-              <div className='flex gap-3'>
-                {radioButtons.map((option) => (
-                  <div key={option.value} className='bg-white flex py-2 text-gray-400 px-4 gap-8 justify-center align-middle border-2 border-gray-500 rounded-lg'>
-                    <input
-                      type="radio"
-                      name="radioValue"
-                      id={option.value}
-                      value={option.value}  
-                      checked={formData.radioValue === option.value} 
-                      onChange={handleChange}
-                    />
-                    <label htmlFor={option.value} className='text-sm text-buttonGray mt-1'>{option.label}</label>
-                  </div>
+            <div className='mt-5'>
+              <p className='text-buttonGray text-sm'>Pricing categories</p>
+              <div>
+                {PricingButtons.map((item) => (
+                  <React.Fragment key={item.id}>
+                    <button
+                      className={`border-buttonGray border-solid border-2 w-20 h-10 rounded-md ml-2 ${formData.Pricing.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
+                        }`}
+                      onClick={() => handleButtonsClickforPricing(item.name)}
+                    >
+                      <p className='text-sm text-buttonGray'>{item.name}</p>
+                    </button>
+                    {formData.Pricing.includes(item.name) && (
+                      <InputWithIcon
+                        icon={<RxCross2 color='gray' />}
+                        placeholder="Enter your name"
+                        value={formData.pricingInputs[item.name]}
+                        onChange={handleChange}
+                        name={item.name}
+                      />
+                    )}
+                  </React.Fragment>
                 ))}
               </div>
-              <div>
-                <span className='mt-5 text-buttonGray text-sm'>Additional charge can be added to provide recordings</span>
+            </div>
+            <div className='mt-4'>
+              <p className='text-buttonGray text-sm'>Which medium would you like to choose?</p>
+              {selectMainOption.map((option) => (
+                <SelectMain
+                  key={option.name}
+                  name={option.name}
+                  options={option.options}
+                  value={formData.selectedOptions[option.name]}
+                  onChange={handleChange}
+                  label={option.label}
+                />
+              ))}
+            </div>
+            <div className='mt-4'>
+              <p className='text-buttonGray text-sm'>Recordings availability</p>
+              <div className='border-gray-300 rounded-md'>
+                <div className='flex gap-3'>
+                  {radioButtons.map((option) => (
+                    <div key={option.value} className='bg-white flex py-2 text-gray-400 px-4 gap-8 justify-center align-middle border-2 border-gray-500 rounded-lg'>
+                      <input
+                        type="radio"
+                        name="radioValue"
+                        id={option.value}
+                        value={option.value}
+                        checked={formData.radioValue === option.value}
+                        onChange={handleChange}
+                      />
+                      <label htmlFor={option.value} className='text-sm text-buttonGray mt-1'>{option.label}</label>
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <span className='mt-5 text-buttonGray text-sm'>Additional charge can be added to provide recordings</span>
+                </div>
               </div>
             </div>
           </div>
+          <Link href="/onboardSubmit">
+            <div className='mt-8'>
+              <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Submit</button>
+            </div>
+          </Link>
         </div>
-        <Link href="/onboardSubmit">
-          <div className='mt-8'>
-            <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Submit</button>
-          </div>
-        </Link>
       </div>
-    </div>
+    </TabNavigator>
   );
 };
 

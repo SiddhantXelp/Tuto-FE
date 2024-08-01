@@ -7,6 +7,7 @@ import SubmitTable from './SubmitTable';
 import PendingTable from './PendingTable';
 import CompletedTable from './CompletedTable';
 import Link from 'next/link';
+import TabNavigator from "../TabNavigator/page";
 
 type Tab = 'Submitted' | 'Pending' | 'Completed';
 
@@ -70,7 +71,7 @@ const ClassManagementPage: React.FC = () => {
   
 
   return (
-    <>
+    <TabNavigator>
       <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 items-center mt-5'>
         {data.map((item, index) => (
           <Link href={getLinkHref(index)} key={index} passHref>
@@ -130,7 +131,7 @@ const ClassManagementPage: React.FC = () => {
         {renderContent()}
       </div>
      
-    </>
+    </TabNavigator>
   );
 };
 

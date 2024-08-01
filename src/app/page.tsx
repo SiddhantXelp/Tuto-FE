@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Login from "../app/auth/Login/page";
-import Dashboard from "../app/Dashboard/page";
+import Dashboard from "./TabNavigator/page";
 import MainDashboard from "./MainDashboard";
-
 const Home: React.FC = () => {
 
   const token = localStorage.getItem("userInfo");

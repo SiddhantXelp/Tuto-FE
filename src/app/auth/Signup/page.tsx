@@ -1,9 +1,57 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BackgroundComponent from '../../../common/BackgroundComponent';
 import Link from 'next/link';
+import { useGoogleLogin } from '@react-oauth/google';
+import { useRouter } from 'next/navigation';
 
-const HomePage: React.FC = () => {
+const Signup: React.FC = () => {
+  const router = useRouter();
+  const [showLogin, setLogin] = useState(true);
+  const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
+
+  useEffect(() => {
+      const storedUserInfo = localStorage.getItem('userInfo');
+      if (storedUserInfo) {
+          setUserInfo(JSON.parse(storedUserInfo));
+          router.push('/'); 
+      }
+  }, [router]);
+
+  const handleshowpassword = () => {
+      setLogin(false);
+  };
+
+  const login = useGoogleLogin({
+      onSuccess: async (response) => {
+          const accessToken = response?.access_token;
+
+          if (accessToken) {
+              try {
+                  const profileResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+                      headers: {
+                          Authorization: `Bearer ${accessToken}`,
+                      },
+                  });
+
+                  const profileData = await profileResponse.json();
+                  const userData = {
+                      name: profileData.name,
+                      email: profileData.email,
+                  };
+
+                  localStorage.setItem('userInfo', JSON.stringify(userData));
+                  setUserInfo(userData);
+                  router.push('/');
+              } catch (error) {
+                  console.error('Failed to fetch user profile', error);
+              }
+          }
+      },
+      onError: (error) => {
+          console.error('Google login failed', error);
+      },
+  });
 
   return (
     <BackgroundComponent className="flex items-center justify-center">
@@ -90,6 +138,7 @@ const HomePage: React.FC = () => {
               borderRadius: '8px',
               backgroundColor: 'transparent'
             }}
+            onClick={() => login()}
           >
             Google
           </button>
@@ -118,4 +167,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default Signup;
