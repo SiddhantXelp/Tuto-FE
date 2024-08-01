@@ -25,6 +25,7 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "framer-motion": "^10.16.4",
     "jwt-decode": "^4.0.0",
+    "lodash": "^4.17.21",
     "lodash-fp": "^0.10.4",
     "next": "^14.2.5",
     "next-redux-saga": "^4.1.2",
