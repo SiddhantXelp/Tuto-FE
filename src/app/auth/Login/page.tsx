@@ -1,61 +1,27 @@
 "use client";
+
 import React, { useState, useEffect } from 'react';
 import BackgroundComponent from "../../../common/BackgroundComponent";
 import Link from "next/link";
-import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
 
-const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
+const Login: React.FC = () => {
     const router = useRouter();
-
     const [showLogin, setLogin] = useState(true);
-
-    const handleshowpassword = () => {
-        setLogin(false)
-    }
     const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
 
     useEffect(() => {
         const storedUserInfo = localStorage.getItem('userInfo');
         if (storedUserInfo) {
             setUserInfo(JSON.parse(storedUserInfo));
-
+            router.push('/'); 
         }
-    }, []);
+    }, [router]);
 
-    // const login = useGoogleLogin({
-    //     onSuccess: async (response) => {
-    //         const accessToken = response?.access_token;
-
-    //         if (accessToken) {
-    //             try {
-    //                 const profileResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-    //                     headers: {
-    //                         Authorization: `Bearer ${accessToken}`,
-    //                     },
-    //                 });
-
-    //                 const profileData = await profileResponse.json();
-    //                 const userData = {
-    //                     name: profileData.name,
-    //                     email: profileData.email,
-    //                 };
-
-    //                 localStorage.setItem('userInfo', JSON.stringify(userData));
-    //                 setUserInfo(userData);
-
-    //                 router.push('/');
-    //                 window.location.reload();
-
-    //             } catch (error) {
-    //                 console.error('Failed to fetch user profile', error);
-    //             }
-    //         }
-    //     },
-    //     onError: (error) => {
-    //         console.error('Google login failed', error);
-    //     },
-    // });
+    const handleshowpassword = () => {
+        setLogin(false);
+    };
 
     const login = useGoogleLogin({
         onSuccess: async (response) => {
@@ -76,7 +42,8 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
                     };
 
                     localStorage.setItem('userInfo', JSON.stringify(userData));
-                    onLoginSuccess();
+                    setUserInfo(userData);
+                    router.push('/');
                 } catch (error) {
                     console.error('Failed to fetch user profile', error);
                 }
@@ -177,12 +144,12 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
                         <h2 className="text-xl mb-6 text-center text-gray-800">Welcome</h2>
 
                         <div className="mb-4">
-                            <label htmlFor="username" className="block text-gray-700 mb-2 text-sm/[14px]">
+                            <label htmlFor="password" className="block text-gray-700 mb-2 text-sm/[14px]">
                                 Enter your Password
                             </label>
                             <input
                                 type="password"
-                                id="username"
+                                id="password"
                                 className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
                             />
@@ -209,9 +176,7 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
 
                     </div>
                 )
-
             }
-
         </BackgroundComponent>
     );
 };
