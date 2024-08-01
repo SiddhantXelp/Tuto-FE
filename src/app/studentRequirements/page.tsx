@@ -61,7 +61,7 @@ const StudentRequirementForm: React.FC = () => {
   return (
     <div className='flex justify-center items-center h-auto'>
       <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10 border-gray-300 border-solid border-2'>
-        <span className='font-medium text-xl text-buttonGray block mb-4'>Student Requirements</span>
+        <span className='font-medium text-sm text-buttonGray block mb-4'>Student Requirements</span>
         <div className='mt-16'>
           {options.map((option) => (
             <SelectMain
@@ -69,6 +69,7 @@ const StudentRequirementForm: React.FC = () => {
               label={option.label}
               name={option.name}  
               options={option.options}  
+              lablename={option.label}
               value={selectedOptions[option.name]}
               onChange={handleChange}
             />

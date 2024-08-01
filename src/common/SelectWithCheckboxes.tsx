@@ -28,13 +28,13 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
   };
 
   return (
-    <div className="relative inline-block w-96 h-20 ">
+    <div className="relative inline-block w-40 h-20 ">
       <div
         className="border border-gray-300 rounded-md p-2 cursor-pointer flex items-center"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <FaAngleDown className="mr-2" />
-        <div className="flex-grow">
+        <FaAngleDown className="mr-2" color='gray' />
+        <div className="flex-grow text-buttonGray text-sm ">
           {selectedOptions.length > 0
             ? selectedOptions.join(', ')
             : 'Select options'}
@@ -49,7 +49,7 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
                 checked={selectedOptions.includes(option.value)}
                 onChange={() => toggleOption(option.value)}
               />
-              <label className="ml-2">{option.label}</label>
+              <label className="ml-2 text-xs text-buttonGray">{option.label}</label>
             </div>
           ))}
         </div>

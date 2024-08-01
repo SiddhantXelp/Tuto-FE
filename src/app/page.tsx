@@ -11,6 +11,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
+import Link from "next/link";
 
 
 
@@ -67,6 +68,7 @@ export default function Home() {
 
       <div className="border-dashed border   grid grid-cols-[70%_30%]">
         <div className="grid grid-cols-4 gap-2 2xl:gap-10">
+          <Link href="/student">
           <div>
             <span className="text-buttonGray sm:text-xxs md:text-xxs">Students</span>
             <div className="sm:w-30 md:w-20 lg:w-32 xl:w-48 2xl:w-52 h-32 bg-white shadow-lg rounded-xl p-2">
@@ -84,7 +86,9 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </Link>
 
+          <Link href="/classManagement">
           <div>
             <span className="text-buttonGray sm:text-xxs md:text-xxs">Class Management</span>
             <div className="sm:w-30 md:w-20 lg:w-32 xl:w-48 2xl:w-52 h-32 bg-white shadow-lg rounded-xl p-2">
@@ -101,7 +105,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-
+          </Link>
           <div>
             <span className="text-buttonGray sm:text-xxs md:text-xxs">Previous</span>
             <div className="sm:w-30 md:w-20 lg:w-32 xl:w-48 2xl:w-52 h-32 bg-white shadow-lg rounded-xl p-2">
@@ -194,8 +198,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            <div>
+            <Link href="/payment">
+            <div className="cursor-pointer">
               <span className="text-sm text-buttonGray">Revenue</span>
               <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full h-64 bg-white  ">
                 <div className="flex flex-row justify-center">
@@ -239,6 +243,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            </Link>
           </div>
           <div>
             <div className="flex flex-row justify-between mt-1">
