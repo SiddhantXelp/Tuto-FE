@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import Login from "../app/auth/Login/page";
 import Dashboard from "./TabNavigator/page";
 import MainDashboard from "./MainDashboard";

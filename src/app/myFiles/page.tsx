@@ -1,13 +1,22 @@
 import React from 'react';
 import TabNavigator from "../TabNavigator/page";
+import Card from '../../common/Myfiles/filecard';
+import { data } from "./data";
 
 const MyFilesPage = () => {
+
   return (
     <TabNavigator>
-      <span className="font-bold text-4xl">MyFilesPage</span>
-
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
+      <div className="bg-gray-100 p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {data.map((item) => (
+            <Card
+              key={item.id}
+              data={item}
+            />
+          ))}
+        </div>
+      </div>
     </TabNavigator>
   );
 };

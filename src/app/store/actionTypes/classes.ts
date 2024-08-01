@@ -1,0 +1,4 @@
+export const GET_CLASSES = 'GET_CLASSES';
+export const SET_CLASSES = 'SET_CLASSES';
+export const SET_CLASSES_ERROR = 'SET_CLASSES_ERROR';
+export const SET_CLASSES_LOADING = 'SET_CLASSES_LOADING';
