@@ -73,6 +73,8 @@ const OnboardingPage: React.FC = () => {
     }));
   };
 
+
+  console.log(">>>>>>>>>>>>>>>>>formData",formData);
   return (
 
 
