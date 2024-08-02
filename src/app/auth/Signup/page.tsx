@@ -38,6 +38,8 @@ const Signup: React.FC = () => {
                   const userData = {
                       name: profileData.name,
                       email: profileData.email,
+                      picture: profileData.picture
+
                   };
 
                   localStorage.setItem('userInfo', JSON.stringify(userData));

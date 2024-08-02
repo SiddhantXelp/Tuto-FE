@@ -1,4 +1,4 @@
-import {isFunction} from 'lodash/fp';
+import { isFunction } from 'lodash';
 
 export interface ActionReducers<S> {
   [action: string]: (p: any, s: S) => S | ((s: S) => S);

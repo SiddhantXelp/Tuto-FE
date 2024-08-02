@@ -15,7 +15,7 @@ const Login: React.FC = () => {
         const storedUserInfo = localStorage.getItem('userInfo');
         if (storedUserInfo) {
             setUserInfo(JSON.parse(storedUserInfo));
-            router.push('/'); 
+            router.push('/');
         }
     }, [router]);
 
@@ -39,6 +39,7 @@ const Login: React.FC = () => {
                     const userData = {
                         name: profileData.name,
                         email: profileData.email,
+                        picture: profileData.picture
                     };
 
                     localStorage.setItem('userInfo', JSON.stringify(userData));
