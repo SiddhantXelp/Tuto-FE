@@ -36,6 +36,8 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     console.log('Logged out');
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('user');
+
     router.push('/auth/Login');
 
   };
@@ -43,7 +45,11 @@ const Header: React.FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    const storedUserInfo = localStorage.getItem('userInfo');
+    let storedUserInfo;
+
+    storedUserInfo = localStorage.getItem('userInfo');
+    storedUserInfo = localStorage.getItem('user');
+
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
     }
@@ -107,7 +113,7 @@ const Header: React.FC = () => {
                     height={100}
                   />
                 ) : (
-                  <p>No user info available</p>
+                  <p></p>
                 )}
               </span>
             </button>

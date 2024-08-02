@@ -37,7 +37,7 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
         <div className="flex-grow text-buttonGray text-sm ">
           {selectedOptions.length > 0
             ? selectedOptions.join(', ')
-            : 'Select options'}
+            : 'Repeat class'}
         </div>
       </div>
       {isOpen && (

@@ -25,7 +25,11 @@ export default function Home() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    const storedUserInfo = localStorage.getItem('userInfo');
+    let storedUserInfo;
+
+    storedUserInfo = localStorage.getItem('userInfo');
+    storedUserInfo = localStorage.getItem('user');
+
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
     }
@@ -146,9 +150,9 @@ export default function Home() {
 
         <div className="grid grid-cols-[40%_60%] mt-10 gap-2 2xl:gap-10">
           <div className="flex flex-col gap-4 ml-6">
-            <button className='sm:w-20 md:w-16 lg:w-20 xl:w-36 2xl:w-44   md:h-6 lg:h-8 xl:h-10 2xl:h-12 bg-buttonGray flex justify-center items-center border rounded-2xl  p-1'>
+            {/* <button className='sm:w-20 md:w-16 lg:w-20 xl:w-36 2xl:w-44   md:h-6 lg:h-8 xl:h-10 2xl:h-12 bg-buttonGray flex justify-center items-center border rounded-2xl  p-1'>
               <span className='text-white text-xs'>Add student  +</span>
-            </button>
+            </button> */}
             <button className='sm:w-20 md:w-16 lg:w-20 xl:w-36 2xl:w-44   md:h-6 lg:h-8 xl:h-10 2xl:h-12 bg-gray-400 flex justify-center items-center border rounded-2xl  p-1'>
               <span className='text-white text-xs'>Schedule </span>
             </button>
