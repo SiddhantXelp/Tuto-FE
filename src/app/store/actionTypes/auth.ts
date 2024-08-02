@@ -1,1 +1,5 @@
-console.log('hello world')
+export const GET_SIGNUP = 'GET_SIGNUP';
+export const SET_SIGN_UP = 'SET_SIGN_UP';
+
+export const SET_SIGNUP_ERROR = 'SET_SIGNUP_ERROR';
+export const SET_SIGNUP_LOADING = 'SET_SIGNUP_LOADING';

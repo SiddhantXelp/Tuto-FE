@@ -5,7 +5,10 @@ import Dashboard from "./TabNavigator/page";
 import MainDashboard from "./MainDashboard";
 const Home: React.FC = () => {
 
-  const token = localStorage.getItem("userInfo");
+  let token;
+  token = localStorage.getItem("userInfo");
+  token = localStorage.getItem("user");
+
 
   return (
     <>

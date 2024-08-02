@@ -5,14 +5,18 @@ import BackgroundComponent from "../../../common/BackgroundComponent";
 import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
-
+import Spinner from "../../../common/Spinner"
 const Login: React.FC = () => {
     const router = useRouter();
     const [showLogin, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
 
     useEffect(() => {
-        const storedUserInfo = localStorage.getItem('userInfo');
+        let storedUserInfo;
+
+        storedUserInfo = localStorage.getItem('userInfo');
+        storedUserInfo = localStorage.getItem('user');
+
         if (storedUserInfo) {
             setUserInfo(JSON.parse(storedUserInfo));
             router.push('/');
@@ -56,7 +60,9 @@ const Login: React.FC = () => {
     });
 
     return (
+
         <BackgroundComponent className="flex items-center justify-center">
+            {/* <Spinner /> */}
             {
                 showLogin ? (
                     <div className="w-full max-w-md">
