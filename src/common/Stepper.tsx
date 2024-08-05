@@ -1,5 +1,4 @@
-// components/Stepper.tsx
-
+"use client";
 import React from 'react';
 
 type Step = {

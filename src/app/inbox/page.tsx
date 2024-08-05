@@ -1,15 +1,72 @@
-import React from 'react';
-import TabNavigator from "../TabNavigator/page";
+"use client"
+// import React from 'react';
+// import TabNavigator from "../TabNavigator/page";
+// import ChatList from './components/ChatList';
+// import ChatWindow from './components/ChatWindow';
+// import Head from 'next/head';
 
-const IndexPage = () => {
+// const IndexPage = () => {
+//   return (
+//     <div className="flex h-screen">
+//     <Head>
+//       <title>Chat Interface</title>
+//       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+//     </Head>
+//     <ChatList />
+//     <ChatWindow />
+//   </div>
+//   );
+// };
+
+// export default IndexPage;
+import { useState } from 'react';
+import Head from 'next/head';
+import ChatList from './components/ChatList';
+import ChatWindow from './components/ChatWindow';
+import TabNavigator from '../../app/TabNavigator/page';
+
+
+export default function IndexPage() {
+  const chats = [
+    {
+      id: 1,
+      name: 'Jhon Lebowski',
+      message: 'I am excited to see you in class!',
+      time: '08:00 PM',
+      image: 'https://img.freepik.com/free-photo/3d-cartoon-portrait-person-practicing-law-related-profession_23-2151419547.jpg?size=626&ext=jpg',
+      messages: [
+        { id: 1, text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', time: '08:00 PM', sender: 'other' },
+        { id: 2, text: 'Lorem Ipsum is simply dummy text.', time: '08:00 PM', sender: 'me' },
+       
+      ]
+    },
+    {
+      id: 2,
+      name: 'Jane Doe',
+      message: 'Can we reschedule our meeting?',
+      time: '07:45 PM',
+      image: 'https://img.freepik.com/premium-vector/cute-boy-smiling-cartoon-kawaii-boy-illustration-boy-avatar-happy-kid_1001605-3447.jpg?size=626&ext=jpg',
+      messages: [
+        { id: 1, text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', time: '07:46 PM', sender: 'other'  },
+        { id: 2, text: 'Sure, what time works for you hijhkkbhkukhyycmh hgjhgg  gjhjbumyjb gjhgbhvg hjbgjhm g gbyjb  fbtkvytyyutyttyjgyjtuytrtbmjbtyutbgjhvg?', time: '07:46 PM', sender: 'me' },
+       
+      ]
+    }
+  ];
+
+  const [selectedChat, setSelectedChat] = useState(null);
+
   return (
     <TabNavigator>
-      <span className="font-bold text-4xl">IndexPage</span>
-
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
+    <div className="flex h-screen">
+      <Head>
+        <title>Chat Interface</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+      </Head>
+      <ChatList chats={chats} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
+      <ChatWindow selectedChat={selectedChat} />
+    </div>
     </TabNavigator>
   );
-};
+}
 
-export default IndexPage;

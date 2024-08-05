@@ -11,6 +11,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
+import Stepper from "@/common/Stepper";
 
 interface UserInfo {
   name: string;
@@ -76,6 +77,36 @@ export default function Home() {
       time: "17:00pm - 18:00"
     },
   ];
+
+  const stepContents = [
+    <div>
+      <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
+        <span className="text-buttonGray text-xs bg-white">Meeting with Mr. Mishra</span>
+        <span className="text-buttonGray text-xxs">At 07:00pm - 8:00pm, Friday Aug 23 2023:00</span>
+      </div>
+    </div>,
+    <div>
+      <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
+        <span className="text-buttonGray text-xs bg-white">Meeting with Mr. Mishra</span>
+        <span className="text-buttonGray text-xxs">At 09:00pm - 10:00pm, Friday Aug 23 2023</span>
+      </div>
+    </div>,
+    <div>Content for Step 3</div>
+  ];
+
+  const steps = stepContents.map((_, index) => ({
+    label: `Step ${index + 1}`,
+    content: (
+      <div>
+        {stepContents.slice(0, index + 1).map((content, contentIndex) => (
+          <div key={contentIndex}>{content}</div>
+        ))}
+      </div>
+    )
+  }));
+
+  const [activeStep, setActiveStep] = useState(1);
+
 
   return (
     <>
@@ -199,15 +230,14 @@ export default function Home() {
                 <span className="text-xs text-buttonGray" >View All</span>
               </div>
               <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full bg-white h-64 rounded-xl border-gray-400 flex flex-row gap-5 p-2 justify-evenly">
-                <div></div>
-                <div className="p-0 w-full">
-                  {Reminders.map((item) => (
-                    <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
-                      <span className="text-buttonGray text-xs bg-white">{item.head}</span>
-                      <span className="text-buttonGray text-xs">{item.time}</span>
-                    </div>
-                  ))}
-                </div>
+                  <div className="mt-10">
+                    <Stepper
+                      steps={steps}
+                      activeStep={activeStep}
+                      onStepChange={setActiveStep}
+                    />
+                  </div>
+              
               </div>
             </div>
 
@@ -217,46 +247,49 @@ export default function Home() {
                 <span className="text-sm text-buttonGray" >Revenue</span>
               </div>
               <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full bg-white h-64 rounded-xl border-gray-400 flex flex-row gap-5 p-2 justify-evenly">
-                <div className="flex flex-row justify-center">
-                  <div style={{ width: 140, height: 140, marginTop: "10px" }}>
-                    <CircularProgressbar
-                      value={percentage}
-                      text={`${percentage}%`}
-                      styles={buildStyles({
-                        strokeLinecap: 'butt',
-                        textSize: '16px',
-                        pathTransitionDuration: 0.5,
-                        pathColor: '#1F78B4',
-                        textColor: '#1F78B4',
-                        trailColor: '#FFA0A0',
-                        backgroundColor: '#3e98c7',
-                      })}
-                    />
-                  </div>
-                  <div>
-                    <div className="flex flex-row justify-center cursor-pointer items-center bg-slate-400 rounded-xl md:h-6 lg:h-7 xl:h-8 2xl:h-10  md:w-20 lg:w-28 xl:w-36 2xl:w-36 gap-12">
-                      <span className="text-xxs text-white">May'2023</span>
-                      <MdKeyboardArrowDown size={15} color="white" />
+                <div className="flex flex-col justify-center">
+                  <div className="flex flex-row justify-center gap-2 mt-5">
+                    <div style={{ width: 140, height: 140, marginTop: "10px" }}>
+                      <CircularProgressbar
+                        value={percentage}
+                        text={`${percentage}%`}
+                        styles={buildStyles({
+                          strokeLinecap: 'butt',
+                          textSize: '16px',
+                          pathTransitionDuration: 0.5,
+                          pathColor: '#1F78B4',
+                          textColor: '#1F78B4',
+                          trailColor: '#FFA0A0',
+                          backgroundColor: '#3e98c7',
+                        })}
+                      />
                     </div>
-                    <div className="flex flex-col mt-10">
-                      <span className="text-buttonGray text-sm">1,50000 Overall</span>
-                      <span className="text-buttonGray text-xxs">10 Pending payments</span>
-                      <p className="underline text-xxs text-buttonGray cursor-pointer">Payment History</p>
-                    </div>
+                    <div>
+                      <div className="flex flex-row justify-center cursor-pointer items-center bg-slate-400 rounded-xl md:h-6 lg:h-7 xl:h-8 2xl:h-10  md:w-20 lg:w-28 xl:w-36 2xl:w-36 gap-12 mt-2">
+                        <span className="text-xxs text-white">May'2023</span>
+                        <MdKeyboardArrowDown size={15} color="white" />
+                      </div>
+                      <div className="flex flex-col mt-10">
+                        <span className="text-buttonGray text-sm">1,50000 Overall</span>
+                        <span className="text-buttonGray text-xxs">10 Pending payments</span>
+                        <p className="underline text-xxs text-buttonGray cursor-pointer">Payment History</p>
+                      </div>
 
+                    </div>
                   </div>
-                </div>
-                <div className="m-10 flex flex-row gap-4 p-2">
-                  <div className="flex flex-row align-middle items-center gap-2">
-                    <div style={{ width: "8px", height: "8px", backgroundColor: "#1F78B4" }}></div>
-                    <span className="text-xxs text-buttonGray ">Payment Received</span>
-                  </div>
-                  <div className="flex flex-row align-middle items-center gap-2">
-                    <div style={{ width: "8px", height: "8px", backgroundColor: "#FFA0A0" }}></div>
-                    <span className="text-xxs text-buttonGray ">Pending Payment</span>
+                  <div className="m-8 flex flex-col gap-1 p-2">
+                    <div className="flex flex-row align-middle items-center gap-2">
+                      <div style={{ width: "8px", height: "8px", backgroundColor: "#1F78B4" }}></div>
+                      <span className="text-xxs text-buttonGray ">Payment Received</span>
+                    </div>
+                    <div className="flex flex-row align-middle items-center gap-2">
+                      <div style={{ width: "8px", height: "8px", backgroundColor: "#FFA0A0" }}></div>
+                      <span className="text-xxs text-buttonGray ">Pending Payment</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
 
           </div>

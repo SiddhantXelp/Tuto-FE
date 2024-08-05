@@ -179,6 +179,8 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+
+    console.log(":::::::::::::::::::::::::::::::name", name, value);
     setFormData(prevFormData => ({
       ...prevFormData,
       [name]: value
@@ -493,7 +495,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                           setSelectedOptions={handleSelectChange}
                         />
                       </div>
-
                     </div>
                   </div>
 

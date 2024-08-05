@@ -24,6 +24,10 @@ export const CategoriesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const memberAuthToken = 'sid';
   const classesData = useAppSelector((state: { classes: ClassesState }) => state.classes.setClasses?.classes);
+  const GETClassData = useAppSelector((state: { classes: ClassesState }) => state.classes);
+  console.log(GETClassData,"GETClassData");
+  
+
 
   const [tableData, setTableData] = useState([]);
 
