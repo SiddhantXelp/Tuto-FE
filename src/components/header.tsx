@@ -45,10 +45,8 @@ const Header: React.FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    let storedUserInfo;
+    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
 
-    storedUserInfo = localStorage.getItem('userInfo');
-    storedUserInfo = localStorage.getItem('user');
 
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));

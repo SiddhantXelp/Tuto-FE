@@ -25,9 +25,8 @@ const Signup: React.FC = () => {
   console.log(">>>>>>>>>>>>>>>>>>>>.responsesignup", responsesignup);
 
   useEffect(() => {
-    let storedUserInfo;
-    storedUserInfo = localStorage.getItem('userInfo');
-    storedUserInfo = localStorage.getItem('user');
+    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
+
 
     if (storedUserInfo) {
       router.push('/');
