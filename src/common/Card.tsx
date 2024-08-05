@@ -11,8 +11,9 @@ import FileInputWithIcon from '@/common/FileInputWithIcon';
 import SearchComponent from '@/common/SearchComponent';
 import SelectMain from './SelectMain';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getStudentGroup } from '@/app/store/actions/classes';
+import { getStudentGroup, getCreateclass } from '@/app/store/actions/classes';
 import CustomDropDown from './CustomDropDown';
+import Spinner from "../common/Spinner"
 
 
 interface DialogComponentProps {
@@ -131,7 +132,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const classesData = useAppSelector((state: { classes: any }) => state.classes.getstudentgroup);
 
-  console.log("::::::::::::::::{{{{{{{{{{{{{{{{{{{{{{", classesData?.groups);
   const [formData, setFormData] = useState<FormData>({
     typeMeeting: [],
     selectedOptions: [],
@@ -149,13 +149,21 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   });
 
   // Handle the change for SearchComponent and SelectMain
-  const handleChange = (e: any) => {
+  // const handleChange = (e: any) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value
+  //   }));
+  // };
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value
     }));
   };
+
 
   // Handle the change specifically for SelectMain options
   const handleSelectChangedev = (name: string, value: any) => {
@@ -171,8 +179,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-
-    console.log(":::::::::::::::::::::::::::::::name", name, value);
     setFormData(prevFormData => ({
       ...prevFormData,
       [name]: value
@@ -217,7 +223,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const handelNext = (event: any) => {
     event.preventDefault();
-    console.log("Hello Button");
     setTabValue("Virtual platform")
   }
 
@@ -236,35 +241,29 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   const handelCreate = (e: any) => {
     e.preventDefault();
 
-    console.log("formData>>>>>>>>>>>>", formData)
+    const data = {
+      "title": formData.classTitle,
+      "group": formData.selectedGroup,
+      "materialUrl": formData.material,
+      "platform": formData.typeMeeting[0],
+      "scheduleDate": formData.startDate,
+      // "classStartTime": formData.startTime,
+      // "classEndTime": formData.endTime,
+      "classStartTime": "2024-08-05T15:29:56.143Z",
+      "classEndTime": "2024-08-05T15:29:56.143Z",
+      "videoCallLink": formData.videoLink,
+      "repeatClass": formData.selectedOptions,
+      "subject": {
+        "name": formData.subject,
+        "description": formData.description
+      },
+      "studentGroupId": "10bee614-b67e-4d66-8a23-7bb140ae8900",
+      "scheduleId": "03159c49-cfcf-4592-9f8e-91c29c3b08c1"
+    }
+    dispatch(getCreateclass(memberAuthToken, data))
 
   }
 
-  const data = {
-    totalItems: 3,
-    totalPages: 1,
-    currentPage: 1,
-    groups: [
-      {
-        id: "56be1cdb-b891-4f74-8062-8dfc200b30f8",
-        title: "Sample Group Title",
-        createdAt: "2024-08-01T13:19:03.000Z",
-        updatedAt: "2024-08-01T13:19:03.000Z"
-      },
-      {
-        id: "68b1b474-3120-4c44-af88-2a7fdd70723f",
-        title: "Group B",
-        createdAt: "2024-08-02T11:28:09.000Z",
-        updatedAt: "2024-08-02T11:28:09.000Z"
-      },
-      {
-        id: "faecf314-5ea4-4536-adac-ef0343161e20",
-        title: "Group A",
-        createdAt: "2024-08-02T11:28:01.000Z",
-        updatedAt: "2024-08-02T11:28:01.000Z"
-      }
-    ]
-  };
 
   const optionsGroup = classesData?.groups.map((group: any) => ({
     id: group.id,
@@ -272,10 +271,23 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   }));
 
 
-  console.log("{++++++++++++++++formData.selectedGroup", formData.selectedGroup);
+  const SubjectOptions = [
+    { label: "English", value: "English" },
+    { label: "Social", value: "Social" },
+  ];
+
+  const transformedSubjectOptions = SubjectOptions.map((option) => ({
+    id: option.value,
+    title: option.label,
+  }));
+
+  const isLoading = useAppSelector(state => state.student.loading);
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)} className="fixed inset-0 z-10">
+      {
+        isLoading ? <Spinner /> : ""
+      }
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div className="fixed inset-0 z-10 flex items-center justify-center">
         {showNewContent ? (
@@ -368,7 +380,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                   </div>
                   <div className="mb-4">
                     {/* <label className="block text-gray-700 mb-2">Subject</label> */}
-                    {SubjectOPtions.map((option) => (
+                    {/* {SubjectOPtions.map((option) => (
                       <SelectMain
                         key={option.name}
                         label={option.label}
@@ -376,10 +388,19 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                         lablename={option.lablename}
                         Optionlabel={option.Optionlabel}
                         options={option.options}
-                        value={formData[option.name]}
+                        value={formData[option.name] || ''} // Ensure a default value is provided
                         onChange={(value) => handleChange({ target: { name: option.name, value } })}
                       />
-                    ))}
+                    ))} */}
+                    <CustomDropDown
+                      label="Select Subject"
+                      name="selectedSubject"
+                      lablename="Select Subjects"
+                      options={transformedSubjectOptions}
+                      value={formData.subject}
+                      onChange={(e) => handleChange({ target: { name: 'subject', value: e.target.value } })}
+                    />
+
                   </div>
                   <div className="mb-4 flex justify-between items-center">
                     <div className="w-full">
@@ -465,13 +486,14 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                         />
                       </div>
 
-                      <div className="mt-2 md:mt-0 w-full md:w-48">
+                      <div className="mt-2 md:mt-0 w-full md:w-48 lg:w-56 xl:w-64">
                         <SelectWithCheckboxes
                           options={options}
                           selectedOptions={formData.selectedOptions}
                           setSelectedOptions={handleSelectChange}
                         />
                       </div>
+
                     </div>
                   </div>
 

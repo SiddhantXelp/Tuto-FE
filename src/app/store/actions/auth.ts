@@ -11,12 +11,25 @@ export const setSignup = (signupData: any) => ({
     signupData,
 });
 
-export const setSignupError = (error: any) => ({
+
+
+export const getCreateUser = (token: string, data: any) => ({
+    type: actionTypes.GET_CREATE_USER,
+    token,
+    data
+});
+
+export const setCreateUser = (createUser: any) => ({
+    type: actionTypes.SET_CREATE_USER,
+    createUser,
+});
+
+export const setAuthError = (error: any) => ({
     type: actionTypes.SET_SIGNUP_ERROR,
     error,
 });
 
-export const setSignupLoading = (loading: any) => ({
+export const setAuthLoading = (loading: any) => ({
     type: actionTypes.SET_SIGNUP_LOADING,
     loading,
 });
