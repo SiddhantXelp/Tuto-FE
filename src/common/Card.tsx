@@ -428,54 +428,53 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                             }`}
                           onClick={() => handleCheckboxChange(item.name)}
                         >
-                          <p className='text-xxs text-buttonGray'>{item.name}</p>
+                          <p className='text-xs text-buttonGray'>{item.name}</p>
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div>
-                    <p className='text-xs text-buttonGray mt-2'>Schedule</p>
-                    <div className='flex flex-row gap-2 mt-2'>
-                      <div className='flex flex-row gap-4'>
+                  <div className="p-0">
+                    <p className="text-xs text-buttonGray mt-2">Schedule</p>
+                    <div className="flex flex-col md:flex-row gap-2 mt-2">
+                      <div className="flex flex-col md:flex-row gap-4">
                         <input
-                          type='date'
+                          type="date"
                           value={formData.startDate}
                           onChange={handleDateChange}
-                          className='border border-buttonGray rounded-md w-40 h-10'
+                          className="border border-buttonGray rounded-md w-full md:w-40 h-10"
                         />
 
-                        <div className='border-buttonGray border-solid border-2 w-32 h-10 rounded-md'>
+                        <div className="border-buttonGray border-solid border-2 w-full md:w-32 h-10 rounded-md">
                           <input
-                            type='time'
+                            type="time"
                             value={formData.startTime}
                             onChange={handleStartTimeChange}
-                            className='w-full h-full border-none'
+                            className="w-full h-full border-none"
                           />
                         </div>
                       </div>
 
-                      <div className='flex flex-row gap-4'>
-                        <span className='p-2 text-buttonGray text-xs'>to</span>
-                        <div className='border-buttonGray border-solid border-2 w-32 h-10 rounded-md'>
-                          <input
-                            type='time'
-                            value={formData.endTime}
-                            onChange={handleEndTimeChange}
-                            className='w-full h-full border-none'
-                          />
-                        </div>
+                      <span className="p-2 text-buttonGray text-xs md:static md:p-0 mt-2">to</span>
+                      <div className="border-buttonGray border-solid border-2 w-full md:w-32 h-10 rounded-md">
+                        <input
+                          type="time"
+                          value={formData.endTime}
+                          onChange={handleEndTimeChange}
+                          className="w-full h-full border-none"
+                        />
+                      </div>
 
-                        <div className="ml-2 w-48">
-                          <SelectWithCheckboxes
-                            options={options}
-                            selectedOptions={formData.selectedOptions}
-                            setSelectedOptions={handleSelectChange}
-                          />
-                        </div>
+                      <div className="mt-2 md:mt-0 w-full md:w-48">
+                        <SelectWithCheckboxes
+                          options={options}
+                          selectedOptions={formData.selectedOptions}
+                          setSelectedOptions={handleSelectChange}
+                        />
                       </div>
                     </div>
                   </div>
+
 
                   {/* <div>
                     <p className='text-xs text-buttonGray'>Video call link</p>

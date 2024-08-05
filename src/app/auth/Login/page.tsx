@@ -10,10 +10,10 @@ const Login: React.FC = () => {
     const router = useRouter();
     const [showLogin, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
+    const [isLoading, setisLoading] = useState(false);
 
     useEffect(() => {
         const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
-
 
         if (storedUserInfo) {
             setUserInfo(JSON.parse(storedUserInfo));
@@ -28,6 +28,7 @@ const Login: React.FC = () => {
     const login = useGoogleLogin({
         onSuccess: async (response) => {
             const accessToken = response?.access_token;
+            setisLoading(true);
 
             if (accessToken) {
                 try {
@@ -49,6 +50,10 @@ const Login: React.FC = () => {
                     router.push('/');
                 } catch (error) {
                     console.error('Failed to fetch user profile', error);
+                    setisLoading(false)
+                }
+                finally {
+                    setisLoading(false);
                 }
             }
         },
@@ -60,7 +65,10 @@ const Login: React.FC = () => {
     return (
 
         <BackgroundComponent className="flex items-center justify-center">
-            {/* <Spinner /> */}
+            {
+                isLoading && <Spinner />
+
+            }
             {
                 showLogin ? (
                     <div className="w-full max-w-md">
