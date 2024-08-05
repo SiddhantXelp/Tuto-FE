@@ -12,10 +12,8 @@ const Login: React.FC = () => {
     const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
 
     useEffect(() => {
-        let storedUserInfo;
+        const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
 
-        storedUserInfo = localStorage.getItem('userInfo');
-        storedUserInfo = localStorage.getItem('user');
 
         if (storedUserInfo) {
             setUserInfo(JSON.parse(storedUserInfo));

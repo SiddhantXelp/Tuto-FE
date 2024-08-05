@@ -25,10 +25,7 @@ export default function Home() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    let storedUserInfo;
-
-    storedUserInfo = localStorage.getItem('userInfo');
-    storedUserInfo = localStorage.getItem('user');
+    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
 
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
