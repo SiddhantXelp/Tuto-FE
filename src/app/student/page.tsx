@@ -8,8 +8,13 @@ import Link from 'next/link';
 import { recentStudentColumns, recentStudentsData } from './data';
 import Table from '@/components/table';
 import TabNavigator from "../TabNavigator/page";
+import { useAppDispatch } from '../store/hooks';
 
 const StudentPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+
+
   const data = [
     {
       cardName: "Students according to subjects",
