@@ -3,8 +3,7 @@
 import { combineReducers } from 'redux';
 import { ClassesReducer } from './classes';
 import { AuthReducer } from "./auth";
-import { studentsReducer } from './students';
-
+import { StudentReducer } from "./student"
 
 
 
@@ -12,7 +11,7 @@ import { studentsReducer } from './students';
 export const rootReducer = combineReducers({
   classes: ClassesReducer,
   auth: AuthReducer,
-  students: studentsReducer
+  student: StudentReducer
 
 });
 

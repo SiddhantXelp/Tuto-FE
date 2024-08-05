@@ -6,7 +6,8 @@ export interface IClasses {
   setClassesError: any;
   setClassesLoading: any;
   createclass: any;
-  getstudentgroup: any
+  getstudentgroup: any;
+  ClassById: any
 }
 
 const initialState: IClasses = {
@@ -14,7 +15,8 @@ const initialState: IClasses = {
   setClassesError: null,
   setClassesLoading: null,
   createclass: null,
-  getstudentgroup: null
+  getstudentgroup: null,
+  ClassById: null
 };
 
 const setClasses = ({ setClasses }: { setClasses: any }, state: IClasses) => ({
@@ -34,6 +36,11 @@ const setStudentGroup = ({ getstudentgroup }: { getstudentgroup: any }, state: I
   getstudentgroup,
 });
 
+
+const setClassById = ({ ClassById }: { ClassById: any }, state: IClasses) => ({
+  ...state,
+  ClassById,
+});
 
 
 const setClassesError = (
@@ -62,8 +69,8 @@ export const actionReducers = {
   [actionTypes.SET_CLASSES_ERROR]: setClassesError,
   [actionTypes.SET_CLASSES_LOADING]: setClassesLoading,
   [actionTypes.SET_CREATE_CLASS]: setCreateClasses,
-  [actionTypes.SET_STUDENT_GROUP]: setStudentGroup
-  // [actionTypes.GET_Classes]: getClasses,
+  [actionTypes.SET_STUDENT_GROUP]: setStudentGroup,
+  [actionTypes.GET_CLASSES_ID]: setClassById,
 };
 
 export const ClassesReducer = (

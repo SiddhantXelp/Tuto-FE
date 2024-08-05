@@ -3,6 +3,7 @@ import React, { useState, ChangeEvent } from 'react';
 import InputMain from '@/common/InputMain';
 import Link from 'next/link';
 import TabNavigator from "../TabNavigator/page";
+import { useRouter } from 'next/navigation';
 
 interface Field {
   labelName: string;
@@ -28,8 +29,8 @@ const fields: Field[] = [
     id: "gender",
     value: "",
     radioOptions: [
-      { label: "Male", value: "male" },
-      { label: "Female", value: "female" },
+      { label: "Male", value: "M" },
+      { label: "Female", value: "F" },
       { label: "Prefer not to disclose", value: "Prefer not to disclose" }
     ]
   },
@@ -57,6 +58,8 @@ const fields: Field[] = [
 ];
 
 const OnboardingPage: React.FC = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<{ [key: string]: string }>({
     name: '',
     gender: '',
@@ -72,9 +75,9 @@ const OnboardingPage: React.FC = () => {
       [name]: value
     }));
   };
+  const queryParams = new URLSearchParams(formData as any).toString();
 
-
-  console.log(">>>>>>>>>>>>>>>>>formData",formData);
+  console.log(">>>>>>>>>>>>>>>>>formData", formData);
   return (
 
 
@@ -96,7 +99,12 @@ const OnboardingPage: React.FC = () => {
               radioOptions={field.radioOptions}
             />
           ))}
-          <Link href="/studentRequirements">
+          {/* <Link href="/studentRequirements">
+            <div>
+              <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Next</button>
+            </div>
+          </Link> */}
+          <Link href={`/studentRequirements?${queryParams}`}>
             <div>
               <button className='w-full bg-buttonGray h-10 rounded-md text-white'>Next</button>
             </div>

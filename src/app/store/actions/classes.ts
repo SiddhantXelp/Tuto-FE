@@ -28,6 +28,19 @@ export const setCreateClasses = (createclass: any) => ({
 
 
 
+export const getClassById = (token: string, id: any) => ({
+  type: actionTypes.GET_CLASSES_ID,
+  token,
+  id
+});
+
+
+export const setClassById = (ClassById: any) => ({
+  type: actionTypes.SET_CLASSES_ID,
+  ClassById,
+});
+
+
 
 
 
