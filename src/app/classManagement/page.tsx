@@ -6,7 +6,6 @@ import ClassTable from './classes/page';
 import TimeTable from './timeTable/page';
 import Attendance from './attendence/page';
 import TabNavigator from "../TabNavigator/page";
-import Config from 'react-native-config';
 
 
 type Tab = 'Overview' | 'Classes' | 'Time table' | 'Attendance';

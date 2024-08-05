@@ -5,17 +5,19 @@ import BackgroundComponent from "../../../common/BackgroundComponent";
 import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
-
+import Spinner from "../../../common/Spinner"
 const Login: React.FC = () => {
     const router = useRouter();
     const [showLogin, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
+    const [isLoading, setisLoading] = useState(false);
 
     useEffect(() => {
-        const storedUserInfo = localStorage.getItem('userInfo');
+        const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
+
         if (storedUserInfo) {
             setUserInfo(JSON.parse(storedUserInfo));
-            router.push('/'); 
+            router.push('/');
         }
     }, [router]);
 
@@ -26,6 +28,7 @@ const Login: React.FC = () => {
     const login = useGoogleLogin({
         onSuccess: async (response) => {
             const accessToken = response?.access_token;
+            setisLoading(true);
 
             if (accessToken) {
                 try {
@@ -39,6 +42,7 @@ const Login: React.FC = () => {
                     const userData = {
                         name: profileData.name,
                         email: profileData.email,
+                        picture: profileData.picture
                     };
 
                     localStorage.setItem('userInfo', JSON.stringify(userData));
@@ -46,6 +50,10 @@ const Login: React.FC = () => {
                     router.push('/');
                 } catch (error) {
                     console.error('Failed to fetch user profile', error);
+                    setisLoading(false)
+                }
+                finally {
+                    setisLoading(false);
                 }
             }
         },
@@ -55,7 +63,12 @@ const Login: React.FC = () => {
     });
 
     return (
+
         <BackgroundComponent className="flex items-center justify-center">
+            {
+                isLoading && <Spinner />
+
+            }
             {
                 showLogin ? (
                     <div className="w-full max-w-md">

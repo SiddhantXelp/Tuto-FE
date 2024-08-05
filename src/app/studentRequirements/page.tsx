@@ -2,6 +2,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import SelectMain from '@/common/SelectMain'; // Ensure the path is correct
 import Link from 'next/link';
+import TabNavigator from "../TabNavigator/page";
 
 const options = [
   {
@@ -59,6 +60,7 @@ const StudentRequirementForm: React.FC = () => {
   
 
   return (
+    <TabNavigator>
     <div className='flex justify-center items-center h-auto'>
       <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10 border-gray-300 border-solid border-2'>
         <span className='font-medium text-sm text-buttonGray block mb-4'>Student Requirements</span>
@@ -82,6 +84,7 @@ const StudentRequirementForm: React.FC = () => {
         </div>
       </div>
     </div>
+    </TabNavigator>
   );
 };
 

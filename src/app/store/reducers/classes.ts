@@ -1,25 +1,43 @@
 import * as actionTypes from '../actionTypes/classes';
-import {GenericAction, reducingFunction} from '../helpers/createReducer';
+import { GenericAction, reducingFunction } from '../helpers/createReducer';
 
 export interface IClasses {
   setClasses: any;
   setClassesError: any;
   setClassesLoading: any;
+  createclass: any;
+  getstudentgroup: any
 }
 
 const initialState: IClasses = {
   setClasses: null,
   setClassesError: null,
   setClassesLoading: null,
+  createclass: null,
+  getstudentgroup: null
 };
 
-const setClasses = ({setClasses}: {setClasses: any}, state: IClasses) => ({
+const setClasses = ({ setClasses }: { setClasses: any }, state: IClasses) => ({
   ...state,
   setClasses,
 });
 
+
+const setCreateClasses = ({ createclass }: { createclass: any }, state: IClasses) => ({
+  ...state,
+  createclass,
+});
+
+
+const setStudentGroup = ({ getstudentgroup }: { getstudentgroup: any }, state: IClasses) => ({
+  ...state,
+  getstudentgroup,
+});
+
+
+
 const setClassesError = (
-  {setClassesError}: {setClassesError: any},
+  { setClassesError }: { setClassesError: any },
   state: IClasses,
 ) => ({
   ...state,
@@ -27,7 +45,7 @@ const setClassesError = (
 });
 
 const setClassesLoading = (
-  {setClassesLoading}: {setClassesLoading: any},
+  { setClassesLoading }: { setClassesLoading: any },
   state: IClasses,
 ) => ({
   ...state,
@@ -43,6 +61,8 @@ export const actionReducers = {
   [actionTypes.SET_CLASSES]: setClasses,
   [actionTypes.SET_CLASSES_ERROR]: setClassesError,
   [actionTypes.SET_CLASSES_LOADING]: setClassesLoading,
+  [actionTypes.SET_CREATE_CLASS]: setCreateClasses,
+  [actionTypes.SET_STUDENT_GROUP]: setStudentGroup
   // [actionTypes.GET_Classes]: getClasses,
 };
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import useScroll from '@/hooks/use-scroll';
@@ -9,6 +9,13 @@ import { IoMdNotifications, IoMdPersonAdd } from "react-icons/io";
 import { PiStepsFill } from "react-icons/pi";
 import DialogComponent from '@/common/Card';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+
+interface UserInfo {
+  name: string;
+  email: string;
+  picture: string;
+}
 
 const Header: React.FC = () => {
   const scrolled = useScroll(5);
@@ -29,10 +36,22 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     console.log('Logged out');
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('user');
+
     router.push('/auth/Login');
 
   };
 
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+
+  useEffect(() => {
+    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
+
+
+    if (storedUserInfo) {
+      setUserInfo(JSON.parse(storedUserInfo));
+    }
+  }, []);
 
   return (
     <div
@@ -72,18 +91,31 @@ const Header: React.FC = () => {
               <div className='items-center'>
                 <IoMdNotifications size={"16px"} color='gray' />
               </div>
+              {/* <div className='flex flex-row justify-center content-center gap-0 alignitem-center items-center'>
+                <p className='text-xs text-buttonGray'>{userInfo ? userInfo.name : ""}</p>
+              </div> */}
             </div>
-            {/* <div className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center">
-              <span className="font-semibold text-sm">HQ</span>
-            </div> */}
+
             <button
               id="dropdownDividerButton"
               onClick={handleToggleDropdown}
               className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center"
               type="button"
             >
-              <span className="font-semibold text-sm">HQ</span>
+              <span className="font-semibold text-sm">
+                {userInfo ? (
+                  <Image
+                    src={userInfo.picture || ""}
+                    alt="Profile"
+                    width={100}
+                    height={100}
+                  />
+                ) : (
+                  <p></p>
+                )}
+              </span>
             </button>
+
             {isDropdownOpen && (
               <div
                 id="dropdownDivider"
