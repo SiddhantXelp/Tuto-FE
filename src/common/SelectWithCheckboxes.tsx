@@ -30,7 +30,7 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
   return (
     <div className="relative inline-block w-full max-w-xs md:max-w-md">
       <div
-        className="border border-gray-300 rounded-md p-2 cursor-pointer flex items-center justify-between"
+        className="h-auto w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center">

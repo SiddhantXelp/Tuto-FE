@@ -5,25 +5,39 @@ import BackgroundComponent from "../../../common/BackgroundComponent";
 import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
-import Spinner from "../../../common/Spinner"
+import Spinner from "../../../common/Spinner";
+import { getLogin, setLogin } from "../../store/actions/auth";
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Login: React.FC = () => {
     const router = useRouter();
-    const [showLogin, setLogin] = useState(true);
-    const [userInfo, setUserInfo] = useState<{ name: string; email: string } | null>(null);
+    const dispatch = useAppDispatch();
+
+    const [showLogin, setLoginGoogle] = useState(true);
     const [isLoading, setisLoading] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
 
     useEffect(() => {
         const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
 
         if (storedUserInfo) {
-            setUserInfo(JSON.parse(storedUserInfo));
             router.push('/');
         }
     }, [router]);
 
     const handleshowpassword = () => {
-        setLogin(false);
+        setLoginGoogle(false);
     };
+    const responsesLogin = useAppSelector((state: { auth: any }) => state.auth.login);
+    const isLoadingLogin = useAppSelector((state: { auth: any }) => state.auth.login);
+    const isError = useAppSelector((state: { auth: any }) => state.auth.error);
+
+
+
 
     const login = useGoogleLogin({
         onSuccess: async (response) => {
@@ -46,7 +60,6 @@ const Login: React.FC = () => {
                     };
 
                     localStorage.setItem('userInfo', JSON.stringify(userData));
-                    setUserInfo(userData);
                     router.push('/');
                 } catch (error) {
                     console.error('Failed to fetch user profile', error);
@@ -61,6 +74,44 @@ const Login: React.FC = () => {
             console.error('Google login failed', error);
         },
     });
+
+
+    const handelLogin = () => {
+
+        const data = {
+            usernameOrPhoneNumber: username,
+            password: password
+        }
+
+        dispatch(getLogin(data));
+
+        console.log("datadatadatadata", data);
+    }
+
+
+    useEffect(() => {
+        if (responsesLogin) {
+            const userData = {
+                responsesLogin
+            };
+
+            localStorage.setItem('user', JSON.stringify(userData));
+
+            router.push('/');
+            dispatch(setLogin(null));
+
+        }
+    }, [responsesLogin]);
+
+    useEffect(() => {
+        if (isError) {
+            console.log(":::::::::::::::isError", isError);
+
+            toast.error(isError)
+
+        }
+
+    }, [isError])
 
     return (
 
@@ -94,6 +145,7 @@ const Login: React.FC = () => {
                                 id="username"
                                 className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                         </div>
                         <button
@@ -165,6 +217,8 @@ const Login: React.FC = () => {
                                 id="password"
                                 className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
+                                onChange={(e) => setPassword(e.target.value)}
+
                             />
                         </div>
                         <p className='mt-2 text-sm/[14px]'>Forget password?</p>
@@ -177,6 +231,7 @@ const Login: React.FC = () => {
                                 borderRadius: '8px',
                                 backgroundColor: 'transparent'
                             }}
+                            onClick={handelLogin}
                         >
                             Login
                         </button>
@@ -186,7 +241,19 @@ const Login: React.FC = () => {
                                 Not having account? <b>sign up here</b>
                             </p>
                         </Link>
-
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            className="mt-20"
+                            style={{ marginTop: '50px', position: 'absolute', right: '0' }}
+                        />
                     </div>
                 )
             }

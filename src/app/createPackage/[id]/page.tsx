@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getCreateStudentPackage, setCreateStudentPackages } from "@/app/store/actions/student";
 import { useRouter } from 'next/navigation';
 import Spinner from "../../../common/Spinner"
+import { toast } from 'react-toastify';
 
 const CreatePackage: React.FC = () => {
   const params = useParams();
@@ -185,7 +186,40 @@ const CreatePackage: React.FC = () => {
   const memberAuthToken = "bjksabhdjashduakdjkasdhjaskhdkj"
   const studentPackage = useAppSelector((state: { student: any }) => state.student.createStudentPackage);
 
+  const validateForm = () => {
+    const errors: string[] = [];
+
+    if (subjects.length === 0) {
+      errors.push("Please select at least one subject.");
+    }
+
+    if (selectedAbbreviations.length === 0) {
+      errors.push("Please select at least one day.");
+    }
+
+    if (!pricingCategory) {
+      errors.push("Please enter valid pricing for at least one category.");
+    }
+
+    if (!formData.selectedOptions.boardEducation) {
+      errors.push("Please select the medium of class.");
+    }
+
+    if (formData.radioValue === '') {
+      errors.push("Please select whether recordings are available.");
+    }
+
+    return errors;
+  };
+
   const handelSubmit = () => {
+    const errors = validateForm();
+
+    if (errors.length > 0) {
+      errors.forEach((error) => toast.error(error));
+      return;
+    }
+
     const data = {
       "tutorId": id,
       "subjects": subjects,
@@ -214,11 +248,12 @@ const CreatePackage: React.FC = () => {
       {
         isLoading ? <Spinner /> : ""
       }
-      <div className='flex justify-center items-center h-auto'>
-        <div className='w-2/4 bg-gray-100 shadow-lg rounded p-16 mt-10 border-gray-300 border-solid border-2'>
-          <span className='font-medium text-xl text-buttonGray block mb-4'>Create your package</span>
+      <div className='flex justify-center items-center min-h-screen bg-[#F9F9F9] p-4'>
+        <div className='w-full max-w-xl bg-[#F8F5F5] shadow-xl border border-[#707070] rounded-[19px] p-6'>
+          <span className='font-medium text-xl text-[#707070] block mb-4 opacity-100'>Create your package</span>
+
           <div className="mt-2 mb-5">
-            <label className="block text-buttonGray text-xs mb-2">No. of Subjects you would like to offer?</label>
+            <label className="block text-[#707070] text-[14px] mb-2">No. of Subjects you would like to offer?</label>
             <div className="w-full">
               <SelectWithCheckboxes
                 options={handelSubjects}
@@ -228,30 +263,39 @@ const CreatePackage: React.FC = () => {
             </div>
           </div>
           <div className='mt-5'>
-            <p className='text-buttonGray text-sm'>What days do you prefer?</p>
-            <div className="grid grid-cols-5 gap-2">
+            <p className='block text-[#707070] text-[14px]'>What days do you prefer?</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-5">
               {buttons.map((item) => (
                 <button
                   key={item.id}
-                  className={`border-buttonGray border-solid border-2 w-26 h-10 rounded-md ${formData.selectedDays.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
-                    }`}
+                  className={`transition-colors duration-300 ease-in-out border-2 w-50 h-12 rounded-md ${formData.selectedDays.includes(item.name)
+                    ? 'bg-[#707070] text-white border-[#707070]'
+                    : 'bg-white text-[#707070] border-[#707070]'
+                    } hover:bg-[#505050] hover:text-white focus:outline-none`}
                   onClick={() => handleButtonClick(item.name)}
                 >
-                  <p className='text-sm text-buttonGray'>{item.name}</p>
+                  <p className={`text-sm ${formData.selectedDays.includes(item.name) ? 'text-white' : 'text-[#707070]'}`}>
+                    {item.name}
+                  </p>
                 </button>
               ))}
+
             </div>
             <div className='mt-5'>
-              <p className='text-buttonGray text-sm'>Pricing categories</p>
+              <p className='block text-[#707070] text-[14px]'>Pricing categories</p>
               <div className="flex flex-wrap gap-4 mt-2">
                 {PricingButtons.map((item) => (
                   <React.Fragment key={item.id}>
                     <button
-                      className={`border-buttonGray border-solid border-2 w-20 h-10 rounded-md ${selectedPricing === item.name ? 'bg-blue-500 text-white' : 'bg-white'
-                        }`}
+                      className={`transition-colors duration-300 ease-in-out border-2 w-20 h-10 rounded-md ${selectedPricing === item.name
+                        ? 'bg-[#707070] text-white border-[#707070]'
+                        : 'bg-white text-[#707070] border-[#707070]'
+                        } hover:bg-[#505050] hover:text-white focus:outline-none`}
                       onClick={() => handleButtonsClickforPricing(item.name)}
                     >
-                      <p className='text-sm text-buttonGray'>{item.name}</p>
+                      <p className={`text-sm ${selectedPricing === item.name ? 'text-white' : 'text-[#707070]'}`}>
+                        {item.name}
+                      </p>
                     </button>
                     {selectedPricing === item.name && (
                       <div className="flex items-center mt-0">
@@ -265,11 +309,10 @@ const CreatePackage: React.FC = () => {
                     )}
                   </React.Fragment>
                 ))}
-                <span className='mt-5 text-buttonGray text-xxs'>Additional charge can be added to provide recordings</span>
               </div>
             </div>
             <div className='mt-4'>
-              <p className='text-buttonGray text-sm'>Which medium would you like to choose?</p>
+              <p className='block text-[#707070] text-[14px]'>Which medium would you like to choose?</p>
               {selectMainOption.map((option) => (
                 <SelectMain
                   key={option.name}
@@ -277,16 +320,24 @@ const CreatePackage: React.FC = () => {
                   options={option.options}
                   value={formData.selectedOptions[option.name]}
                   onChange={handleChange}
-                  label={option.label}
+                  label={""}
                 />
               ))}
             </div>
             <div className='mt-4'>
-              <p className='text-buttonGray text-sm'>Recordings availability</p>
-              <div className='border-gray-300 rounded-md'>
+              <p className='block text-[#707070] text-[14px]'>Recordings availability</p>
+              <div className='border-gray-300 rounded-md mt-2'>
                 <div className='flex gap-3'>
                   {radioButtons.map((option) => (
-                    <div key={option.value} className='bg-white flex py-2 text-gray-400 px-4 gap-8 justify-center align-middle border-2 border-gray-500 rounded-lg'>
+                    <div
+                      key={option.value}
+                      className={`flex py-2 px-4 gap-8 justify-center align-middle border-2 rounded-lg transition-colors duration-300 ease-in-out ${formData.radioValue === option.value
+                        ? 'bg-[#707070] text-white border-[#707070]'
+                        : 'bg-white text-[#707070] border-gray-500'
+                        }`}
+                      onClick={() => handleChange({ target: { name: 'radioValue', value: option.value } })}
+
+                    >
                       <input
                         type="radio"
                         name="radioValue"
@@ -294,22 +345,21 @@ const CreatePackage: React.FC = () => {
                         value={option.value}
                         checked={formData.radioValue === option.value}
                         onChange={handleChange}
+                        className="accent-[#707070]" // Optional: custom color for radio button
                       />
-                      <label htmlFor={option.value} className='text-sm text-buttonGray mt-1'>{option.label}</label>
+                      <label htmlFor={option.value} className="text-sm mt-1">{option.label}</label>
                     </div>
                   ))}
-                </div>
-                <div>
-                  <span className='mt-5 text-buttonGray text-sm'>Additional charge can be added to provide recordings</span>
+
+                  <span className='block text-[#707070] text-[14px]'>Additional charge can be added to provide recordings</span>
+
                 </div>
               </div>
             </div>
           </div>
-          {/* <Link href="/onboardSubmit"> */}
           <div className='mt-8'>
             <button className='w-full bg-buttonGray h-10 rounded-md text-white' onClick={handelSubmit}>Submit</button>
           </div>
-          {/* </Link> */}
         </div>
       </div>
     </TabNavigator>

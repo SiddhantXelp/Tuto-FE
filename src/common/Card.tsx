@@ -4,16 +4,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxes';
-import TextAreaInput from '@/common/TextAreaInput';
-import { MdOutlineContentCopy } from 'react-icons/md';
 import InputMain from './InputMain';
-import FileInputWithIcon from '@/common/FileInputWithIcon';
 import SearchComponent from '@/common/SearchComponent';
 import SelectMain from './SelectMain';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getStudentGroup, getCreateclass } from '@/app/store/actions/classes';
+import { getStudentGroup, getCreateclass, setCreateClasses } from '@/app/store/actions/classes';
 import CustomDropDown from './CustomDropDown';
 import Spinner from "../common/Spinner"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
 
 
 interface DialogComponentProps {
@@ -79,43 +79,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   ]
 
-  const SubjectOPtions = [
-    {
-      label: "Subject",
-      name: "Subject",
-      lablename: "Select Subjects",
-      Optionlabel: "",
-      options: [
-        { label: "English", value: "English" },
-        { label: "Social", value: "Social" },
-        { label: "GroupA", value: "GroupA" },
-        { label: "Group B", value: "Group B" },
-      ],
-    },
-
-  ]
-
-
-
-  const StudentOPtions = [
-    {
-      label: "Students",
-      name: "Students",
-      lablename: "Select type of class",
-      Optionlabel: "",
-      options: [
-        { label: "Select all", value: "Select all" },
-        { label: "Group A", value: "Group A" },
-        { label: "Group B", value: "Group B" },
-        { label: "Physics", value: "Physics" },
-        { label: "Maths", value: "Maths" },
-
-      ],
-    },
-
-  ]
-
-
 
   const Tabbuttons: ButtonItem[] = [
     { id: 1, name: 'Create new class' },
@@ -126,8 +89,11 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const memberAuthToken = "hiaJDFKljkajdkaklsdmabksjdlm,asdasd"
   useEffect(() => {
-    dispatch(getStudentGroup(memberAuthToken));
-  }, [dispatch, memberAuthToken]);
+    if (open) {
+      dispatch(getStudentGroup(memberAuthToken));
+
+    }
+  }, [dispatch, memberAuthToken, open]);
 
 
   const classesData = useAppSelector((state: { classes: any }) => state.classes.getstudentgroup);
@@ -148,14 +114,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     filter: {}
   });
 
-  // Handle the change for SearchComponent and SelectMain
-  // const handleChange = (e: any) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value
-  //   }));
-  // };
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -187,27 +145,18 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }));
   };
 
-  const handleCheckboxChange = (value: string) => {
+  const handleCheckboxChangeNew = (value: string) => {
     setFormData(prevFormData => {
-      const newSelectedDays = prevFormData.typeMeeting.includes(value)
-        ? prevFormData.typeMeeting.filter(day => day !== value)
-        : [...prevFormData.typeMeeting, value];
+      // If the item is already selected, clear the selection (or you can decide to keep it selected)
+      const newSelectedDay = prevFormData.typeMeeting.includes(value) ? null : value;
+
       return {
         ...prevFormData,
-        typeMeeting: newSelectedDays,
+        typeMeeting: newSelectedDay ? [newSelectedDay] : [], // Keep only one selected item or clear selection
       };
     });
   };
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files ? event.target.files[0] : null;
-  //   if (file) {
-  //     setFormData(prevFormData => ({
-  //       ...prevFormData,
-  //       material: file.name,
-  //     }));
-  //   }
-  // };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevFormData => ({
@@ -224,8 +173,17 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
 
   const handelNext = (event: any) => {
+
     event.preventDefault();
-    setTabValue("Virtual platform")
+
+    if (validateForm()) {
+      setTabValue("Virtual platform")
+    } else {
+      errors.forEach(error => toast.error(error));
+    }
+
+
+
   }
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,56 +198,129 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     setFormData(prev => ({ ...prev, endTime: e.target.value }));
   };
 
+  const [errors, setErrors] = useState<string[]>([]);
+
+
+  const validateForm = () => {
+    const validationErrors: string[] = [];
+    if (!formData.classTitle) validationErrors.push("Class title is required.");
+    if (!formData.selectedGroup) validationErrors.push("Group selection is required.");
+    if (!formData.material) validationErrors.push("Material URL required.");
+    if (!formData.subject) validationErrors.push("Subject is required.");
+
+    validationErrors.forEach(error => toast.error(error));
+
+    return validationErrors.length === 0;
+  };
+
+  const validateFormFinal = () => {
+    const validationErrors: string[] = [];
+    if (!formData.typeMeeting || formData.typeMeeting.length === 0) {
+      validationErrors.push("At least one virtual platform must be selected.");
+    }
+
+    if (!formData.startDate) {
+      validationErrors.push("Schedule date is required.");
+    }
+
+    if (!formData.videoLink) {
+      validationErrors.push("Video call link is required.");
+    }
+
+    if (!formData.selectedOptions || formData.selectedOptions.length === 0) {
+      validationErrors.push("Select Days.");
+    }
+
+    if (!formData.description) {
+      validationErrors.push("Subject description is required.");
+    }
+
+    if (!formData.startTime) {
+      validationErrors.push("Schedule Start Time is required.");
+    }
+
+    if (!formData.endTime) {
+      validationErrors.push("Schedule End Time is required.");
+    }
+    validationErrors.forEach(error => toast.error(error));
+
+    return validationErrors.length === 0;
+  };
+
   const handelCreate = (e: any) => {
     e.preventDefault();
 
-    const data = {
-      "title": formData.classTitle,
-      "group": formData.selectedGroup,
-      "materialUrl": formData.material,
-      "platform": formData.typeMeeting[0],
-      "scheduleDate": formData.startDate,
-      // "classStartTime": formData.startTime,
-      // "classEndTime": formData.endTime,
-      "classStartTime": "2024-08-05T15:29:56.143Z",
-      "classEndTime": "2024-08-05T15:29:56.143Z",
-      "videoCallLink": formData.videoLink,
-      "repeatClass": formData.selectedOptions,
-      "subject": {
-        "name": formData.subject,
-        "description": formData.description
-      },
-      "studentGroupId": "10bee614-b67e-4d66-8a23-7bb140ae8900",
-      "scheduleId": "03159c49-cfcf-4592-9f8e-91c29c3b08c1"
+
+
+    if (validateFormFinal()) {
+      const data = {
+        "title": formData.classTitle,
+        "group": formData.selectedGroup,
+        "materialUrl": formData.material,
+        "platform": formData.typeMeeting[0],
+        "scheduleDate": formData.startDate,
+        "classStartTime": formData.startTime,
+        "classEndTime": formData.endTime,
+        // "classStartTime": "2024-08-05T15:29:56.143Z",
+        // "classEndTime": "2024-08-05T15:29:56.143Z",
+        "videoCallLink": formData.videoLink,
+        "repeatClass": formData.selectedOptions,
+        "subject": {
+          "name": formData.subject,
+          "description": formData.description
+        },
+        "studentGroupId": "10bee614-b67e-4d66-8a23-7bb140ae8900",
+        "scheduleId": "03159c49-cfcf-4592-9f8e-91c29c3b08c1"
+      }
+      dispatch(getCreateclass(memberAuthToken, data))
+    } else {
+      errors.forEach(error => toast.error(error));
     }
-    dispatch(getCreateclass(memberAuthToken, data))
+
 
   }
-
-
-  const optionsGroup = classesData?.groups.map((group: any) => ({
-    id: group.id,
-    title: group.title
-  }));
-
-
   const SubjectOptions = [
     { label: "English", value: "English" },
     { label: "Social", value: "Social" },
   ];
 
-  const transformedSubjectOptions = SubjectOptions.map((option) => ({
+
+  const optionsGroup = classesData?.groups?.map((group: any) => ({
+    id: group.id,
+    title: group.title
+  })) ?? [];
+
+  const transformedSubjectOptions = (SubjectOptions ?? []).map((option) => ({
     id: option.value,
     title: option.label,
   }));
 
   const isLoading = useAppSelector(state => state.student.loading);
 
+  const receivedCreatedClass = useAppSelector((state: { classes: any }) => state.classes.createclass);
+
+
+  useEffect(() => {
+    if (receivedCreatedClass) {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Class Created Successfully.',
+        icon: 'success',
+        confirmButtonText: 'Done'
+      });
+      dispatch(setCreateClasses(null))
+
+      setOpen(false)
+
+    }
+  }, [receivedCreatedClass]);
+
   return (
     <Dialog open={open} onClose={() => setOpen(false)} className="fixed inset-0 z-10">
       {
         isLoading ? <Spinner /> : ""
       }
+
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div className="fixed inset-0 z-10 flex items-center justify-center">
         {showNewContent ? (
@@ -355,24 +386,27 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
             </div>
           </DialogPanel>
         ) : (
-          <DialogPanel className="bg-white rounded-lg shadow-xl w-2/4 h-auto">
-            <div className="flex flex-row p-0 gap-1">
+          <DialogPanel className="bg-white rounded-lg shadow-xl w-full md:w-1/2 lg:w-1/3 h-auto">
+            <div className="flex flex-col md:flex-row p-0 gap-0 rounded-lg">
               {Tabbuttons.map((item) => (
                 <button
                   key={item.id}
-                  className={`h-10 w-full rounded-lg ${tabValue === item.name ? 'bg-white' : 'bg-buttonGray'}`}
+                  className={`h-14 flex-1 border-t-2 border-l-2 border-r-2 border-white-500 ${tabValue === item.name ? 'bg-white' : 'bg-[#ECEAEA]'
+                    } rounded-tl-lg rounded-tr-lg`}
                   onClick={() => handleTabClick(item.name)}
                 >
-                  {item.name}
+                  <span className="text-left font-semibold text-[14px] md:text-[18px] leading-[1.5] text-[#707070] opacity-100">
+                    {item.name}
+                  </span>
                 </button>
               ))}
             </div>
+
             <div className='p-5'>
               {tabValue === 'Create new class' && (
-
                 <form>
                   <div className="mb-4">
-                    <label className="block text-buttonGray text-xs mb-2">Class title</label>
+                    <label className="block text-[#707070] text-[12px] md:text-[14px] mb-2">Class title</label>
                     <InputMain
                       name="classTitle"
                       value={formData.classTitle || ''}
@@ -381,19 +415,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                     />
                   </div>
                   <div className="mb-4">
-                    {/* <label className="block text-gray-700 mb-2">Subject</label> */}
-                    {/* {SubjectOPtions.map((option) => (
-                      <SelectMain
-                        key={option.name}
-                        label={option.label}
-                        name={option.name}
-                        lablename={option.lablename}
-                        Optionlabel={option.Optionlabel}
-                        options={option.options}
-                        value={formData[option.name] || ''} // Ensure a default value is provided
-                        onChange={(value) => handleChange({ target: { name: option.name, value } })}
-                      />
-                    ))} */}
                     <CustomDropDown
                       label="Select Subject"
                       name="selectedSubject"
@@ -402,112 +423,94 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       value={formData.subject}
                       onChange={(e) => handleChange({ target: { name: 'subject', value: e.target.value } })}
                     />
-
                   </div>
-                  <div className="mb-4 flex justify-between items-center">
-                    <div className="w-full">
-                      <CustomDropDown
-                        label="Select Group"
-                        name="selectedGroup"
-                        lablename=""
-                        options={optionsGroup}
-                        value={formData.selectedGroup}
-                        onChange={(e) => handleChange({ target: { name: 'selectedGroup', value: e.target.value } })}
-                      />
-                    </div>
+                  <div className="mb-4">
+                    {/* <div className="w-full md:w-1/2"> */}
+                    <CustomDropDown
+                      label="Select Group"
+                      name="selectedGroup"
+                      lablename=""
+                      options={optionsGroup}
+                      value={formData.selectedGroup}
+                      onChange={(e) => handleChange({ target: { name: 'selectedGroup', value: e.target.value } })}
+                    />
+                    {/* </div> */}
                   </div>
-                  <div className="mb-4 flex items-center">
-                    <div className="w-full">
-                      <label className="block text-buttonGray text-xs mb-2">Material</label>
-                      <InputMain
-                        name="material"
-                        value={formData.material || ''}
-                        onChange={handleFileChange}
-                        placeholder="Enter class title"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label className="block text-[#707070] text-[12px] md:text-[14px] mb-2">Material Url</label>
+                    <InputMain
+                      name="material"
+                      value={formData.material || ''}
+                      onChange={handleFileChange}
+                      placeholder="Enter material URL"
+                    />
                   </div>
                   <button
                     type="button"
-                    className="w-full bg-gray-500 text-white py-2 rounded"
+                    className="w-full bg-gray-500 text-white py-2 rounded-md text-sm md:text-base"
                     onClick={handelNext}
                   >
                     Next
                   </button>
                 </form>
-
               )}
               {tabValue === 'Virtual platform' && (
-
                 <>
                   <div>
-                    <p className='text-buttonGray text-xs'>Virtual platform</p>
-                    <div className="grid grid-cols-5 gap-2">
+                    <p className='block text-[#707070] text-[12px] md:text-[14px] mb-2'>Virtual platform</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
                       {buttons.map((item) => (
                         <button
                           key={item.id}
                           type="button"
-                          className={`border-buttonGray border-solid border-2 w-30 h-10 rounded-md ${formData.typeMeeting.includes(item.name) ? 'bg-blue-500 text-white' : 'bg-white'
-                            }`}
-                          onClick={() => handleCheckboxChange(item.name)}
+                          className={`transition-colors duration-300 ease-in-out border-2 w-50 h-12 rounded-md ${formData.typeMeeting.includes(item.name) ? 'bg-[#707070] text-white border-[#707070]' : 'bg-white text-[#707070] border-[#707070]'} hover:bg-[#505050] hover:text-white focus:outline-none border-[#707070]`}
+                          onClick={() => handleCheckboxChangeNew(item.name)}
                         >
-                          <p className='text-xs text-buttonGray'>{item.name}</p>
+                          <p className='text-base'>{item.name}</p>
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="p-0">
-                    <p className="text-xs text-buttonGray mt-2">Schedule</p>
-                    <div className="flex flex-col md:flex-row gap-2 mt-2">
-                      <div className="flex flex-col md:flex-row gap-4">
+                  <div className="p-0 mt-5">
+                    <p className="block text-[#707070] text-[12px] md:text-[14px] mb-2">Schedule</p>
+                    <div className="flex flex-col md:flex-row gap-2 items-center">
+                      <div className="flex flex-col md:flex-row gap-2 w-full md:w-2/3">
                         <input
                           type="date"
                           value={formData.startDate}
                           onChange={handleDateChange}
-                          className="border border-buttonGray rounded-md w-full md:w-40 h-10"
+                          className="border border-buttonGray rounded-md w-full md:w-[150px] h-10"
                         />
-
-                        <div className="border-buttonGray border-solid border-2 w-full md:w-32 h-10 rounded-md">
-                          <input
-                            type="time"
-                            value={formData.startTime}
-                            onChange={handleStartTimeChange}
-                            className="w-full h-full border-none"
-                          />
-                        </div>
-                      </div>
-
-                      <span className="p-2 text-buttonGray text-xs md:static md:p-0 mt-2">to</span>
-                      <div className="border-buttonGray border-solid border-2 w-full md:w-32 h-10 rounded-md">
+                        <input
+                          type="time"
+                          value={formData.startTime}
+                          onChange={handleStartTimeChange}
+                          className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2"
+                        />
+                        <span className="text-[#707070] text-[12px] md:text-[14px] mt-2">to</span>
                         <input
                           type="time"
                           value={formData.endTime}
                           onChange={handleEndTimeChange}
-                          className="w-full h-full border-none"
+                          className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2"
                         />
                       </div>
-
-                      <div className="mt-2 md:mt-0 w-full md:w-48 lg:w-56 xl:w-64">
+                      <div className="w-full md:w-1/3 mt-2 md:mt-0">
                         <SelectWithCheckboxes
                           options={options}
                           selectedOptions={formData.selectedOptions}
                           setSelectedOptions={handleSelectChange}
+                          className="w-full"
                         />
                       </div>
                     </div>
                   </div>
 
 
-                  {/* <div>
-                    <p className='text-xs text-buttonGray'>Video call link</p>
-                    <div className='w-full h-12 border-2 border-gray-400 bg-white rounded-md flex items-center p-2'>
-                      <p className='text-sm text-buttonGray'>https://react-icons.github.io/react-icons/search/#q=cop</p>
-                      <p className='ml-auto flex items-center'><MdOutlineContentCopy /></p>
-                    </div>
-                  </div> */}
-                  <div className="mb-4">
-                    <label className="block text-buttonGray text-xs mb-2">Video call link</label>
+
+                  <div className="mt-5">
+                    <label className="block text-[#707070] text-[12px] md:text-[14px]">Video call link</label>
                     <InputMain
                       name="videoLink"
                       value={formData.videoLink || ''}
@@ -515,32 +518,22 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       placeholder="Enter Video call link"
                     />
                   </div>
-                  <div className='mt-4'>
-                    <span className='text-sm text-buttonGray'>Description</span>
-                    {/* <TextAreaInput
-                      name="description"
-                      value={formData.description || ''}
-                      onChange={handleInputChange}
-                      placeholder="Enter your text here..."
-                      rows={6}
-                      cols={40}
-                    /> */}
+                  <div className="mt-5">
+                    <span className='block text-[#707070] text-[12px] md:text-[14px]'>Description</span>
                     <textarea
                       value={formData.description || ''}
                       name="description"
                       onChange={handleInputChange}
-                      placeholder={"Enter your text here..."}
+                      placeholder="Write your description here"
                       rows={6}
                       cols={40}
-                      className='w-full border-2 border-gray-400 bg-white rounded-md'
+                      className='h-auto w-full bg-white border border-[#707070] rounded-md p-2 placeholder:text-gray-500 placeholder:text-sm'
                     />
                   </div>
                   <div className='mt-8'>
-                    <button type="submit" className='w-full bg-buttonGray h-10 rounded-md text-white' onClick={handelCreate}>Create</button>
+                    <button type="submit" className='w-full bg-buttonGray h-10 rounded-md text-white text-sm md:text-base' onClick={handelCreate}>Create</button>
                   </div>
                 </>
-
-
               )}
             </div>
           </DialogPanel>

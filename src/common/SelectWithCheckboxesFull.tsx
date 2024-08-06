@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaAngleDown } from "react-icons/fa";
+import { FaAngleDown, FaChevronDown } from "react-icons/fa";
 
 interface Option {
     label: string;
@@ -30,30 +30,29 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
     return (
         <div className="relative inline-block w-full">
             <div
-                className="border-buttonGray border-2 rounded-md p-2 cursor-pointer flex items-center justify-between shadow-sm focus:ring-indigo-500 focus:border-gray-300 bg-white"
+                className="h-12 w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <div className="flex items-center">
-                    <FaAngleDown className="mr-2" color='gray' />
-                    <div className="text-buttonGray text-sm">
-                        {selectedOptions.length > 0
-                            ? selectedOptions.join(', ')
-                            : 'Select options'}
+                <div className="flex items-center justify-between">
+                    <div className="text-buttonGray text-[16px] mt-1 ">
+                        {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select options'}
                     </div>
-                </div>
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <FaChevronDown size={16} color="gray" />
+                    </div>                </div>
             </div>
             {isOpen && (
                 <div className="absolute border border-gray-300 bg-white rounded-md mt-1 w-full max-h-60 overflow-y-auto z-10 shadow-lg">
                     {options.map((option) => (
-                        <div key={option.value} className="flex items-center p-2 hover:bg-gray-100">
+                        <label key={option.value} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
                             <input
                                 type="checkbox"
                                 checked={selectedOptions.includes(option.value)}
                                 onChange={() => toggleOption(option.value)}
                                 className="accent-blue-500"
                             />
-                            <label className="ml-2 text-xs text-buttonGray">{option.label}</label>
-                        </div>
+                            <span className="ml-2 text-xs text-buttonGray">{option.label}</span>
+                        </label>
                     ))}
                 </div>
             )}
