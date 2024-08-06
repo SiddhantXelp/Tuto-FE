@@ -60,19 +60,19 @@ const TimeTable: React.FC = () => {
           onClick={() => setView('Day')} 
           className={`rounded-md flex items-center justify-center mb-3 py-1.5 px-8 ${view === 'Day' ? 'bg-selectedButton text-white' : 'bg-gray-300 text-gray-800'}`}
         >
-          <p className="text-xxxs">Today</p>
+          <p className="tesm">Today</p>
         </button>
         <button 
           onClick={() => setView('Week')} 
           className={`rounded-md flex items-center justify-center mb-3 py-1.5 px-8 ${view === 'Week' ? 'bg-selectedButton text-white' : 'bg-gray-300 text-gray-800'}`}
         >
-          <p className="text-xxxs">Weekly</p>
+          <p className="text-sm">Weekly</p>
         </button>
         <button 
           onClick={() => setView('Month')} 
           className={`rounded-md flex items-center justify-center mb-3 py-1.5 px-8 ${view === 'Month' ? 'bg-selectedButton text-white' : 'bg-gray-300 text-gray-800'}`}
         >
-          <p className="text-xxxs">Monthly</p>
+          <p className="text-sm">Monthly</p>
         </button>
         {/* <button 
           onClick={goToToday} 
@@ -82,7 +82,7 @@ const TimeTable: React.FC = () => {
         </button> */}
       </div>
       <div className='rounded-md flex items-center justify-center mb-3 py-1.5 px-8 bg-selectedButton text-white'>
-      <p className="text-xxxs">Month</p>
+      <p className="text-sm">Month</p>
       </div>
       </div>
 

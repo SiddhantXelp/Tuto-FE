@@ -25,67 +25,67 @@ const Attendance: React.FC = () => {
     <div>
       <div className="flex flex-wrap space-x-5">
         <div className="flex flex-col  w-full sm:w-[30%] md:w-[15%] mb-4">
-          <h4 className="text-xxs font-bold text-gray-600 mb-1">Least attendance</h4>
+          <h4 className="text-sm font-bold text-gray-600 mb-1">Least attendance</h4>
           <div className="bg-white rounded-lg p-4 flex flex-col gap-y-1.5 w-full">
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600 mr-4">99. Suresh</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600 mr-4">99. Suresh</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">98. Mathew</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">98. Mathew</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">96. Lily</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">96. Lily</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">96. Lily</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">96. Lily</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col w-full sm:w-[30%] md:w-[15%] mb-4">
-          <h4 className="text-xxs font-bold text-gray-600 mb-1">Performance</h4>
+          <h4 className="text-sm font-bold text-gray-600 mb-1">Performance</h4>
           <div className="bg-white rounded-lg p-4 flex flex-col gap-y-1.5 w-full">
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600 mr-4">99. Suresh</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600 mr-4">99. Suresh</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">98. Mathew</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">98. Mathew</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">96. Lily</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">96. Lily</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">96. Lily</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">96. Lily</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col  w-full sm:w-[30%] md:w-[15%] mb-4">
-          <h4 className="text-xxs font-bold text-gray-600 mb-1">Groups</h4>
+          <h4 className="text-sm font-bold text-gray-600 mb-1">Groups</h4>
           <div className="bg-white rounded-lg p-4 flex flex-col gap-y-1.5 w-full">
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600 mr-4">Group A</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600 mr-4">Group A</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">Group A</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">Group A</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">Group A</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">Group A</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xxxs text-gray-600">Group A</p>
-              <p className="text-xxxs text-gray-600">5/25</p>
+              <p className="text-sm text-gray-600">Group A</p>
+              <p className="text-sm text-gray-600">5/25</p>
             </div>
           </div>
         </div>
@@ -94,13 +94,13 @@ const Attendance: React.FC = () => {
         <div className="flex space-x-4 mb-4">
           <span
             onClick={() => handleOptionChange('option1')}
-            className={`text-sm cursor-pointer mr-10 text-xxs ${selectedOption === 'option1' ? 'font-bold' : ''}`}
+            className={`text-sm cursor-pointer mr-10  ${selectedOption === 'option1' ? 'font-bold' : ''}`}
           >
             Recent Classes
           </span>
 
           {/* <span
-          className={`text-sm cursor-pointer text-xxs ${selectedOption === 'Overview' ? 'font-bold' : ''}`}
+          className={`text-sm cursor-pointer text-sm ${selectedOption === 'Overview' ? 'font-bold' : ''}`}
           onClick={() => setSelectedTab('Overview')}
         >
           Overview
@@ -108,7 +108,7 @@ const Attendance: React.FC = () => {
 
           <span
             onClick={() => handleOptionChange('option2')}
-            className={`text-sm cursor-pointer text-xxs ${selectedOption === 'option2' ? 'font-bold' : ''}`}
+            className={`text-sm cursor-pointer  ${selectedOption === 'option2' ? 'font-bold' : ''}`}
           >
             Students
           </span>
