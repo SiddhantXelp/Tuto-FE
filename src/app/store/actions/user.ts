@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes/students';
+import * as actionTypes from '../actionTypes/user';
 
 export const getStudents = (token: string) => ({
   type: actionTypes.GET_STUDENTS,
