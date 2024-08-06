@@ -30,6 +30,10 @@ const Login: React.FC = () => {
     }, [router]);
 
     const handleshowpassword = () => {
+        if (!username) {
+            toast.error("Enter Username");
+            return;
+        }
         setLoginGoogle(false);
     };
     const responsesLogin = useAppSelector((state: { auth: any }) => state.auth.login);
@@ -78,6 +82,10 @@ const Login: React.FC = () => {
 
     const handelLogin = () => {
 
+        if (!password) {
+            toast.error("Enter Password");
+            return;
+        }
         const data = {
             usernameOrPhoneNumber: username,
             password: password
@@ -241,22 +249,11 @@ const Login: React.FC = () => {
                                 Not having account? <b>sign up here</b>
                             </p>
                         </Link>
-                        <ToastContainer
-                            position="top-right"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                            className="mt-20"
-                            style={{ marginTop: '50px', position: 'absolute', right: '0' }}
-                        />
+
                     </div>
                 )
             }
+            <ToastContainer />
         </BackgroundComponent>
     );
 };

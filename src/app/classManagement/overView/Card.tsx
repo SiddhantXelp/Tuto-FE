@@ -47,7 +47,7 @@ const OverviewTabContent: React.FC = () => {
           <DialogComponent open={open} setOpen={setOpen} />
           <StartClassDialog open={openStart} setOpen={setOpenStart} />
           <div className="my-2">
-            <span className="text-xs text-buttonGray font-semibold">Recent classes</span>
+            <span className="text-sm text-buttonGray font-semibold">Recent classes</span>
           </div>
           <div className="flex flex-wrap justify-between">
             {classesData && classesData.map((card: any, index: number) => (
@@ -94,7 +94,7 @@ const OverviewTabContent: React.FC = () => {
 
           <div>
             <div className="my-3">
-              <span className="text-xs text-buttonGray font-semibold">Schedule</span>
+              <span className="text-sm text-buttonGray font-semibold">Schedule</span>
             </div>
             <Table />
           </div>

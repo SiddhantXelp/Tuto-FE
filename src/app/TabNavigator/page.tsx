@@ -26,17 +26,8 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
                     </PageWrapper>
                 </MarginWidthWrapper>
                 <ToastContainer
-                    position="top-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
                     className="mt-20"
-                    style={{ marginTop: '50px', position: 'absolute', right: '0' }}
+
                 />
             </main>
         </div>

@@ -4,7 +4,7 @@ import {SubmitTableData,SubmitTableColumns} from '../assignments/data';
 
 const SubmitTable = () => {
   return (
-    <div>
+    <div className='h-full'>
        <Table columns={SubmitTableColumns} data={SubmitTableData} includeCheckbox={false} />
     </div>
   )

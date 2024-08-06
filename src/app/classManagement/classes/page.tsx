@@ -32,24 +32,24 @@ const ClassManagementPage: React.FC = () => {
   };
 
   return (
-     <div>
+    <div>
 
       <div className='w-full h-12 pr-5 py-3 bg-white flex justify-between '>
         <div className="space-x-20 pl-10 ">
           <span
-            className={` cursor-pointer text-xxs ${selectedTab === 'Upcoming' ? 'font-bold' : ''}`}
+            className={` cursor-pointer text-sm ${selectedTab === 'Upcoming' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Upcoming')}
           >
             Upcoming
           </span>
           <span
-            className={` cursor-pointer text-xxs ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
+            className={` cursor-pointer text-sm ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Completed')}
           >
             Completed
           </span>
           <span
-            className={` cursor-pointer text-xxs ${selectedTab === 'Cancelled' ? 'font-bold' : ''}`}
+            className={` cursor-pointer text-sm ${selectedTab === 'Cancelled' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Cancelled')}
           >
             Cancelled

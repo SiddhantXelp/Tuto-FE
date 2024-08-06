@@ -14,27 +14,27 @@ interface StepperProps {
 
 const Stepper: React.FC<StepperProps> = ({ steps, activeStep, onStepChange }) => {
   return (
-    <div className="flex">
-      <div className="flex flex-col items-center mr-10">
+    <div className="flex h-full">
+      <div className="flex flex-col items-center mr-6">
         {steps.map((step, index) => (
           <div key={index} className="flex flex-col items-center">
             <div
-              className={`flex items-center justify-center w-4 h-4 text-xs rounded-full mb-2 ${
+              className={`flex items-center justify-center w-7 h-7 text-sm rounded-full mb-2 ${
                 index === activeStep
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-500 text-white'
-              } cursor-pointer`}
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-400 text-white'
+              } cursor-pointer transition-colors duration-300 ease-in-out`}
               onClick={() => onStepChange(index)}
             >
               {index + 1}
             </div>
             {index < steps.length - 1 && (
-              <div className="w-px h-8 bg-gray-300"></div>
+              <div className="w-px h-10 bg-gray-300"></div>
             )}
           </div>
         ))}
       </div>
-      <div className="ml-4">
+      <div className="flex-1">
         {steps[activeStep].content}
       </div>
     </div>

@@ -54,10 +54,10 @@ export default function Home() {
       head: "Social",
       time: "17:00pm - 18:00"
     },
-    {
-      head: "Telugu",
-      time: "17:00pm - 18:00"
-    },
+    // {
+    //   head: "Telugu",
+    //   time: "17:00pm - 18:00"
+    // },
   ];
   const Reminders = [
     {
@@ -79,20 +79,26 @@ export default function Home() {
   ];
 
   const stepContents = [
-    <div>
-      <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
-        <span className="text-buttonGray text-xs bg-white">Meeting with Mr. Mishra</span>
-        <span className="text-buttonGray text-xxs">At 07:00pm - 8:00pm, Friday Aug 23 2023:00</span>
+    <div key="step1" className="bg-white shadow-md rounded-lg border border-gray-300 p-4 mt-0">
+      <div className="flex flex-col gap-2">
+        <span className="text-gray-800 text-sm font-semibold">Meeting with Mr. Mishra</span>
+        <span className="text-gray-600 text-xs">At 07:00pm - 08:00pm, Friday Aug 23, 2023</span>
       </div>
     </div>,
-    <div>
-      <div className="flex flex-col border-2 border-gray-300 rounded-md gap-1 w-full mt-3">
-        <span className="text-buttonGray text-xs bg-white">Meeting with Mr. Mishra</span>
-        <span className="text-buttonGray text-xxs">At 09:00pm - 10:00pm, Friday Aug 23 2023</span>
+    <div key="step2" className="bg-white shadow-md rounded-lg border border-gray-300 p-4 mt-3">
+      <div className="flex flex-col gap-2">
+        <span className="text-gray-800 text-sm font-semibold">Meeting with Mr. Mishra</span>
+        <span className="text-gray-600 text-xs">At 09:00pm - 10:00pm, Friday Aug 23, 2023</span>
       </div>
     </div>,
-    <div>Content for Step 3</div>
+    <div key="step3" className="bg-white shadow-md rounded-lg border border-gray-300 p-4 mt-3">
+      <div className="flex flex-col gap-2">
+        <span className="text-gray-800 text-sm font-semibold">Content for Step 3</span>
+        <span className="text-gray-600 text-xs">Additional details or content for step 3 go here.</span>
+      </div>
+    </div>
   ];
+
 
   const steps = stepContents.map((_, index) => ({
     label: `Step ${index + 1}`,
@@ -110,83 +116,77 @@ export default function Home() {
 
   return (
     <>
-
-      <div className="border-dashed border   grid grid-cols-[70%_30%]">
-        <div className="grid grid-cols-4 gap-2 2xl:gap-10">
-          <div>
-            <span className="text-buttonGray sm:text-xxs md:text-xxs">Students</span>
-            <div className="sm:w-30 md:w-20 lg:w-32 xl:w-48 2xl:w-52 h-32 bg-white shadow-lg rounded-xl p-2">
-              <ul className="list-disc pl-5" >
-                <li className="text-buttonGray text-xs break-words">
-                  200 students
-                </li>
-              </ul>
-              <ul className="ml-5 flex flex-col mt-2">
-                <li className="text-buttonGray text-xs" >144 Active students</li>
-                <li className="text-buttonGray text-xs">14 Newly registered</li>
-              </ul>
-              <div className=" flex justify-end mt-10">
-                <p><TiGroup size={15} color="gray" /></p>
+      <div className="grid grid-cols-1 lg:grid-cols-[70%_30%] gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex flex-col">
+            <span className="text-buttonGray text-sm font-semibold mb-2">Students</span>
+            <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
+              <div>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li className="text-buttonGray text-sm break-words">200 students</li>
+                  <li className="text-buttonGray text-sm">144 Active students</li>
+                  <li className="text-buttonGray text-sm">14 Newly registered</li>
+                </ul>
+              </div>
+              <div className="flex justify-end mt-4">
+                <TiGroup size={20} color="gray" />
               </div>
             </div>
           </div>
 
-          <div>
-            <span className="text-buttonGray sm:text-xs md:text-xs">Class Management</span>
-            <div className="sm:w-30 md:w-20 lg:w-32 xl:w-48 2xl:w-52 h-32 bg-white shadow-lg rounded-xl p-2">
-              <ul className="list-disc pl-5" >
-                <li className="text-buttonGray text-xs break-words">
-                  20 classes scheduled for next 7 days
-                </li>
-              </ul>
-              <ul className="ml-5 flex flex-col">
-                <li className="text-buttonGray text-xs">2 classes available</li>
-              </ul>
-              <div className="flex justify-end mt-10">
-                <p><BiSolidBarChartAlt2 size={15} color="gray" /></p>
+          <div className="flex flex-col">
+            <span className="text-buttonGray text-sm font-semibold mb-2">Class Management</span>
+            <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
+              <div>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li className="text-buttonGray text-sm break-words">20 classes scheduled for next 7 days</li>
+                  <li className="text-buttonGray text-sm">2 classes available</li>
+                </ul>
+              </div>
+              <div className="flex justify-end mt-4">
+                <BiSolidBarChartAlt2 size={20} color="gray" />
               </div>
             </div>
           </div>
 
-          <div>
-            <span className="text-buttonGray sm:text-xxs md:text-xxs">Previous</span>
-            <div className="sm:w-30 md:w-20 lg:w-32 xl:w-48 2xl:w-52 h-32 bg-white shadow-lg rounded-xl p-2">
-              <div className="flex flex-row  gap-4 align-middle">
-                <span className="mt-0"><FaRegClock size={10} color="gray" /></span>
-                <span className="text-buttonGray text-xs">18:30 - 20:30</span>
+          <div className="flex flex-col">
+            <span className="text-buttonGray text-sm font-semibold mb-2">Previous</span>
+            <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
+              <div className="flex items-center gap-2 mt-2">
+                <FaRegClock size={14} color="gray" />
+                <span className="text-buttonGray text-sm">18:30 - 20:30</span>
               </div>
-              <div className="flex flex-row  gap-4 align-middle mt-3">
-                <span className="mt-0"><FaBook size={10} color="gray" /></span>
-                <span className="text-buttonGray text-xs">English class</span>
+              <div className="flex items-center gap-2 mt-2">
+                <FaBook size={14} color="gray" />
+                <span className="text-buttonGray text-sm">English class</span>
               </div>
             </div>
           </div>
-          <div>
-            <span className="text-buttonGray sm:text-xs md:text-xs">Next Class</span>
-            <div className="sm:w-30 md:w-20 lg:w-32 xl:w-48 2xl:w-52 h-32 bg-white shadow-lg rounded-xl p-2">
-              <div className="flex flex-row  gap-4 align-middle">
-                <span className="mt-0"><FaRegClock size={10} color="gray" /></span>
-                <span className="text-buttonGray text-xs">18:30 - 20:30</span>
+
+          <div className="flex flex-col">
+            <span className="text-buttonGray text-sm font-semibold mb-2">Next Class</span>
+            <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
+              <div className="flex items-center gap-2 mt-2">
+                <FaRegClock size={14} color="gray" />
+                <span className="text-buttonGray text-sm">18:30 - 20:30</span>
               </div>
-              <div className="flex flex-row  gap-4 align-middle mt-3">
-                <span className="mt-0"><FaBook size={10} color="gray" /></span>
-                <span className="text-buttonGray text-xs">English class</span>
+              <div className="flex items-center gap-2 mt-2">
+                <FaBook size={14} color="gray" />
+                <span className="text-buttonGray text-sm">English class</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-[40%_60%] mt-10 gap-2 2xl:gap-10">
-          <div className="flex flex-col gap-4 ml-6">
-            {/* <button className='sm:w-20 md:w-16 lg:w-20 xl:w-36 2xl:w-44   md:h-6 lg:h-8 xl:h-10 2xl:h-12 bg-buttonGray flex justify-center items-center border rounded-2xl  p-1'>
-              <span className='text-white text-xs'>Add student  +</span>
-            </button> */}
-            <button className='sm:w-20 md:w-16 lg:w-20 xl:w-36 2xl:w-44   md:h-6 lg:h-8 xl:h-10 2xl:h-12 bg-gray-400 flex justify-center items-center border rounded-2xl  p-1'>
-              <span className='text-white text-xs'>Schedule </span>
+
+        <div className="flex flex-col lg:flex-row gap-6 mt-6">
+          <div className="flex flex-col gap-4 mx-10">
+            <button className="bg-gray-400 w-full lg:w-36 py-2 px-4 rounded-2xl text-white text-sm">
+              Schedule
             </button>
           </div>
           <div className="flex flex-col items-center">
-            <div className="md:w-20 lg:w-20 xl:w-24 md:h-20 lg:h-20 xl:h-24  bg-red-400 rounded-full overflow-hidden">
+            <div className="w-20 h-20 bg-red-400 rounded-full overflow-hidden">
               <Image
                 src={userInfo ? userInfo.picture : ""}
                 alt="Description of the image"
@@ -195,19 +195,22 @@ export default function Home() {
                 layout="responsive"
               />
             </div>
-            <span className="text-buttonGray text-xx ">Hello</span>
-            <span className="text-buttonGray text-xx ">{userInfo ? userInfo.name : ""}</span>
+            <span className="text-buttonGray mt-2">Hello</span>
+            <span className="text-buttonGray">{userInfo ? userInfo.name : ""}</span>
           </div>
         </div>
       </div>
 
+      <div className="flex flex-col h-full mt-2">
+        <span className="text-buttonGray text-sm font-semibold mb-2">Submitted Assignment</span>
 
+      </div>
 
-
-      <div className="border-dashed border  w-full h-64 rounded-lg">
-        <div className="grid grid-cols-[70%_30%] gap-2">
+      <div className="w-full h-auto mt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6 h-full">
           <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} />
-          <div className="sm:w-20 md:w-full lg:w-full xl:w-full 2xl:w-full bg-white shadow-lg border border-gray-200 mt-2 p-4 rounded-lg">
+
+          <div className="bg-white shadow-lg border border-gray-200 p-4 rounded-lg h-full">
             <Calendar
               onChange={setValue}
               value={value}
@@ -220,88 +223,84 @@ export default function Home() {
         </div>
 
 
-
-        <div className="border-dashed border grid grid-cols-[70%_30%] gap-2 rounded-lg">
-          <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full  h-64 grid grid-cols-[50%_50%] gap-2 p-2">
-
-            <div>
-              <div className="flex flex-row justify-between">
-                <span className="text-sm text-buttonGray" >Reminders</span>
-                <span className="text-xs text-buttonGray" >View All</span>
-              </div>
-              <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full bg-white h-64 rounded-xl border-gray-400 flex flex-row gap-5 p-2 justify-evenly">
-                  <div className="mt-10">
-                    <Stepper
-                      steps={steps}
-                      activeStep={activeStep}
-                      onStepChange={setActiveStep}
-                    />
-                  </div>
-              
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          <div className="relative">
+            <div className="flex justify-between mb-4">
+              <span className="text-buttonGray text-sm font-semibold">Upcoming Classes</span>
+              <span className="text-xs text-buttonGray cursor-pointer">View All</span>
             </div>
 
-            <div>
-              {/* <span className="text-sm text-buttonGray">Revenue</span> */}
-              <div className="flex flex-row justify-between">
-                <span className="text-sm text-buttonGray" >Revenue</span>
-              </div>
-              <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full bg-white h-64 rounded-xl border-gray-400 flex flex-row gap-5 p-2 justify-evenly">
-                <div className="flex flex-col justify-center">
-                  <div className="flex flex-row justify-center gap-2 mt-5">
-                    <div style={{ width: 140, height: 140, marginTop: "10px" }}>
-                      <CircularProgressbar
-                        value={percentage}
-                        text={`${percentage}%`}
-                        styles={buildStyles({
-                          strokeLinecap: 'butt',
-                          textSize: '16px',
-                          pathTransitionDuration: 0.5,
-                          pathColor: '#1F78B4',
-                          textColor: '#1F78B4',
-                          trailColor: '#FFA0A0',
-                          backgroundColor: '#3e98c7',
-                        })}
-                      />
-                    </div>
-                    <div>
-                      <div className="flex flex-row justify-center cursor-pointer items-center bg-slate-400 rounded-xl md:h-6 lg:h-7 xl:h-8 2xl:h-10  md:w-20 lg:w-28 xl:w-36 2xl:w-36 gap-12 mt-2">
-                        <span className="text-xxs text-white">May'2023</span>
-                        <MdKeyboardArrowDown size={15} color="white" />
-                      </div>
-                      <div className="flex flex-col mt-10">
-                        <span className="text-buttonGray text-sm">1,50000 Overall</span>
-                        <span className="text-buttonGray text-xxs">10 Pending payments</span>
-                        <p className="underline text-xxs text-buttonGray cursor-pointer">Payment History</p>
-                      </div>
+            <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
+              <Stepper
+                steps={steps}
+                activeStep={activeStep}
+                onStepChange={setActiveStep}
+              />
+            </div>
+          </div>
 
-                    </div>
+
+
+
+          <div className="relative">
+            <div className="flex justify-between mb-4">
+              <span className="text-buttonGray text-sm font-semibold">Revenue</span>
+            </div>
+
+            <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="flex justify-center items-center" style={{ width: '180px', height: '150px' }}>
+                  <CircularProgressbar
+                    value={percentage}
+                    text={`${percentage}%`}
+                    styles={buildStyles({
+                      strokeLinecap: 'butt',
+                      textSize: '16px',
+                      pathTransitionDuration: 0.5,
+                      pathColor: '#1F78B4',
+                      textColor: '#1F78B4',
+                      trailColor: '#FFA0A0',
+                    })}
+                  />
+                </div>
+
+                <div className="flex flex-col justify-center items-start mx-10">
+                  <div className="flex items-center bg-slate-400 rounded-xl py-1 px-3 gap-2 cursor-pointer">
+                    <span className="text-xs text-white">May'2023</span>
+                    <MdKeyboardArrowDown size={15} color="white" />
                   </div>
-                  <div className="m-8 flex flex-col gap-1 p-2">
-                    <div className="flex flex-row align-middle items-center gap-2">
-                      <div style={{ width: "8px", height: "8px", backgroundColor: "#1F78B4" }}></div>
-                      <span className="text-xxs text-buttonGray ">Payment Received</span>
-                    </div>
-                    <div className="flex flex-row align-middle items-center gap-2">
-                      <div style={{ width: "8px", height: "8px", backgroundColor: "#FFA0A0" }}></div>
-                      <span className="text-xxs text-buttonGray ">Pending Payment</span>
-                    </div>
+                  <div className="flex flex-col mt-4">
+                    <span className="text-buttonGray text-xs">1,50000 Overall</span>
+                    <span className="text-buttonGray text-xs">10 Pending payments</span>
+                    <p className="underline text-xs text-buttonGray cursor-pointer">Payment History</p>
                   </div>
                 </div>
               </div>
 
+              <div className="flex gap-4 mt-5">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-600"></div>
+                  <span className="text-xs text-buttonGray">Payment Received</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-red-300"></div>
+                  <span className="text-xs text-buttonGray">Pending Payment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div className="relative">
+            <div className="flex justify-between mb-4">
+              <span className="text-buttonGray text-sm font-semibold">Upcoming Classes</span>
+              <span className="text-xs text-buttonGray cursor-pointer">View All</span>
             </div>
 
-          </div>
-          <div>
-            <div className="flex flex-row justify-between mt-1">
-              <li className="text-sm text-buttonGray" >Upcoming Classes</li>
-              <span className="text-xs text-buttonGray mr-4" >View All</span>
-            </div>
-            <div className="sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full bg-white h-64 rounded-xl border-gray-400">
-              <div className="p-4">
+            <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
+              <div className="space-y-2">
                 {data.map((item) => (
-                  <div className="bg-white border-2 border-gray-300 p-2 flex flex-col gap-1 rounded-lg mt-1">
+                  <div key={item.head} className="bg-white border-2 border-gray-300 p-2 flex flex-col gap-1 rounded-lg">
                     <span className="text-buttonGray text-xs">{item.head}</span>
                     <span className="text-buttonGray text-xs">{item.time}</span>
                   </div>
@@ -309,9 +308,11 @@ export default function Home() {
               </div>
             </div>
           </div>
+
         </div>
 
-      </div >
+
+      </div>
     </>
   );
 }

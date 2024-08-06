@@ -40,25 +40,25 @@ const ClassManagementPage: React.FC = () => {
     <TabNavigator>
       <div className="w-full h-12 flex space-x-20 pl-10 py-3 bg-white">
         <span
-          className={`text-sm cursor-pointer text-xxs ${selectedTab === 'Overview' ? 'font-bold' : ''}`}
+          className={`text-sm cursor-pointer ${selectedTab === 'Overview' ? 'font-bold' : ''}`}
           onClick={() => setSelectedTab('Overview')}
         >
           Overview
         </span>
         <span
-          className={`text-sm cursor-pointer text-xxs ${selectedTab === 'Classes' ? 'font-bold' : ''}`}
+          className={`text-sm cursor-pointer ${selectedTab === 'Classes' ? 'font-bold' : ''}`}
           onClick={() => setSelectedTab('Classes')}
         >
           Classes
         </span>
         <span
-          className={`text-sm cursor-pointer text-xxs ${selectedTab === 'Time table' ? 'font-bold' : ''}`}
+          className={`text-sm cursor-pointer ${selectedTab === 'Time table' ? 'font-bold' : ''}`}
           onClick={() => setSelectedTab('Time table')}
         >
           Time table
         </span>
         <span
-          className={`text-sm cursor-pointer text-xxs ${selectedTab === 'Attendance' ? 'font-bold' : ''}`}
+          className={`text-sm cursor-pointer ${selectedTab === 'Attendance' ? 'font-bold' : ''}`}
           onClick={() => setSelectedTab('Attendance')}
         >
           Attendance
