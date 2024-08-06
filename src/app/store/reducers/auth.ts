@@ -3,14 +3,16 @@ import { GenericAction, reducingFunction } from '../helpers/createReducer';
 
 export interface ISignup {
     signupData: any;
-    createUser:any;
+    createUser: any;
+    login: any;
     error: any;
     loading: any;
 }
 
 const initialState: ISignup = {
     signupData: null,
-    createUser:null,
+    createUser: null,
+    login: null,
     error: null,
     loading: null,
 };
@@ -24,6 +26,12 @@ const setCreateUser = ({ createUser }: { createUser: any }, state: ISignup) => (
     ...state,
     createUser,
 });
+
+const setLogin = ({ login }: { login: any }, state: ISignup) => ({
+    ...state,
+    login,
+});
+
 
 const setSignupError = (
     { error }: { error: any },
@@ -43,9 +51,12 @@ const setSignupLoading = (
 
 export const actionReducers = {
     [actionTypes.SET_SIGN_UP]: setSignup,
-    [actionTypes.SET_SIGNUP_ERROR]: setSignupError,
-    [actionTypes.SET_SIGNUP_LOADING]: setSignupLoading,
     [actionTypes.SET_CREATE_USER]: setCreateUser,
+    [actionTypes.SET_LOGIN_USER]: setLogin,
+    [actionTypes.SET_SIGNUP_ERROR]: setSignupError,
+    [actionTypes.SET_SIGNUP_LOADING]: setSignupLoading
+
+
 };
 
 export const AuthReducer = (

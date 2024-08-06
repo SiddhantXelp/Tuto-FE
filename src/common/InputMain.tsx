@@ -11,7 +11,7 @@ interface InputMainProps {
   label: string;
   type: string;
   name: string;
-  placeholder:string;
+  placeholder: string;
   id: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -30,7 +30,7 @@ const InputMain: React.FC<InputMainProps> = ({
 }) => {
   return (
     <div className='flex flex-col mb-4'>
-      <label htmlFor={id} className='text-sm mb-2 text-buttonGray'>{label}</label>
+      <label htmlFor={id} className='text-sm mb-2 text-[#707070]'>{label}</label>
       {type === 'radio' ? (
         <div className='flex flex-row space-x-4'>
           {radioOptions?.map((option) => (
@@ -44,9 +44,9 @@ const InputMain: React.FC<InputMainProps> = ({
                 onChange={onChange}
                 placeholder={placeholder}
                 className='mr-2'
-               
+
               />
-              <label htmlFor={option.value}  className='ml-2 text-sm'>{option.label}</label>
+              <label htmlFor={option.value} className='ml-2 text-sm'>{option.label}</label>
             </div>
           ))}
         </div>
@@ -57,8 +57,7 @@ const InputMain: React.FC<InputMainProps> = ({
           id={id}
           value={value}
           onChange={onChange}
-          className='h-auto w-auto border-2 border-buttonGray rounded-md p-2'
-        />
+          className="h-auto w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100" />
       )}
     </div>
   );

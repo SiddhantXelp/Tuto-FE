@@ -1,114 +1,110 @@
 "use client";
 
 import Link from 'next/link';
-import React, { useEffect } from 'react'
-import { FaVideo, FaCalendar, FaFileVideo } from "react-icons/fa6";
+import React from 'react';
+import { FaVideo, FaCalendar, FaFileVideo } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { IoMdPricetag } from "react-icons/io";
 import TabNavigator from "../TabNavigator/page";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { setCreateUser } from "@/app/store/actions/auth";
 import { setCreateStudentPackages } from "@/app/store/actions/student";
+import Swal from 'sweetalert2'
 
 const OnboardSubmit = () => {
   const studentPackage = useAppSelector((state: { student: any }) => state.student.createStudentPackage);
   const userData = useAppSelector((state: { auth: any }) => state.auth.createUser);
   const dispatch = useAppDispatch();
 
-  console.log("KKKKKKKKKKKKKKKKKstudentPackage", userData);
-
-
-  const handelSubmit = () => {
+  const handleSubmit = () => {
     dispatch(setCreateUser(null));
-    dispatch(setCreateStudentPackages(null))
+    dispatch(setCreateStudentPackages(null));
+    Swal.fire({
+      title: 'Success!',
+      text: 'Package Created Successfully.',
+      icon: 'success',
+      confirmButtonText: 'Done'
+    });
 
-  }
+  };
 
   return (
     <TabNavigator>
-      <div className='flex justify-center items-center h-auto'>
-        <div className='w-2/4 bg-gray-100 shadow-lg rounded p-0 mt-10 border-gray-300 border-solid border-2'>
-
-          <table className="table-auto w-full">
-            <thead>
-              <tr className='bg-slate-100 h-40 w-full justify-center'>
-                <th className='text-2xl text-buttonGray'>{userData && userData?.user?.fullName}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className='bg-white'>
-                <td className='h-12'>
-                  <div className='flex flex-row gap-5'>
-                    <FaVideo size={"20"} className='ml-2' color='gray' />
-                    <p className='text-xs text-buttonGray'>{studentPackage?.meetMedium === "ZO" ? "Zoom" : "Google Meet"}</p>
-                  </div>
-                </td>
-              </tr>
-              <tr className='bg-slate-100'>
-                <td className='h-12'>
-                  <div className='flex flex-row gap-5'>
-                    <HiOutlineMenuAlt2 size={"20"} className='ml-2' color='gray' />
-                    <p className='text-xs text-buttonGray'>No.of subjects</p>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className='text-xs text-buttonGray'>{studentPackage?.subjects ? studentPackage?.subjects.length : 0}</td>
-                  </div>
-                </td>
-              </tr>
-              <tr className='bg-white'>
-                <td className='h-12'>
-                  <div className='flex flex-row gap-5'>
-                    <FaCalendar size={"20"} className='ml-2' color='gray' />
-                    <p className='text-xs text-buttonGray'>Days</p>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className='text-xs text-buttonGray'>{studentPackage?.days ? studentPackage?.days : ""}</td>
-                  </div>
-                </td>
-              </tr>
-              <tr className='bg-slate-100'>
-                <td className='h-12'>
-                  <div className='flex flex-row gap-5'>
-                    <IoMdPricetag size={"20"} className='ml-2' color='gray' />
-                    <p className='text-xs text-buttonGray'>Pricing</p>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className='text-xs text-buttonGray'>{studentPackage?.pricingCategory?.category ? studentPackage?.pricingCategory?.category : ""} Rs {studentPackage?.pricingCategory?.category ? studentPackage?.pricingCategory?.price : ""}</td>
-                  </div>
-                </td>
-              </tr>
-              <tr className='bg-white'>
-                <td className='h-12'>
-                  <div className='flex flex-row gap-5'>
-                    <FaFileVideo size={"20"} className='ml-2' color='gray' />
-                    <p className='text-xs text-buttonGray'>Video Recording</p>
-                    <td></td>
-                    <td></td>
-                    <td className='text-xs text-buttonGray'>{studentPackage?.recordSession ? "Available" : "Not-Available"}</td>
-                  </div>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-
-          <Link href="/">
-            <div className='m-5'>
-              <button className='w-full bg-gray-400 h-10 rounded-md text-white' onClick={handelSubmit}>Save & Proceed</button>
+      <div className='flex justify-center items-center min-h-screen bg-[#F9F9F9] p-4'>
+        <div className='w-full max-w-md bg-[#F8F5F5] shadow-xl border  rounded-[19px] p-6'>
+          <div className='mb-6 text-center'>
+            <h1 className='text-2xl font-semibold text-gray-700'>{userData?.fullName || ""}</h1>
+          </div>
+          <div className='flex justify-center mb-6 h-8'>
+            <div className='border-b-2 border-gray-500 w-28 h-8'>
             </div>
-          </Link>
+          </div>
+
+
+
+
+
+          <div className='space-y-0'>
+            <div className='bg-white p-4 shadow-md -mx-6'>
+              <div className='flex items-center space-x-3'>
+                <FaVideo size={"24"} color='gray' />
+                <p className='text-sm text-gray-600'>
+                  {studentPackage?.meetMedium === "ZO" ? "Zoom" : "Google Meet"}
+                </p>
+              </div>
+            </div>
+
+            <div className='p-4 shadow-md -mx-6'>
+              <div className='flex items-center space-x-3'>
+                <HiOutlineMenuAlt2 size={"24"} color='gray' />
+                <p className='text-sm text-gray-600'>No. of Subjects</p>
+                <span className='ml-auto text-gray-600'>{studentPackage?.subjects?.length || 0}</span>
+              </div>
+            </div>
+
+            <div className='bg-white p-4 shadow-md -mx-6'>
+              <div className='flex items-center space-x-3'>
+                <FaCalendar size={"24"} color='gray' />
+                <p className='text-sm text-gray-600'>Days</p>
+                <span className='ml-auto text-gray-600'>{studentPackage?.days || ""}</span>
+              </div>
+            </div>
+
+            <div className='p-4 shadow-md -mx-6'>
+              <div className='flex items-center space-x-3'>
+                <IoMdPricetag size={"24"} color='gray' />
+                <p className='text-sm text-gray-600'>Pricing</p>
+                <span className='ml-auto text-gray-600'>
+                  {studentPackage?.pricingCategory?.category ? `${studentPackage?.pricingCategory?.category} Rs ${studentPackage?.pricingCategory?.price}` : ""}
+                </span>
+              </div>
+            </div>
+
+            <div className='bg-white p-4 shadow-md -mx-6'>
+              <div className='flex items-center space-x-3'>
+                <FaFileVideo size={"24"} color='gray' />
+                <p className='text-sm text-gray-600'>Video Recording</p>
+                <span className='ml-auto text-gray-600'>
+                  {studentPackage?.recordSession ? "Available" : "Not Available"}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className='mt-6 text-center'>
+            <Link href="/">
+              <button
+                className='w-full inline-block bg-gray-400 text-white py-2 px-4 rounded-md'
+                onClick={handleSubmit}
+              >
+                Save & Proceed
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </TabNavigator>
-  )
-}
+  );
+};
 
-export default OnboardSubmit
+export default OnboardSubmit;

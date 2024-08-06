@@ -24,6 +24,18 @@ export const setCreateUser = (createUser: any) => ({
     createUser,
 });
 
+
+
+export const getLogin = (data: any) => ({
+    type: actionTypes.GET_LOGIN_USER,
+    data
+});
+
+export const setLogin = (login: any) => ({
+    type: actionTypes.SET_LOGIN_USER,
+    login,
+});
+
 export const setAuthError = (error: any) => ({
     type: actionTypes.SET_SIGNUP_ERROR,
     error,
