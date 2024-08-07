@@ -10,7 +10,7 @@ export const DISCLOSURE_CANCEL = 'cancel';
 
 
 export const getStudents = async (token: string) => {
-  console.log('getStudents', token);
+  // console.log('getStudents', token);
 
   try {
     const response = await axios.get(
@@ -33,7 +33,7 @@ export const getStudents = async (token: string) => {
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('Students......', e);
+      // console.log('Students......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;

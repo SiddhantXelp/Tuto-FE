@@ -6,7 +6,7 @@ let cancelAuth: Canceler;
 export const DISCLOSURE_CANCEL = 'cancel';
 
 export const createPackage = async (token: string, data: any) => {
-    console.log('getClasses', token);
+    // console.log('getClasses', token);
 
     try {
         const response = await axios.post(
@@ -29,7 +29,7 @@ export const createPackage = async (token: string, data: any) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('classes......', e);
+            // console.log('classes......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;

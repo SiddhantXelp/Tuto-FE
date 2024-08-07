@@ -353,7 +353,7 @@ const StudentRequirementForm: React.FC = () => {
   useEffect(() => {
 
     if (isError) {
-      console.log(isError, "::::::::::::isError");
+      // console.log(isError, "::::::::::::isError");
 
       toast.error(isError)
 

@@ -10,7 +10,7 @@ export const DISCLOSURE_CANCEL = 'cancel';
 
 
 export const getClasses = async (token: string) => {
-  console.log('getClasses', token);
+  // console.log('getClasses', token);
 
   try {
     const response = await axios.get(
@@ -33,7 +33,7 @@ export const getClasses = async (token: string) => {
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('classes......', e);
+      // console.log('classes......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;
@@ -41,7 +41,7 @@ export const getClasses = async (token: string) => {
 };
 
 export const createClass = async (token: string, data: any) => {
-  console.log('Data:', data);
+  // console.log('Data:', data);
   try {
     const response = await axios.post(
       apis.createClass,
@@ -63,7 +63,7 @@ export const createClass = async (token: string, data: any) => {
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('SignupERROR......', e);
+      // console.log('SignupERROR......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;
@@ -72,7 +72,7 @@ export const createClass = async (token: string, data: any) => {
 
 
 export const getStudentGroup = async (token: string) => {
-  console.log('getClasses', token);
+  // console.log('getClasses', token);
 
   try {
     const response = await axios.get(
@@ -88,7 +88,7 @@ export const getStudentGroup = async (token: string) => {
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('classes......', e);
+      // console.log('classes......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;
@@ -97,7 +97,7 @@ export const getStudentGroup = async (token: string) => {
 
 
 export const getClassesById = async (token: string, id: string) => {
-  console.log('getClasses', token);
+  // console.log('getClasses', token);
 
   try {
     const response = await axios.get(
@@ -120,7 +120,7 @@ export const getClassesById = async (token: string, id: string) => {
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('classes......', e);
+      // console.log('classes......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;

@@ -165,8 +165,8 @@ const CreateNewAssignment = () => {
 
 
 
-  console.log(cards, "cards")
-  console.log(formData, "formData")
+  // console.log(cards, "cards")
+  // console.log(formData, "formData")
 
   return (
     <TabNavigator>

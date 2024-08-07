@@ -35,7 +35,7 @@ function* CreateUserEffect(action: any): Generator<any, any, any> {
         yield put(setAuthLoading(false));
     } catch (e: any) {
         yield put(setAuthLoading(false));
-        console.log("::::::::::::::::::::::::::::::::::", e.response?.data?.message)
+        // console.log("::::::::::::::::::::::::::::::::::", e.response?.data?.message)
         yield put(setAuthError(e.response?.data?.message));
     }
 }

@@ -22,7 +22,7 @@ const Signup: React.FC = () => {
   const responsesignup = useAppSelector((state: { auth: any }) => state.auth.signupData);
   const isLoading = useAppSelector(state => state.auth.loading);
 
-  console.log(">>>>>>>>>>>>>>>>>>>>.responsesignup", responsesignup);
+  // console.log(">>>>>>>>>>>>>>>>>>>>.responsesignup", responsesignup);
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
@@ -57,12 +57,12 @@ const Signup: React.FC = () => {
           localStorage.setItem('userInfo', JSON.stringify(userData));
           router.push('/');
         } catch (error) {
-          console.error('Failed to fetch user profile', error);
+          // console.error('Failed to fetch user profile', error);
         }
       }
     },
     onError: (error) => {
-      console.error('Google login failed', error);
+      // console.error('Google login failed', error);
     },
   });
 

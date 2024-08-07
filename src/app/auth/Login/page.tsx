@@ -66,7 +66,7 @@ const Login: React.FC = () => {
                     localStorage.setItem('userInfo', JSON.stringify(userData));
                     router.push('/');
                 } catch (error) {
-                    console.error('Failed to fetch user profile', error);
+                    // console.error('Failed to fetch user profile', error);
                     setisLoading(false)
                 }
                 finally {
@@ -75,7 +75,7 @@ const Login: React.FC = () => {
             }
         },
         onError: (error) => {
-            console.error('Google login failed', error);
+            // console.error('Google login failed', error);
         },
     });
 
@@ -93,7 +93,7 @@ const Login: React.FC = () => {
 
         dispatch(getLogin(data));
 
-        console.log("datadatadatadata", data);
+        // console.log("datadatadatadata", data);
     }
 
 
@@ -113,7 +113,7 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (isError) {
-            console.log(":::::::::::::::isError", isError);
+            // console.log(":::::::::::::::isError", isError);
 
             toast.error(isError)
 

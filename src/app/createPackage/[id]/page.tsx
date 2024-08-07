@@ -230,13 +230,13 @@ const CreatePackage: React.FC = () => {
     }
     dispatch(getCreateStudentPackage(memberAuthToken, data));
 
-    console.log(":::::::::>??????????>>>", data)
+    // console.log(":::::::::>??????????>>>", data)
 
   }
 
   useEffect(() => {
     if (studentPackage) {
-      console.log(">>>>>>>>>>>>>>>>>>>>>>classesData", studentPackage);
+      // console.log(">>>>>>>>>>>>>>>>>>>>>>classesData", studentPackage);
       router.push(`/onboardSubmit`);
       // dispatch(setCreateStudentPackages(null))
     }

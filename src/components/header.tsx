@@ -34,7 +34,7 @@ const Header: React.FC = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logged out');
+    // console.log('Logged out');
     localStorage.removeItem('userInfo');
     localStorage.removeItem('user');
 

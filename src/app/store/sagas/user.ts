@@ -6,7 +6,7 @@ import { getStudents } from '@/app/api/user.service';
 import { setStudents, setStudentsError, setStudentsLoading } from '../actions/user';
 
 function* getStudentsEffect(action: any): Generator<any, any, any> {
-  console.log('getStudentsEffect......API CALLING', action);
+  // console.log('getStudentsEffect......API CALLING', action);
 
   try {
     yield put(setStudentsLoading(true));

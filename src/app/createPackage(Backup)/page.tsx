@@ -140,7 +140,7 @@ const CreatePackage: React.FC = () => {
       };
     });
   };
-  console.log(formData);
+  // console.log(formData);
 
 
   return (

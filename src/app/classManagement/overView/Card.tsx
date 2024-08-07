@@ -20,7 +20,7 @@ const OverviewTabContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const memberAuthToken = 'bJHGWGEuiWHAYEAHEwJKHEIUWQDJNASDJgdiUWKJEh';
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
-  console.log(":::::::::::::::classesData", classesData);
+  // console.log(":::::::::::::::classesData", classesData);
   const dialogOpen = () => {
     setOpen(true);
   };

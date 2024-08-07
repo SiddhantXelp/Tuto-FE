@@ -39,7 +39,7 @@ const GoogleSignInButton: React.FC = () => {
             }
         },
         onError: (error) => {
-            console.error('Google login failed', error);
+            // console.error('Google login failed', error);
         },
     });
 

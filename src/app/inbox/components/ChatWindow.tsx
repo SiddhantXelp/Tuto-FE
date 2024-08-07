@@ -194,7 +194,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
-      console.log('Message sent:', message);
+      // console.log('Message sent:', message);
       setMessage('');
     }
   };
@@ -203,7 +203,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
     const uploadedFile = event.target.files?.[0];
     if (uploadedFile) {
       setFile(uploadedFile);
-      console.log('File uploaded:', uploadedFile);
+      // console.log('File uploaded:', uploadedFile);
     }
   };
 

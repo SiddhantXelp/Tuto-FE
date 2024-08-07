@@ -25,7 +25,7 @@ export const CategoriesPage: React.FC = () => {
   const memberAuthToken = 'sid';
   const classesData = useAppSelector((state: { classes: ClassesState }) => state.classes.setClasses?.classes);
   const GETClassData = useAppSelector((state: { classes: ClassesState }) => state.classes);
-  console.log(GETClassData,"GETClassData");
+  // console.log(GETClassData,"GETClassData");
   
 
 
@@ -55,9 +55,9 @@ export const CategoriesPage: React.FC = () => {
     }
   }, [classesData]);
 
-  console.log(tableData, "tableData");
+  // console.log(tableData, "tableData");
 
-  console.log(classesData,"classesDataclassesDataclassesData")
+  // console.log(classesData,"classesDataclassesDataclassesData")
 
   return (
     <div className="p-4">
