@@ -53,6 +53,9 @@ const Header: React.FC = () => {
     }
   }, []);
 
+  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
+
+
   return (
     <div
       className={cn(
@@ -105,7 +108,7 @@ const Header: React.FC = () => {
               <span className="font-semibold text-sm">
                 {userInfo ? (
                   <Image
-                    src={userInfo.picture || ""}
+                    src={imageUrl}
                     alt="Profile"
                     width={100}
                     height={100}

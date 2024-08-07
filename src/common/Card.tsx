@@ -284,16 +284,42 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     { label: "Social", value: "Social" },
   ];
 
+  const groups = [
+    {
+      id: "56be1cdb-b891-4f74-8062-8dfc200b30f5",
+      title: "Select Subject"
+    },
+    {
+      id: "68b1b474-3120-4c44-af88-2a7fdd70723d",
+      title: "English"
+    },
+    {
+      id: "faecf314-5ea4-4536-adac-ef0343161e21",
+      title: "Science"
+    },
+    {
+      id: "d8b5e2f4-9d9d-4f42-9d5e-2c8b8a4f2b70",
+      title: "Mathematics"
+    },
+    {
+      id: "3bfa20f7-905b-4c39-9d21-1b2c8b7c4f90",
+      title: "History"
+    },
+    {
+      id: "7f8c2a5b-914d-4f4f-89a2-4e6f2b8e5a8c",
+      title: "Geography"
+    }
+  ];
 
   const optionsGroup = classesData?.groups?.map((group: any) => ({
     id: group.id,
     title: group.title
   })) ?? [];
 
-  const transformedSubjectOptions = (SubjectOptions ?? []).map((option) => ({
-    id: option.value,
-    title: option.label,
-  }));
+  const transformedSubjectOptions = groups?.map((group: any) => ({
+    id: group.id,
+    title: group.title
+  })) ?? [];
 
   const isLoading = useAppSelector(state => state.student.loading);
 
@@ -315,6 +341,15 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }
   }, [receivedCreatedClass]);
 
+
+  const isError = useAppSelector((state: { classes: any }) => state.classes.error);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(isError)
+    }
+
+  }, [isError])
   return (
     <Dialog open={open} onClose={() => setOpen(false)} className="fixed inset-0 z-10">
       {
@@ -326,7 +361,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
         {showNewContent ? (
           <DialogPanel className="bg-white rounded-lg shadow-xl w-2/4 h-auto">
             <div className='p-12'>
-              <div className='flex justify-center items-cente'>
+              <div className='flex justify-center items-center'>
                 <span className='font-medium text-xl text-blue block mb-4'> +Add student</span>
 
               </div>
@@ -418,7 +453,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                     <CustomDropDown
                       label="Select Subject"
                       name="selectedSubject"
-                      lablename="Select Subjects"
+                      lablename=""
                       options={transformedSubjectOptions}
                       value={formData.subject}
                       onChange={(e) => handleChange({ target: { name: 'subject', value: e.target.value } })}
@@ -480,6 +515,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                           type="date"
                           value={formData.startDate}
                           onChange={handleDateChange}
+                          placeholder='DD-MM-YYY'
                           className="border border-buttonGray rounded-md w-full md:w-[150px] h-10"
                         />
                         <input

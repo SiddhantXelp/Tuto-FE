@@ -1,32 +1,3 @@
-// "use client";
-
-// import React, { useEffect } from "react";
-// import Dashboard from "./TabNavigator/page";
-// import MainDashboard from "./MainDashboard";
-// import { useRouter } from 'next/navigation';
-
-// const Home: React.FC = () => {
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const token = localStorage.getItem("user") || localStorage.getItem("userInfo");
-
-//     if (!token) {
-//       router.push("/auth/Login");
-//     }
-//   }, [router]);
-
-//   return (
-//     <>
-//       <Dashboard>
-//         <MainDashboard />
-//       </Dashboard>
-//     </>
-//   );
-// };
-
-// export default Home;
-
 "use client";
 
 import React, { useEffect, useState, lazy, Suspense } from "react";

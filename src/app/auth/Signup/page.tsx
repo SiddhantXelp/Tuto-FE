@@ -4,9 +4,12 @@ import BackgroundComponent from '../../../common/BackgroundComponent';
 import Link from 'next/link';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
-import { getSignup, setSignup } from "../../store/actions/auth";
+import { getSignup, setSignup, setAuthError } from "../../store/actions/auth";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import Spinner from "../../../common/Spinner"
+import { toast } from 'react-toastify'; // Import toast
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup: React.FC = () => {
   const router = useRouter();
@@ -34,6 +37,51 @@ const Signup: React.FC = () => {
   }, [router]);
 
 
+  const validateForm = () => {
+
+    if (!email) {
+      toast.error("Email ID is required");
+      return false;
+    }
+
+    if (!username) {
+      toast.error("Username is required");
+      return false;
+    }
+
+    if (!password) {
+      toast.error("Password is required");
+      return false;
+    }
+
+    if (!confirmPassword) {
+      toast.error("Please confirm your password");
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return false;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Invalid email address");
+      return false;
+    }
+    return true;
+  };
+
+  const isError = useAppSelector((state: { auth: any }) => state.auth.error);
+
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(isError);
+      dispatch(setAuthError(null))
+
+    }
+
+  }, [isError])
 
   const login = useGoogleLogin({
     onSuccess: async (response) => {
@@ -68,21 +116,32 @@ const Signup: React.FC = () => {
 
   const handleSubmit = () => {
 
-    if (confirmPassword !== password) {
-      alert("Password Not Matched");
-      return;
+    // if (confirmPassword !== password) {
+    //   alert("Password Not Matched");
+    //   return;
+    // }
+
+    // const data = {
+    //   username: username,
+    //   email: email,
+    //   phoneNumber: 1234567890,
+    //   password: password,
+    //   roleId: "046294f6-0555-4f87-9562-da798b09ec23"
+    // }
+
+    // dispatch(getSignup(memberAuthToken, data));
+
+    if (validateForm()) {
+      const data = {
+        username,
+        email,
+        phoneNumber: 1234567890,
+        password,
+        roleId: "046294f6-0555-4f87-9562-da798b09ec23"
+      };
+
+      dispatch(getSignup(memberAuthToken, data));
     }
-
-    const data = {
-      username: username,
-      email: email,
-      phoneNumber: 1234567890,
-      password: password,
-      roleId: "046294f6-0555-4f87-9562-da798b09ec23"
-    }
-
-    dispatch(getSignup(memberAuthToken, data));
-
 
   };
 
@@ -104,7 +163,7 @@ const Signup: React.FC = () => {
   return (
     <BackgroundComponent className="flex items-center justify-center">
       {
-        isLoading ? <Spinner/> : ""
+        isLoading ? <Spinner /> : ""
       }
       <div className="w-full max-w-md">
         <h2
@@ -122,7 +181,7 @@ const Signup: React.FC = () => {
 
         <div className="mb-4">
           <label htmlFor="contact" className="block text-gray-700 mb-2 text-sm/[14px]">
-            Email ID or Mobile Number
+            Email ID
           </label>
           <input
             type="text"
@@ -217,6 +276,8 @@ const Signup: React.FC = () => {
           <p className='text-center mt-5 text-sm/[14px]'>Already having account?  <b> Login here</b></p>
         </Link>
       </div>
+      <ToastContainer />
+
     </BackgroundComponent>
   );
 };

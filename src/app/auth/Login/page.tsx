@@ -37,8 +37,7 @@ const Login: React.FC = () => {
         setLoginGoogle(false);
     };
     const responsesLogin = useAppSelector((state: { auth: any }) => state.auth.login);
-    const isLoadingLogin = useAppSelector((state: { auth: any }) => state.auth.login);
-    const isError = useAppSelector((state: { auth: any }) => state.auth.error);
+    const isLoadingLogin = useAppSelector((state: { auth: any }) => state.auth.loading);
 
 
 
@@ -99,8 +98,15 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (responsesLogin) {
+            // const userData = {
+            //     responsesLogin
+            // };
+
+            console.log("responsesLogin", responsesLogin);
             const userData = {
-                responsesLogin
+                name: responsesLogin?.user?.fullName,
+                email: responsesLogin?.user?.email,
+                picture: responsesLogin?.user?.picture
             };
 
             localStorage.setItem('user', JSON.stringify(userData));
@@ -110,6 +116,7 @@ const Login: React.FC = () => {
 
         }
     }, [responsesLogin]);
+    const isError = useAppSelector((state: { auth: any }) => state.auth.error);
 
     useEffect(() => {
         if (isError) {
@@ -125,7 +132,7 @@ const Login: React.FC = () => {
 
         <BackgroundComponent className="flex items-center justify-center">
             {
-                isLoading && <Spinner />
+                isLoading || isLoadingLogin && <Spinner />
 
             }
             {
@@ -151,6 +158,7 @@ const Login: React.FC = () => {
                             <input
                                 type="text"
                                 id="username"
+                                value={username}
                                 className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
                                 onChange={(e) => setUsername(e.target.value)}
@@ -223,6 +231,7 @@ const Login: React.FC = () => {
                             <input
                                 type="password"
                                 id="password"
+                                value={password}
                                 className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
                                 onChange={(e) => setPassword(e.target.value)}
