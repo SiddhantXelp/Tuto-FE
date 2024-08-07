@@ -27,9 +27,9 @@ const Card: React.FC<CardProps> = ({ data, id, type }) => {
     };
 
     const handleCardClick = () => {
-        if (type === "file") {
-            router.push(`/myFiles/Files/${id}`);
-        }
+        // if (type === "file") {
+        //     router.push(`/myFiles/Files/${id}`);
+        // }
 
     };
 
@@ -37,30 +37,24 @@ const Card: React.FC<CardProps> = ({ data, id, type }) => {
         <>
 
 
-            <div className="bg-white p-6 rounded-xl h-[5rem] flex flex-col cursor-pointer relative border border-black"
+            <div
+                className="bg-white p-1 sm:p-6 rounded-xl h-auto flex flex-col cursor-pointer relative border border-black"
                 onClick={handleCardClick}
             >
-                <div className="flex items-center">
-                    {
-                        type === "pdf" ?
-                            (
-                                <FaFilePdf size={34} />
+                <div className="flex items-center space-x-3">
+                    {type === 'pdf' ? (
+                        <FaFilePdf size={34} />
+                    ) : (
+                        <GoFileDirectoryFill size={40} color="grey" />
+                    )}
 
-                            ) :
-                            (
-                                <GoFileDirectoryFill size={40} color="grey" />
-
-                            )
-
-                    }
-
-                    {/* <h2 className="text-lg font-normal text-[#565656] mx-5">{data}</h2> */}
-                    <h2 className="text-sm sm:text-base md:text-lg font-medium text-gray-700 ml-2 sm:ml-4 md:ml-6">
-                        {data}
-                    </h2>
+                    <div className="min-w-0">
+                        <h2 className="text-sm sm:text-sm md:text-sm font-medium text-gray-700 break-words">
+                            {data}
+                        </h2>
+                    </div>
 
                     <div className="relative ml-auto">
-
                         <BsThreeDotsVertical
                             size={24}
                             color="black"
@@ -122,6 +116,8 @@ const Card: React.FC<CardProps> = ({ data, id, type }) => {
                     </div>
                 </div>
             </div>
+
+
 
 
 

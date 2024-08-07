@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import TabNavigator from "../../../TabNavigator/page";
 import SubFilecard from '../../../../common/Myfiles/SubFilecard';
 import { data } from "../../data";
@@ -8,18 +8,36 @@ import { useParams } from 'next/navigation';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { getMyFilesByID } from '@/app/store/actions/assignment';
+import Spinner from "@/common/Spinner";
 
 const MyFilesPage = () => {
     const { id } = useParams();
     const file = data.find(file => file.id === Number(id));
+    const dispatch = useAppDispatch();
+    const memberAuthToken = "njdkfhsdkjfhsdkjfsdhdfkjsdkhfsjkdfhsdkjf";
+    const myFiles = useAppSelector((state: { assignment: any }) => state.assignment.setMyFilesById);
+    const isLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getMyFilesByID(memberAuthToken, String(id)))
+        }
+    }, [dispatch, memberAuthToken, id]);
+
     return (
         <TabNavigator>
+
+            {
+                isLoading && <Spinner />
+            }
             <div className="p-4 md:p-8 bg-white h-[100rem] rounded-xl">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
                     <div className="flex items-center space-x-4 p-4 md:p-6 border-grey border-b-[1px]">
                         <GoFileDirectoryFill size={50} color="grey" />
                         <div>
-                            <h1 className="text-lg md:text-xl font-semibold text-[#565656]">{file?.fileName}</h1>
+                            <h1 className="text-lg md:text-xl font-semibold text-[#565656]">{myFiles?.title}</h1>
                             <p className="text-gray-600">
                                 {file?.totalFiles} files
                             </p>
@@ -45,15 +63,27 @@ const MyFilesPage = () => {
 
                 <div className="p-4 md:p-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {file?.subFiles?.map(subFile => (
-                            <SubFilecard
-                                key={subFile.id}
-                                data={subFile?.subFilename}
-                                id={subFile?.id}
-                                type="file"
 
-                            />
-                        ))}
+                        {
+                            myFiles && myFiles.Files && myFiles.Files.length > 0 ? (
+                                <>
+                                    {myFiles.Files.map((subFile: any) => (
+                                        <SubFilecard
+                                            key={subFile.id}
+                                            data={subFile.fileName}
+                                            id={subFile.id}
+                                            type="pdf"
+                                        />
+                                    ))}
+                                </>
+                            ) : (
+                                <div className="text-center text-gray-500 mt-4">
+                                    <h1>There are no files</h1>
+                                </div>
+                            )
+                        }
+
+
                     </div>
                 </div>
             </div>
