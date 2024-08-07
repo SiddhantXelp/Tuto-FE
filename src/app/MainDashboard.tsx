@@ -112,7 +112,7 @@ export default function Home() {
   }));
 
   const [activeStep, setActiveStep] = useState(1);
-
+  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
 
   return (
     <>
@@ -188,8 +188,8 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <div className="w-20 h-20 bg-red-400 rounded-full overflow-hidden">
               <Image
-                src={userInfo ? userInfo.picture : ""}
-                alt="Description of the image"
+                src={imageUrl}
+                alt="profile"
                 width={100}
                 height={100}
                 layout="responsive"

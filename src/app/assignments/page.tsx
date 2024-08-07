@@ -45,11 +45,11 @@ const ClassManagementPage: React.FC = () => {
   const renderContent = () => {
     switch (selectedTab) {
       case 'Submitted':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg overflow-auto"><SubmitTable /></div>;
+        return <div className="w-full h-98 bg-gray-100 rounded-lg overflow-auto"><SubmitTable /></div>;
       case 'Pending':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg overflow-auto"><PendingTable /></div>;
+        return <div className="w-full h-98 bg-gray-100 rounded-lg overflow-auto"><PendingTable /></div>;
       case 'Completed':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg overflow-auto"><CompletedTable /></div>;
+        return <div className="w-full h-98 bg-gray-100 rounded-lg overflow-auto"><CompletedTable /></div>;
       default:
         return null;
     }

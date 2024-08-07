@@ -56,14 +56,14 @@ const ClassManagementPage: React.FC = () => {
           </span>
         </div>
         <div className='flex space-x-3'>
-          <div className="bg-buttonGray rounded-full flex items-center justify-center">
-            <p className="flex justify-between text-xxxs my-1 text-white m-2">Last 7days</p>
+          {/* <div className="bg-buttonGray rounded-full flex items-center justify-center">
+            <p className="flex justify-between text-sm my-1 text-white m-2">Last 7days</p>
             <div className="m-2">
               <Icon icon="uis:calender" width="15" height="15" color='white' />
             </div>
-          </div>
+          </div> */}
           <div className="bg-gray-300 rounded-full flex items-center justify-center">
-            <p className="flex justify-between text-xxxs my-1 text-gray-800 m-6">Re-Schedule</p>
+            <p className="flex justify-between text-sm my-1 text-gray-800 m-6">Re-Schedule</p>
 
           </div>
         </div>

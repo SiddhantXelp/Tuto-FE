@@ -1,25 +1,15 @@
 import React from 'react';
-import { Circles } from 'react-loader-spinner';
+import { Bars } from 'react-loader-spinner';
 
 const FullScreenLoader = () => (
-    <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5f5f5',
-        zIndex: 9999,
-    }}>
-        <Circles
-            height="80"
-            width="80"
-            color="#4fa94d"
-            ariaLabel="circles-loading"
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-100 z-50">
+        <Bars
+            height={80}
+            width={80}
+            color="grey"
+            ariaLabel="bars-loading"
             visible={true}
+            wrapperClass="loader-wrapper"
         />
     </div>
 );

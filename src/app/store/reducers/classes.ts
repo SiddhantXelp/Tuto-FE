@@ -70,7 +70,7 @@ export const actionReducers = {
   [actionTypes.SET_CLASSES_LOADING]: setClassesLoading,
   [actionTypes.SET_CREATE_CLASS]: setCreateClasses,
   [actionTypes.SET_STUDENT_GROUP]: setStudentGroup,
-  [actionTypes.GET_CLASSES_ID]: setClassById,
+  [actionTypes.SET_CLASSES_ID]: setClassById,
 };
 
 export const ClassesReducer = (
