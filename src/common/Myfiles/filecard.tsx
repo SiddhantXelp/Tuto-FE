@@ -97,8 +97,8 @@ const Card: React.FC<CardProps> = ({ data }) => {
             </div>
 
             <div className="mt-auto">
-                <h2 className="text-lg font-normal text-[#565656]">{data.fileName}</h2>
-                <p className="mt-2 text-sm text-[#565656]">{data.totalFiles} files</p>
+                <h2 className="text-lg font-normal text-[#565656]">{data.title}</h2>
+                {/* <p className="mt-2 text-sm text-[#565656]">{data.totalFiles} files</p> */}
             </div>
         </div>
     );
