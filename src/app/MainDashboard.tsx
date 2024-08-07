@@ -202,7 +202,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col h-full mt-2">
-        <span className="text-buttonGray text-sm font-semibold mb-2">Submitted Assignment</span>
+        <span className="text-buttonGray text-sm font-semibold mt-4">Submitted Assignment</span>
 
       </div>
 
@@ -227,7 +227,7 @@ export default function Home() {
           <div className="relative">
             <div className="flex justify-between mb-4">
               <span className="text-buttonGray text-sm font-semibold">Upcoming Classes</span>
-              <span className="text-xs text-buttonGray cursor-pointer">View All</span>
+              <span className="text-xs text-buttonGray cursor-pointer mr-1">View All</span>
             </div>
 
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
@@ -294,7 +294,7 @@ export default function Home() {
           <div className="relative">
             <div className="flex justify-between mb-4">
               <span className="text-buttonGray text-sm font-semibold">Upcoming Classes</span>
-              <span className="text-xs text-buttonGray cursor-pointer">View All</span>
+              <span className="text-xs text-buttonGray cursor-pointer mr-2">View All</span>
             </div>
 
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
