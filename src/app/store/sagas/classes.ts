@@ -18,7 +18,7 @@ function* getClassesEffect(action: any): Generator<any, any, any> {
     yield put(setClassesLoading(false));
   } catch (e: any) {
     yield put(setClassesLoading(false));
-    yield put(setClassesError(e.response));
+    yield put(setClassesError(e.response?.data?.message));
   }
 }
 
@@ -35,7 +35,7 @@ function* getCreateClassesEffect(action: any): Generator<any, any, any> {
     yield put(setClassesLoading(false));
   } catch (e: any) {
     yield put(setClassesLoading(false));
-    yield put(setClassesError(e.response));
+    yield put(setClassesError(e.response?.data?.message));
   }
 }
 
@@ -52,7 +52,7 @@ function* getStudentGroupEffect(action: any): Generator<any, any, any> {
     yield put(setClassesLoading(false));
   } catch (e: any) {
     yield put(setClassesLoading(false));
-    yield put(setClassesError(e.response));
+    yield put(setClassesError(e.response?.data?.message));
   }
 }
 
@@ -70,7 +70,7 @@ function* getCreateClassesByIdEffect(action: any): Generator<any, any, any> {
     yield put(setClassesLoading(false));
   } catch (e: any) {
     yield put(setClassesLoading(false));
-    yield put(setClassesError(e.response));
+    yield put(setClassesError(e.response?.data?.message));
   }
 }
 
