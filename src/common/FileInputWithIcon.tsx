@@ -8,7 +8,7 @@ interface FileInputWithIconProps {
 
 const FileInputWithIcon: React.FC<FileInputWithIconProps> = ({ icon, onChange, name }) => {
   return (
-    <div className="relative flex items-center border-2 border-gray-400 h-12 rounded-md w-full">
+    <div className="relative flex items-center  h-12  w-full border border-[#707070] rounded-md p-2 opacity-100">
       {/* File input field */}
       <input
         type="file"

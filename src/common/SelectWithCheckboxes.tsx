@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaAngleDown } from "react-icons/fa";
 
 interface Option {
@@ -18,6 +18,7 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
   setSelectedOptions,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleOption = (option: string) => {
     if (selectedOptions.includes(option)) {
@@ -27,8 +28,21 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
     }
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative inline-block w-full max-w-xs md:max-w-md">
+    <div ref={dropdownRef} className="relative inline-block w-full max-w-xs md:max-w-md">
       <div
         className="h-auto w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100"
         onClick={() => setIsOpen(!isOpen)}
@@ -41,22 +55,19 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
               : 'Select options'}
           </div>
         </div>
-        {/* <span className="text-xs text-gray-500">
-          {isOpen ? 'Close' : 'Open'}
-        </span> */}
       </div>
       {isOpen && (
-        <div className="absolute border border-gray-300 bg-white rounded-md mt-1 w-full max-h-60 overflow-y-auto z-10">
+        <div className="absolute border border-gray-300 bg-white rounded-md mt-1 w-full max-h-60 overflow-y-auto z-10 shadow-lg">
           {options.map((option) => (
-            <div key={option.value} className="flex items-center p-2 hover:bg-gray-100">
+            <label key={option.value} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
               <input
                 type="checkbox"
                 checked={selectedOptions.includes(option.value)}
                 onChange={() => toggleOption(option.value)}
                 className="accent-blue-500"
               />
-              <label className="ml-2 text-xs text-buttonGray">{option.label}</label>
-            </div>
+              <span className="ml-2 text-xs text-buttonGray">{option.label}</span>
+            </label>
           ))}
         </div>
       )}

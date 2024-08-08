@@ -18,13 +18,13 @@ const ClassManagementPage: React.FC = () => {
       case 'Upcoming':
         return (
           <div>
-            <div className="w-full h-59 bg-gray-100 rounded-lg"><CategoriesPage /></div>
+            <div className="w-full h-98  rounded-lg"><CategoriesPage /></div>
           </div>
         );
       case 'Completed':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg"><CategoriesPage /></div>;
+        return <div className="w-full h-98  rounded-lg"><CategoriesPage /></div>;
       case 'Cancelled':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg"><CategoriesPage /></div>;
+        return <div className="w-full h-98  rounded-lg"><CategoriesPage /></div>;
 
       default:
         return null;
@@ -37,19 +37,19 @@ const ClassManagementPage: React.FC = () => {
       <div className='w-full h-12 pr-5 py-3 bg-white flex justify-between '>
         <div className="space-x-20 pl-10 ">
           <span
-            className={` cursor-pointer text-sm ${selectedTab === 'Upcoming' ? 'font-bold' : ''}`}
+            className={` cursor-pointer text-gray-600 text-sm ${selectedTab === 'Upcoming' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Upcoming')}
           >
             Upcoming
           </span>
           <span
-            className={` cursor-pointer text-sm ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
+            className={` cursor-pointer text-gray-600 text-sm ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Completed')}
           >
             Completed
           </span>
           <span
-            className={` cursor-pointer text-sm ${selectedTab === 'Cancelled' ? 'font-bold' : ''}`}
+            className={` cursor-pointer text-gray-600 text-sm ${selectedTab === 'Cancelled' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Cancelled')}
           >
             Cancelled

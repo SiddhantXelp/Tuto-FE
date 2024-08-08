@@ -62,31 +62,25 @@ const QuestionBank = () => {
     const toggleVisibility = () => {
         setIsVisible(!isVisible);
     };
-  return (
-    <TabNavigator>
-    
+    return (
+        <TabNavigator>
 
 
-    
-        <div className="p-4">
-            <div className='flex flex-row justify-between mt-2'>
-                <div>
-                    <span className='text-sm'>Question Bank</span>
-                </div>
-                <div className='flex flex-row justify-evenly gap-2'>
-                    <div>
+
+            <div className='bg-white p-6 md:p-10 rounded-lg shadow-lg h-[900px]'>
+                <div className='flex flex-row justify-between items-center mb-4'>
+                    <span className='text-gray-800 text-xl font-semibold mb-4'>Question Bank</span>
+                    <div className='flex flex-row items-center gap-2'>
                         <SearchComponent onSearch={handleChange} />
-                    </div>
-                    <div>
-                        <div className="border border-gray-300 p-2 rounded-md w-auto h-10 bg-white">
-                            <div className="flex items-center mb-4">
-                                <i className="mr-2 cursor-pointer" onClick={toggleVisibility}><FaFilter color='gray' size={20}/></i>
-                                <span className="font-semibold text-xs text-buttonGray">Filters</span>
-                            </div>
+                        <div className="relative">
+                            <button className="border border-gray-300 p-2 rounded-md flex items-center bg-white h-full">
+                                <FaFilter color='gray' size={20} className='mr-2' />
+                                <span className="font-semibold text-xs text-gray-600">Filters</span>
+                            </button>
                             {isVisible && (
-                                <div className="space-y-2 bg-slate-200">
+                                <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-md shadow-lg w-48">
                                     {filterOptions.map((filter) => (
-                                        <label key={filter.name} className="flex items-center">
+                                        <label key={filter.name} className="flex items-center mb-2">
                                             <input
                                                 type="checkbox"
                                                 name={filter.name}
@@ -94,7 +88,7 @@ const QuestionBank = () => {
                                                 onChange={handleChangeCheckbox}
                                                 className="mr-2"
                                             />
-                                            {filter.label}
+                                            <span className="text-xs text-gray-700">{filter.label}</span>
                                         </label>
                                     ))}
                                 </div>
@@ -102,53 +96,50 @@ const QuestionBank = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 mt-3">
-                {mainCardData.map((item) => (
-                    <div key={item.id} className='relative'>
-                        <div className={`border-2 border-buttonGray rounded-lg bg-white`}>
-                            <div className='flex flex-row justify-between items-center p-2'>
-                                <div className='flex flex-col gap-1'>
-                                    <span className='text-xs text-buttonGray'>{item.head}</span>
-                                    <span className='text-xxs text-buttonGray'>{item.data}</span>
-                                </div>
-                                <div>
-                                    {showCardId !== item.id ? (
-                                        <IoMdAdd color='black' size={30} onClick={() => handleClick(item.id)} />
-                                    ) : (
-                                        <IoMdRemove color='black' size={30} onClick={() => handleClick(item.id)} />
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                        {showCardId === item.id && (
-                            <div className="mt-2">
-                                {innerCardData.map((innerItem, index) => (
-                                    <div key={index} className='border-2 border-buttonGray rounded-lg mb-2 bg-white'>
-                                        <div className='flex flex-row justify-between items-center p-2'>
-                                            <div className='flex flex-col gap-1'>
-                                                <span className='text-xs text-buttonGray'>{innerItem.head}</span>
-                                                <span className='text-xxs text-buttonGray'>{innerItem.data}</span>
-                                            </div>
-                                            <Link href="/assignments/createAssignment/createNewAssignment">
-                                                <div>
-                                                    <span><u>Edit</u></span>
-                                                </div>
-                                            </Link>
-                                        </div>
+                <div className="grid grid-cols-1 gap-4">
+                    {mainCardData.map((item) => (
+                        <div key={item.id} className='relative'>
+                            <div className='border border-gray-300 rounded-lg bg-white shadow-md'>
+                                <div className='flex flex-row justify-between items-center p-4'>
+                                    <div className='flex flex-col gap-1'>
+                                        <span className='text-sm text-gray-600'>{item.head}</span>
+                                        <span className='text-sm text-gray-500'>{item.data}</span>
                                     </div>
-                                ))}
+                                    <button onClick={() => handleClick(item.id)} className='text-gray-600'>
+                                        {showCardId !== item.id ? (
+                                            <IoMdAdd color='black' size={24} />
+                                        ) : (
+                                            <IoMdRemove color='black' size={24} />
+                                        )}
+                                    </button>
+                                </div>
                             </div>
-                        )}
-                    </div>
-                ))}
+                            {showCardId === item.id && (
+                                <div className="mt-4">
+                                    {innerCardData.map((innerItem, index) => (
+                                        <div key={index} className='border border-gray-300 rounded-lg mb-2 bg-white shadow-sm'>
+                                            <div className='flex flex-row justify-between items-center p-4'>
+                                                <div className='flex flex-col gap-1'>
+                                                    <span className='text-xs text-gray-600'>{innerItem.head}</span>
+                                                    <span className='text-xs text-gray-500'>{innerItem.data}</span>
+                                                </div>
+                                                <Link href="/assignments/createAssignment/createNewAssignment">
+                                                    <button className='text-gray-500 hover:underline text-xs hover:text-blue-800'>Edit</button>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
-    
 
 
-    </TabNavigator>
-  )
+
+        </TabNavigator>
+    )
 }
 
 export default QuestionBank

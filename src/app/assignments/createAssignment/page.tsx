@@ -1,29 +1,28 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 import TabNavigator from "../../TabNavigator/page";
 
 const View = () => {
     return (
         <TabNavigator>
-            <div className='w-full h-full'>
-                <div className='w-full h-96 bg-white shadow-lg rounded-e-lg sm:p-2 md:p-6 lg:p-8 xl:p-10 flex justify-between items-center '>
+            <div className=' bg-white shadow-xl rounded-lg p-4 md:p-8 flex justify-between items-center h-[700px] mt-5'>
 
-                    <Link href="/assignments/createAssignment/createNewAssignment">
-                        <div className='sm:w-52 md:w-56 lg:w-60 xl:w-64 2xl:w-64 h-28 bg-slate-100 flex justify-center items-center border-2 border-gray-400 rounded-lg '>
-                            <span className=' text-xs'>Create new assignment+</span>
-                        </div>
-                    </Link>
+                <Link href="/assignments/createAssignment/createNewAssignment">
+                    <div className='w-full sm:w-64 md:w-72 lg:w-80 xl:w-96 h-40 bg-[#F4F4F4] flex flex-col justify-center items-center border-2 border-gray-300 rounded-lg transition-transform transform hover:scale-105'>
+                        <span className='text-sm font-semibold text-gray-700'>Create New Assignment+</span>
+                    </div>
+                </Link>
 
-                    <div className='w-0.5 h-72 bg-gray-300'></div> {/* Divider */}
-                    <Link href="/assignments/createAssignment/createNewAssignment/preview/questionBank">
-                        <div className='sm:w-52 md:w-56 lg:w-60 xl:w-64 2xl:w-64 h-28 bg-slate-100 flex justify-center items-center p-4 border-2 border-gray-400 rounded-lg'>
-                            <span className=' text-xs'>Choose from the Question Bank</span>
-                        </div>
-                    </Link>
-                </div>
+                <div className='w-[2px] h-full bg-gray-300 mx-6'></div>
+
+                <Link href="/assignments/createAssignment/createNewAssignment/preview/questionBank">
+                    <div className='w-full sm:w-64 md:w-72 lg:w-80 xl:w-96 h-40 bg-[#F4F4F4] flex flex-col justify-center items-center p-4 border-2 border-gray-300 rounded-lg transition-transform transform hover:scale-105'>
+                        <span className='text-sm font-semibold text-gray-700'>Choose from the Question Bank</span>
+                    </div>
+                </Link>
             </div>
         </TabNavigator>
-    )
-}
+    );
+};
 
-export default View
+export default View;

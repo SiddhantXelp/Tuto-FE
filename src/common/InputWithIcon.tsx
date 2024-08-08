@@ -20,6 +20,7 @@ const InputWithIcon: React.FC<InputWithIconProps> = ({ icon, placeholder,type, v
         name={name}
         onChange={onChange} 
         style={styles.input}
+        className='h-auto w-full bg-white border border-[#707070] rounded-md p-2 opacity-100'
       />
       <span style={styles.iconContainer}>{icon}</span>
     </div>
@@ -41,14 +42,14 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: 'flex',
     alignItems: 'center',
   },
-  input: {
-    width: '100%',
-    padding: '10px 40px 10px 10px', 
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    outline: 'none',
-    boxSizing: 'border-box',
-  },
+  // input: {
+  //   width: '100%',
+  //   padding: '10px 40px 10px 10px', 
+  //   border: '1px solid #707070',
+  //   borderRadius: '4px',
+  //   outline: 'none',
+  //   boxSizing: 'border-box',
+  // },
 };
 
 export default InputWithIcon;
