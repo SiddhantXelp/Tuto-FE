@@ -116,7 +116,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-[70%_30%] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="flex flex-col">
             <span className="text-buttonGray text-sm font-semibold mb-2">Students</span>

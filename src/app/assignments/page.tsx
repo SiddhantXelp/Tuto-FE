@@ -106,19 +106,19 @@ const ClassManagementPage: React.FC = () => {
 
         <div className="w-full sm:w-auto md:w-96 lg:w-96 xl:w-96 2xl:w-auto h-12 flex space-x-4 md:space-x-8 lg:space-x-12 pl-4 md:pl-6 lg:pl-8 py-3 bg-white rounded-xl mb-4">
           <span
-            className={`text-sm cursor-pointer ${selectedTab === 'Submitted' ? 'font-bold' : ''}`}
+            className={`text-gray-600 text-sm cursor-pointer ${selectedTab === 'Submitted' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Submitted')}
           >
             Submitted
           </span>
           <span
-            className={`text-sm cursor-pointer ${selectedTab === 'Pending' ? 'font-bold' : ''}`}
+            className={`text-gray-600 text-sm cursor-pointer ${selectedTab === 'Pending' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Pending')}
           >
             Pending
           </span>
           <span
-            className={`text-sm cursor-pointer ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
+            className={`text-gray-600 text-sm cursor-pointer ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Completed')}
           >
             Completed
