@@ -342,7 +342,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   }, [receivedCreatedClass]);
 
 
-  const isError = useAppSelector((state: { classes: any }) => state.classes.error);
+  const isError = useAppSelector((state: { classes: any }) => state.classes.setClassesError);
 
   useEffect(() => {
     if (isError) {
