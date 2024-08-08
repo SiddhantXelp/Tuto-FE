@@ -24,11 +24,11 @@ const ClassManagementPage: React.FC = () => {
           </div>
         );
       case 'Classes':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg p-4"><ClassTable /></div>;
+        return <div className="w-full h-98 bg-gray-100 rounded-lg p-4"><ClassTable /></div>;
       case 'Time table':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg p-4"><TimeTable /></div>;
+        return <div className="w-full h-98 bg-gray-100 rounded-lg p-4"><TimeTable /></div>;
       case 'Attendance':
-        return <div className="w-full h-64 bg-gray-100 rounded-lg p-4"><Attendance /></div>;
+        return <div className="w-full h-98 bg-gray-100 rounded-lg p-4"><Attendance /></div>;
       default:
         return null;
     }

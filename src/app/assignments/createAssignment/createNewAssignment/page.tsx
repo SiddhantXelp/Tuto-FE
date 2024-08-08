@@ -170,14 +170,11 @@ const CreateNewAssignment = () => {
 
   return (
     <TabNavigator>
-      <span>Create new assignment</span>
-
-      <div className='grid grid-cols-10 h-full '>
-
-        <div className='col-span-3 bg-white flex flex-row '>
-
-          <div className='grid grid-cols-1'>
-            <div className='p-4'>
+      <div className='w-full h-[1000px] bg-gray-50 p-6 md:p-10'>
+        <div className='bg-white shadow-xl rounded-lg p-6 md:p-8 flex flex-col md:flex-row gap-6'>
+          <div className='flex flex-col md:w-1/3'>
+            <h2 className='text-lg  mb-4 text-[#101415]'>Create New Assignment</h2>
+            <div className='space-y-4'>
               {formFields.map((field) => {
                 switch (field.type) {
                   case 'text':
@@ -189,6 +186,7 @@ const CreateNewAssignment = () => {
                         placeholder={field.placeholder}
                         onChange={handleChange}
                         value={formData[field.name as keyof typeof formData] as string}
+                        className='w-full'
                       />
                     );
                   case 'select':
@@ -198,34 +196,37 @@ const CreateNewAssignment = () => {
                         name={field.name}
                         label={field.label}
                         options={field.options}
-                        lablename={field.lablename} // Ensure lablename is passed
+                        lablename={field.lablename}
                         value={formData[field.name as keyof typeof formData] as string}
                         onChange={handleChange}
+                        className='w-full'
                       />
                     );
                   case 'file':
                     return (
                       <div key={field.name}>
-                        <label htmlFor={field.name} className='text-buttonGray '>{field.label}</label>
+                        <label htmlFor={field.name} className='block text-sm mb-2 text-[#707070]'>{field.label}</label>
                         <FileInputWithIcon
                           key={field.name}
                           name={field.name}
                           placeholder={field.placeholder}
                           icon={<FaFile />}
                           onChange={handleFileChange}
+                          className='w-full'
                         />
                       </div>
                     );
                   case 'date':
                     return (
                       <div key={field.name}>
-                        <label htmlFor={field.name} className='text-buttonGray'>{field.label}</label>
+                        <label htmlFor={field.name} className='block text-sm mb-2 text-[#707070]'>{field.label}</label>
                         <InputWithIcon
                           type={field.type}
                           name={field.name}
                           icon={null}
                           onChange={handleChange}
                           value={formData[field.name as keyof typeof formData] as string}
+                          className='w-full'
                         />
                       </div>
                     );
@@ -235,21 +236,15 @@ const CreateNewAssignment = () => {
               })}
             </div>
           </div>
-          <div className='w-0.5 h-72 bg-gray-300 ml-10'></div> {/* Divider */}
-        </div>
 
-        <div className='col-span-7 bg-white ml-1'>
-
-
-
-          <div className='col-span-7 bg-white ml-1'>
+          <div className='flex-grow md:w-2/3 mt-16'>
             {cards.map((card, cardIndex) => (
-              <div key={card.id} className='border-2 border-gray-300 gap-2 p-4 rounded-lg mb-4'>
-                <div>
-                  <span className='text-buttonGray text-xs'>Question {cardIndex + 1}</span>
-                  <div className='grid grid-cols-2 gap-4'>
+              <div key={card.id} className='mb-4 bg-white shadow-sm border border-[#707070] rounded-md p-2 opacity-100'>
+                <div className='mb-4'>
+                  <span className='text-gray-600 text-xs'>Question {cardIndex + 1}</span>
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-5'>
                     <input
-                      className='border-2 h-10 border-gray-400 w-auto rounded-lg'
+                      className=' text-gray-700 border border-[#707070] rounded-md p-2 opacity-100'
                       type='text'
                       name='question'
                       value={card.formData.question}
@@ -257,90 +252,96 @@ const CreateNewAssignment = () => {
                     />
                     <select
                       name='option'
-                      className='border-2 h-10 border-gray-400 w-auto rounded-lg'
+                      className='border border-[#707070] rounded-md p-2 opacity-100 text-gray-700'
                       value={card.formData.option}
                       onChange={(e) => handleCardChange(cardIndex, e)}
                     >
-                      <option className='text-buttonGray text-xs'>Paragraph</option>
-                      <option className='text-buttonGray text-xs'>Multiple choice questions</option>
-                      <option className='text-buttonGray text-xs'>Checkboxes</option>
-                      <option className='text-buttonGray text-xs'>Upload file</option>
+                      <option className='text-gray-600'>Paragraph</option>
+                      <option className='text-gray-600'>Multiple choice questions</option>
+                      <option className='text-gray-600'>Checkboxes</option>
+                      <option className='text-gray-600'>Upload file</option>
                     </select>
                   </div>
-                  {card.formData.option === 'Paragraph' ? (
-                    <div className='p-4'>
-                      <textarea
-                        name='paragraph'
-                        placeholder='Answer text'
-                        className='text-buttonGray text-xs border-b-2 border-gray-400 w-full h-24'
-                        value={card.formData.paragraph}
-                        onChange={(e) => handleCardChange(cardIndex, e)}
-                      />
-
-                    </div>
-                  ) : card.formData.option === 'Multiple choice questions' ? (
-                    <>
-                      {radioOptions.map((item) => (
-                        <div key={item.name}>
-                          <input
-                            type='radio'
-                            name={`radioGroup${card.id}`}
-                            value={item.value}
-                            checked={card.formData.radioGroup === item.value}
-                            onChange={() => handleRadioChange(cardIndex, item.value)}
-                            className='mt-4 bg-slate-100  border-b-2 border-gray-400'
-                          />
-                          <label className='text-buttonGray text-xs ml-2'>{item.label}</label>
-                        </div>
-                      ))}
-
-                    </>
-                  ) : card.formData.option === 'Checkboxes' ? (
-                    <>
-                      {checkboxOptions.map((checkbox, checkboxIndex) => (
-                        <div key={checkbox.value}>
-                          <input
-                            type='checkbox'
-                            checked={card.formData.checkboxes.split(',').includes(checkbox.value)}
-                            onChange={() => handleCheckboxChange(cardIndex, checkbox.value)}
-                            className='mt-4 text-buttonGray size-2'
-                          />
-                          <label className='text-buttonGray text-xs ml-2'>{checkbox.label}</label>
-                        </div>
-                      ))}
-
-                    </>
-                  ) : card.formData.option === 'Upload file' ? (
-                    <div className='p-4'>
-                      <label htmlFor='uploadFile' className='text-buttonGray text-xs'>Upload File</label>
-                      <input
-                        type='file'
-                        name='file'
-                        className='border-2 h-10 border-gray-400 w-full rounded-lg'
-                        onChange={(e) => handleFileChange(cardIndex, e)}
-                      />
-                      {card.formData.file && (
-                        <div className='mt-2'>
-                          <p><strong>Uploaded File:</strong> {card.formData.file.name}</p>
-                        </div>
-                      )}
-                    </div>
-                  ) : null}
                 </div>
+
+                {card.formData.option === 'Paragraph' && (
+                  <textarea
+                    name='paragraph'
+                    placeholder='Answer text'
+                    className=' text-gray-700 w-full h-24 border border-[#707070] rounded-md p-2 opacity-100'
+                    value={card.formData.paragraph}
+                    onChange={(e) => handleCardChange(cardIndex, e)}
+                  />
+                )}
+
+                {card.formData.option === 'Multiple choice questions' && (
+                  <div className='mt-4'>
+                    {radioOptions.map((item) => (
+                      <div key={item.name} className='flex items-center mb-2'>
+                        <input
+                          type='radio'
+                          name={`radioGroup${card.id}`}
+                          value={item.value}
+                          checked={card.formData.radioGroup === item.value}
+                          onChange={() => handleRadioChange(cardIndex, item.value)}
+                          className='mr-2'
+                        />
+                        <label className='text-gray-600 text-xs'>{item.label}</label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {card.formData.option === 'Checkboxes' && (
+                  <div className='mt-4'>
+                    {checkboxOptions.map((checkbox) => (
+                      <div key={checkbox.value} className='flex items-center mb-2'>
+                        <input
+                          type='checkbox'
+                          checked={card.formData.checkboxes.split(',').includes(checkbox.value)}
+                          onChange={() => handleCheckboxChange(cardIndex, checkbox.value)}
+                          className='mr-2'
+                        />
+                        <label className='text-gray-600 text-xs'>{checkbox.label}</label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {card.formData.option === 'Upload file' && (
+                  <div className='mt-4'>
+                    <label htmlFor='uploadFile' className='text-gray-700 text-xs'>Upload File</label>
+                    <input
+                      type='file'
+                      name='file'
+                      className='border-2 border-gray-300 rounded-lg p-2 w-full'
+                      onChange={(e) => handleFileChange(cardIndex, e)}
+                    />
+                    {card.formData.file && (
+                      <div className='mt-2 text-gray-600'>
+                        <strong>Uploaded File:</strong> {card.formData.file.name}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
-          </div>
-          <div className='flex flex-col gap-4 p-2'>
-            <button onClick={addCard} className='mb-4 p-2 bg-white border-2 border-buttonGray  sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full text-buttonGray rounded text-xs'>Add question+</button>
-            <Link href="/assignments/createAssignment/createNewAssignment/preview">
-              <button className='mb-4 p-2 bg-buttonGray sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full text-white rounded text-xs'>Create & Preview</button>
-            </Link>
+
+            <div className='flex flex-col gap-4 mt-6'>
+              <button onClick={addCard} className='p-3 bg-white-500 text-black rounded-lg shadow hover:bg-gray-500 hover:text-white hover:border-gray-500 transition-colors border border-[#707070]'>
+                <span className='text-sm'>Add Question+</span>
+
+              </button>
+              <button className='p-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey'>
+                <Link href="/assignments/createAssignment/createNewAssignment/preview">
+                  <span className='text-sm'>Create & Preview</span>
+                </Link>
+              </button>
+            </div>
           </div>
         </div>
-
-
       </div>
-    </TabNavigator>
+    </TabNavigator >
   );
 };
 

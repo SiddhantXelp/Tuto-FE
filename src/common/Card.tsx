@@ -252,7 +252,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
 
 
-    if (validateFormFinal()) {
+    if (validateFormFinal() && validateForm()) {
       const data = {
         "title": formData.classTitle,
         "group": formData.selectedGroup,
@@ -513,21 +513,21 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       <div className="flex flex-col md:flex-row gap-2 w-full md:w-2/3">
                         <input
                           type="date"
-                          value={formData.startDate}
+                          value={formData.startDate || "DD-MM-YYY"}
                           onChange={handleDateChange}
                           placeholder='DD-MM-YYY'
                           className="border border-buttonGray rounded-md w-full md:w-[150px] h-10"
                         />
                         <input
                           type="time"
-                          value={formData.startTime}
+                          value={formData.startTime || "00:00"}
                           onChange={handleStartTimeChange}
                           className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2"
                         />
                         <span className="text-[#707070] text-[12px] md:text-[14px] mt-2">to</span>
                         <input
                           type="time"
-                          value={formData.endTime}
+                          value={formData.endTime || "00:00"}
                           onChange={handleEndTimeChange}
                           className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2"
                         />

@@ -1,158 +1,125 @@
 import Link from 'next/link';
-import React from 'react'
+import React from 'react';
 import TabNavigator from "../../../../TabNavigator/page";
 
 const Preview = () => {
     const assignmentData = [
-        {
-            head: "Assignment title",
-            data: "English grammar 8th standard",
-        },
-        {
-            head: "Subject",
-            data: "English",
-        },
-        {
-            head: "Students",
-            data: "Group B",
-        },
-        {
-            head: "Material",
-            data: "_English gramer pdf",
-        },
-        {
-            head: "Due date & time",
-            data: "20-03-2023, 09:00pm",
-        }
+        { head: "Assignment title", data: "English grammar 8th standard" },
+        { head: "Subject", data: "English" },
+        { head: "Students", data: "Group B" },
+        { head: "Material", data: "_English grammar pdf" },
+        { head: "Due date & time", data: "20-03-2023, 09:00pm" }
     ];
 
     const cards = [
-        {
-            cardName: "Quetion1",
-
-        },
-
-        {
-            cardName: "Quetion2",
-
-        },
-        {
-            cardName: "Quetion3",
-        },
-        {
-            cardName: "Quetion4",
-        },
-    ]
+        { cardName: "Question1" },
+        { cardName: "Question2" },
+        { cardName: "Question3" },
+        { cardName: "Question4" }
+    ];
 
     const radioOptions = [
         { name: 'option1', value: 'Option1', label: 'Option 1' },
         { name: 'option2', value: 'Option2', label: 'Option 2' },
         { name: 'option3', value: 'Option3', label: 'Option 3' }
     ];
+
     const checkboxOptions = [
         { label: 'Option 1', value: 'Option1' },
         { label: 'Option 2', value: 'Option2' },
         { label: 'Option 3', value: 'Option3' }
     ];
 
-
     return (
         <TabNavigator>
-            <span>Create new assignment</span>
+            <div className='bg-white  p-6 md:p-10 rounded-lg shadow'>
+                <h1 className='text-xl font-semibold mb-4'>Create new assignment</h1>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+                    <div className='p-4 '>
+                        {assignmentData.map((item, index) => (
+                            <div key={index} className='mb-2'>
+                                <span className='font-semibold text-sm'>{item.head}</span>
+                                <p className='text-gray-700 text-sm mt-3'>{item.data}</p>
+                                <p className='text-gray-700 text-sm mt-3 border-b-2 border-grey'></p>
 
-            <div className='grid grid-cols-10 h-full '>
+                            </div>
+                        ))}
+                    </div>
 
-                <div className='col-span-3 bg-white flex flex-row '>
+                    <div className=' p-4  col-span-2'>
+                        <h2 className='text-sm font-medium mb-4'>Questions</h2>
+                        {cards.map((item, index) => (
+                            <div key={index} className='border border-gray-300 rounded-lg mb-4 p-4'>
+                                <span className='block text-gray-800 font-medium mb-2 text-sm'>{item.cardName}</span>
+                                {item.cardName === "Question1" && (
+                                    <textarea
+                                        name='paragraph'
+                                        placeholder='Answer text'
+                                        className='border border-gray-400 rounded w-full p-2 h-24'
+                                    />
+                                )}
 
-                    <div className='grid grid-cols-1'>
-                        <div>
-                            {assignmentData.map((item) => (
-                                <div className='flex flex-col gap-1 border-b-2 border-gray-200 mt-2 p-2'>
-                                    <span className=' text-xs'>{item.head}</span>
-                                    <span className='text-buttonGray text-xxs'>{item.data}</span>
-                                </div>
-                            ))}
+                                {item.cardName === "Question2" && (
+                                    <div className='flex flex-col'>
+                                        {radioOptions.map(option => (
+                                            <div key={option.name} className='flex items-center mb-2'>
+                                                <input
+                                                    type='radio'
+                                                    id={option.name}
+                                                    name={`radioGroup${index}`}
+                                                    value={option.value}
+                                                    className='mr-2'
+                                                />
+                                                <label htmlFor={option.name} className='text-gray-700 text-sm'>{option.label}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
 
+                                {item.cardName === "Question3" && (
+                                    <div className='flex flex-col'>
+                                        {checkboxOptions.map(option => (
+                                            <div key={option.value} className='flex items-center mb-2'>
+                                                <input
+                                                    type='checkbox'
+                                                    id={option.value}
+                                                    className='mr-2'
+                                                />
+                                                <label htmlFor={option.value} className='text-gray-700 text-sm'>{option.label}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {item.cardName === "Question4" && (
+                                    <div>
+                                        <input
+                                            type='file'
+                                            className='border border-gray-400 rounded w-full p-2'
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                        
+                        <div className='flex flex-col gap-4 mt-6'>
+                            <button className='p-3 bg-white-500 text-black rounded-lg shadow hover:bg-gray-500 hover:text-white hover:border-gray-500 transition-colors border border-[#707070]'>
+                                <Link href="/assignments/createAssignment/createNewAssignment">
+                                    <span className='text-sm'>Edit</span>
+                                </Link>
+
+                            </button>
+                            <button className='p-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey'>
+                                <Link href="/assignments">
+                                    <span className='text-sm'>Save & Publish</span>
+                                </Link>
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <div className='col-span-7 bg-white ml-1'>
-
-
-
-                    <div className='col-span-7 bg-white ml-1'>
-
-                        {cards.map((item) => (
-                            <div className='border-2 border-gray-300 gap-2 p-4 rounded-lg mb-4'>
-                                <div>
-                                    <span className='text-buttonGray text-sm'>{item.cardName}</span>
-
-                                    <div>
-                                        {item.cardName === "Quetion1" ? (
-                                            <div>
-                                                <textarea
-                                                    name='paragraph'
-                                                    placeholder='Answer text'
-                                                    className='text-buttonGray text-xs border-b-2 border-gray-400 w-full h-16'
-                                                />
-                                            </div>
-
-                                        ) : item.cardName === "Quetion2" ? (
-                                            <>
-                                                {radioOptions.map((item) => (
-                                                    <div key={item.name}>
-                                                        <input
-                                                            type='radio'
-                                                            className='mt-4 bg-slate-100  border-b-2 border-gray-400 size-3'
-                                                        />
-                                                        <label className='text-buttonGray text-xs ml-2'>{item.label}</label>
-                                                    </div>
-                                                ))}
-                                            </>
-
-                                        ) : item.cardName === "Quetion3" ? (
-                                            <>
-                                                {checkboxOptions.map((checkbox, checkboxIndex) => (
-                                                    <div key={checkbox.value}>
-                                                        <input
-                                                            type='checkbox'
-                                                            className='mt-4 text-buttonGray size-1'
-                                                        />
-                                                        <label className='text-buttonGray text-xs ml-2'>{checkbox.label}</label>
-                                                    </div>
-                                                ))}
-                                            </>
-                                        ) : item.cardName === "Quetion4" ? (
-                                            <>
-                                                <input
-                                                    type='file'
-                                                    name='file'
-                                                    className='border-2 h-10 border-gray-400 w-full rounded-lg text-buttonGray text-xs'
-                                                />
-                                            </>
-                                        ) : <></>}
-                                    </div>
-
-                                </div>
-                            </div>
-                        ))}
-
-                    </div>
-                    <div className='flex flex-col gap-2 p-2'>
-                      <Link href="/assignments/createAssignment/createNewAssignment">
-                        <button className='mb-4 p-2 bg-white border-2 border-buttonGray  sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full text-buttonGray rounded text-xs'>Edit</button>
-                        </Link>
-                        <Link href="/assignments">
-                        <button className='mb-4 p-2 bg-buttonGray sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-full text-white rounded text-xs'>Save & Publish</button>
-                        </Link>
-                    </div>
-                </div>
-
-
             </div>
         </TabNavigator>
-    )
+    );
 }
 
-export default Preview
+export default Preview;
