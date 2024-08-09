@@ -104,7 +104,7 @@
 //     }
 //   };
 //   console.log(message,"message");
-  
+
 
 //   return (
 //     <div className="flex-1 p-1 flex flex-col">
@@ -208,10 +208,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
   };
 
   return (
-    <div className="flex-1 p-2 md:p-4 flex flex-col">
+    <div className="flex-1 flex flex-col">
       {selectedChat ? (
         <>
-          <div className="flex items-center mb-4 bg-white border-b p-2 md:p-4">
+          <div className="flex items-center mb-4 bg-white border-b p-4 md:p-4 mt-2">
             <img src={selectedChat.image} alt={selectedChat.name} className="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3" />
             <div className="flex flex-col">
               <h2 className="text-sm md:text-xs font-bold">{selectedChat.name}</h2>
@@ -221,12 +221,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
           <div className="flex-1 overflow-y-auto p-2">
             {selectedChat.messages.map((msg) => (
               <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
-                <div className={`p-2 md:p-3 rounded ${msg.sender === 'me' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+                <div
+                  className={`p-2 md:p-3 rounded ${msg.sender === 'me' ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                    } ${msg.sender === 'me' ? 'w-1/2' : 'w-1/2'}`}
+                >
                   <p className="text-xs md:text-xs">{msg.text}</p>
                   <span className="text-xs">{msg.time}</span>
                 </div>
               </div>
             ))}
+
           </div>
           <div className="flex items-center border-t border-gray-300 p-2">
             <div className="relative flex-1">
