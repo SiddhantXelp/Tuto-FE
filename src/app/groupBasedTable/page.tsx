@@ -3,9 +3,8 @@ import SearchComponent from '@/common/SearchComponent';
 import Table from '@/components/table';
 import { allStudentsColumns, allStudentsData } from '../studentsTable/data';
 import React, { useState } from 'react'
-import TabNavigator from "../TabNavigator/page";
-
-const GroupBasedTable = () => {
+import TabNavigator from "@/app/TabNavigator/page"
+const SubjectsBasedTable = () => {
   const [selectedOption, setSelectedOption] = useState('');
 
   const Selectoptions = [
@@ -39,7 +38,6 @@ const GroupBasedTable = () => {
     }
   ]
 
-
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(e.target.value);
   };
@@ -60,19 +58,18 @@ const GroupBasedTable = () => {
             name=""
             value={selectedOption}
             onChange={handleSelectChange}
-            className="block w-72 h-10 p-2 mt-1 text-buttonGray border-buttonGray rounded-md border-1 shadow-sm focus:ring-indigo-500 focus:border-gray-300 sm:text-sm bg-white"
+            className="block w-72 h-10 p-2 mt-1 text-buttonGray border-buttonGray rounded-md border-1 shadow-sm focus:ring-indigo-500 focus:border-gray-300  bg-white text-xs"
           >
-            <option className="text-buttonGray text-sm">Group A</option>
             <option className="text-buttonGray text-sm mt-2">All Students</option>
-            <option className="text-buttonGray text-xxs">. Groups</option>
+            <option className="text-buttonGray text-sm">Groups</option>
             {Selectoptions[0]?.options.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
-            <option className="text-buttonGray text-xxs">. Subjects</option>
+            <option className="text-buttonGray text-sm">Subjects</option>
             {Selectoptions[0]?.Secondoptions.map(option => (
-              <option key={option.value} value={option.value} className="bg-white text-sm">
+              <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -80,7 +77,7 @@ const GroupBasedTable = () => {
         </div>
       </div>
       <div className="mt-10 ">
-        <div className='w-64 border-white ml-auto '>
+        <div className='w-64 border-white ml-auto mr-0'>
           <SearchComponent onSearch={handleChange} />
         </div>
         <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} />
@@ -92,4 +89,4 @@ const GroupBasedTable = () => {
   )
 }
 
-export default GroupBasedTable
+export default SubjectsBasedTable

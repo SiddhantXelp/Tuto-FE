@@ -50,7 +50,9 @@ export default function IndexPage() {
       messages: [
         { id: 1, text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', time: '07:46 PM', sender: 'other' },
         { id: 2, text: 'Sure, what time works for you hijhkkbhkukhyycmh hgjhgg  gjhjbumyjb gjhgbhvg hjbgjhm g gbyjb  fbtkvytyyutyttyjgyjtuytrtbmjbtyutbgjhvg?', time: '07:46 PM', sender: 'me' },
+        { id: 3, text: 'No, what time works for you ', time: '07:46 PM', sender: 'me' },
 
+   
       ]
     }
   ];
@@ -59,7 +61,7 @@ export default function IndexPage() {
 
   return (
     <TabNavigator>
-      <div className="flex h-[900px] bg-white shadow-2xl rounded-xl">
+      <div className="flex h-[850px] bg-white shadow-2xl rounded-xl">
         <ChatList chats={chats} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
         <ChatWindow selectedChat={selectedChat} />
       </div>
