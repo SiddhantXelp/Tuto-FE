@@ -62,17 +62,17 @@ const NumberStudents = () => {
             onChange={handleSelectChange}
             className="block w-60 h-10 p-2 mt-1 text-buttonGray border-buttonGray rounded-md border-1 shadow-sm focus:ring-indigo-500 focus:border-gray-300 sm:text-sm bg-white"
           >
-            <option className="text-buttonGray text-xxs">All Students :280</option>
-            <option className="text-buttonGray text-xxs mt-2">All Students</option>
-            <option className="text-buttonGray text-xxxs">. Groups</option>
+            <option className="text-buttonGray text-sm">All Students :280</option>
+            <option className="text-buttonGray text-sm mt-2">All Students</option>
+            <option className="text-buttonGray text-sm">. Groups</option>
             {Selectoptions[0]?.options.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
-            <option className="text-buttonGray text-xxxs">. Subjects</option>
+            <option className="text-buttonGray text-sm">. Subjects</option>
             {Selectoptions[0]?.Secondoptions.map(option => (
-              <option key={option.value} value={option.value} className="bg-white text-xxs">
+              <option key={option.value} value={option.value} className="bg-white text-sm">
                 {option.label}
               </option>
             ))}
@@ -80,7 +80,7 @@ const NumberStudents = () => {
         </div>
 
         <div className='w-60 h-10 bg-buttonGray flex justify-center items-center border rounded-lg  p-1'>
-          <span className='text-white text-xxs'>Add student  +</span>
+          <span className='text-white text-sm'>Add student  +</span>
         </div>
       </div>
       <div className="mt-10 ">

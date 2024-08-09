@@ -45,14 +45,14 @@ const ChatList: React.FC<ChatListProps> = ({ chats, selectedChat, setSelectedCha
         {chats.map(chat => (
           <li
             key={chat.id}
-            className={`flex items-center py-2 mb-2 border rounded hover:bg-gray-200 cursor-pointer ${selectedChat?.id === chat.id ? 'bg-gray-300' : ''
+            className={`flex items-center py-2 mb-2 border-t-2 rounded hover:bg-gray-200 cursor-pointer ${selectedChat?.id === chat.id ? 'bg-gray-300' : ''
               }`}
             onClick={() => setSelectedChat(chat)}
           >
             <img src={chat.image} alt={chat.name} className="w-10 h-10 rounded-full mx-5" />
             <div className="flex-1">
               <h3 className="font-bold text-xs">{chat.name}</h3>
-              <p className='text-[10px]'>{chat.message}</p>
+              <p className='text-[12px]'>{chat.message}</p>
             </div>
             <span className='text-[10px] mr-2 mx-2'>{chat.time}</span>
           </li>

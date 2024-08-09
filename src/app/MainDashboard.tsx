@@ -209,7 +209,6 @@ export default function Home() {
       <div className="w-full h-auto mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6 h-full">
           <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} />
-
           <div className="bg-white shadow-lg border border-gray-200 p-4 rounded-lg h-full">
             <Calendar
               onChange={setValue}
@@ -226,7 +225,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           <div className="relative">
             <div className="flex justify-between mb-4">
-              <span className="text-buttonGray text-sm font-semibold">Upcoming Classes</span>
+              <span className="text-buttonGray text-sm font-semibold">Reminders</span>
               <span className="text-xs text-buttonGray cursor-pointer">View All</span>
             </div>
 

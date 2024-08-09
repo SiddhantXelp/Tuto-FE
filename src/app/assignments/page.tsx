@@ -98,27 +98,29 @@ const ClassManagementPage: React.FC = () => {
             <div className='bg-white border rounded-md shadow-sm flex items-center justify-center p-4 cursor-pointer h-28 w-full sm:w-48 mt-11'>
               <div className='flex flex-col items-center'>
                 <GrAdd color='black' size={"24px"} />
-                <p className='text-black text-sm mt-2'>Create Assignment</p>
+                <p className='text-black text-sm mt-2 font-semibold'>Create Assignment</p>
               </div>
             </div>
           </Link>
         </div>
 
-        <div className="w-full sm:w-auto md:w-96 lg:w-96 xl:w-96 2xl:w-auto h-12 flex space-x-4 md:space-x-8 lg:space-x-12 pl-4 md:pl-6 lg:pl-8 py-3 bg-white rounded-xl mb-4">
+        <div className="relative w-3/12 h-10 flex bg-white rounded-xl text-center">
+          <div
+          />
           <span
-            className={`text-gray-600 text-sm cursor-pointer ${selectedTab === 'Submitted' ? 'font-bold' : ''}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Submitted' ? 'font-bold text-white bg-gray-500' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Submitted')}
           >
             Submitted
           </span>
           <span
-            className={`text-gray-600 text-sm cursor-pointer ${selectedTab === 'Pending' ? 'font-bold' : ''}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Pending' ? 'font-bold text-white bg-gray-500' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Pending')}
           >
             Pending
           </span>
           <span
-            className={`text-gray-600 text-sm cursor-pointer ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Completed' ? 'font-bold text-white bg-gray-500' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Completed')}
           >
             Completed

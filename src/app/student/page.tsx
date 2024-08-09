@@ -123,14 +123,12 @@ const StudentPage: React.FC = () => {
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-4 mt-7'>
             {data.map((item, index) => (
               <div key={index} className='flex flex-col'>
-                {/* Card Name Outside the Card */}
                 <div className={`mb-2 ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
                   onClick={() => (index === 0 || index === 2) && handleClick(index)}>
                   <span className='text-buttonGray text-sm'>{item.cardName}</span>
                   {item.cardNameEnd && <span className='text-buttonGray text-sm ml-2'>{item.cardNameEnd}</span>}
                 </div>
 
-                {/* Card Content */}
                 <div className={`rounded-md flex flex-col justify-between ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
                   onClick={() => (index === 0 || index === 2) && handleClick(index)}>
                   <div className='flex flex-col items-center'>
@@ -147,7 +145,7 @@ const StudentPage: React.FC = () => {
               </div>
             ))}
 
-            <Link href="/addStudent">
+            <Link href="/onboarding">
               <div className='bg-[#707070] border rounded-md shadow-sm flex items-center justify-center p-4 cursor-pointer h-28 w-full sm:w-48 mt-7'>
                 <div className='flex flex-col items-center'>
                   <GrAdd color='white' size={"24px"} />

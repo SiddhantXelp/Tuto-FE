@@ -80,19 +80,19 @@ const Header: React.FC = () => {
           <div className='flex flex-row gap-14'>
             <div className='flex flex-row gap-8 alignitem-center items-center'>
               <div className='flex flex-row justify-center align-center gap-1 items-center content-center cursor-pointer	'>
-                <p className='text-xs text-buttonGray' onClick={dialogOpen}>Create new Class</p>
-                <p><PiStepsFill size={"16px"} color='gray' /></p>
+                <p className='text-sm text-buttonGray' onClick={dialogOpen}>Create new Class</p>
+                <p className='ml-1'><PiStepsFill size={"17px"} color='gray' /></p>
               </div>
               <Link href='/onboarding'>
                 <div className='flex flex-row justify-center content-center gap-1 alignitem-center items-center'>
-                  <p className='text-xs text-buttonGray'>Onboard Student</p>
-                  <p className='mt-1'>
-                    <IoMdPersonAdd size={"16px"} color='gray' />
+                  <p className='text-sm  text-buttonGray'>Onboard Student</p>
+                  <p className='ml-1'>
+                    <IoMdPersonAdd size={"17px"} color='gray' />
                   </p>
                 </div>
               </Link>
               <div className='items-center'>
-                <IoMdNotifications size={"16px"} color='gray' />
+                <IoMdNotifications size={"17px"} color='gray' />
               </div>
               {/* <div className='flex flex-row justify-center content-center gap-0 alignitem-center items-center'>
                 <p className='text-xs text-buttonGray'>{userInfo ? userInfo.name : ""}</p>
