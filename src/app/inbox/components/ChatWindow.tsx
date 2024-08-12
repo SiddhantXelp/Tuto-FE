@@ -222,14 +222,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
             {selectedChat.messages.map((msg) => (
               <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
                 <div
-                  className={`p-2 md:p-3 rounded ${msg.sender === 'me' ? 'bg-blue-500 text-white' : 'bg-gray-200'
-                    } ${msg.sender === 'me' ? 'w-1/2' : 'w-1/2'}`}
+                  className={`p-2 md:p-3 rounded-lg ${msg.sender === 'me' ? 'bg-blue-500 text-white rounded-tr-none' : 'bg-gray-200 rounded-tl-none ml-2'
+                    } ${msg.sender === 'me' ? 'w-1/2 ml-2' : 'w-1/2 ml-2'}`}
                 >
                   <p className="text-xs md:text-xs">{msg.text}</p>
                   <span className="text-xs">{msg.time}</span>
                 </div>
               </div>
             ))}
+
+
 
           </div>
           <div className="flex items-center border-t border-gray-300 p-2">

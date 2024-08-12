@@ -125,7 +125,14 @@ interface Event {
   barColor?: string;
 }
 
-const Table: React.FC = () => {
+interface ScheduleProps {
+  month: string
+}
+
+
+// const Table: React.FC = () => {
+const Table: React.FC<ScheduleProps> = ({ month }) => {
+
   const [calendar, setCalendar] = useState<DayPilotCalendar | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);

@@ -16,12 +16,12 @@ import { useRouter } from 'next/navigation';
 const OverviewTabContent: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [openStart, setOpenStart] = useState(false);
+  const [month, setMonth] = useState("Weekly")
   const router = useRouter();
 
   const dispatch = useAppDispatch();
   const memberAuthToken = 'bJHGWGEuiWHAYEAHEwJKHEIUWQDJNASDJgdiUWKJEh';
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
-  console.log(":::::::::::::::classesData", classesData);
   const dialogOpen = () => {
     setOpen(true);
   };
@@ -41,9 +41,10 @@ const OverviewTabContent: React.FC = () => {
 
   const formatTime = (time: string) => {
     return time ? moment(time, 'HH:mm').format('hh:mm A') : 'NA';
-  }; 
+  };
   const formattedDate = (isoDateString: any) => isoDateString ? moment(isoDateString).format('MMMM Do YYYY') : "NA";
 
+  console.log("monthmonthmonth",month);
   return (
     <>
 
@@ -97,10 +98,19 @@ const OverviewTabContent: React.FC = () => {
         </div>
 
         <div>
-          <div className="my-3">
+          <div className="my-3 flex justify-between items-center">
             <span className="text-sm text-buttonGray font-semibold">Schedule</span>
+            <div>
+              <select className="p-2 border rounded-md bg-white" onChange={(e) => setMonth(e.target.value)}>
+                <option>Weekly</option>
+                <option>Monthly</option>
+                <option>Yearly</option>
+              </select>
+            </div>
           </div>
-          <Table />
+
+
+          <Table month={month} />
         </div>
       </div>
     </>

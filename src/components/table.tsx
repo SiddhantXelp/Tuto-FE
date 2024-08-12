@@ -16,7 +16,7 @@ interface Props {
 
 const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
   return (
-    <div className="overflow-x-auto shadow-2xl">
+    <div className="overflow-x-auto shadow-2xl rounded-lg">
       <table className="min-w-full bg-white border border-gray-200">
         <thead>
           <tr>

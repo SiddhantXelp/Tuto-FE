@@ -14,8 +14,36 @@ const CreateNewAssignment = () => {
     subjects: '',
     student: '',
     material: null,
-    dueDate: ''
-  });
+    dueDate: '',
+    radioInput: "",
+    radioOptions: [],
+    checkboxInput: "",
+    checkboxOptions: []
+
+  })
+
+  const [cards, setCards] = useState([
+    {
+      id: 1,
+      formData: {
+        question: '',
+        option: 'Paragraph',
+        paragraph: '',
+        radioGroup: '',
+        checkboxes: '',
+        file: null,
+        radioInput: "",
+        radioOptions: [],
+        checkboxInput: "",
+        checkboxOptions: [],
+      }
+    }
+  ]);
+
+  const [dynamicRadioOptions, setDynamicRadioOptions] = useState<string[]>([]);
+  const [radioInput, setRadioInput] = useState('');
+  const [dynamicCheckboxOptions, setDynamicCheckboxOptions] = useState<string[]>([]);
+  const [checkboxInput, setCheckboxInput] = useState<string>('');
 
   const formFields = [
     {
@@ -63,24 +91,6 @@ const CreateNewAssignment = () => {
     });
   };
 
-
-
-
-
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      formData: {
-        question: '',
-        option: 'Paragraph',
-        paragraph: '',
-        radioGroup: '',
-        checkboxes: '',
-        file: null
-      }
-    }
-  ]);
-
   const addCard = () => {
     setCards([
       ...cards,
@@ -90,15 +100,21 @@ const CreateNewAssignment = () => {
           question: '',
           option: 'Paragraph',
           paragraph: '',
-          radioGroup: '',
-          checkboxes: '',
-          file: null
+          radioGroup: radioInput,
+          checkboxes: checkboxInput,
+          file: null,
+          radioInput: "",
+          radioOptions: [],
+          checkboxInput: "",
+          checkboxOptions: []
+
         }
       }
     ]);
+
   };
 
-  const handleCheckboxChange = (cardIndex, checkboxValue) => {
+  const handleCheckboxChange = (cardIndex: any, checkboxValue: any) => {
     const newCards = cards.map((card, index) =>
       index === cardIndex
         ? {
@@ -121,17 +137,22 @@ const CreateNewAssignment = () => {
     setCards(newCards);
   };
 
-  const handleFileChange = (cardIndex, e) => {
-    const { files } = e.target;
-    const newCards = cards.map((card, index) =>
-      index === cardIndex
-        ? { ...card, formData: { ...card.formData, file: files ? files[0] : null } }
-        : card
-    );
-    setCards(newCards);
-  };
+  const handleFileChange = (cardIndex: any, e: any) => {
+    const file = e.target.files[0];
+    const updatedCards = [...cards];
 
-  const handleCardChange = (cardIndex, e) => {
+    if (file) {
+      updatedCards[cardIndex] = {
+        ...updatedCards[cardIndex],
+        formData: {
+          ...updatedCards[cardIndex].formData,
+          file: file
+        }
+      };
+      setCards(updatedCards);
+    }
+  };
+  const handleCardChange = (cardIndex: any, e: any) => {
     const { name, value } = e.target;
     const newCards = cards.map((card, index) =>
       index === cardIndex
@@ -141,7 +162,7 @@ const CreateNewAssignment = () => {
     setCards(newCards);
   };
 
-  const handleRadioChange = (cardIndex, value) => {
+  const handleRadioChange = (cardIndex: any, value: any) => {
     const newCards = cards.map((card, index) =>
       index === cardIndex
         ? { ...card, formData: { ...card.formData, radioGroup: value } }
@@ -150,23 +171,123 @@ const CreateNewAssignment = () => {
     setCards(newCards);
   };
 
-  const radioOptions = [
-    { name: 'option1', value: 'Option1', label: 'Option 1' },
-    { name: 'option2', value: 'Option2', label: 'Option 2' },
-    { name: 'option3', value: 'Option3', label: 'Option 3' }
-  ];
+  const handleRadioOptionChange = (cardIndex: any, optionIndex: any, e: any) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].formData.radioOptions[optionIndex] = e.target.value;
+    setCards(updatedCards);
+  };
 
-  const checkboxOptions = [
-    { label: 'Option 1', value: 'Option1' },
-    { label: 'Option 2', value: 'Option2' },
-    { label: 'Option 3', value: 'Option3' }
-  ];
-
-
+  const handleRadioInputChange = (cardIndex: any, e: any) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].formData.radioInput = e.target.value;
+    setCards(updatedCards);
+  };
 
 
-  console.log(cards, "cards")
-  console.log(formData, "formData")
+  const handleSubmit = () => {
+    const formattedData = {
+      titleName: formData.titleName,
+      subjects: formData.subjects,
+      student: formData.student,
+      material: formData.material,
+      dueDate: formData.dueDate,
+      questions: cards.map(card => {
+        switch (card.formData.option) {
+          case 'Paragraph':
+            return {
+              question_text: card.formData.question || 'Question',
+              question_type: 'text',
+              options: []
+            };
+          case 'Multiple choice questions':
+            return {
+              question_text: card.formData.question || 'Question',
+              question_type: 'radio',
+              options: card.formData.radioOptions
+            };
+          case 'Checkboxes':
+            return {
+              question_text: card.formData.question || 'Question',
+              question_type: 'checkbox',
+              options: card.formData.checkboxOptions
+            };
+          case 'Upload file':
+            return {
+              question_text: card.formData.question || 'Question',
+              question_type: 'file',
+              options: card.formData.material ? card.formData.material.name : 'No file uploaded'
+            };
+          default:
+            return {
+              question_text: card.formData.question || 'Question',
+              question_type: 'text',
+              options: []
+            };
+        }
+      })
+    };
+
+    console.log(JSON.stringify(formattedData, null, 2));
+  };
+
+
+
+  const removeCard = (index: any) => {
+    setCards(cards.filter((_, i) => i !== index));
+  };
+
+  const addRadioOption = (cardIndex: any) => {
+    const updatedCards = [...cards];
+    const newOption = updatedCards[cardIndex].formData.radioInput;
+
+    if (newOption) {
+      updatedCards[cardIndex].formData.radioOptions = [
+        ...(updatedCards[cardIndex].formData.radioOptions || []),
+        newOption,
+      ];
+      updatedCards[cardIndex].formData.radioInput = '';
+      setCards(updatedCards);
+    }
+  };
+
+  const deleteRadioOption = (cardIndex: any, optionIndex: any) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].formData.radioOptions.splice(optionIndex, 1);
+    setCards(updatedCards);
+  };
+
+  const handleCheckboxOptionChange = (cardIndex: any, optionIndex: any, e: any) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].formData.checkboxOptions[optionIndex] = e.target.value;
+    setCards(updatedCards);
+  };
+
+  const handleCheckboxInputChange = (cardIndex: any, e: any) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].formData.checkboxInput = e.target.value;
+    setCards(updatedCards);
+  };
+
+  const addCheckboxOption = (cardIndex: any) => {
+    const updatedCards = [...cards];
+    const newOption = updatedCards[cardIndex].formData.checkboxInput;
+
+    if (newOption) {
+      updatedCards[cardIndex].formData.checkboxOptions = [
+        ...(updatedCards[cardIndex].formData.checkboxOptions || []),
+        newOption,
+      ];
+      updatedCards[cardIndex].formData.checkboxInput = '';
+      setCards(updatedCards);
+    }
+  };
+
+  const deleteCheckboxOption = (cardIndex: any, optionIndex: any) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].formData.checkboxOptions.splice(optionIndex, 1);
+    setCards(updatedCards);
+  };
+
 
   return (
     <TabNavigator>
@@ -183,10 +304,9 @@ const CreateNewAssignment = () => {
                         key={field.name}
                         name={field.name}
                         label={field.label}
-                        placeholder={field.placeholder}
+                        placeholder={String(field.placeholder)}
                         onChange={handleChange}
                         value={formData[field.name as keyof typeof formData] as string}
-                        className='w-full'
                       />
                     );
                   case 'select':
@@ -196,7 +316,7 @@ const CreateNewAssignment = () => {
                         name={field.name}
                         label={field.label}
                         options={field.options}
-                        lablename={field.lablename}
+                        lablename={String(field.lablename)}
                         value={formData[field.name as keyof typeof formData] as string}
                         onChange={handleChange}
                         className='w-full'
@@ -226,7 +346,6 @@ const CreateNewAssignment = () => {
                           icon={null}
                           onChange={handleChange}
                           value={formData[field.name as keyof typeof formData] as string}
-                          className='w-full'
                         />
                       </div>
                     );
@@ -240,6 +359,12 @@ const CreateNewAssignment = () => {
           <div className='flex-grow md:w-2/3 mt-16'>
             {cards.map((card, cardIndex) => (
               <div key={card.id} className='mb-4 bg-white shadow-sm border border-[#707070] rounded-md p-2 opacity-100'>
+                <button
+                  onClick={() => removeCard(cardIndex)}
+                  className='text-red-500 text-xs font-bold'
+                >
+                  Remove Question
+                </button>
                 <div className='mb-4'>
                   <span className='text-gray-600 text-xs'>Question {cardIndex + 1}</span>
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-5'>
@@ -265,49 +390,107 @@ const CreateNewAssignment = () => {
                 </div>
 
                 {card.formData.option === 'Paragraph' && (
-                  <textarea
-                    name='paragraph'
-                    placeholder='Answer text'
-                    className=' text-gray-700 w-full h-24 border border-[#707070] rounded-md p-2 opacity-100'
-                    value={card.formData.paragraph}
-                    onChange={(e) => handleCardChange(cardIndex, e)}
-                  />
+                  <>
+                  </>
                 )}
+
+
 
                 {card.formData.option === 'Multiple choice questions' && (
                   <div className='mt-4'>
-                    {radioOptions.map((item) => (
-                      <div key={item.name} className='flex items-center mb-2'>
+                    {card.formData.radioOptions?.map((value: any, index: any) => (
+                      <div key={index} className='flex items-center mb-2'>
                         <input
-                          type='radio'
+                          type='checkbox'
                           name={`radioGroup${card.id}`}
-                          value={item.value}
-                          checked={card.formData.radioGroup === item.value}
-                          onChange={() => handleRadioChange(cardIndex, item.value)}
+                          value={value}
+                          checked={card.formData.radioGroup === value}
+                          onChange={() => handleRadioChange(cardIndex, value)}
                           className='mr-2'
                         />
-                        <label className='text-gray-600 text-xs'>{item.label}</label>
+                        <input
+                          type='text'
+                          value={value}
+                          onChange={(e) => handleRadioOptionChange(cardIndex, index, e)}
+                          className='border border-[#707070] rounded-md p-2 w-48 mr-2'
+                        />
+                        <button
+                          onClick={() => deleteRadioOption(cardIndex, index)}
+                          className='mr-2 py-1 px-2 bg-red-500 text-white rounded-md'
+                        >
+                          Delete
+                        </button>
                       </div>
                     ))}
+
+                    <div className='mt-4'>
+                      <input
+                        type='checkbox'
+                        className='mr-2'
+                      />
+                      <input
+                        type='text'
+                        value={card.formData.radioInput || ''}
+                        onChange={(e) => handleRadioInputChange(cardIndex, e)}
+                        placeholder='Enter Option'
+                        className='border border-[#707070] rounded-md p-2 w-48 mb-2'
+                      />
+                      <button
+                        onClick={() => addRadioOption(cardIndex)}
+                        className='ml-5 p-2 bg-white-500 text-black rounded-lg shadow hover:bg-gray-500 hover:text-white hover:border-gray-500 transition-colors border border-[#707070]'
+                      >
+                        Add
+                      </button>
+                    </div>
                   </div>
                 )}
 
                 {card.formData.option === 'Checkboxes' && (
                   <div className='mt-4'>
-                    {checkboxOptions.map((checkbox) => (
-                      <div key={checkbox.value} className='flex items-center mb-2'>
+                    {card.formData.checkboxOptions?.map((value: any, index: any) => (
+                      <div key={index} className='flex items-center mb-2'>
                         <input
                           type='checkbox'
-                          checked={card.formData.checkboxes.split(',').includes(checkbox.value)}
-                          onChange={() => handleCheckboxChange(cardIndex, checkbox.value)}
+                          value={value}
+                          checked={card.formData.checkboxes.split(',').includes(value)}
+                          onChange={() => handleCheckboxChange(cardIndex, value)}
                           className='mr-2'
                         />
-                        <label className='text-gray-600 text-xs'>{checkbox.label}</label>
+                        <input
+                          type='text'
+                          value={value}
+                          onChange={(e) => handleCheckboxOptionChange(cardIndex, index, e)}
+                          className='border border-[#707070] rounded-md p-2 w-48 mr-2'
+                        />
+                        <button
+                          onClick={() => deleteCheckboxOption(cardIndex, index)}
+                          className='mr-2 py-1 px-2 bg-red-500 text-white rounded-md'
+                        >
+                          Delete
+                        </button>
                       </div>
                     ))}
+                    <div className='mt-4'>
+                      <input
+                        type='checkbox'
+                        className='mr-2'
+                      />
+                      <input
+                        type='text'
+                        value={card.formData.checkboxInput || ''}
+                        onChange={(e) => handleCheckboxInputChange(cardIndex, e)}
+                        placeholder='Enter Option'
+                        className='border border-[#707070] rounded-md p-2 w-48 mb-2'
+                      />
+                      <button
+                        onClick={() => addCheckboxOption(cardIndex)}
+                        className='ml-5 p-2 bg-white-500 text-black rounded-lg shadow hover:bg-gray-500 hover:text-white hover:border-gray-500 transition-colors border border-[#707070]'
+                      >
+                        Add
+                      </button>
+                    </div>
                   </div>
                 )}
-
                 {card.formData.option === 'Upload file' && (
                   <div className='mt-4'>
                     <label htmlFor='uploadFile' className='text-gray-700 text-xs'>Upload File</label>
@@ -332,10 +515,10 @@ const CreateNewAssignment = () => {
                 <span className='text-sm'>Add Question+</span>
 
               </button>
-              <button className='p-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey'>
-                <Link href="/assignments/createAssignment/createNewAssignment/preview">
-                  <span className='text-sm'>Create & Preview</span>
-                </Link>
+              <button className='p-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey' onClick={handleSubmit}>
+                {/* <Link href="/assignments/createAssignment/createNewAssignment/preview"> */}
+                <span className='text-sm'>Create & Preview</span>
+                {/* </Link> */}
               </button>
             </div>
           </div>

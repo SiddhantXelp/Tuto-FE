@@ -52,12 +52,12 @@ const StudentPage: React.FC = () => {
 
   return (
     <TabNavigator>
-      <div className='w-full h-auto'>
+      <div className='w-full h-auto p-0 sm:p-0 md:p-5'>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 2xl:gap-12">
           <Link href="/studentsTable">
             <div>
-              <span className='text-buttonGray text-xs'>No.of Students</span>
-              <div className='md:w-36 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
+              <span className='text-sm font-semibold mb-4 text-buttonGray '>No.of Students</span>
+              <div className='md:w-36 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
                 <div className='flex-grow flex items-center justify-center'>
                   <h1 className='text-xl text-black-400 font-bold'>
                     280
@@ -72,14 +72,14 @@ const StudentPage: React.FC = () => {
           </Link>
 
           <div>
-            <span className='text-buttonGray text-xs'>Performance</span>
-            <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
+            <span className='text-sm font-semibold mb-4 text-buttonGray'>Performance</span>
+            <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
             </div>
           </div>
 
           <div>
-            <span className='text-buttonGray text-xs'>Progress reports</span>
-            <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
+            <span className='text-sm font-semibold mb-4 text-buttonGray'>Progress reports</span>
+            <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
               <div className="flex flex-row flex-initial justify-between mt-3">
                 <div >
                   <p className='text-buttonGray text-sm'>01 Suresh</p>
@@ -99,8 +99,8 @@ const StudentPage: React.FC = () => {
 
           <Link href="/studentsTable">
             <div>
-              <span className='text-buttonGray text-xs'>Groups</span>
-              <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
+              <span className='text-sm font-semibold mb-4 text-buttonGray'>Groups</span>
+              <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
                 <div className="flex flex-row flex-initial justify-between mt-3">
                   <div >
                     <p className='text-buttonGray text-sm'>Group A</p>
@@ -125,8 +125,8 @@ const StudentPage: React.FC = () => {
               <div key={index} className='flex flex-col'>
                 <div className={`mb-2 ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
                   onClick={() => (index === 0 || index === 2) && handleClick(index)}>
-                  <span className='text-buttonGray text-sm'>{item.cardName}</span>
-                  {item.cardNameEnd && <span className='text-buttonGray text-sm ml-2'>{item.cardNameEnd}</span>}
+                  <span className='text-sm font-semibold mb-4 text-buttonGray'>{item.cardName}</span>
+                  {item.cardNameEnd && <span className=' ml-2 text-sm font-semibold mb-4 text-buttonGray'>{item.cardNameEnd}</span>}
                 </div>
 
                 <div className={`rounded-md flex flex-col justify-between ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
