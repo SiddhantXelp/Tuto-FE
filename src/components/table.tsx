@@ -16,7 +16,7 @@ interface Props {
 
 const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
   return (
-    <div className="overflow-x-auto shadow-2xl rounded-lg">
+    <div className="overflow-x-auto shadow-lg rounded-lg">
       <table className="min-w-full bg-white border border-gray-200">
         <thead>
           <tr>
@@ -41,7 +41,7 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
                 </td>
               )}
               {columns.map((column, colIndex) => (
-                <td key={colIndex} className="px-6 py-3 text-sm text-gray-500"> {/* Added vertical padding here */}
+                <td key={colIndex} className="px-6 py-3 text-xs text-gray-500"> {/* Added vertical padding here */}
                   {column.isCheckbox ? (
                     <input type="checkbox" />
                   ) : (

@@ -9,6 +9,7 @@ import { recentStudentColumns, recentStudentsData } from './data';
 import Table from '@/components/table';
 import TabNavigator from "../TabNavigator/page";
 import { useAppDispatch } from '../store/hooks';
+import PerformanceChart from '@/common/PerformanceChart';
 
 const StudentPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -74,6 +75,7 @@ const StudentPage: React.FC = () => {
           <div>
             <span className='text-sm font-semibold mb-4 text-buttonGray'>Performance</span>
             <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
+              <PerformanceChart/>
             </div>
           </div>
 

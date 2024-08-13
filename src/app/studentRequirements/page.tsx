@@ -367,7 +367,7 @@ const StudentRequirementForm: React.FC = () => {
         {
           isLoading ? <Spinner /> : ""
         }
-        <div className='flex justify-center items-center min-h-screen bg-[#F9F9F9] p-4'>
+        <div className='flex justify-center items-center mt-20 bg-[#F9F9F9]'>
           <div className='w-full max-w-xl bg-[#F8F5F5] shadow-xl border  rounded-[19px] p-6'>
             <span className='font-medium text-xl text-[#707070] block mb-4 opacity-100'>Student Requirements</span>
 

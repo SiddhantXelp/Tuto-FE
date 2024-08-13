@@ -9,10 +9,11 @@ import { GoFileDirectoryFill } from "react-icons/go";
 interface CardProps {
     data: any;
     id: any;
-    type: string
+    type: string;
+    onClick?: (id: any) => void;
 }
 
-const Card: React.FC<CardProps> = ({ data, id, type }) => {
+const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const router = useRouter();
 
@@ -33,31 +34,37 @@ const Card: React.FC<CardProps> = ({ data, id, type }) => {
 
     };
 
+    const handleClick = () => {
+        if (onClick) {
+            onClick(id); // Call the onClick function with the id
+        }
+    };
+
     return (
         <>
 
 
             <div
-                className="bg-white p-1 sm:p-6 rounded-xl h-auto flex flex-col cursor-pointer relative border border-black"
-                onClick={handleCardClick}
+                className="bg-white p-1 sm:p-6 rounded-xl h-auto flex flex-col relative border border-black w-auto cursor-pointer"
+                onClick={handleClick}
             >
                 <div className="flex items-center space-x-3">
                     {type === 'pdf' ? (
                         <FaFilePdf size={34} />
                     ) : (
-                        <GoFileDirectoryFill size={40} color="grey" />
+                        <GoFileDirectoryFill size={40} color="#565656" />
                     )}
 
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                         <h2 className="text-sm sm:text-sm md:text-sm font-medium text-gray-700 break-words">
                             {data}
                         </h2>
                     </div>
 
-                    <div className="relative ml-auto">
+                    <div className="relative">
                         <BsThreeDotsVertical
                             size={24}
-                            color="black"
+                            color="#565656"
                             onClick={handleToggleDropdown}
                             id="dropdownDividerButton"
                         />
@@ -116,6 +123,7 @@ const Card: React.FC<CardProps> = ({ data, id, type }) => {
                     </div>
                 </div>
             </div>
+
 
 
 

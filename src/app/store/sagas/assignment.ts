@@ -6,7 +6,7 @@ import { getMyFiles, getMyFilesById } from '../../api/assignment.service';
 import { setMyFiles, setAssignmentError, setAssignmentLoading, setMyFilesByID } from '../actions/assignment';
 
 function* getMyFilesEffect(action: any): Generator<any, any, any> {
-    console.log('getAssignmentEffect......API CALLING', action);
+    // console.log('getAssignmentEffect......API CALLING', action);
 
     try {
         yield put(setAssignmentLoading(true));
@@ -24,7 +24,7 @@ function* getMyFilesEffect(action: any): Generator<any, any, any> {
 }
 
 function* getMyFilesBYIdEffect(action: any): Generator<any, any, any> {
-    console.log('getAssignmentEffect......API CALLING', action);
+    // console.log('getAssignmentEffect......API CALLING', action);
 
     try {
         yield put(setAssignmentLoading(true));

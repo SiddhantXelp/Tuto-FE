@@ -33,11 +33,11 @@ const Card: React.FC<CardProps> = ({ data }) => {
             onClick={handleCardClick}
         >
             <div className="flex items-center">
-                <GoFileDirectoryFill size={40} color="grey" />
+                <GoFileDirectoryFill size={40} color="#565656" />
                 <div className="relative ml-auto">
                     <BsThreeDotsVertical
                         size={24}
-                        color="black"
+                        color="#565656"
                         onClick={handleToggleDropdown}
                         id="dropdownDividerButton"
                     />

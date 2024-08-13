@@ -116,16 +116,16 @@ export default function Home() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6 mt-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="flex flex-col">
-            <span className="text-buttonGray text-sm font-semibold mb-2">Students</span>
+            <span className="text-[#565656] text-sm font-semibold mb-2">Students</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li className="text-buttonGray text-sm break-words">200 students</li>
-                  <li className="text-buttonGray text-sm">144 Active students</li>
-                  <li className="text-buttonGray text-sm">14 Newly registered</li>
+                  <li className="text-[#565656] text-sm break-words">200 students</li>
+                  <li className="text-[#565656] text-sm">144 Active students</li>
+                  <li className="text-[#565656] text-sm">14 Newly registered</li>
                 </ul>
               </div>
               <div className="flex justify-end mt-4">
@@ -135,12 +135,12 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col">
-            <span className="text-buttonGray text-sm font-semibold mb-2">Class Management</span>
+            <span className="text-[#565656] text-sm font-semibold mb-2">Class Management</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li className="text-buttonGray text-sm break-words">20 classes scheduled for next 7 days</li>
-                  <li className="text-buttonGray text-sm">2 classes available</li>
+                  <li className="text-[#565656] text-sm break-words">20 classes scheduled for next 7 days</li>
+                  <li className="text-[#565656] text-sm">2 classes available</li>
                 </ul>
               </div>
               <div className="flex justify-end mt-4">
@@ -150,29 +150,29 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col">
-            <span className="text-buttonGray text-sm font-semibold mb-2">Previous</span>
+            <span className="text-[#565656] text-sm font-semibold mb-2">Previous</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex items-center gap-2 mt-2">
                 <FaRegClock size={14} color="gray" />
-                <span className="text-buttonGray text-sm">18:30 - 20:30</span>
+                <span className="text-[#565656] text-sm">18:30 - 20:30</span>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <FaBook size={14} color="gray" />
-                <span className="text-buttonGray text-sm">English class</span>
+                <span className="text-[#565656] text-sm">English class</span>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col">
-            <span className="text-buttonGray text-sm font-semibold mb-2">Next Class</span>
+            <span className="text-[#565656] text-sm font-semibold mb-2">Next Class</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex items-center gap-2 mt-2">
                 <FaRegClock size={14} color="gray" />
-                <span className="text-buttonGray text-sm">18:30 - 20:30</span>
+                <span className="text-[#565656] text-sm">18:30 - 20:30</span>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <FaBook size={14} color="gray" />
-                <span className="text-buttonGray text-sm">English class</span>
+                <span className="text-[#565656] text-sm">English class</span>
               </div>
             </div>
           </div>
@@ -195,28 +195,28 @@ export default function Home() {
                 layout="responsive"
               />
             </div>
-            <span className="text-buttonGray mt-2">Hello</span>
-            <span className="text-buttonGray">{userInfo ? userInfo.name : ""}</span>
+            <span className="text-[#565656] mt-2">Hello</span>
+            <span className="text-[#565656]">{userInfo ? userInfo.name : ""}</span>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col h-full mt-2">
-        <span className="text-buttonGray text-sm font-semibold mb-2">Submitted Assignment</span>
+        <span className="text-[#565656] text-sm font-semibold mb-2 mt-5">Submitted Assignment</span>
 
       </div>
 
       <div className="w-full h-auto mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6 h-full">
           <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} />
-          <div className="bg-white shadow-lg border border-gray-200 p-4 rounded-lg h-full">
+          <div className="bg-white shadow-lg p-4 rounded-lg h-full w-[384px]">
             <Calendar
               onChange={setValue}
               value={value}
               locale="en-US"
               showNavigation={false}
               formatShortWeekday={formatShortWeekday}
-              className="w-full h-full"
+              className="h-full"
             />
           </div>
         </div>
@@ -225,8 +225,8 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           <div className="relative">
             <div className="flex justify-between mb-4">
-              <span className="text-buttonGray text-sm font-semibold">Reminders</span>
-              <span className="text-xs text-buttonGray cursor-pointer">View All</span>
+              <span className="text-[#565656] text-sm font-semibold">Reminders</span>
+              <span className="text-xs text-[#565656] cursor-pointer">View All</span>
             </div>
 
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
@@ -243,7 +243,7 @@ export default function Home() {
 
           <div className="relative">
             <div className="flex justify-between mb-4">
-              <span className="text-buttonGray text-sm font-semibold">Revenue</span>
+              <span className="text-[#565656] text-sm font-semibold">Revenue</span>
             </div>
 
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
@@ -269,9 +269,9 @@ export default function Home() {
                     <MdKeyboardArrowDown size={15} color="white" />
                   </div>
                   <div className="flex flex-col mt-4">
-                    <span className="text-buttonGray text-xs">1,50000 Overall</span>
-                    <span className="text-buttonGray text-xs">10 Pending payments</span>
-                    <p className="underline text-xs text-buttonGray cursor-pointer">Payment History</p>
+                    <span className="text-[#565656] text-xs">1,50000 Overall</span>
+                    <span className="text-[#565656] text-xs">10 Pending payments</span>
+                    <p className="underline text-xs text-[#565656] cursor-pointer">Payment History</p>
                   </div>
                 </div>
               </div>
@@ -279,11 +279,11 @@ export default function Home() {
               <div className="flex gap-4 mt-5">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-blue-600"></div>
-                  <span className="text-xs text-buttonGray">Payment Received</span>
+                  <span className="text-xs text-[#565656]">Payment Received</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-red-300"></div>
-                  <span className="text-xs text-buttonGray">Pending Payment</span>
+                  <span className="text-xs text-[#565656]">Pending Payment</span>
                 </div>
               </div>
             </div>
@@ -292,16 +292,16 @@ export default function Home() {
 
           <div className="relative">
             <div className="flex justify-between mb-4">
-              <span className="text-buttonGray text-sm font-semibold">Upcoming Classes</span>
-              <span className="text-xs text-buttonGray cursor-pointer">View All</span>
+              <span className="text-[#565656] text-sm font-semibold">Upcoming Classes</span>
+              <span className="text-xs text-[#565656] cursor-pointer">View All</span>
             </div>
 
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
               <div className="space-y-2">
                 {data.map((item) => (
-                  <div key={item.head} className="bg-white border-2 border-gray-300 p-2 flex flex-col gap-1 rounded-lg">
-                    <span className="text-buttonGray text-xs">{item.head}</span>
-                    <span className="text-buttonGray text-xs">{item.time}</span>
+                  <div key={item.head} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100">
+                    <span className="text-[#565656] text-xs">{item.head}</span>
+                    <span className="text-[#565656] text-xs">{item.time}</span>
                   </div>
                 ))}
               </div>

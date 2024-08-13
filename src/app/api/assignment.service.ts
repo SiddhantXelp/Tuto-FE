@@ -31,7 +31,6 @@ export const getMyFiles = async (token: string) => {
 
 
 export const getMyFilesById = async (token: string, id: string) => {
-    console.log('GetFilesById', token);
 
     try {
         const response = await axios.get(
