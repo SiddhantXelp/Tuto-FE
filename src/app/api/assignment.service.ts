@@ -52,3 +52,130 @@ export const getMyFilesById = async (token: string, id: string) => {
     }
 };
 
+export const createFolder = async (token: string, data: any) => {
+    console.log('createFolder:', data);
+    try {
+        const response = await axios.post(
+            apis.createFolder,
+            data,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            console.log('createFolderERRROOORRR......', e);
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};
+
+
+
+export const createFiles = async (token: string, data: any) => {
+    console.log('createFiles:', data);
+    try {
+        const response = await axios.post(
+            apis.createFiles,
+            data,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            console.log('createFilesRRROOORRR......', e);
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};
+
+
+
+
+export const deleteFolders = async (token: string, id: any) => {
+    console.log('createFiles:', id);
+    try {
+        const response = await axios.delete(
+            apis.deleteFolder(id),
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+        console.log(":>>>>>>>>>>>>:response",response);
+
+        return response;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            console.log('createFilesRRROOORRR......', e);
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};
+
+
+
+
+export const deleteFiles = async (token: string, id: any) => {
+    console.log('createFiles:', id);
+    try {
+        const response = await axios.delete(
+            apis.deleteFiles(id),
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            console.log('createFilesRRROOORRR......', e);
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};
+

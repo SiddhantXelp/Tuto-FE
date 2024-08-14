@@ -112,7 +112,7 @@ const Login: React.FC = () => {
             localStorage.setItem('user', JSON.stringify(userData));
 
             router.push('/');
-            dispatch(setLogin(null));
+            // dispatch(setLogin(null));
 
         }
     }, [responsesLogin]);
