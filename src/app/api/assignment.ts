@@ -8,6 +8,8 @@ export default {
     createFiles: `${BASE_URL}/api/v1/files`,
     deleteFolder: (id: string) => `${BASE_URL}/api/v1/folders/${id}`,
     deleteFiles: (id: string) => `${BASE_URL}/api/v1/files/${id}`,
+    createAssignment: `${BASE_URL}/api/v1/assignments`,
+
 
 
 

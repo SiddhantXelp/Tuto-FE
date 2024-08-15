@@ -135,7 +135,7 @@ export const deleteFolders = async (token: string, id: any) => {
                 },
             },
         );
-        console.log(":>>>>>>>>>>>>:response",response);
+        console.log(":>>>>>>>>>>>>:response", response);
 
         return response;
     } catch (e) {
@@ -179,3 +179,33 @@ export const deleteFiles = async (token: string, id: any) => {
     }
 };
 
+
+
+export const createAssignment = async (token: string, data: any) => {
+    try {
+        const response = await axios.post(
+            apis.createAssignment,
+            data,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            console.log('createAssignmentERRROOORRR......', e);
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};

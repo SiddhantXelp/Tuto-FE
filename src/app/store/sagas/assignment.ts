@@ -2,8 +2,8 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes/assignment';
 
-import { getMyFiles, getMyFilesById, createFolder, createFiles, deleteFolders, deleteFiles } from '../../api/assignment.service';
-import { setMyFiles, setAssignmentError, setAssignmentLoading, setMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFolder, setDeleteFiles } from '../actions/assignment';
+import { getMyFiles, getMyFilesById, createFolder, createFiles, deleteFolders, deleteFiles, createAssignment } from '../../api/assignment.service';
+import { setMyFiles, setAssignmentError, setAssignmentLoading, setMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFolder, setDeleteFiles, setCreateAssignment } from '../actions/assignment';
 
 function* getMyFilesEffect(action: any): Generator<any, any, any> {
     // console.log('getAssignmentEffect......API CALLING', action);
@@ -109,6 +109,24 @@ function* getDeleteFilesEffect(action: any): Generator<any, any, any> {
     }
 }
 
+
+function* getCreateAssignmentEffect(action: any): Generator<any, any, any> {
+    try {
+        yield put(setAssignmentLoading(true));
+        yield put(setAssignmentError(''));
+        yield put(setCreateAssignment(null));
+
+        const response = yield call(createAssignment, action.token, action.data);
+        yield put(setCreateAssignment(response));
+
+        yield put(setAssignmentLoading(false));
+    } catch (e: any) {
+        yield put(setAssignmentLoading(false));
+        yield put(setAssignmentError(e.response));
+    }
+}
+
+
 export function* AssignmentSaga() {
     yield takeEvery(actionTypes.GET_MY_FILES, getMyFilesEffect);
     yield takeEvery(actionTypes.GET_MY_FILES_BY_ID, getMyFilesBYIdEffect);
@@ -116,6 +134,7 @@ export function* AssignmentSaga() {
     yield takeEvery(actionTypes.GET_CREATE_FILES, getCreateFilesEffect);
     yield takeEvery(actionTypes.GET_DELETE_FOLDER, getDeleteFolderEffect);
     yield takeEvery(actionTypes.GET_DELETE_FILES, getDeleteFilesEffect);
+    yield takeEvery(actionTypes.GET_CREATE_ASSIGNMENT, getCreateAssignmentEffect);
 
 
 

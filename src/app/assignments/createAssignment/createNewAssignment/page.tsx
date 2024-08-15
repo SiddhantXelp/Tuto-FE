@@ -1,23 +1,22 @@
 "use client";
-import FileInputWithIcon from '@/common/FileInputWithIcon';
 import InputMain from '@/common/InputMain';
 import InputWithIcon from '@/common/InputWithIcon';
-import SelectMain from '@/common/SelectMain';
-import Link from 'next/link';
 import React, { useState } from 'react';
-import { FaFile } from "react-icons/fa";
 import TabNavigator from "../../../TabNavigator/page";
 import { MdOutlineCancel } from "react-icons/md";
+import SelectWithCheckboxes from '@/common/SelectWithCheckboxesFull';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { getCreateAssignment, setCreateAssignment } from '@/app/store/actions/assignment';
+import Spinner from "@/common/Spinner";
+import { toast } from 'react-toastify';
 
 const CreateNewAssignment = () => {
-  const [storedQuestions, setStoredQuestions] = useState(null);
-
-  const [showInput, setInput] = useState(false);
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     titleName: '',
-    subjects: '',
-    student: '',
-    material: null,
+    subjects: "",
+    student: [] as string[],
+    material: null as File | null,
     dueDate: '',
     radioInput: "",
     radioOptions: [],
@@ -25,6 +24,28 @@ const CreateNewAssignment = () => {
     checkboxOptions: []
 
   })
+  const [storedQuestions, setStoredQuestions] = useState(null);
+  const isLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [radioInput, setRadioInput] = useState('');
+  const [checkboxInput, setCheckboxInput] = useState<string>('');
+  const [showInput, setInput] = useState(false);
+  const handelStudents = [
+    { label: "Aarav Patel", value: "Aarav Patel" },
+    { label: "Ishaan Sharma", value: "Ishaan Sharma" },
+    { label: "Aanya Gupta", value: "Aanya Gupta" },
+    { label: "Vihaan Singh", value: "Vihaan Singh" },
+    { label: "Saanvi Mehta", value: "Saanvi Mehta" },
+    { label: "Aryan Desai", value: "Aryan Desai" },
+    { label: "Ananya Reddy", value: "Ananya Reddy" },
+    { label: "Arjun Kumar", value: "Arjun Kumar" },
+    { label: "Mira Iyer", value: "Mira Iyer" },
+    { label: "Rohan Joshi", value: "Rohan Joshi" }
+  ];
+
+
+  const token = "hsjdhsjkdhskjhdkjshdkjhahdkajsdhjk"
+
 
   const [cards, setCards] = useState([
     {
@@ -44,8 +65,6 @@ const CreateNewAssignment = () => {
     }
   ]);
 
-  const [radioInput, setRadioInput] = useState('');
-  const [checkboxInput, setCheckboxInput] = useState<string>('');
 
   const formFields = [
     {
@@ -187,52 +206,73 @@ const CreateNewAssignment = () => {
   };
 
 
-  const handleSubmit = () => {
-    const formattedData = {
-      titleName: formData.titleName,
-      subjects: formData.subjects,
-      student: formData.student,
-      material: formData.material,
-      dueDate: formData.dueDate,
-      questions: cards.map(card => {
-        switch (card.formData.option) {
-          case 'Paragraph':
-            return {
-              question_text: card.formData.question || 'Question',
-              question_type: 'text',
-              options: []
-            };
-          case 'Multiple choice questions':
-            return {
-              question_text: card.formData.question || 'Question',
-              question_type: 'radio',
-              options: card.formData.radioOptions
-            };
-          case 'Checkboxes':
-            return {
-              question_text: card.formData.question || 'Question',
-              question_type: 'checkbox',
-              options: card.formData.checkboxOptions
-            };
-          case 'Upload file':
-            return {
-              question_text: card.formData.question || 'Question',
-              question_type: 'file',
-              options: card.formData.file.name ? card.formData.file.name : 'No file uploaded'
-            };
-          default:
-            return {
-              question_text: card.formData.question || 'Question',
-              question_type: 'text',
-              options: []
-            };
-        }
-      })
-    };
-    setInput(true)
 
-    console.log(JSON.stringify(formattedData, null, 2));
-    setStoredQuestions(formattedData.questions);
+  const validateForm = () => {
+    const validationErrors: string[] = [];
+    if (!formData.titleName) validationErrors.push("Assignment title is required.");
+    if (!formData.subjects) validationErrors.push("Subject is required.");
+    if (!formData.student) validationErrors.push("Student required.");
+    if (!formData.material) validationErrors.push("Material is required.");
+    if (!formData.dueDate) validationErrors.push("Date is required.");
+
+    validationErrors.forEach(error => toast.error(error));
+
+    return validationErrors.length === 0;
+  };
+
+  const handleSubmit = () => {
+
+    if (validateForm()) {
+      const formattedData = {
+        assignmentTitle: formData.titleName,
+        subject: formData.subjects,
+        students: formData.student,
+        material: formData.material.name,
+        date: formData.dueDate,
+        questions: cards.map(card => {
+          switch (card.formData.option) {
+            case 'Paragraph':
+              return {
+                question: card.formData.question || 'Question',
+                questionType: 'text',
+                answer: []
+              };
+            case 'Multiple choice questions':
+              return {
+                question: card.formData.question || 'Question',
+                questionType: 'radio',
+                answer: card.formData.radioOptions
+              };
+            case 'Checkboxes':
+              return {
+                question: card.formData.question || 'Question',
+                questionType: 'checkbox',
+                answer: card.formData.checkboxOptions
+              };
+            case 'Upload file':
+              return {
+                question: card.formData.question || 'Question',
+                questionType: 'file',
+                answer: card.formData.file.name ? card.formData.file.name : 'No file uploaded'
+              };
+            default:
+              return {
+                question: card.formData.question || 'Question',
+                questionType: 'text',
+                answer: []
+              };
+          }
+        })
+      };
+      setInput(true)
+      setStoredQuestions(formattedData.questions);
+
+    } else {
+      errors.forEach(error => toast.error(error));
+      console.log("::::::::::::::", errors.forEach(error => error))
+    }
+
+
 
 
   };
@@ -296,8 +336,85 @@ const CreateNewAssignment = () => {
   };
 
 
+  const handleSelectChange = (options: string[]) => {
+    setFormData(prevState => ({
+      ...prevState,
+      student: options
+    }));
+  };
+
+  const handleMaterialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files && files[0]) {
+      setFormData(prevState => ({
+        ...prevState,
+        material: files[0]
+      }));
+    }
+  };
+
+  const handelPublish = () => {
+    const formattedData = {
+      assignmentTitle: formData.titleName,
+      subject: formData.subjects,
+      students: formData.student,
+      material: formData.material.name,
+      date: formData.dueDate,
+      questions: cards.map(card => {
+        switch (card.formData.option) {
+          case 'Paragraph':
+            return {
+              question: card.formData.question || 'Question',
+              questionType: 'text',
+              answer: []
+            };
+          case 'Multiple choice questions':
+            return {
+              question: card.formData.question || 'Question',
+              questionType: 'radio',
+              answer: card.formData.radioOptions
+            };
+          case 'Checkboxes':
+            return {
+              question: card.formData.question || 'Question',
+              questionType: 'checkbox',
+              answer: card.formData.checkboxOptions
+            };
+          case 'Upload file':
+            return {
+              question: card.formData.question || 'Question',
+              questionType: 'file',
+              answer: card.formData.file.name ? card.formData.file.name : 'No file uploaded'
+            };
+          default:
+            return {
+              question: card.formData.question || 'Question',
+              questionType: 'text',
+              answer: []
+            };
+        }
+      })
+    };
+
+    const data = new FormData();
+
+    data.append('assignmentTitle', formattedData.assignmentTitle);
+    data.append('subject', formattedData.subject);
+    data.append('students', formattedData.students);
+    data.append('date', formattedData.date);
+
+    if (formattedData.material) {
+      data.append('material', formattedData.material);
+    }
+
+    data.append('questions', JSON.stringify(formattedData.questions));
+    dispatch(getCreateAssignment(token, data));
+
+  }
+
   return (
     <TabNavigator>
+      {isLoading && <Spinner />}
       <div className='w-full h-[1000px] bg-gray-50 p-0 md:p-6'>
         <div className='bg-white shadow-xl rounded-lg p-6 md:p-8 flex flex-col md:flex-row gap-6'>
           <div className='flex flex-col md:w-1/3'>
@@ -337,15 +454,19 @@ const CreateNewAssignment = () => {
 
                           </>
                         ) : (
-                          <SelectMain
-                            name={field.name}
-                            label={field.label}
-                            options={field.options}
-                            lablename={String(field.lablename)}
-                            value={formData[field.name as keyof typeof formData] as string}
-                            onChange={handleChange}
-                            className='w-full'
-                          />
+                          <>
+                            <div className="mt-2 mb-5">
+                              <label className="block text-buttonGray text-sm mb-2">Subjects</label>
+                              <div className="w-full  h-12">
+                                <SelectWithCheckboxes
+                                  options={handelStudents}
+                                  selectedOptions={formData.student}
+                                  setSelectedOptions={handleSelectChange}
+                                />
+                              </div>
+                            </div>
+
+                          </>
                         )}
                       </div>
                     );
@@ -355,18 +476,27 @@ const CreateNewAssignment = () => {
                         {showInput ? (
                           <>
                             <label className='text-sm mb-2 text-[#707070]'>{field?.label}</label>
-
-                            <h1>{formData[field.name as keyof typeof formData] as string}</h1>
+                            {formData.material ? (
+                              <h1>{formData.material.name}</h1>
+                            ) : (
+                              <h1>No file selected</h1>
+                            )}
 
                           </>
                         ) : (
-                          <InputMain
-                            name={field.name}
-                            label={field.label}
-                            placeholder={String(field.placeholder)}
-                            onChange={handleChange}
-                            value={formData[field.name as keyof typeof formData] as string} type={''} id={''}
-                          />
+                          <>
+                            <div className='mt-4'>
+                              <label className='text-sm mb-2 text-[#707070]'>{field?.label}</label>
+                              <input
+                                type='file'
+                                name={field.name}
+                                className=' h-auto w-full bg-white border border-[#707070] rounded-md p-2 opacity-100'
+                                onChange={handleMaterialChange}
+                              />
+
+                            </div>
+                          </>
+
                         )}
                       </div>
                     );
@@ -419,17 +549,17 @@ const CreateNewAssignment = () => {
                             <span className='text-gray-600 text-xs'>Question {index + 1}</span>
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-2'>
                               <p className='text-gray-700 border border-[#707070] rounded-md p-2 opacity-100'>
-                                {question.question_text}
+                                {question.question}
                               </p>
                               <p className='border border-[#707070] rounded-md p-2 opacity-100 text-gray-700'>
-                                {question.question_type}
+                                {question.questionType}
                               </p>
                             </div>
                           </div>
 
-                          {question.question_type === 'radio' && (
+                          {question.questionType === 'radio' && (
                             <div className='mt-4'>
-                              {question.options?.map((option: any, idx: any) => (
+                              {question.answer?.map((option: any, idx: any) => (
                                 <div key={idx} className='flex items-center mb-2'>
                                   <input
                                     type='radio'
@@ -446,9 +576,9 @@ const CreateNewAssignment = () => {
                             </div>
                           )}
 
-                          {question.question_type === 'checkbox' && (
+                          {question.questionType === 'checkbox' && (
                             <div className='mt-4'>
-                              {question.options?.map((option: any, idx: any) => (
+                              {question.answer?.map((option: any, idx: any) => (
                                 <div key={idx} className='flex items-center mb-2'>
                                   <input
                                     type='checkbox'
@@ -464,11 +594,11 @@ const CreateNewAssignment = () => {
                             </div>
                           )}
 
-                          {question.question_type === 'file' && (
+                          {question.questionType === 'file' && (
                             <div className='mt-4'>
                               <p className='text-gray-700 text-xs mb-2'>Uploaded File</p>
                               <p className='h-auto w-full bg-white border border-[#707070] rounded-md p-2 opacity-100'>
-                                {question.options}
+                                {question.answer}
                               </p>
                             </div>
                           )}
@@ -659,7 +789,7 @@ const CreateNewAssignment = () => {
                 showInput ?
                   (
                     <>
-                      <button className='p-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey' onClick={handleSubmit}>
+                      <button className='p-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey' onClick={handelPublish}>
                         {/* <Link href="/assignments/createAssignment/createNewAssignment/preview"> */}
                         <span className='text-sm'>Save & Publish</span>
                         {/* </Link> */}

@@ -49,6 +49,25 @@ const Signup: React.FC = () => {
       return false;
     }
 
+    if (!/[A-Z]/.test(password)) {
+      toast.error("Password must contain at least one uppercase letter.");
+    }
+
+    // Lowercase letter validation
+    if (!/[a-z]/.test(password)) {
+      toast.error("Password must contain at least one lowercase letter.");
+    }
+
+    // Digit validation
+    if (!/\d/.test(password)) {
+      toast.error("Password must contain at least one digit.");
+    }
+
+    // Special character validation
+    if (!/[!@#$%^&*]/.test(password)) {
+      toast.error("Password must contain at least one special character.");
+    }
+
     if (!password) {
       toast.error("Password is required");
       return false;

@@ -5,6 +5,7 @@ import { getFileTypeFromExtension } from '@/common/fileUtils';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getCreateFiles, getCreateFolder } from '@/app/store/actions/assignment';
 import Spinner from "@/common/Spinner";
+import { toast } from 'react-toastify';
 
 interface AddFolderModalProps {
     isOpen: boolean;
@@ -54,6 +55,10 @@ const AddFolderModel: React.FC<AddFolderModalProps> = ({ isOpen, onClose, isFold
         if (isFolder) {
             if (folderId) {
                 console.log("This is a Parent Folder", folderId);
+                if (!formData?.title) {
+                    toast.error("Folder name Required");
+                    return;
+                }
                 const data = {
                     user_id: responsesLogin,
                     title: formData?.title,
@@ -64,6 +69,10 @@ const AddFolderModel: React.FC<AddFolderModalProps> = ({ isOpen, onClose, isFold
                 dispatch(getCreateFolder(token, data))
             }
             else {
+                if (!formData?.title) {
+                    toast.error("Folder name Required");
+                    return;
+                }
                 const data = {
                     user_id: responsesLogin,
                     title: formData?.title,
@@ -75,6 +84,10 @@ const AddFolderModel: React.FC<AddFolderModalProps> = ({ isOpen, onClose, isFold
                 console.log("THis is Main Folder", folderId);
             }
         } else if (isFile && formData.file) {
+            if (!formData?.file) {
+                toast.error("File is Required");
+                return;
+            }
             const formDataToSend = new FormData();
 
             formDataToSend.append('file', formData.file);
@@ -86,6 +99,7 @@ const AddFolderModel: React.FC<AddFolderModalProps> = ({ isOpen, onClose, isFold
 
         }
         onClose();
+
     };
 
 
@@ -122,14 +136,19 @@ const AddFolderModel: React.FC<AddFolderModalProps> = ({ isOpen, onClose, isFold
 
                     {isFile && (
                         <>
-                            <label className='text-sm mb-2 text-[#707070]'>Upload File</label>
 
-                            <input
-                                name="file"
-                                type="file"
-                                onChange={handleInputChange}
-                                className="w-full"
-                            />
+                            <div className='mt-4'>
+                                <label className='text-sm mb-5 text-[#707070]'>Upload File</label>
+                                <input
+                                    name="file"
+                                    type="file"
+                                    onChange={handleInputChange}
+                                    className=' h-auto w-full bg-white border border-[#707070] rounded-md p-2 opacity-100 mt-2'
+                                />
+
+                            </div>
+
+
                             <button
                                 className="bg-gray-500 text-center py-2 px-4 border-t cursor-pointer rounded-xl text-white hover:bg-gray-600 transition duration-200 w-full"
                                 onClick={handleAction}

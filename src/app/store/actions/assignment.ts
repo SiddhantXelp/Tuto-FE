@@ -78,6 +78,20 @@ export const setDeleteFiles = (setDeleteFile: any) => ({
 
 
 
+export const getCreateAssignment = (token: string, data: any) => ({
+    type: actionTypes.GET_CREATE_ASSIGNMENT,
+    token,
+    data
+});
+
+
+export const setCreateAssignment = (setCreateAssignments: any) => ({
+    type: actionTypes.SET_CREATE_ASSIGNMENT,
+    setCreateAssignments,
+});
+
+
+
 export const setAssignmentError = (error: any) => ({
     type: actionTypes.SET_ASSIGNMENT_ERROR,
     error,

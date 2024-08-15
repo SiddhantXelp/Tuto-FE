@@ -116,7 +116,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6 mt-5">
+      <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="flex flex-col">
             <span className="text-[#565656] text-sm font-semibold mb-2">Students</span>
@@ -195,14 +195,14 @@ export default function Home() {
                 layout="responsive"
               />
             </div>
-            <span className="text-[#565656] mt-2">Hello</span>
-            <span className="text-[#565656]">{userInfo ? userInfo.name : ""}</span>
+            <span className="text-[#000000] mt-2 text-sm">Hello</span>
+            <span className="text-black">{userInfo ? userInfo.name : ""}</span>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col h-full mt-2">
-        <span className="text-[#565656] text-sm font-semibold mb-2 mt-5">Submitted Assignment</span>
+        <span className="text-[#565656] text-sm font-semibold mb-2 mt-3">Submitted Assignment</span>
 
       </div>
 
