@@ -77,7 +77,7 @@ const SubjectsBasedTable = () => {
         </div>
       </div>
       <div className="mt-10 ">
-        <div className='w-64 border-white ml-auto mr-0'>
+        <div className='w-64 border-white ml-auto mr-3'>
           <SearchComponent onSearch={handleChange} />
         </div>
         <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} />

@@ -19,27 +19,27 @@ const StudentPage: React.FC = () => {
   const data = [
     {
       cardName: "Students according to subjects",
-      cardNametwo:"",
+      cardNametwo: "",
       subject: 'English',
       details: ['20 Total', '10 Pending']
     },
     {
       // cardNameEnd: "View all",
-      cardName:"",
-      cardNametwo:"View all",
+      cardName: "",
+      cardNametwo: "View all",
       subject: 'Telugu',
       details: ['20 Total', '10 Pending']
     },
     {
       cardName: "Students according to subjects",
-      cardNametwo:"",
+      cardNametwo: "",
       subject: 'Group A',
       details: ['20 Total', '10 Pending']
     },
     {
       // cardNameEnd: "View all",
-      cardName:"",
-      cardNametwo:"View all",
+      cardName: "",
+      cardNametwo: "View all",
       subject: 'Group B',
       details: ['20 Total', '10 Pending']
     }
@@ -66,7 +66,7 @@ const StudentPage: React.FC = () => {
               <span className='text-buttonGray text-xs'>No.of Students</span>
               <div className='md:w-36 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
                 <div className='flex-grow flex items-center justify-center'>
-                  <h1 className='text-xl text-black-400 font-bold'>
+                  <h1 className='text-3xl text-gray-600 font-bold'>
                     280
                   </h1>
                 </div>
@@ -78,12 +78,14 @@ const StudentPage: React.FC = () => {
             </div>
           </Link>
 
-          <div>
-            <span className='text-buttonGray text-xs'>Performance</span>
-            <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex flex-col justify-between p-4'>
-              <PerformanceChart/>
+          
+          <div className='flex flex-col items-center'>
+            <span className='text-buttonGray text-xs mb-2'>Performance</span>
+            <div className='md:w-32 lg:w-36 xl:w-60 2xl:w-64 h-36 bg-white border rounded-md flex justify-center items-center p-0'>
+              <PerformanceChart />
             </div>
           </div>
+
 
           <div>
             <span className='text-buttonGray text-xs'>Progress reports</span>
@@ -131,14 +133,7 @@ const StudentPage: React.FC = () => {
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-4 mt-7'>
             {data.map((item, index) => (
               <div key={index} className='flex flex-col'>
-                {/* <div className={`mb-2 ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
-                  onClick={() => (index === 0 || index === 2) && handleClick(index)}>
-                  <span className='text-buttonGray text-sm'>{item.cardName}</span>
-                  {item.cardNameEnd && <span className='text-buttonGray text-sm ml-2'>{item.cardNameEnd}</span>}
-                </div> */}
-
-
-                {/* <div className='flex justify-between items-center mb-2  '> */}
+               
                 <div className={`mb-2 flex justify-between items-center ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
                   onClick={() => (index === 0 || index === 2) && handleClick(index)}>
                   <span className='text-gray-600 text-xs'>{item.cardName}</span>

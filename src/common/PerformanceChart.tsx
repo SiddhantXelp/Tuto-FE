@@ -1,91 +1,82 @@
-"use client"
+"use client";
 import React from 'react';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-const data = {
-  labels: ['', '', '', '', '', '', ''],
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [15, 35, 45, 70, 55, 40, 16],
-      fill: true,
-      backgroundColor: 'rgb(60, 60, 60)', 
-      borderColor: 'rgba(169, 169, 169, 1)',
-      tension: 0.4,
-    },
-    {
-      label: 'Dataset 2',
-      data: [10, 40, 60, 50, 40, 30, 20],
-      fill: true,
-      backgroundColor: 'rgba(105, 105, 105, 0.7)', 
-      borderColor: 'rgba(105, 105, 105, 1)',
-      tension: 0.4,
-    },
-  ],
-};
+import Chart from 'react-apexcharts';
 
 const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: true,
-      text: '',
-      align: 'start',
-      color: '#000',
-      font: {
-        size: 18,
-      },
-      padding: {
-        top: 10,
-        bottom: 10,
-      },
+  chart: {
+    type: 'area',
+    height: '100%',
+    width: '100%',
+    toolbar: {
+      show: false,
     },
   },
-  scales: {
-    x: {
-      display: false,
-    },
-    y: {
-      display: false,
+  colors: ['#707070', '#d0d7dc'], 
+  fill: {
+    type: 'gradient',
+    gradient: {
+      shadeIntensity: 0,
+      opacityFrom: 2,
+      opacityTo: 0.6,
     },
   },
-  elements: {
-    point: {
-      radius: 0,
+  stroke: {
+    curve: 'smooth',
+    width: 2, 
+  },
+  markers: {
+    size: 0, 
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  xaxis: {
+    categories: ['', '', '', '', '', '', ''],
+    labels: {
+      show: false, 
     },
+    axisBorder: {
+      show: false, 
+    },
+    axisTicks: {
+      show: false, 
+    },
+  },
+  yaxis: {
+    labels: {
+      show: false,
+    },
+    axisBorder: {
+      show: false, 
+    },
+    axisTicks: {
+      show: false, 
+    },
+  },
+  grid: {
+    show: false, 
+  },
+  tooltip: {
+    enabled: false, 
+  },
+  legend: {
+    show: false, 
   },
 };
 
-const PerformanceChart: React.FC = () => {
-  return (
-    <div className='w-full h-full'>
-      <Line data={data} options={options} />
-    </div>
-  );
-};  
+const series = [
+  {
+    name: '', 
+    data: [10, 35, 45, 70, 55, 40, 16],
+  },
+  {
+    name: '', 
+    data: [20, 40, 60, 50, 40, 30, 30],
+  },
+];
+
+const PerformanceChart = () => (
+  <Chart options={options} series={series} type="area" height={180}  />
+);
 
 export default PerformanceChart;

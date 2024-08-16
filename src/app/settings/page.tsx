@@ -12,11 +12,11 @@ type ToggleProps = {
 
 const ToggleSwitch: React.FC<ToggleProps> = ({ id, label, enabled, onToggle }) => (
   <div className="flex items-center justify-between py-2">
-    <span className='text-xs'>{label}</span>
+    <span className='text-xs text-buttonGray'>{label}</span>
     <button
       onClick={() => onToggle(id)}
       className={`relative inline-flex h-5 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
-        enabled ? 'bg-green-500' : 'bg-gray-200'
+        enabled ? 'bg-buttonGray' : 'bg-gray-200'
       }`}
     >
       <span
@@ -46,13 +46,13 @@ const NotificationCategory: React.FC<CategoryProps> = ({ category, onToggleAll, 
   return (
     <div className="notification-category p-4 border rounded-lg shadow-md">
       <div className="flex items-center justify-between mb-4">
-        <span className="text-sm font-semibold">{category.title}</span>
+        <span className="text-sm font-semibold text-buttonGray">{category.title}</span>
         <div className='flex flex-row justify-evenly align-middle items-center'>
-          <span className='text-xxs mr-2'>Select All</span>
+          <span className='text-xxs mr-2 text-buttonGray'>Select All</span>
        <button
           onClick={() => onToggleAll(category.id)}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
-            allEnabled ? 'bg-green-500' : 'bg-gray-200'
+            allEnabled ? 'bg-buttonGray' : 'bg-gray-200'
           }`}
         >
           <span
@@ -144,7 +144,7 @@ const NotificationSettings: React.FC = () => {
               toggles: category.toggles.map(toggle =>
                 toggle.id === toggleId ? { ...toggle, enabled: !toggle.enabled } : toggle
               ),
-            }
+            } 
           : category
       )
     );
@@ -154,9 +154,9 @@ const NotificationSettings: React.FC = () => {
 
   return (
     <TabNavigator>
-      <>
+      <div className='bg-white shadow-lg p-2'>
        <div>
-        <span>Notification settings</span>
+        <span className='text-buttonGray'>Notification settings</span>
       </div>
       <div className='ml-10'>
         <span className='text-buttonGray text-xs'>Choose which updates you are looking for</span>
@@ -171,7 +171,7 @@ const NotificationSettings: React.FC = () => {
         />
       ))}
     </div>
-    </>
+    </div>
     </TabNavigator>
   );
 };

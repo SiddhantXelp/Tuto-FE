@@ -21,12 +21,12 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
         <thead>
           <tr>
             {includeCheckbox && (
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-500">
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-buttonGray">
                 <input type="checkbox" />
               </th>
             )}
             {columns.map((column, index) => (
-              <th key={index} className="px-4 py-2 text-left text-xs font-medium text-white uppercase tracking-wider bg-gray-500">
+              <th key={index} className="px-4 py-2 text-left text-xs font-medium text-buttonGray uppercase tracking-wider bg-lightGray ">
                 {column.header}
               </th>
             ))}
@@ -41,7 +41,7 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
                 </td>
               )}
               {columns.map((column, colIndex) => (
-                <td key={colIndex} className="px-6 py-3 text-sm text-gray-500"> {/* Added vertical padding here */}
+                <td key={colIndex} className="px-6 py-3 text-xs text-buttonGray"> {/* Added vertical padding here */}
                   {column.isCheckbox ? (
                     <input type="checkbox" />
                   ) : (
