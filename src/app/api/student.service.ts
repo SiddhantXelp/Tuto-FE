@@ -35,3 +35,28 @@ export const createPackage = async (token: string, data: any) => {
         throw e;
     }
 };
+
+
+
+export const getStudent = async (token: string, page: string, limit: string) => {
+    console.log('getStudents', token);
+
+    try {
+        const response = await axios.get(
+            apis.getStudents(page, limit),
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            console.log('getStudents......', e);
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};

@@ -11,6 +11,19 @@ export const setCreateStudentPackages = (createStudentPackage: any) => ({
     createStudentPackage,
 });
 
+
+export const getStudents = (token: string, page: string, limit: string) => ({
+    type: actionTypes.GET_STUDENTS,
+    token,
+    page,
+    limit
+});
+
+export const setStudents = (getStudents: any) => ({
+    type: actionTypes.SET_STUDENTS,
+    getStudents,
+});
+
 export const setStudentError = (error: any) => ({
     type: actionTypes.SET_STUDENT_ERROR,
     error,

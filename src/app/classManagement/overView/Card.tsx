@@ -21,7 +21,25 @@ const OverviewTabContent: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const memberAuthToken = 'bJHGWGEuiWHAYEAHEwJKHEIUWQDJNASDJgdiUWKJEh';
+  const [localClassesData, setLocalClassesData] = useState<any[]>([]);
+
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
+
+  console.log(":::::::::::::::::::::::::classesData", classesData);
+  useEffect(() => {
+    if (!open) {
+      dispatch(getClasses(memberAuthToken));
+
+    }
+  }, [dispatch, memberAuthToken, open]);
+
+  useEffect(() => {
+    if (classesData) {
+      setLocalClassesData(classesData);
+    }
+  }, [classesData]);
+
+
   const dialogOpen = () => {
     setOpen(true);
   };
@@ -35,16 +53,10 @@ const OverviewTabContent: React.FC = () => {
 
   };
 
-  useEffect(() => {
-    dispatch(getClasses(memberAuthToken));
-  }, [dispatch, memberAuthToken]);
-
   const formatTime = (time: string) => {
     return time ? moment(time, 'HH:mm').format('hh:mm A') : 'NA';
   };
   const formattedDate = (isoDateString: any) => isoDateString ? moment(isoDateString).format('MMMM Do YYYY') : "NA";
-
-  console.log("monthmonthmonth",month);
   return (
     <>
 
@@ -55,7 +67,7 @@ const OverviewTabContent: React.FC = () => {
           <span className="text-sm text-buttonGray font-semibold">Recent classes</span>
         </div>
         <div className="flex flex-wrap justify-between">
-          {classesData && classesData.map((card: any, index: number) => (
+          {localClassesData && localClassesData.slice(0,5).map((card: any, index: number) => (
             <div
               key={index}
               className="w-full sm:w-[48%] md:w-[23.5%] lg:w-[16%] h-35 bg-gray-200 rounded-lg p-4 flex flex-col gap-y-1.5 mb-4"

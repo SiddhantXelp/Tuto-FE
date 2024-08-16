@@ -1,13 +1,37 @@
 
 import { BsDownload } from "react-icons/bs";
 
+
+export const cardData = [
+    {
+      cardName: "Students according to subjects",
+      subject: 'English',
+      details: ['20 Total', '10 Pending']
+    },
+    {
+      cardNameEnd: "View all",
+      subject: 'Telugu',
+      details: ['20 Total', '10 Pending']
+    },
+    {
+      cardName: "Students according to subjects",
+      subject: 'Group A',
+      details: ['20 Total', '10 Pending']
+    },
+    {
+      cardNameEnd: "View all",
+      subject: 'Group B',
+      details: ['20 Total', '10 Pending']
+    }
+  ];
+
 export const recentStudentColumns = [
-    { header: 'Student', key: 'name' },
+    { header: 'Student', key: 'fullName' },
     { header: 'Grade', key: 'grade' },
     { header: 'Subjects', key: 'subjects' },
     { header: 'Attendance', key: 'attendance' },
-    { header: 'Parent Contact', key: 'parentContact' },
-    { header: 'Enrollment date', key: 'enrollmentDate' },
+    { header: 'Parent Contact', key: 'phoneNumber' },
+    { header: 'Enrollment date', key: 'createdAt' },
     { header: 'Performance', key: 'performance' },
   
   ];

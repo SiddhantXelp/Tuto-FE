@@ -90,6 +90,16 @@ export const setCreateAssignment = (setCreateAssignments: any) => ({
     setCreateAssignments,
 });
 
+export const getAssignments = (token: string) => ({
+    type: actionTypes.GET_ASSIGNMENTS,
+    token
+});
+
+
+export const setAssignments = (setAssignments: any) => ({
+    type: actionTypes.SET_ASSIGNMENTS,
+    setAssignments,
+});
 
 
 export const setAssignmentError = (error: any) => ({

@@ -11,7 +11,7 @@ export const SubmitTableData = [
     submissionStatus: "Submitted",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download: <BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Santhosh",
@@ -20,7 +20,7 @@ export const SubmitTableData = [
     submissionStatus: "Social",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
 
   },
   {
@@ -30,7 +30,7 @@ export const SubmitTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -39,7 +39,7 @@ export const SubmitTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -48,7 +48,7 @@ export const SubmitTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -57,7 +57,7 @@ export const SubmitTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -66,7 +66,7 @@ export const SubmitTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -75,7 +75,7 @@ export const SubmitTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -84,9 +84,9 @@ export const SubmitTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Submitted",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
- 
+
   // Add more data as needed
 ];
 
@@ -99,7 +99,7 @@ export const PendingTableData = [
     submissionStatus: "Submitted",
     dueDate: "20-03-2023",
     status: "Pending",
-    download: <BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Santhosh",
@@ -108,7 +108,7 @@ export const PendingTableData = [
     submissionStatus: "Social",
     dueDate: "20-03-2023",
     status: "Pending",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
 
   },
   {
@@ -118,7 +118,7 @@ export const PendingTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Pending",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -127,7 +127,7 @@ export const PendingTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Pending",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -136,7 +136,7 @@ export const PendingTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Pending",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -145,7 +145,7 @@ export const PendingTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Pending",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -154,9 +154,9 @@ export const PendingTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Pending",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
-  
+
   // Add more data as needed
 ];
 export const completedTableData = [
@@ -167,7 +167,7 @@ export const completedTableData = [
     submissionStatus: "Submitted",
     dueDate: "20-03-2023",
     status: "Completed",
-    download: <BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Santhosh",
@@ -176,7 +176,7 @@ export const completedTableData = [
     submissionStatus: "Social",
     dueDate: "20-03-2023",
     status: "Completed",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
 
   },
   {
@@ -186,7 +186,7 @@ export const completedTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Completed",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -195,7 +195,7 @@ export const completedTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Completed",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -204,7 +204,7 @@ export const completedTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Completed",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
   {
     student: "Sandya",
@@ -213,19 +213,19 @@ export const completedTableData = [
     submissionStatus: "English",
     dueDate: "20-03-2023",
     status: "Completed",
-    download:<BsDownload   color="gray" size={13} />,
+    download: <BsDownload color="gray" size={13} />,
   },
-  
-  
+
+
   // Add more data as needed
 ];
 
 export const SubmitTableColumns = [
-  { header: 'Student', key: 'student' },
+  { header: 'Student', key: 'students' },
   { header: 'Type', key: 'type' },
   { header: 'Subject', key: 'subject' },
   { header: 'Submission status', key: 'submissionStatus' },
-  { header: 'Due date', key: 'dueDate' },
+  { header: 'Due date', key: 'date' },
   { header: 'Status', key: 'status' },
   { header: 'Download', key: 'download' },
 ];

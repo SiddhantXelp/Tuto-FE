@@ -45,7 +45,7 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true }) => {
                   {column.isCheckbox ? (
                     <input type="checkbox" />
                   ) : (
-                    item[column.key]
+                    item[column.key] || "NA"
                   )}
                 </td>
               ))}

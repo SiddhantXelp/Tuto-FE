@@ -1,7 +1,7 @@
 "use client";
 import InputMain from '@/common/InputMain';
 import InputWithIcon from '@/common/InputWithIcon';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TabNavigator from "../../../TabNavigator/page";
 import { MdOutlineCancel } from "react-icons/md";
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxesFull';
@@ -9,43 +9,46 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getCreateAssignment, setCreateAssignment } from '@/app/store/actions/assignment';
 import Spinner from "@/common/Spinner";
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation';
+import { handelStudents, formFields } from "./data";
+
+interface FormData {
+  titleName: string;
+  subjects: string;
+  student: string[];
+  material: File | null;
+  dueDate: string;
+  radioInput: string;
+  radioOptions: string[];
+  checkboxInput: string;
+  checkboxOptions: string[];
+}
 
 const CreateNewAssignment = () => {
-  const dispatch = useAppDispatch();
-  const [formData, setFormData] = useState({
-    titleName: '',
-    subjects: "",
-    student: [] as string[],
-    material: null as File | null,
-    dueDate: '',
-    radioInput: "",
-    radioOptions: [],
-    checkboxInput: "",
-    checkboxOptions: []
+  const router = useRouter();
 
-  })
+  const dispatch = useAppDispatch();
+  const [formData, setFormData] = useState<FormData>({
+    titleName: '',
+    subjects: '',
+    student: [],
+    material: null,
+    dueDate: '',
+    radioInput: '',
+    radioOptions: [],
+    checkboxInput: '',
+    checkboxOptions: []
+  });
   const [storedQuestions, setStoredQuestions] = useState(null);
   const isLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
+  const userData = useAppSelector((state: { auth: any }) => state.auth.login);
+  const createAssignmentResponse = useAppSelector((state: { assignment: any }) => state.assignment.setCreateAssignments);
   const [errors, setErrors] = useState<string[]>([]);
   const [radioInput, setRadioInput] = useState('');
   const [checkboxInput, setCheckboxInput] = useState<string>('');
   const [showInput, setInput] = useState(false);
-  const handelStudents = [
-    { label: "Aarav Patel", value: "Aarav Patel" },
-    { label: "Ishaan Sharma", value: "Ishaan Sharma" },
-    { label: "Aanya Gupta", value: "Aanya Gupta" },
-    { label: "Vihaan Singh", value: "Vihaan Singh" },
-    { label: "Saanvi Mehta", value: "Saanvi Mehta" },
-    { label: "Aryan Desai", value: "Aryan Desai" },
-    { label: "Ananya Reddy", value: "Ananya Reddy" },
-    { label: "Arjun Kumar", value: "Arjun Kumar" },
-    { label: "Mira Iyer", value: "Mira Iyer" },
-    { label: "Rohan Joshi", value: "Rohan Joshi" }
-  ];
-
-
   const token = "hsjdhsjkdhskjhdkjshdkjhahdkajsdhjk"
-
 
   const [cards, setCards] = useState([
     {
@@ -66,43 +69,7 @@ const CreateNewAssignment = () => {
   ]);
 
 
-  const formFields = [
-    {
-      type: 'text',
-      name: 'titleName',
-      label: 'Assignment Title',
-      placeholder: 'Write your assignment title'
-    },
-    {
-      type: 'text',
-      name: 'subjects',
-      label: 'Subject',
-      placeholder: 'Enter subject'
-    },
-    {
-      type: 'select',
-      name: 'student',
-      label: 'Students',
-      options: [
-        { label: 'Select all', value: 'Selectall' },
-        { label: 'Mahesh', value: 'Mahesh' },
-        { label: 'Suresh', value: 'Suresh' }
-      ],
-      lablename: 'Select an option'
-    },
-    {
-      type: 'file',
-      name: 'material',
-      label: 'Material',
-      placeholder: 'Upload file'
-    },
-    {
-      type: 'date',
-      name: 'dueDate',
-      label: 'Date',
-      placeholder: 'Select date'
-    }
-  ];
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -205,8 +172,6 @@ const CreateNewAssignment = () => {
     setCards(updatedCards);
   };
 
-
-
   const validateForm = () => {
     const validationErrors: string[] = [];
     if (!formData.titleName) validationErrors.push("Assignment title is required.");
@@ -269,15 +234,9 @@ const CreateNewAssignment = () => {
 
     } else {
       errors.forEach(error => toast.error(error));
-      console.log("::::::::::::::", errors.forEach(error => error))
     }
 
-
-
-
   };
-
-
 
   const removeCard = (index: any) => {
     setCards(cards.filter((_, i) => i !== index));
@@ -335,7 +294,6 @@ const CreateNewAssignment = () => {
     setCards(updatedCards);
   };
 
-
   const handleSelectChange = (options: string[]) => {
     setFormData(prevState => ({
       ...prevState,
@@ -345,6 +303,7 @@ const CreateNewAssignment = () => {
 
   const handleMaterialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
+    console.log("PPPPPPPPPPPPPPPPPfiles", files);
     if (files && files[0]) {
       setFormData(prevState => ({
         ...prevState,
@@ -358,7 +317,7 @@ const CreateNewAssignment = () => {
       assignmentTitle: formData.titleName,
       subject: formData.subjects,
       students: formData.student,
-      material: formData.material.name,
+      material: formData.material,
       date: formData.dueDate,
       questions: cards.map(card => {
         switch (card.formData.option) {
@@ -397,7 +356,7 @@ const CreateNewAssignment = () => {
     };
 
     const data = new FormData();
-
+    data.append("student_id", userData?.user?.id)
     data.append('assignmentTitle', formattedData.assignmentTitle);
     data.append('subject', formattedData.subject);
     data.append('students', formattedData.students);
@@ -412,6 +371,21 @@ const CreateNewAssignment = () => {
 
   }
 
+
+  useEffect(() => {
+    if (createAssignmentResponse) {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Assignment Created Successfully.',
+        icon: 'success',
+        confirmButtonText: 'Done'
+      });
+      dispatch(setCreateAssignment(null));
+      router.push("/assignments")
+
+    }
+
+  }, [createAssignmentResponse])
   return (
     <TabNavigator>
       {isLoading && <Spinner />}
@@ -456,7 +430,7 @@ const CreateNewAssignment = () => {
                         ) : (
                           <>
                             <div className="mt-2 mb-5">
-                              <label className="block text-buttonGray text-sm mb-2">Subjects</label>
+                              <label className="block text-buttonGray text-sm mb-2">Students</label>
                               <div className="w-full  h-12">
                                 <SelectWithCheckboxes
                                   options={handelStudents}
@@ -790,9 +764,7 @@ const CreateNewAssignment = () => {
                   (
                     <>
                       <button className='p-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey' onClick={handelPublish}>
-                        {/* <Link href="/assignments/createAssignment/createNewAssignment/preview"> */}
                         <span className='text-sm'>Save & Publish</span>
-                        {/* </Link> */}
                       </button>
                     </>
 
@@ -801,9 +773,7 @@ const CreateNewAssignment = () => {
                   (
                     <>
                       <button className='p-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-500 hover:text-black hover:border-gray-500 transition-colors border border-grey' onClick={handleSubmit}>
-                        {/* <Link href="/assignments/createAssignment/createNewAssignment/preview"> */}
                         <span className='text-sm'>Create & Preview</span>
-                        {/* </Link> */}
                       </button>
                     </>
 

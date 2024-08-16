@@ -209,3 +209,28 @@ export const createAssignment = async (token: string, data: any) => {
         throw e;
     }
 };
+
+
+export const getAssignments = async (token: string) => {
+    console.log('Get Assignment', token);
+
+    try {
+        const response = await axios.get(
+            apis.getAssignments,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            console.log('getAssignments......', e);
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};
+
