@@ -1,5 +1,5 @@
 import axios, { Canceler } from 'axios';
-import apis from './students';
+import apis from './user';
 const { CancelToken } = axios;
 let cancelAuth: Canceler;
 

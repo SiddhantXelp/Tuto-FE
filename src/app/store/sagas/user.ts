@@ -1,9 +1,9 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 
-import * as actionTypes from '../actionTypes/students';
+import * as actionTypes from '../actionTypes/user';
 
-import { getStudents } from '@/app/api/students.service';
-import { setStudents, setStudentsError, setStudentsLoading } from '../actions/students';
+import { getStudents } from '@/app/api/user.service';
+import { setStudents, setStudentsError, setStudentsLoading } from '../actions/user';
 
 function* getStudentsEffect(action: any): Generator<any, any, any> {
   console.log('getStudentsEffect......API CALLING', action);

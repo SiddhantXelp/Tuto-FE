@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes/students';
+import * as actionTypes from '../actionTypes/user';
 import { GenericAction, reducingFunction } from '../helpers/createReducer';
 
 export interface IStudents {
