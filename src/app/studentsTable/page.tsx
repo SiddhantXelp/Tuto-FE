@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { allStudentsColumns, allStudentsData } from './data';
 import Table from '@/components/table'
 import TabNavigator from "../TabNavigator/page";
+import Link from 'next/link';
 
 const NumberStudents = () => {
   const [selectedOption, setSelectedOption] = useState('');
@@ -78,13 +79,14 @@ const NumberStudents = () => {
             ))}
           </select>
         </div>
-
-        <div className='w-60 h-10 bg-buttonGray flex justify-center items-center border rounded-lg  p-1'>
-          <span className='text-white text-sm'>Add student  +</span>
-        </div>
+        <Link href="/onboarding">
+          <div className='w-60 h-10 bg-buttonGray flex justify-center items-center border rounded-lg  p-1'>
+            <span className='text-white text-sm'>Add student  +</span>
+          </div>
+        </Link>
       </div>
       <div className="mt-10 ">
-        <div className='w-64 border-white ml-auto mr-0'>
+        <div className='w-64 border-white ml-auto flex items-end mr-2'>
           <SearchComponent onSearch={handleChange} />
         </div>
         <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} />

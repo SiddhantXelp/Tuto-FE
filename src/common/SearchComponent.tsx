@@ -48,7 +48,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
         onChange={handleInputChange}
         placeholder="Search..."
         // style={styles.searchInput}
-        className='h-auto w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100'
+        className='h-auto w-auto bg-white border border-[hsl(0,30%,95%)] rounded-md p-2 opacity-100'
       />
       <IoSearch style={styles.searchIcon} />
       <button onClick={handleSearch} style={{ display: 'none' }}>
