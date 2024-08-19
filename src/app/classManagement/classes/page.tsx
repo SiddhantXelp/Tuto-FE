@@ -33,40 +33,27 @@ const ClassManagementPage: React.FC = () => {
 
   return (
     <div>
-
-      <div className='w-full h-12 pr-5 py-3 bg-white flex justify-between '>
-        <div className="space-x-20 pl-10 ">
-          <span
-            className={` cursor-pointer text-gray-600 text-sm ${selectedTab === 'Upcoming' ? 'font-bold' : ''}`}
-            onClick={() => setSelectedTab('Upcoming')}
-          >
-            Upcoming
-          </span>
-          <span
-            className={` cursor-pointer text-gray-600 text-sm ${selectedTab === 'Completed' ? 'font-bold' : ''}`}
-            onClick={() => setSelectedTab('Completed')}
-          >
-            Completed
-          </span>
-          <span
-            className={` cursor-pointer text-gray-600 text-sm ${selectedTab === 'Cancelled' ? 'font-bold' : ''}`}
-            onClick={() => setSelectedTab('Cancelled')}
-          >
-            Cancelled
-          </span>
-        </div>
-        <div className='flex space-x-3'>
-          {/* <div className="bg-buttonGray rounded-full flex items-center justify-center">
-            <p className="flex justify-between text-sm my-1 text-white m-2">Last 7days</p>
-            <div className="m-2">
-              <Icon icon="uis:calender" width="15" height="15" color='white' />
-            </div>
-          </div> */}
-          <div className="bg-gray-300 rounded-full flex items-center justify-center">
-            <p className="flex justify-between text-sm my-1 text-gray-800 m-6">Re-Schedule</p>
-
-          </div>
-        </div>
+      <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
+        <div
+        />
+        <span
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Upcoming' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          onClick={() => setSelectedTab('Upcoming')}
+        >
+          Upcoming
+        </span>
+        <span
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Completed' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          onClick={() => setSelectedTab('Completed')}
+        >
+          Completed
+        </span>
+        <span
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Cancelled' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          onClick={() => setSelectedTab('Cancelled')}
+        >
+          Cancelled
+        </span>
       </div>
       {renderContent()}
 

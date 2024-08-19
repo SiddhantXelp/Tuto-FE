@@ -24,8 +24,6 @@ const OverviewTabContent: React.FC = () => {
   const [localClassesData, setLocalClassesData] = useState<any[]>([]);
 
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
-
-  console.log(":::::::::::::::::::::::::classesData", classesData);
   useEffect(() => {
     if (!open) {
       dispatch(getClasses(memberAuthToken));
@@ -64,13 +62,13 @@ const OverviewTabContent: React.FC = () => {
         <DialogComponent open={open} setOpen={setOpen} />
         <StartClassDialog open={openStart} setOpen={setOpenStart} />
         <div className="my-2">
-          <span className="text-sm text-buttonGray font-semibold">Recent classes</span>
+          <span className="text-sm text-[#565656] font-semibold">Recent classes</span>
         </div>
         <div className="flex flex-wrap justify-between">
-          {localClassesData && localClassesData.slice(0,5).map((card: any, index: number) => (
+          {localClassesData && localClassesData.slice(0, 5).map((card: any, index: number) => (
             <div
               key={index}
-              className="w-full sm:w-[48%] md:w-[23.5%] lg:w-[16%] h-35 bg-gray-200 rounded-lg p-4 flex flex-col gap-y-1.5 mb-4"
+              className="w-full sm:w-[48%] md:w-[23.5%] lg:w-[16%] h-35 bg-white rounded-lg p-4 flex flex-col gap-y-1.5 mb-4 shadow-lg"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -100,7 +98,7 @@ const OverviewTabContent: React.FC = () => {
             </div>
           ))}
           <div
-            className="w-full sm:w-[48%] md:w-[23.5%] lg:w-[12%] h-32 bg-gray-200 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer"
+            className="shadow-lg w-full sm:w-[48%] md:w-[23.5%] lg:w-[12%] h-32 bg-white rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer mt-2"
             onClick={dialogOpen}
           >
             <Icon icon="mingcute:add-line" width="40" height="35" color="black" />
@@ -111,14 +109,14 @@ const OverviewTabContent: React.FC = () => {
 
         <div>
           <div className="my-3 flex justify-between items-center">
-            <span className="text-sm text-buttonGray font-semibold">Schedule</span>
-            <div>
+            <span className="text-sm text-[#565656] font-semibold">Schedule</span>
+            {/* <div>
               <select className="p-2 border rounded-md bg-white" onChange={(e) => setMonth(e.target.value)}>
                 <option>Weekly</option>
                 <option>Monthly</option>
                 <option>Yearly</option>
               </select>
-            </div>
+            </div> */}
           </div>
 
 

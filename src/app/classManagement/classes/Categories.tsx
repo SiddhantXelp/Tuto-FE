@@ -66,7 +66,7 @@ export const CategoriesPage: React.FC = () => {
 
 
   return (
-    <div className="p-4">
+    <div>
       <Table columns={columns} data={tableData} includeCheckbox={true} />
     </div>
   );

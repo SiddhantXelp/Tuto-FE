@@ -10,6 +10,7 @@ export interface IAssignment {
     setDeleteFile: any;
     setCreateAssignments: any;
     setAssignments: any;
+    setAssignmentById: any;
     error: any;
     loading: any;
 
@@ -23,6 +24,7 @@ const initialState: IAssignment = {
     setDeleteFile: null,
     setCreateAssignments: null,
     setAssignments: null,
+    setAssignmentById: null,
     error: null,
     loading: null,
 
@@ -72,6 +74,11 @@ const setAssignment = ({ setAssignments }: { setAssignments: any }, state: IAssi
     setAssignments,
 });
 
+const setAssignmentById = ({ setAssignmentById }: { setAssignmentById: any }, state: IAssignment) => ({
+    ...state,
+    setAssignmentById,
+});
+
 
 const setAssignmentError = (
     { error }: { error: any },
@@ -101,6 +108,8 @@ export const actionReducers = {
     [actionTypes.SET_DELETE_FILES]: setDeleteFiles,
     [actionTypes.SET_CREATE_ASSIGNMENT]: setCreateAssignment,
     [actionTypes.SET_ASSIGNMENTS]: setAssignment,
+    [actionTypes.SET_ASSIGNMENT_BY_ID]: setAssignmentById,
+
 
 
 

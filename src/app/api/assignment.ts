@@ -10,6 +10,8 @@ export default {
     deleteFiles: (id: string) => `${BASE_URL}/api/v1/files/${id}`,
     createAssignment: `${BASE_URL}/api/v1/assignments`,
     getAssignments: `${BASE_URL}/api/v1/assignments`,
+    getAssignmentById: (id: string) => `${BASE_URL}/api/v1/assignments/${id}`,
+
 
 
 

@@ -10,7 +10,8 @@ import { PiStepsFill } from "react-icons/pi";
 import DialogComponent from '@/common/Card';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-
+import { getLogin, setLogin } from "@/app/store/actions/auth";
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 interface UserInfo {
   name: string;
   email: string;
@@ -18,6 +19,7 @@ interface UserInfo {
 }
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
   const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
   const [open, setOpen] = useState(false);
@@ -37,7 +39,7 @@ const Header: React.FC = () => {
     console.log('Logged out');
     localStorage.removeItem('userInfo');
     localStorage.removeItem('user');
-
+    dispatch(setLogin(null));
     router.push('/auth/Login');
 
   };

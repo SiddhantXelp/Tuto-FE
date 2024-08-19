@@ -5,7 +5,6 @@ import { useRouter, useParams } from 'next/navigation';
 import TabNavigator from "../../../TabNavigator/page";
 import SubFilecard from '../../../../common/Myfiles/SubFilecard';
 import { data } from "../../data";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -90,7 +89,7 @@ const MyFilesPage = () => {
     return (
         <TabNavigator>
             {isLoading && <Spinner />}
-            <div className="p-4 md:p-8 bg-white h-[100rem] rounded-xl">
+            <div className="p-4 md:p-8 bg-white h-[100rem] rounded-xl m-2">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
                     <div className="flex items-center space-x-4 p-4 md:p-6 border-grey border-b-[1px]">
                         <GoFileDirectoryFill size={50} color="grey" />

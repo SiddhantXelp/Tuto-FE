@@ -90,7 +90,7 @@ const Attendance: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="p-4">
+      {/* <div className="p-4">
         <div className="flex space-x-4 mb-4">
           <span
             onClick={() => handleOptionChange('option1')}
@@ -98,14 +98,6 @@ const Attendance: React.FC = () => {
           >
             Recent Classes
           </span>
-
-          {/* <span
-          className={`text-sm cursor-pointer text-sm ${selectedOption === 'Overview' ? 'font-bold' : ''}`}
-          onClick={() => setSelectedTab('Overview')}
-        >
-          Overview
-        </span> */}
-
           <span
             onClick={() => handleOptionChange('option2')}
             className={`text-sm cursor-pointer  ${selectedOption === 'option2' ? 'font-bold' : ''}`}
@@ -114,7 +106,26 @@ const Attendance: React.FC = () => {
           </span>
         </div>
         <Table columns={columns} data={data} includeCheckbox={false} />
+      </div> */}
+      <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
+        <div
+        />
+        <span
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedOption === 'option1' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          onClick={() => handleOptionChange('option1')}
+        >
+          Upcoming
+        </span>
+        <span
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedOption === 'option2' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          onClick={() => handleOptionChange('Completed')}
+        >
+          Completed
+        </span>
+
       </div>
+      <Table columns={columns} data={data} includeCheckbox={false} />
+
     </div>
   );
 };

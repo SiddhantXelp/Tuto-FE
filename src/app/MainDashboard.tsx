@@ -12,6 +12,8 @@ import 'react-calendar/dist/Calendar.css';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Stepper from "@/common/Stepper";
+import { FiPlus } from "react-icons/fi";
+import DialogComponent from '@/common/Card';
 
 interface UserInfo {
   name: string;
@@ -112,42 +114,49 @@ export default function Home() {
   }));
 
   const [activeStep, setActiveStep] = useState(1);
-  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
+  const [open, setOpen] = useState(false);
 
+  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
+  const dialogOpen = () => {
+    setOpen(true);
+  };
   return (
-    <>
+    <div className="pt-2 px-4 mt-7">
+      <DialogComponent open={open} setOpen={setOpen} />
+
       <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="flex flex-col">
             <span className="text-[#565656] text-sm font-semibold mb-2">Students</span>
-            <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
-              <div>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li className="text-[#565656] text-sm break-words">200 students</li>
-                  <li className="text-[#565656] text-sm">144 Active students</li>
-                  <li className="text-[#565656] text-sm">14 Newly registered</li>
-                </ul>
-              </div>
-              <div className="flex justify-end mt-4">
-                <TiGroup size={20} color="gray" />
+            <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col h-full">
+              <div className="flex-1">
+                <div className="text-[#565656] text-sm break-words">
+                  200 students</div>
+                <div className="text-[#565656] text-sm mt-2">144 Active students</div>
+                <div className="text-[#565656] text-sm flex justify-between items-center mt-2">
+                  <span>14 Newly registered</span>
+                  <TiGroup size={20} color="gray" className="ml-2" />
+                </div>
               </div>
             </div>
+
           </div>
+
 
           <div className="flex flex-col">
             <span className="text-[#565656] text-sm font-semibold mb-2">Class Management</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
-              <div>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li className="text-[#565656] text-sm break-words">20 classes scheduled for next 7 days</li>
-                  <li className="text-[#565656] text-sm">2 classes available</li>
-                </ul>
-              </div>
-              <div className="flex justify-end mt-4">
-                <BiSolidBarChartAlt2 size={20} color="gray" />
+              <div className="flex-1">
+                <div className="text-[#565656] text-sm break-words">20 classes scheduled for next 7 days</div>
+                <div className="text-[#565656] text-sm mt-2">2 classes available</div>
+                <div className="text-[#565656] text-sm flex justify-between items-center mt-2">
+                  <span>Classes Overview</span>
+                  <BiSolidBarChartAlt2 size={20} color="gray" className="ml-2" />
+                </div>
               </div>
             </div>
           </div>
+
 
           <div className="flex flex-col">
             <span className="text-[#565656] text-sm font-semibold mb-2">Previous</span>
@@ -156,9 +165,13 @@ export default function Home() {
                 <FaRegClock size={14} color="gray" />
                 <span className="text-[#565656] text-sm">18:30 - 20:30</span>
               </div>
-              <div className="flex items-center gap-2 mt-2">
+              <div className="flex items-center gap-2 mt-0">
                 <FaBook size={14} color="gray" />
                 <span className="text-[#565656] text-sm">English class</span>
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                {/* <FaBook size={14} color="gray" />
+                <span className="text-[#565656] text-sm">English class</span> */}
               </div>
             </div>
           </div>
@@ -168,11 +181,15 @@ export default function Home() {
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex items-center gap-2 mt-2">
                 <FaRegClock size={14} color="gray" />
-                <span className="text-[#565656] text-sm">18:30 - 20:30</span>
+                <span className="text-[#565656] text-sm">19:30 - 21:30</span>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <FaBook size={14} color="gray" />
-                <span className="text-[#565656] text-sm">English class</span>
+                <span className="text-[#565656] text-sm">Maths class</span>
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                {/* <FaBook size={14} color="gray" />
+                <span className="text-[#565656] text-sm">English class</span> */}
               </div>
             </div>
           </div>
@@ -180,8 +197,11 @@ export default function Home() {
 
 
         <div className="flex flex-col lg:flex-row gap-6 mt-6">
-          <div className="flex flex-col gap-4 mx-10">
-            <button className="bg-gray-400 w-full lg:w-36 py-2 px-4 rounded-2xl text-white text-sm">
+          <div className="flex flex-col gap-4 mx-10 mt-5">
+            <button className="bg-[#707070] w-full lg:w-44 py-2 px-4 rounded-2xl text-white text-sm flex" onClick={dialogOpen}>
+              Create new class <FiPlus className="mt-1 ml-2" color="white" />
+            </button>
+            <button className="bg-[#E2E2E2] w-full lg:w-44 py-2 px-4 rounded-2xl text-[#2A2A2A] text-sm shadow-lg border border-[#E2E2E2]">
               Schedule
             </button>
           </div>
@@ -196,27 +216,26 @@ export default function Home() {
               />
             </div>
             <span className="text-[#000000] mt-2 text-sm">Hello</span>
-            <span className="text-black">{userInfo ? userInfo.name : ""}</span>
+            <span className="text-black font-bold">{userInfo ? userInfo.name : ""}</span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col h-full mt-2">
-        <span className="text-[#565656] text-sm font-semibold mb-2 mt-3">Submitted Assignment</span>
+      <div className="flex flex-col h-full">
+        <span className="text-[#565656] text-sm font-semibold mt-7">Submitted Assignment</span>
 
       </div>
 
-      <div className="w-full h-auto mt-10">
+      <div className="w-full h-auto mt-2">
         <div className="grid grid-cols-1 lg:grid-cols-[70%_25%] gap-6 h-full">
           <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} />
           <div className="bg-white shadow-lg p-4 rounded-lg h-full w-[384px]">
             <Calendar
-              onChange={setValue}
               value={value}
               locale="en-US"
               showNavigation={false}
               formatShortWeekday={formatShortWeekday}
-              className="h-full"
+              className="h-full border-none"
             />
           </div>
         </div>
@@ -312,6 +331,6 @@ export default function Home() {
 
 
       </div>
-    </>
+    </div>
   );
 }

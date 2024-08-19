@@ -113,7 +113,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { DayPilot, DayPilotCalendar, DayPilotEvent } from "@daypilot/daypilot-lite-react";
+import { DayPilot, DayPilotCalendar} from "@daypilot/daypilot-lite-react";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import moment from 'moment';
 
@@ -164,7 +164,7 @@ const Table: React.FC<ScheduleProps> = ({ month }) => {
 
 
   return (
-    <div>
+    <div className='bg-white'>
       <DayPilotCalendar
         viewType={"Days"}
         days={7}

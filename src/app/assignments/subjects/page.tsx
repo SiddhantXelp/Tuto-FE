@@ -41,10 +41,10 @@ const ClassManagementSubject: React.FC = () => {
 
   return (
     <TabNavigator>
-      <div className="sm:w-auto md:w-auto lg:w-auto xl:w-auto 2xl:w-auto sm:h-12 md:h-auto lg:h-14 xl:h-14 2xl:h-14 flex flex-wrap  bg-white rounded-xl">
+      <div className="sm:w-auto md:w-auto lg:w-auto xl:w-auto 2xl:w-auto sm:h-12 md:h-auto lg:h-14 xl:h-14 2xl:h-14 flex flex-wrap  bg-white rounded-xl m-5">
         <div className='flex flex-row flex-wrap justify-evenly align-middle  p-2 w-full'>
           {newData.map((item) => (
-            <span className='flex-1 text-xxxs text-buttonGray whitespace-pre-line'>
+            <span className='flex-1 text-xs text-buttonGray whitespace-pre-line'>
               {item.firstName} {"\n"} {item.secondName}
             </span>
           ))}

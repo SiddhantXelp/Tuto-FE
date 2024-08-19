@@ -30,7 +30,7 @@ const OnboardSubmit = () => {
 
   return (
     <TabNavigator>
-      <div className='flex justify-center items-center min-h-screen bg-[#F9F9F9] p-4'>
+      <div className='flex justify-center items-center min-h-screen  p-4'>
         <div className='w-full max-w-md bg-[#F8F5F5] shadow-xl border  rounded-[19px] p-6'>
           <div className='mb-6 text-center'>
             <h1 className='text-2xl font-semibold text-gray-700'>{userData?.fullName || ""}</h1>

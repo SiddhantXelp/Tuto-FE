@@ -104,23 +104,23 @@ const ClassManagementPage: React.FC = () => {
           </Link>
         </div>
 
-        <div className="relative w-3/12 h-10 flex bg-white rounded-xl text-center">
+        <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
           <div
           />
           <span
-            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Submitted' ? 'font-bold text-white bg-gray-500' : 'hover:bg-gray-100'}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Submitted' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Submitted')}
           >
             Submitted
           </span>
           <span
-            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Pending' ? 'font-bold text-white bg-gray-500' : 'hover:bg-gray-100'}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Pending' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Pending')}
           >
             Pending
           </span>
           <span
-            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Completed' ? 'font-bold text-white bg-gray-500' : 'hover:bg-gray-100'}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Completed' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Completed')}
           >
             Completed

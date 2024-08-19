@@ -150,7 +150,7 @@ const NotificationSettings: React.FC = () => {
 
   return (
     <TabNavigator>
-      <div className='bg-white p-6 h-[850px] shadow-xl rounded-lg mt-5'>
+      <div className='bg-white p-6 h-[850px] shadow-xl rounded-lg mt-5 m-5'>
         <div>
           <span className='text-lg text-gray-800'>Notification settings</span>
         </div>

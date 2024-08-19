@@ -101,6 +101,18 @@ export const setAssignments = (setAssignments: any) => ({
     setAssignments,
 });
 
+export const getAssignmentById = (token: string, id: string) => ({
+    type: actionTypes.GET_ASSIGNMENT_BY_ID,
+    token,
+    id
+});
+
+
+export const setAssignmentById = (setAssignmentById: any) => ({
+    type: actionTypes.SET_ASSIGNMENT_BY_ID,
+    setAssignmentById,
+});
+
 
 export const setAssignmentError = (error: any) => ({
     type: actionTypes.SET_ASSIGNMENT_ERROR,
