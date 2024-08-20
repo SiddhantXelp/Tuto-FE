@@ -421,16 +421,17 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
             </div>
           </DialogPanel>
         ) : (
-          <DialogPanel className="bg-white rounded-lg shadow-xl w-full md:w-1/2 lg:w-1/3 h-auto">
+          <DialogPanel className="bg-white shadow-xl w-full md:w-1/2 lg:w-1/3 h-auto">
             <div className="flex flex-col md:flex-row p-0 gap-0 rounded-lg">
               {Tabbuttons.map((item) => (
                 <button
                   key={item.id}
                   className={`h-14 flex-1 border-t-2 border-l-2 border-r-2 border-white-500 ${tabValue === item.name ? 'bg-white' : 'bg-[#ECEAEA]'
-                    } rounded-tl-lg rounded-tr-lg`}
+                    } `}
                   onClick={() => handleTabClick(item.name)}
                 >
-                  <span className="text-left font-semibold text-[14px] md:text-[18px] leading-[1.5] text-[#707070] opacity-100">
+                  <span className={`text-left font-semibold text-[14px] md:text-[18px] leading-[1.5] text-[#707070] opacity-100 ${tabValue === item.name ? 'bg-white' : 'text-[#707070] opacity-50'
+                    }`}>
                     {item.name}
                   </span>
                 </button>
@@ -441,7 +442,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
               {tabValue === 'Create new class' && (
                 <form>
                   <div className="mb-4">
-                    <label className="block text-[#707070] text-[12px] md:text-[14px] mb-2">Class title</label>
+                    <label className="block text-[#707070] text-[12px] md:text-[14px] mb-0">Class title</label>
                     <InputMain
                       name="classTitle"
                       value={formData.classTitle || ''}
@@ -472,7 +473,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                     {/* </div> */}
                   </div>
                   <div className="mb-4">
-                    <label className="block text-[#707070] text-[12px] md:text-[14px] mb-2">Material Url</label>
+                    <label className="block text-[#707070] text-[12px] md:text-[14px] mb-0">Material Url</label>
                     <InputMain
                       name="material"
                       value={formData.material || ''}
@@ -482,7 +483,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                   </div>
                   <button
                     type="button"
-                    className="w-full bg-gray-500 text-white py-2 rounded-md text-sm md:text-base"
+                    className="w-full bg-[#707070] text-white py-2 rounded-md text-sm md:text-base"
                     onClick={handelNext}
                   >
                     Next
@@ -498,7 +499,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                         <button
                           key={item.id}
                           type="button"
-                          className={`transition-colors duration-300 ease-in-out border-2 w-50 h-12 rounded-md ${formData.typeMeeting.includes(item.name) ? 'bg-[#707070] text-white border-[#707070]' : 'bg-white text-[#707070] border-[#707070]'} hover:bg-[#505050] hover:text-white focus:outline-none border-[#707070]`}
+                          className={`rounded-md transition-colors duration-300 ease-in-out border-2 w-50 h-12 ${formData.typeMeeting.includes(item.name) ? 'bg-[#707070] text-white border-[#707070]' : 'bg-white text-[#707070] border-[#707070]'} hover:bg-[#505050] hover:text-white focus:outline-none border-[#707070]`}
                           onClick={() => handleCheckboxChangeNew(item.name)}
                         >
                           <p className='text-base'>{item.name}</p>
@@ -567,7 +568,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                     />
                   </div>
                   <div className='mt-8'>
-                    <button type="submit" className='w-full bg-buttonGray h-10 rounded-md text-white text-sm md:text-base' onClick={handelCreate}>Create</button>
+                    <button type="submit" className='w-full bg-[#707070] h-10 rounded-md text-white text-sm md:text-base' onClick={handelCreate}>Create</button>
                   </div>
                 </>
               )}

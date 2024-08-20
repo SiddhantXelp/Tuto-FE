@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useRouter } from 'next/navigation';
-import Spineer from "../common/Spinner"
+import Spinner from "../common/Spinner"
 
 const Dashboard = lazy(() => import('./TabNavigator/page'));
 const MainDashboard = lazy(() => import('./MainDashboard'));
@@ -22,11 +22,11 @@ const Home: React.FC = () => {
   }, [router]);
 
   if (isLoading) {
-    return <Spineer />;
+    return <Spinner />;
   }
 
   return (
-    <Suspense fallback={<Spineer />}>
+    <Suspense fallback={<Spinner />}>
       <Dashboard>
         <MainDashboard />
       </Dashboard>
