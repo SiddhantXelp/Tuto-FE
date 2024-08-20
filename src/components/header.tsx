@@ -96,7 +96,7 @@
 //                 <IoMdNotifications size={"17px"} color='gray' />
 //               </div>
 //               </Link>
-              
+
 //             </div>
 
 //             <button
@@ -175,7 +175,7 @@ const Header: React.FC = () => {
   const selectedLayout = useSelectedLayoutSegment();
   const [open, setOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] = useState(false); 
+  const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] = useState(false);
   const router = useRouter();
 
   const dialogOpen = () => {
@@ -205,7 +205,9 @@ const Header: React.FC = () => {
   }, []);
 
   const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
-
+  const toggleNotificationDrawer = () => {
+    setIsNotificationDrawerOpen(!isNotificationDrawerOpen);
+  };
   return (
     <div
       className={cn(
@@ -214,7 +216,7 @@ const Header: React.FC = () => {
           'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
           'border-b border-gray-200 bg-white': selectedLayout,
         },
-      )} 
+      )}
     >
       <div className="flex h-[47px] items-center justify-between px-4">
         <div className="flex items-center space-x-4">
@@ -241,14 +243,9 @@ const Header: React.FC = () => {
                   </p>
                 </div>
               </Link>
-              <div className='items-center cursor-pointer' onClick={() => setIsNotificationDrawerOpen(true)}>
+              <div className='items-center cursor-pointer' onClick={toggleNotificationDrawer}>
                 <IoMdNotifications size={"17px"} color='gray' />
               </div>
-            {/* <Link href="/notifications">
-               <div className='items-center' >
-                <IoMdNotifications size={"17px"} color='gray' />
-              </div>
-              </Link> */}
             </div>
 
             <button
@@ -294,11 +291,14 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-     
+
       <DialogComponent open={open} setOpen={setOpen} />
-      
-      <NotificationDrawer isOpen={isNotificationDrawerOpen} setIsOpen={setIsNotificationDrawerOpen} /> 
-     
+
+      {
+        isNotificationDrawerOpen && <NotificationDrawer isOpen={isNotificationDrawerOpen} setIsOpen={setIsNotificationDrawerOpen} />
+      }
+
+
     </div>
   );
 };
