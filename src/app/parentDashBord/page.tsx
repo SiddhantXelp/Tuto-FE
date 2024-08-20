@@ -122,7 +122,7 @@ const SplashScreen: React.FC = () => {
       case 2:
         return (
           <div>
-            <h2 className="text-2xl font-bold mb-6">Hello Parent</h2>
+            <h2 className="text-2xl font-bold mb-6 flex justify-center">Hello Parent</h2>
             <p className="text-gray-700 mb-8 mt-20">
               This splash screen idea uses a short video to showcase the key features and benefits of your platform. The video should be engaging and informative, highlighting the ease of use and personalization that your platform offers. This approach is an excellent way to grab the user's attention and pique their interest.
             </p>
@@ -131,7 +131,7 @@ const SplashScreen: React.FC = () => {
       case 3:
         return (
           <div>
-            <h2 className="text-2xl font-bold mb-6">Hello Parent</h2>
+            <h2 className="text-2xl font-bold mb-6 flex justify-center">Hello Parent</h2>
             <p className="text-gray-700 mb-8 mt-20">
               This splash screen idea is designed to be simple and easy to navigate, with a minimalist design that emphasizes the key features of your platform. The muted color scheme and subtle animations create a sleek and modern look, while the concise text highlights the benefits of your platform without overwhelming the user. This approach is ideal for users who want to quickly access the platform's main features.
             </p>

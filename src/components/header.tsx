@@ -210,7 +210,7 @@ const Header: React.FC = () => {
           'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
           'border-b border-gray-200 bg-white': selectedLayout,
         },
-      )}
+      )} 
     >
       <div className="flex h-[47px] items-center justify-between px-4">
         <div className="flex items-center space-x-4">
@@ -237,14 +237,14 @@ const Header: React.FC = () => {
                   </p>
                 </div>
               </Link>
-              {/* <div className='items-center' onClick={() => setIsNotificationDrawerOpen(true)}>
+              <div className='items-center' onClick={() => setIsNotificationDrawerOpen(true)}>
                 <IoMdNotifications size={"17px"} color='gray' />
-              </div> */}
-            <Link href="/notifications">
+              </div>
+            {/* <Link href="/notifications">
                <div className='items-center' >
                 <IoMdNotifications size={"17px"} color='gray' />
               </div>
-              </Link>
+              </Link> */}
             </div>
 
             <button
@@ -293,7 +293,7 @@ const Header: React.FC = () => {
      
       <DialogComponent open={open} setOpen={setOpen} />
       
-      {/* <NotificationDrawer isOpen={isNotificationDrawerOpen} setIsOpen={setIsNotificationDrawerOpen} />  */}
+      <NotificationDrawer isOpen={isNotificationDrawerOpen} setIsOpen={setIsNotificationDrawerOpen} /> 
      
     </div>
   );
