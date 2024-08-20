@@ -65,12 +65,11 @@ const StudentPage: React.FC = () => {
           </Link>
 
           <div>
-            <span className='text-sm font-semibold mb-4 text-buttonGray'>Performance</span>
-            <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
+            <span className='text-sm font-semibold text-buttonGray'>Performance</span>
+            <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between mt-2'>
               <PerformanceChart />
             </div>
           </div>
-
           <div>
             <span className='text-sm font-semibold mb-4 text-buttonGray'>Progress reports</span>
             <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
