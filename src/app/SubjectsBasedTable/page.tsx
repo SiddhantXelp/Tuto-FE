@@ -3,7 +3,10 @@ import SearchComponent from '@/common/SearchComponent';
 import Table from '@/components/table';
 import { allStudentsColumns, allStudentsData } from '../studentsTable/data';
 import React, { useState } from 'react'
-import TabNavigator from "@/app/TabNavigator/page"
+import TabNavigator from "@/app/TabNavigator/page";
+import { FiPlus } from "react-icons/fi";
+import Link from 'next/link';
+
 const SubjectsBasedTable = () => {
   const [selectedOption, setSelectedOption] = useState('');
 
@@ -52,7 +55,7 @@ const SubjectsBasedTable = () => {
 
   return (
     <TabNavigator>
-      <div className='flex flex-row items-center gap-10'>
+      <div className='flex flex-row items-center gap-10 m-5'>
         <div >
           <select
             name=""
@@ -75,8 +78,11 @@ const SubjectsBasedTable = () => {
             ))}
           </select>
         </div>
+        <Link href="/onboarding">
+          <button className='bg-gray-500 rounded-2xl p-2  text-white flex text-sm w-48 text-center justify-center'>Add Student  <FiPlus className="mt-1 ml-2" color="white" /></button> 
+        </Link>
       </div>
-      <div className="mt-10 ">
+      <div className="mt-5 m-5">
         <div className='w-64 border-white ml-auto mr-3'>
           <SearchComponent onSearch={handleChange} />
         </div>

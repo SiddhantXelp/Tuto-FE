@@ -37,19 +37,19 @@ const ClassManagementPage: React.FC = () => {
         <div
         />
         <span
-          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Upcoming' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tl-lg relative ${selectedTab === 'Upcoming' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
           onClick={() => setSelectedTab('Upcoming')}
         >
           Upcoming
         </span>
         <span
-          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Completed' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2  relative ${selectedTab === 'Completed' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
           onClick={() => setSelectedTab('Completed')}
         >
           Completed
         </span>
         <span
-          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-lg relative ${selectedTab === 'Cancelled' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+          className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tr-lg relative ${selectedTab === 'Cancelled' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
           onClick={() => setSelectedTab('Cancelled')}
         >
           Cancelled

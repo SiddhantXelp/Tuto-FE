@@ -8,12 +8,11 @@ import SideNav from '@/components/side-nav';
 import '../../styles/globals.css';
 import PageWrapper from '@/components/page-wrapper';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-interface DashboardProps {
+interface TabNavigatorProps {
     children?: React.ReactNode;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ children }) => {
+const TabNavigator: React.FC<TabNavigatorProps> = ({ children }) => {
     return (
         <div className="flex">
             <SideNav />
@@ -34,4 +33,4 @@ const Dashboard: React.FC<DashboardProps> = ({ children }) => {
     );
 };
 
-export default Dashboard;
+export default TabNavigator;

@@ -52,7 +52,7 @@ const SubjectsBasedTable = () => {
 
   return (
     <TabNavigator>
-      <div className='flex flex-row items-center gap-10'>
+      <div className='flex flex-row items-center gap-10 m-5'>
         <div >
           <select
             name=""
@@ -76,8 +76,8 @@ const SubjectsBasedTable = () => {
           </select>
         </div>
       </div>
-      <div className="mt-10 ">
-        <div className='w-64 border-white ml-auto mr-0'>
+      <div className="mt-10 m-5">
+        <div className='w-64 border-white ml-auto mr-3'>
           <SearchComponent onSearch={handleChange} />
         </div>
         <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} />

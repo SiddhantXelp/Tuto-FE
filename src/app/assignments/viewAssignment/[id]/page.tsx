@@ -44,7 +44,7 @@ const MyFilesPage = () => {
                         <div className="bg-[#D1D1D1] rounded-lg h-20 w-56 flex items-center p-2 md:p-4">
                             <img src="/profile.png" className="h-10 w-10 rounded-full" alt="Profile" />
                             <div className="ml-2 md:ml-5 flex-1">
-                                <h1 className="text-xs md:text-sm font-medium">{getAssignmentResponse?.students || "NA"}</h1>
+                                <h1 className="text-xs md:text-sm font-medium">{getAssignmentResponse?.students?.slice(0,10) || "NA"}</h1>
                                 <h1 className="text-xs ">6th grade</h1>
                             </div>
                             <div className="border-l border-black h-16 md:h-full mx-2 md:mx-4"></div>

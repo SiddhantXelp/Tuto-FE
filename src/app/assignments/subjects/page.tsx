@@ -43,9 +43,9 @@ const ClassManagementSubject: React.FC = () => {
     <TabNavigator>
       <div className="sm:w-auto md:w-auto lg:w-auto xl:w-auto 2xl:w-auto sm:h-12 md:h-auto lg:h-14 xl:h-14 2xl:h-14 flex flex-wrap  bg-white rounded-xl m-5">
         <div className='flex flex-row flex-wrap justify-evenly align-middle  p-2 w-full'>
-          {newData.map((item) => (
-            <span className='flex-1 text-xs text-buttonGray whitespace-pre-line'>
-              {item.firstName} {"\n"} {item.secondName}
+          {newData.map((item,index) => (
+            <span className='flex-1 text-sm text-buttonGray whitespace-pre-line' key={index}>
+              <span className='text-[#565656] font-bold'>{item.firstName}</span> {"\n"} <span className='text-[#565656]'>{item.secondName}</span>
             </span>
           ))}
 
@@ -53,21 +53,22 @@ const ClassManagementSubject: React.FC = () => {
       </div>
 
 
-      <div>
-        <div className="sm:w-auto md:w-80 lg:w-80 xl:w-80 2xl:w-auto h-12 flex space-x-20 pl-10 py-3 bg-white rounded-xl  ">
+      <div className='m-5'>
+        <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
+          <div
+          />
           <span
-            className={`text-sm cursor-pointer text-xxs ${selectedTab === 'Submitted' ? 'font-bold' : ''}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tl-lg relative ${selectedTab === 'Submitted' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Submitted')}
           >
             Submitted
           </span>
           <span
-            className={`text-sm cursor-pointer text-xxs ${selectedTab === 'Pending' ? 'font-bold' : ''}`}
+            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tr-lg relative ${selectedTab === 'Pending' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
             onClick={() => setSelectedTab('Pending')}
           >
             Pending
           </span>
-
         </div>
         {renderContent()}
       </div>

@@ -24,7 +24,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
     },
     searchInput: {
       width: '100%',
-      height:'40px',
+      height: '40px',
       padding: '8px 40px 8px 8px',
       border: '2px solid white',
       borderRadius: '10px',
@@ -36,7 +36,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
       top: '50%',
       transform: 'translateY(-50%)',
       pointerEvents: 'none' as 'none',
-      color:"gray"
+      color: "gray"
     },
   };
 
@@ -48,7 +48,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
         onChange={handleInputChange}
         placeholder="Search..."
         // style={styles.searchInput}
-        className='h-auto w-auto bg-white border border-[hsl(0,30%,95%)] rounded-md p-2 opacity-100'
+        className='h-auto w-auto bg-white border border-[hsl(0,30%,95%)] rounded-tl-lg rounded-tr-lg p-2 opacity-100'
       />
       <IoSearch style={styles.searchIcon} />
       <button onClick={handleSearch} style={{ display: 'none' }}>

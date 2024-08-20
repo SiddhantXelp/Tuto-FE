@@ -31,13 +31,12 @@ const ClassManagementPage: React.FC = () => {
         return null;
     }
   };
-
   return (
     <TabNavigator>
       {/* <div className="w-full h-12 flex space-x-20 pl-10 py-3 bg-white"> */}
-      <div className="w-full h-10 flex space-x-8 bg-white pl-10">
+      <div className="w-full h-auto  md:h-14 flex space-x-8 bg-white pl-10 border border-t-zinc-200 ml-[-1px] flex-wrap">
 
-        <div className="relative">
+        <div className="relative mt-3">
           <span
             className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Overview' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Overview')}
@@ -48,7 +47,7 @@ const ClassManagementPage: React.FC = () => {
             <TiArrowSortedUp className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 text-gray-500" />
           )}
         </div>
-        <div className="relative">
+        <div className="relative  mt-3">
           <span
             className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Classes' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Classes')}
@@ -59,7 +58,7 @@ const ClassManagementPage: React.FC = () => {
             <TiArrowSortedUp className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 text-gray-500" />
           )}
         </div>
-        <div className="relative">
+        <div className="relative  mt-3">
           <span
             className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Time table' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Time table')}
@@ -70,7 +69,7 @@ const ClassManagementPage: React.FC = () => {
             <TiArrowSortedUp className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 text-gray-500" />
           )}
         </div>
-        <div className="relative">
+        <div className="relative  mt-3">
           <span
             className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Attendance' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Attendance')}

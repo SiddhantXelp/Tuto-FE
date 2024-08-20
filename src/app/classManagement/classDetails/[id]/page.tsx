@@ -62,7 +62,7 @@ const ClassDetails = () => {
         <TabNavigator>
             <StartClassDialog open={open} setOpen={setOpen} />
 
-            <div className="w-full h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md mt-10 sm:h-full" style={{ height: "500px" }}>
+            <div className="m-5  h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md mt-10 sm:h-full" style={{ height: "500px" }}>
                 <div className="flex justify-between items-center border-b border-gray-300 pb-2">
                     <div className="w-80 h-48 bg-slate-500 rounded-[23px] flex flex-col justify-between p-4 mb-11">
                         <h1 className="text-white">{viewClassData?.subject?.name || "NA"}</h1>
