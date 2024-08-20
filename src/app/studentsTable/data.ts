@@ -9,7 +9,7 @@ export const allStudentsColumns = [
   ];
   export const allStudentsData = [
     {
-        name: "Harish",
+        name:"Harish",
         subjects: "Maths",
         attendance: "02/20",
         ParentContact: "+95 95845 95555",
@@ -17,7 +17,7 @@ export const allStudentsColumns = [
         remarks: "02",
     },
     {
-        name: "Mathew",
+        name:"Mathew",
         subjects: "Telugu",
         attendance: "09/20",
         ParentContact: "+95 95845 95555",
@@ -25,7 +25,7 @@ export const allStudentsColumns = [
         remarks: "30min",
     },
     {
-        name: "sai",
+        name:"sai",
         subjects: "Maths",
         attendance: "08/20",
         ParentContact: "+95 95845 95555",
@@ -33,7 +33,7 @@ export const allStudentsColumns = [
         remarks: "30min",
     },
     {
-        name: "Ronaldson",
+        name:"Ronaldson",
         subjects: "English",
         attendance: "02/20",
         ParentContact: "+95 95845 95555",
@@ -41,15 +41,15 @@ export const allStudentsColumns = [
         remarks: "02",
     },
     {
-        name: "Divya",
-        subjects: "Maths",
+        name:"Divya",
+        subjects:"Maths",
         attendance: "02/20",
         ParentContact: "+95 95845 95555",
         absent: "5",
         remarks: "30min",
     },
     {
-        name: "Sujith",
+        name:"Sujith",
         subjects: "Telugu",
         attendance: "10/20",
         ParentContact: "+95 95845 95555",
@@ -57,7 +57,7 @@ export const allStudentsColumns = [
         remarks: "20min",
     },
     {
-        name: "Shanali",
+        name:"Shanali",
         subjects: "Written",
         attendance: "11/20",
         ParentContact: "+95 95845 95555",

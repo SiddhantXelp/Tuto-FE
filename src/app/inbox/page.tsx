@@ -1,25 +1,4 @@
 "use client"
-// import React from 'react';
-// import TabNavigator from "../TabNavigator/page";
-// import ChatList from './components/ChatList';
-// import ChatWindow from './components/ChatWindow';
-// import Head from 'next/head';
-
-// const IndexPage = () => {
-//   return (
-//     <div className="flex h-screen">
-//     <Head>
-//       <title>Chat Interface</title>
-//       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-//     </Head>
-//     <ChatList />
-//     <ChatWindow />
-//   </div>
-//   );
-// };
-
-// export default IndexPage;
-"use client"
 
 import { useState } from 'react';
 import ChatList from './components/ChatList';
@@ -50,7 +29,9 @@ export default function IndexPage() {
       messages: [
         { id: 1, text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', time: '07:46 PM', sender: 'other' },
         { id: 2, text: 'Sure, what time works for you hijhkkbhkukhyycmh hgjhgg  gjhjbumyjb gjhgbhvg hjbgjhm g gbyjb  fbtkvytyyutyttyjgyjtuytrtbmjbtyutbgjhvg?', time: '07:46 PM', sender: 'me' },
+        { id: 3, text: 'No, what time works for you ', time: '07:46 PM', sender: 'me' },
 
+   
       ]
     }
   ];
@@ -66,4 +47,3 @@ export default function IndexPage() {
     </TabNavigator>
   );
 }
-
