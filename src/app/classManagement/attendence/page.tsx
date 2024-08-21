@@ -1,13 +1,23 @@
 "use client";
 
 import React, { useState } from 'react';
-import { RecentClassesColumns, RecentClassesData, StudentColumns, StudentsData } from './data';
+import { RecentClassesColumns, RecentClassesData, StudentColumns, StudentsData ,RecentClassData,RecentClassColumns} from './data';
 import Table from '@/components/table';
 import TabNavigator from "../../TabNavigator/page";
+import ClassmangementTable from'../../../common/ClassmangementTable'
+import SearchComponent from '@/common/SearchComponent';
 
 const Attendance: React.FC = () => {
 
   const [selectedOption, setSelectedOption] = useState('option1');
+  const [formData, setFormData] = useState({})
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   const handleOptionChange = (option: string) => {
     setSelectedOption(option);
@@ -15,7 +25,7 @@ const Attendance: React.FC = () => {
 
   const getTableData = () => {
     if (selectedOption === 'option1') {
-      return { columns: RecentClassesColumns, data: RecentClassesData };
+      return { columns: RecentClassColumns, data: RecentClassData };
     }
     return { columns: StudentColumns, data: StudentsData };
   };
@@ -91,24 +101,30 @@ const Attendance: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
-        <div
-        />
+     <div className='flex flex-row '>
+      <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg  ">
+        
         <span
           className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tl-lg relative ${selectedOption === 'option1' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
           onClick={() => handleOptionChange('option1')}
         >
-          Upcoming
+          Recent classes
         </span>
         <span
           className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tr-lg relative ${selectedOption === 'option2' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
           onClick={() => handleOptionChange('Completed')}
         >
-          Completed
+          Students
         </span>
+        
 
       </div>
-      <Table columns={columns} data={data} includeCheckbox={false} />
+      <div className=''>
+        <SearchComponent onSearch={handleChange} />
+        </div>
+        </div>
+      {/* <Table columns={columns} data={data} includeCheckbox={false} /> */}
+      <ClassmangementTable  data={data} columns={columns}/>
 
     </div>
   );

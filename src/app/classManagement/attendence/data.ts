@@ -130,105 +130,145 @@ export const RecentClassesColumns = [
 
 //  2 data 
 
-export const StudentsData = [
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    {
-        name: "Math 101",
-        classes: "Mathematics",
-        present: "John Doe",
-        parentContact: "2024-09-07",
-        absent: "10:30 AM",
-        remarks: "2 hours",
-    },
-    // Add more data as needed
-  ];
+// export const StudentsData = [
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     {
+//         name: "Math 101",
+//         classes: "Mathematics",
+//         present: "John Doe",
+//         parentContact: "2024-09-07",
+//         absent: "10:30 AM",
+//         remarks: "2 hours",
+//     },
+//     // Add more data as needed
+//   ];
   
-  export const StudentColumns = [
-    { header: 'Name', key: 'name' },
-    { header: 'Classes', key: 'classes' },
-    { header: 'Present', key: 'present' },
-    { header: 'Parent contact', key: 'parentContact' },
-    { header: 'Absent', key: 'absent' },
-    { header: 'Remarks', key: 'remarks' },
- ];
+//   export const StudentColumns = [
+//     { header: 'Name', key: 'name' },
+//     { header: 'Classes', key: 'classes' },
+//     { header: 'Present', key: 'present' },
+//     { header: 'Parent contact', key: 'parentContact' },
+//     { header: 'Absent', key: 'absent' },
+//     { header: 'Remarks', key: 'remarks' },
+//  ];
 
  
+ export const RecentClassColumns = [
+  { header: 'Class title', accessor: 'Classtitle' },
+  { header: 'Subjects', accessor: 'Subjects' },
+  { header: 'Date', accessor: 'Date' },
+  { header: 'Time', accessor: 'Time' },
+  { header: 'Present', accessor: 'Present' },
+  { header: 'Leave', accessor: 'Leave' },
+  { header: 'Total absent', accessor: 'Totalabsent' },
+];
+
+export const RecentClassData = [
+  { Classtitle: 'English grammar', Subjects: 'English', Date: 'Incomplete', Time: '30min', Present: 18, Leave: '02',Totalabsent:'02' },
+  { Classtitle: 'English grammar', Subjects: 'English', Date: 'Incomplete', Time: '30min', Present: 18, Leave: '02',Totalabsent:'02' },
+  { Classtitle: 'English grammar', Subjects: 'English', Date: 'Complete', Time: '30min', Present: 18, Leave: '02',Totalabsent:'02' },
+  { Classtitle: 'English grammar', Subjects: 'English', Date: 'Incomplete', Time: '30min', Present: 18, Leave: '02',Totalabsent:'02' },
+  { Classtitle: 'English grammar', Subjects: 'English', Date: 'Incomplete', Time: '30min', Present: 18, Leave: '02',Totalabsent:'02' },
+  { Classtitle: 'English grammar', Subjects: 'English', Date: 'Incomplete', Time: '30min', Present: 18, Leave: '02',Totalabsent:'02' },
+  { Classtitle: 'English grammar', Subjects: 'English', Date: 'Incomplete', Time: '30min', Present: 18, Leave: '02',Totalabsent:'02' },
+
+  
+];
+
+export const StudentsData = [
+  { name: 'Harish', classes: '50', present: 45, parentContact: '+95 95845 95555', absent: 18, remarks: '02' },
+  { name: 'Sai', classes: 'Maths', present: 'Completed', parentContact: '+95 95845 95555', absent: 5, remarks: '30min' },
+  { name: 'Mathew', classes: 'Telugu', present: 'Completed', parentContact: '+95 95845 95555', absent: 30, remarks: '30min' },
+  { name: 'Ronaldson', classes: 'Written', present: 'Cancelled', parentContact: '+95 95845 95555', absent: 10, remarks: '30min' },
+  { name: 'Divya', classes: 'Maths', present: 'Completed', parentContact: '+95 95845 95555', absent: 6, remarks: '30min' },
+  { name: 'Sujith', classes: 'Telugu', present: 'Completed', parentContact: '+95 95845 95555', absent: 11, remarks: '30min' },
+  { name: 'Shanali', classes: 'Written', present: 'Cancelled', parentContact: '+95 95845 95555', absent: 35, remarks: '30min' },
+];
+
+export const StudentColumns = [
+  { header: 'Name', accessor: 'name' },
+  { header: 'Classes', accessor: 'classes' },
+  { header: 'Present', accessor: 'present' },
+  { header: 'Parent contact', accessor: 'parentContact' },
+  { header: 'Absent', accessor: 'absent' },
+  { header: 'Remarks', accessor: 'remarks' },
+];

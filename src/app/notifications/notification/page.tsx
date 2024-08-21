@@ -39,7 +39,7 @@ const notifications: Notification[] = [
 const page = () => {
   return (
     <TabNavigator>
-    <div className="relative border border-t-zinc-200" >
+    <div className="relative border border-t-zinc-200 m-4" >
       <div
         className='w-full shadow-lg transform  h-auto'
       >
