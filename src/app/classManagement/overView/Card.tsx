@@ -55,15 +55,28 @@ const OverviewTabContent: React.FC = () => {
     return time ? moment(time, 'HH:mm').format('hh:mm A') : 'NA';
   };
   const formattedDate = (isoDateString: any) => isoDateString ? moment(isoDateString).format('MMMM Do YYYY') : "NA";
+
+
+  const handelRedirect = () => {
+
+    router.push("/classManagement?tab=Classes")
+
+  }
   return (
     <>
 
       <div className="px-4">
         <DialogComponent open={open} setOpen={setOpen} />
         <StartClassDialog open={openStart} setOpen={setOpenStart} />
-        <div className="my-2">
-          <span className="text-sm text-[#565656] font-semibold">Recent classes</span>
+        <div className='flex justify-between'>
+          <div className="my-2">
+            <span className="text-sm text-[#565656] font-semibold">Recent classes</span>
+          </div>
+          <div className="my-2 mr-60">
+            <span className="text-sm text-[#565656]  cursor-pointer" onClick={handelRedirect}>View All</span>
+          </div>
         </div>
+
         <div className="flex flex-wrap justify-between">
           {localClassesData && localClassesData.slice(0, 5).map((card: any, index: number) => (
             <div

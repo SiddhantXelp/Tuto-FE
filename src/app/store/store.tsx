@@ -1,48 +1,40 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
-
-// This is the root saga that will contain our sagas, or I should say model? XD
-
-// This will be contain our reducer for the application
 import { rootReducer } from './reducers';
 import { rootSaga } from './sagas';
 
+// Create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-
+// Configure the persist reducer
 const persistConfig = {
-    key: "root",
-    storage: AsyncStorage
-}
+  key: 'root',
+  storage,
+};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const composeEnhancers =
-    // eslint-disable-next-line no-underscore-dangle
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// Ensure composeEnhancers only runs on the client side
+const composeEnhancers = typeof window !== 'undefined' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  : compose;
 
+// Create the Redux store
 const store = createStore(
-    persistedReducer,
-    {},
-    composeEnhancers(applyMiddleware(sagaMiddleware))
+  persistedReducer,
+  {},
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
-// Run redux-saga
+// Run the saga middleware
 sagaMiddleware.run(rootSaga);
-let persistor = persistStore(store)
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+// Create the persistor
+const persistor = persistStore(store);
 
-
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export { store, persistor };
-
-
-

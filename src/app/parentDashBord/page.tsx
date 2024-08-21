@@ -94,17 +94,19 @@
 "use client";
 import { useState } from "react";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
 type Step = 1 | 2 | 3;
 
 const SplashScreen: React.FC = () => {
+  const router = useRouter();
   const [step, setStep] = useState<Step>(1);
 
   const handleNextClick = () => {
     if (step < 3) {
       setStep(step + 1 as Step);
     } else {
-      window.location.href = '/';
+      router.push("/")
     }
   };
 
@@ -145,7 +147,7 @@ const SplashScreen: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-blue-50 relative">
       <div className="w-full h-10 bg-white shadow-2xl flex justify-start items-center pl-4">
-        <span className="text-[#8A70D6]">TutorNow</span> 
+        <span className="text-[#8A70D6]">TutorNow</span>
       </div>
       <div className="flex-grow flex flex-col items-center justify-center">
         <div className="w-4/5 md:w-1/2 bg-white rounded-lg shadow-lg p-10 flex flex-col" style={{ minHeight: '500px' }}>

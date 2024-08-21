@@ -51,40 +51,40 @@ const StudentPage: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 2xl:gap-12">
           <Link href="/studentsTable">
             <div>
-              <span className='text-sm font-semibold mb-4 text-buttonGray'>No.of Students</span>
+              <span className='text-sm font-semibold mb-4 text-[#565656]'>No.of Students</span>
               <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
                 <div className='flex-grow flex items-center justify-center'>
-                  <h1 className='text-xl text-black-400 font-bold'>{studentData?.totalItems || 0}</h1>
+                  <h1 className='text-[30px] text-black-400 font-bold text-[#565656] opacity-100'>{studentData?.totalItems || 0}</h1>
                 </div>
-                <div className='flex flex-row gap-4'>
-                  <p className='text-sm text-buttonGray'>Newly joined: 5</p>
-                  <p className='text-sm text-buttonGray'>Recently Left: 0</p>
+                <div className='flex justify-between'>
+                  <p className='text-sm text-[#565656]'>Newly joined: 5</p>
+                  <p className='text-sm text-[#565656]'>Recently Left: 0</p>
                 </div>
               </div>
             </div>
           </Link>
 
           <div>
-            <span className='text-sm font-semibold text-buttonGray'>Performance</span>
+            <span className='text-sm font-semibold text-[#565656]'>Performance</span>
             <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between mt-2'>
               <PerformanceChart />
             </div>
           </div>
           <div>
-            <span className='text-sm font-semibold mb-4 text-buttonGray'>Progress reports</span>
+            <span className='text-sm font-semibold mb-4 text-[#565656]'>Progress reports</span>
             <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
               <div className="flex flex-row justify-between mt-3">
                 <div>
-                  <p className='text-buttonGray text-sm'>01 Suresh</p>
-                  <p className='text-buttonGray text-sm mt-1'>02. Mathew</p>
-                  <p className='text-buttonGray text-sm mt-1'>03. Shiva</p>
-                  <p className='text-buttonGray text-sm mt-1'>04. Sanjay</p>
+                  <p className='text-[#565656] text-sm'>01 Suresh</p>
+                  <p className='text-[#565656] text-sm mt-1'>02. Mathew</p>
+                  <p className='text-[#565656] text-sm mt-1'>03. Shiva</p>
+                  <p className='text-[#565656] text-sm mt-1'>04. Sanjay</p>
                 </div>
                 <div>
-                  <p className='text-buttonGray text-sm'>98/100</p>
-                  <p className='text-buttonGray text-sm mt-1'>80/100</p>
-                  <p className='text-buttonGray text-sm mt-1'>78/100</p>
-                  <p className='text-buttonGray text-sm mt-1'>75/100</p>
+                  <p className='text-[#565656] text-sm'>98/100</p>
+                  <p className='text-[#565656] text-sm mt-1'>80/100</p>
+                  <p className='text-[#565656] text-sm mt-1'>78/100</p>
+                  <p className='text-[#565656] text-sm mt-1'>75/100</p>
                 </div>
               </div>
             </div>
@@ -92,20 +92,20 @@ const StudentPage: React.FC = () => {
 
           <Link href="/studentsTable">
             <div>
-              <span className='text-sm font-semibold mb-4 text-buttonGray'>Groups</span>
+              <span className='text-sm font-semibold mb-4 text-[#565656]'>Groups</span>
               <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
                 <div className="flex flex-row justify-between mt-3">
                   <div>
-                    <p className='text-buttonGray text-sm'>Group A</p>
-                    <p className='text-buttonGray text-sm mt-1'>Group B</p>
-                    <p className='text-buttonGray text-sm mt-1'>Group C</p>
-                    <p className='text-buttonGray text-sm mt-1'>Group D</p>
+                    <p className='text-[#565656] text-sm'>Group A</p>
+                    <p className='text-[#565656] text-sm mt-1'>Group B</p>
+                    <p className='text-[#565656] text-sm mt-1'>Group C</p>
+                    <p className='text-[#565656] text-sm mt-1'>Group D</p>
                   </div>
                   <div>
-                    <p className='text-buttonGray text-sm'>20</p>
-                    <p className='text-buttonGray text-sm mt-1'>25</p>
-                    <p className='text-buttonGray text-sm mt-1'>66</p>
-                    <p className='text-buttonGray text-sm mt-1'>38</p>
+                    <p className='text-[#565656] text-sm'>20</p>
+                    <p className='text-[#565656] text-sm mt-1'>25</p>
+                    <p className='text-[#565656] text-sm mt-1'>66</p>
+                    <p className='text-[#565656] text-sm mt-1'>38</p>
                   </div>
                 </div>
               </div>
@@ -116,11 +116,16 @@ const StudentPage: React.FC = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-4 mt-7'>
           {cardData.map((item, index) => (
             <div key={index} className='flex flex-col'>
-              <div className={`mb-2 ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
-                onClick={() => (index === 0 || index === 2) && handleClick(index)}>
-                <span className='text-sm font-semibold mb-4 text-buttonGray'>{item.cardName}</span>
-                {item.cardNameEnd && <span className='ml-2 text-sm font-semibold mb-4 text-buttonGray' >{item.cardNameEnd}</span>}
+              <div
+                className={`mb-2 flex justify-between items-center ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
+                onClick={() => (index === 0 || index === 2) && handleClick(index)}
+              >
+                <span className='text-sm font-semibold text-[#565656]'>{item.cardName}</span>
+                {item.cardNameEnd && (
+                  <span className='text-sm text-[#565656]'>{item.cardNameEnd}</span>
+                )}
               </div>
+
               <div className={`rounded-md flex flex-col justify-between ${index === 0 || index === 2 ? 'cursor-pointer' : ''}`}
                 onClick={() => (index === 0 || index === 2) && handleClick(index)}>
                 <div className='flex flex-col items-center'>
@@ -140,7 +145,7 @@ const StudentPage: React.FC = () => {
           <Link href="/onboarding">
             <div className='bg-[#707070] border rounded-md shadow-sm flex items-center justify-center p-4 cursor-pointer h-28 w-full sm:w-48 mt-7'>
               <div className='flex flex-col items-center'>
-                <GrAdd color='white' size={"24px"} />
+                <GrAdd color='white' size={"24px"} className='font-extrabold'/>
                 <p className='text-white text-sm mt-2'>Add Student</p>
               </div>
             </div>
@@ -148,7 +153,7 @@ const StudentPage: React.FC = () => {
         </div>
 
         <div className="mt-5">
-          <h2 className="text-sm font-semibold mb-4 text-buttonGray">Recently added students</h2>
+          <h2 className="text-sm font-semibold mb-4 text-[#565656]">Recently added students</h2>
           <Table columns={recentStudentColumns} data={processedStudentData.slice(0, 10)} includeCheckbox={false} />
         </div>
       </div>

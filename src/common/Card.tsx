@@ -12,7 +12,6 @@ import { getStudentGroup, getCreateclass, setCreateClasses } from '@/app/store/a
 import CustomDropDown from './CustomDropDown';
 import Spinner from "../common/Spinner"
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 
 

@@ -113,9 +113,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { DayPilot, DayPilotCalendar} from "@daypilot/daypilot-lite-react";
+import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
 
 interface Event {
   id: string;
@@ -132,7 +133,7 @@ interface ScheduleProps {
 
 // const Table: React.FC = () => {
 const Table: React.FC<ScheduleProps> = ({ month }) => {
-
+  const router = useRouter();
   const [calendar, setCalendar] = useState<DayPilotCalendar | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
@@ -162,6 +163,10 @@ const Table: React.FC<ScheduleProps> = ({ month }) => {
     }
   }, [classesData]);
 
+  const handleEventClick = (args: any) => {
+    const eventId = args.e.id();
+    router.push(`/classManagement/classDetails/${eventId}`);
+  };
 
   return (
     <div className='bg-white'>
@@ -172,6 +177,7 @@ const Table: React.FC<ScheduleProps> = ({ month }) => {
         timeRangeSelectedHandling={"Enabled"}
         events={events}
         controlRef={setCalendar}
+        onEventClick={handleEventClick}
       />
     </div>
   );

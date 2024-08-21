@@ -7,6 +7,7 @@ import { columns } from './data';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClasses } from '@/app/store/actions/classes';
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
 
 interface ClassesData {
   material: string;
@@ -23,6 +24,7 @@ interface ClassesState {
 
 export const CategoriesPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const memberAuthToken = 'sid';
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
   const GETClassData = useAppSelector((state: { classes: any }) => state.classes);
@@ -41,7 +43,10 @@ export const CategoriesPage: React.FC = () => {
 
   const formattedDate = (isoDateString: any) => isoDateString ? moment(isoDateString).format('MMMM Do YYYY') : "NA";
 
-
+  const handleRowClick = (rowData: any) => {
+    console.log(":::::::::::::>>>>>>>>>>>>>>", rowData?.id);
+    router.push(`/assignments/viewAssignment/${rowData?.id}`)
+  };
 
   useEffect(() => {
     if (classesData && classesData.length > 0) {
@@ -67,7 +72,7 @@ export const CategoriesPage: React.FC = () => {
 
   return (
     <div>
-      <Table columns={columns} data={tableData} includeCheckbox={true} />
+      <Table columns={columns} data={tableData} includeCheckbox={true} onRowClick={handleRowClick} />
     </div>
   );
 };
