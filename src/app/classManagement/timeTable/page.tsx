@@ -125,6 +125,7 @@ import React, { useState, useEffect } from 'react';
 import { DayPilotCalendar, DayPilotMonth, DayPilotEvent } from "@daypilot/daypilot-lite-react";
 import { useAppSelector } from '@/app/store/hooks';
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
 
 interface Event {
   id: number;
@@ -136,6 +137,7 @@ interface Event {
 
 const TimeTable: React.FC = () => {
   const [calendar, setCalendar] = useState<DayPilotCalendar | null>(null);
+  const router = useRouter();
   const [events, setEvents] = useState<Event[]>([]);
   const [view, setView] = useState<'Day' | 'Week' | 'Month'>('Week');
   const [startDate, setStartDate] = useState<string>(moment().format('YYYY-MM-DD'));
@@ -201,13 +203,9 @@ const TimeTable: React.FC = () => {
   };
 
   const onEventClick = async (args: { e: DayPilotEvent }) => {
-    if (!calendar) return;
-
-    const modal = await DayPilot.Modal.prompt("Update event text:", args.e.data.text);
-    if (!modal.result) { return; }
-    const e = args.e;
-    e.data.text = modal.result;
-    calendar.events.update(e);
+    const eventId = args.e.id();
+    console.log("::::::::eventId", eventId);
+    router.push(`/classManagement/classDetails/${eventId}`);
   };
 
   const goToToday = () => {

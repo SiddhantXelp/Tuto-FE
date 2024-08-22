@@ -64,10 +64,10 @@ const page = () => {
         <div className='flex flex-row justify-between items-center '>
           <span className='text-[#565656] text-sm font-bold'>Subjects</span>
 
-          <div className='md:w-28  lg:w-40 xl:w-40 2xl:w-44 h-10 bg-slate-400 border rounded-xl mt-2 flex items-center justify-center md:mr-4 lg:mr-12 xl:mr-20'>
+          <div className='md:w-28  lg:w-48  h-10 bg-[#D1D1D1] border rounded-3xl mt-2 flex items-center justify-center lg:mr-5'>
             <div className='flex flex-row items-center gap-1'>
-              <p className='text-white sm:text-xs text-xs'>Create new assignment</p>
-              <GrAdd color='white' size={"13px"} />
+              <p className='text-black sm:text-xs text-xs font-bold'>Create new assignment</p>
+              <GrAdd color='black' size={"13px"} className='font-bold'/>
             </div>
           </div>
         </div>

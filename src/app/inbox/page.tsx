@@ -40,7 +40,7 @@ export default function IndexPage() {
 
   return (
     <TabNavigator>
-      <div className="flex h-[850px] bg-white shadow-2xl rounded-xl m-5">
+      <div className="flex h-[850px] bg-white shadow-2xl rounded-xl mt-3 ml-2">
         <ChatList chats={chats} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
         <ChatWindow selectedChat={selectedChat} />
       </div>

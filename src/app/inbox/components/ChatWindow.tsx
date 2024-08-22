@@ -1,66 +1,4 @@
 
-
-// "use client"
-// import React from 'react';
-
-// interface Message {
-//   id: number;
-//   text: string;
-//   time: string;
-//   sender: 'me' | 'other';
-// }
-
-// interface Chat {
-//   id: number;
-//   name: string;
-//   message: string;
-//   time: string;
-//   image: string;
-//   messages: Message[];
-// }
-
-// interface ChatWindowProps {
-//   selectedChat: Chat | null;
-// }
-
-// const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
-//   return (
-//     <div className="flex-1 p-1 flex flex-col">
-//       {selectedChat ? (
-//         <>
-//           <div className="flex items-center mb-4 bg-white">
-//             <img src={selectedChat.image} alt={selectedChat.name} className="w-10 h-10 rounded-full mr-3 ml-4" />
-//             <h2 className="text-lg font-bold">{selectedChat.name}</h2>
-//             <span className="ml-2 text-green-500">Active now</span>
-//           </div>
-//           <div className="flex-1 overflow-y-auto">
-//             {selectedChat.messages.map((message) => (
-//               <div key={message.id} className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
-//                 <div className={`p-3 rounded ${message.sender === 'me' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
-//                   <p>{message.text}</p>
-//                   <span className="text-xs">{message.time}</span>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//           <div className="flex items-center  border-t border-gray-300">
-//             <input type="text" placeholder="Type a message" className="flex-1 px-4 py-2 border rounded mr-2" />
-//             <button className="p-2">
-//               <i className="fas fa-paper-plane"></i>
-//             </button>
-//           </div>
-//         </>
-//       ) : (
-//         <div className="flex-1 flex items-center justify-center text-gray-500">
-//           Select a chat to start messaging
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default ChatWindow;
-
 // "use client"
 // import React, { useState } from 'react';
 // import { FaPaperPlane, FaPaperclip } from 'react-icons/fa';
@@ -103,39 +41,45 @@
 //       console.log('File uploaded:', uploadedFile);
 //     }
 //   };
-//   console.log(message,"message");
-
 
 //   return (
-//     <div className="flex-1 p-1 flex flex-col">
+//     <div className="flex-1 flex flex-col">
 //       {selectedChat ? (
 //         <>
-//           <div className="flex items-center mb-4 bg-white border-b ">
-//             <img src={selectedChat.image} alt={selectedChat.name} className="w-10 h-10 rounded-full mr-3 ml-4 p-1" />
-//             <h2 className="text-xs font-bold ">{selectedChat.name}</h2>
-//             <span className="ml-2 text-green-500 text-xs">Active now</span>
+//           <div className="flex items-center mb-4 bg-white border-b p-4 md:p-4 mt-2">
+//             <img src={selectedChat.image} alt={selectedChat.name} className="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3" />
+//             <div className="flex flex-col">
+//               <h2 className="text-sm md:text-xs font-bold">{selectedChat.name}</h2>
+//               <span className="text-xs md:text-xxs text-green-500">Active now</span>
+//             </div>
 //           </div>
-//           <div className="flex-1 overflow-y-auto">
-//             {selectedChat.messages.map((message) => (
-//               <div key={message.id} className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
-//                 <div className={`p-3 rounded ${message.sender === 'me' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
-//                   <p>{message.text}</p>
-//                   <span className="text-xs">{message.time}</span>
+//           <div className="flex-1 overflow-y-auto p-2">
+//             {selectedChat.messages.map((msg) => (
+//               <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
+//                 <div
+//                   className={`p-2 md:p-3 rounded-lg ${msg.sender === 'me' ? 'bg-blue-500 text-white rounded-tr-none' : 'bg-gray-200 rounded-tl-none ml-2'
+//                     } ${msg.sender === 'me' ? 'w-1/2 ml-2' : 'w-1/2 ml-2'}`}
+//                 >
+//                   <p className="text-xs md:text-xs">{msg.text}</p>
+//                   <span className="text-xs">{msg.time}</span>
 //                 </div>
 //               </div>
 //             ))}
+
+
+
 //           </div>
 //           <div className="flex items-center border-t border-gray-300 p-2">
 //             <div className="relative flex-1">
 //               <input
 //                 type="text"
 //                 placeholder="Type a message"
-//                 className="w-full px-4 py-2 border rounded-xl pr-16"
+//                 className="w-full px-3 py-2 border rounded-md pr-16 md:pr-20 text-sm md:text-base"
 //                 value={message}
 //                 onChange={(e) => setMessage(e.target.value)}
 //               />
-//               <label htmlFor="file-upload" className="absolute right-10 top-1/2 transform -translate-y-1/2 cursor-pointer">
-//                 <FaPaperclip size={20} />
+//               <label htmlFor="file-upload" className="absolute right-14 top-1/2 transform -translate-y-1/2 cursor-pointer text-lg md:text-xl">
+//                 <FaPaperclip />
 //                 <input
 //                   id="file-upload"
 //                   type="file"
@@ -144,16 +88,16 @@
 //                 />
 //               </label>
 //               <button
-//                 className="absolute right-2 top-1/2 transform -translate-y-1/2"
+//                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-lg md:text-xl"
 //                 onClick={handleSendMessage}
 //               >
-//                 <FaPaperPlane size={20} />
+//                 <FaPaperPlane />
 //               </button>
 //             </div>
 //           </div>
 //         </>
 //       ) : (
-//         <div className="flex-1 flex items-center justify-center text-gray-500">
+//         <div className="flex-1 flex items-center justify-center text-gray-500 text-sm md:text-base">
 //           Select a chat to start messaging
 //         </div>
 //       )}
@@ -164,9 +108,12 @@
 // export default ChatWindow;
 
 
-"use client"
-import React, { useState } from 'react';
-import { FaPaperPlane, FaPaperclip } from 'react-icons/fa';
+
+
+import React, { useEffect, useState } from 'react';
+import { FaSmile, FaPaperclip } from 'react-icons/fa';
+import io from 'socket.io-client';
+import { IoSendSharp } from "react-icons/io5";
 
 interface Message {
   id: number;
@@ -188,13 +135,20 @@ interface ChatWindowProps {
   selectedChat: Chat | null;
 }
 
+const socket = io("http://tutor.xelpmoc.in:6800");
+
 const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
   const [message, setMessage] = useState('');
+  const [messagesReceived, setMessagesReceived] = useState<Message[]>([]);
   const [file, setFile] = useState<File | null>(null);
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
-      console.log('Message sent:', message);
+      socket.emit('send_message', { message });
+      setMessagesReceived((prevMessages) => [
+        ...prevMessages,
+        { text: message, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }), sender: 'me', id: prevMessages.length + 1 }
+      ]);
       setMessage('');
     }
   };
@@ -207,19 +161,34 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
     }
   };
 
+  useEffect(() => {
+    if (selectedChat) {
+      socket.on('receive_message', (data: { message: string }) => {
+        setMessagesReceived((prevMessages) => [
+          ...prevMessages,
+          { text: data.message, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }), sender: 'other', id: prevMessages.length + 1 },
+        ]);
+      });
+    }
+
+    return () => {
+      socket.off('receive_message');
+    };
+  }, [selectedChat]);
+
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col bg-[#ECECEC]">
       {selectedChat ? (
         <>
-          <div className="flex items-center mb-4 bg-white border-b p-4 md:p-4 mt-2">
+          <div className="flex items-center mb-4 bg-white border-b p-4 md:p-4">
             <img src={selectedChat.image} alt={selectedChat.name} className="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3" />
             <div className="flex flex-col">
-              <h2 className="text-sm md:text-xs font-bold">{selectedChat.name}</h2>
-              <span className="text-xs md:text-xxs text-green-500">Active now</span>
+              <h2 className="text-sm md:text-sm font-bold">{selectedChat.name}</h2>
+              <span className="text-xs md:text-xs text-gray-500">Active now</span>
             </div>
           </div>
           <div className="flex-1 overflow-y-auto p-2">
-            {selectedChat.messages.map((msg) => (
+            {/* {messagesReceived.map((msg) => (
               <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
                 <div
                   className={`p-2 md:p-3 rounded-lg ${msg.sender === 'me' ? 'bg-blue-500 text-white rounded-tr-none' : 'bg-gray-200 rounded-tl-none ml-2'
@@ -229,40 +198,62 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
                   <span className="text-xs">{msg.time}</span>
                 </div>
               </div>
+            ))} */}
+            {messagesReceived.map((msg) => (
+              <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
+                <div
+                  className={`p-2 md:p-3 rounded-lg ${msg.sender === 'me' ? 'bg-white text-black rounded-tr-none' : 'bg-white rounded-tl-none ml-2 text-black'
+                    } ${msg.sender === 'me' ? 'w-1/2 ml-2' : 'w-1/2 ml-2'}`}
+                >
+                  <p className="text-sm md:text-sm">{msg.text}</p>
+                  {msg.sender === 'me' && (
+                    <div className="flex justify-end">
+                      <span className="text-xs mt-1">{msg.time}</span>
+                    </div>
+                  )}
+                  {msg.sender !== 'me' && (
+                    <div className="flex justify-end">
+
+                      <span className="text-xs mt-1">{msg.time}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             ))}
 
-
-
           </div>
-          <div className="flex items-center border-t border-gray-300 p-2">
+          <div className="flex items-center p-6">
             <div className="relative flex-1">
               <input
                 type="text"
-                placeholder="Type a message"
-                className="w-full px-3 py-2 border rounded-md pr-16 md:pr-20 text-sm md:text-base"
+                placeholder=""
+                className="w-full px-3 py-2 border border-[#D1D1D1] rounded-[26px] pr-16 md:pr-24 text-sm md:text-base focus:outline-none"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               />
               <label htmlFor="file-upload" className="absolute right-14 top-1/2 transform -translate-y-1/2 cursor-pointer text-lg md:text-xl">
-                <FaPaperclip />
+                <FaPaperclip className='text-[#707070]' />
+
                 <input
                   id="file-upload"
                   type="file"
-                  className="hidden"
+                  className="hidden "
                   onChange={handleFileUpload}
                 />
               </label>
+              {/* <FaSmile /> */}
+
               <button
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-lg md:text-xl"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-lg md:text-xl mr-3"
                 onClick={handleSendMessage}
               >
-                <FaPaperPlane />
+                <IoSendSharp className='text-[#707070]' />
               </button>
             </div>
           </div>
         </>
       ) : (
-        <div className="flex-1 flex items-center justify-center text-gray-500 text-sm md:text-base">
+        <div className="flex-1 flex items-center justify-center text-black text-sm md:text-base">
           Select a chat to start messaging
         </div>
       )}
@@ -271,8 +262,5 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
 };
 
 export default ChatWindow;
-
-
-
 
 

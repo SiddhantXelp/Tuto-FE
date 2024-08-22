@@ -89,12 +89,12 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true, onRowCl
         <thead>
           <tr>
             {includeCheckbox && (
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-[#F5F5F5]">
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 tracking-wider bg-[#F5F5F5]">
                 <input type="checkbox" />
               </th>
             )}
             {columns.map((column, index) => (
-              <th key={index} className="px-4 py-2 text-left text-sm font-medium text-[#707070] uppercase tracking-wider bg-[#F5F5F5] h-[50px]">
+              <th key={index} className="px-4 py-2 text-left text-sm font-medium text-[#707070] tracking-wider bg-[#F5F5F5] h-[50px]">
                 {column.header}
               </th>
             ))}
@@ -105,7 +105,7 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true, onRowCl
             <tr
               key={rowIndex}
               className="border-t cursor-pointer hover:bg-gray-100"
-              onClick={() => handleRowClick(item)} // Handle row click
+              onClick={() => handleRowClick(item)} 
             >
               {includeCheckbox && (
                 <td className="px-4 py-3">
