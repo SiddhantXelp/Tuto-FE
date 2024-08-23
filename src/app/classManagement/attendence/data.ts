@@ -119,11 +119,12 @@ export const RecentClassesData = [
 export const RecentClassesColumns = [
   { header: 'Class Title', key: 'classTitle' },
   { header: 'Subject', key: 'subject' },
-  { header: 'Student', key: 'student' },
   { header: 'Date', key: 'date' },
   { header: 'Time', key: 'time' },
-  { header: 'Duration', key: 'duration' },
-  { header: 'Assignment', key: 'assignment' },
+  { header: 'Present', key: 'present' },
+  { header: 'Leave', key: 'leave' },
+  { header: 'Total absent', key: 'total absent' },
+
 //   { header: 'Material', key: 'material' },
 ];
 

@@ -48,7 +48,7 @@ const ClassManagementPage: React.FC = () => {
 
   return (
     <TabNavigator>
-      <div className="w-full h-auto md:h-14 flex space-x-8 bg-white pl-10 border border-t-zinc-200 ml-[-1px] flex-wrap">
+      <div className="w-full h-auto md:h-14 flex space-x-20 bg-white pl-10 border border-t-zinc-200 ml-[-1px] flex-wrap">
         <div className="relative mt-3">
           <span
             className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Overview' ? 'font-bold' : ''}`}
