@@ -17,9 +17,11 @@ import DialogComponent from '@/common/Card';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClasses } from '@/app/store/actions/classes';
 import { getStudents } from '@/app/store/actions/student';
-
+import { GoDotFill } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
+
 interface UserInfo {
   name: string;
   email: string;
@@ -237,14 +239,16 @@ export default function Home() {
             <button className="bg-[#707070] w-full lg:w-44 py-2 px-4 rounded-2xl text-white text-sm flex" onClick={dialogOpen}>
               Create new class <FiPlus className="mt-1 ml-2" color="white" />
             </button>
-            <button className="bg-[#E2E2E2] w-full lg:w-44 py-2 px-4 rounded-2xl text-[#2A2A2A] text-sm shadow-lg border border-[#E2E2E2]">
-              Schedule
+            <button className="bg-[#E2E2E2] w-full lg:w-44 py-2 px-4 rounded-2xl text-[#2A2A2A] text-sm shadow-lg border border-[#E2E2E2] flex justify-center items-center space-x-2 opacity-100">
+              <span>Schedule</span>
+              <GoDotFill color="#6B6BFF" />
             </button>
+
           </div>
           <div className="flex flex-col items-center">
             <div className="w-20 h-20 bg-red-400 rounded-full overflow-hidden">
               <Image
-                src={imageUrl}
+                src={imageUrl || ""}
                 alt="profile"
                 width={100}
                 height={100}
@@ -259,7 +263,7 @@ export default function Home() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[73%_23%] gap-6">
         <div>
-          <div className="flex justify-between mb-4">
+          <div className="flex justify-between mb-2">
             <span className="text-[#565656] text-sm font-semibold">Submitted Assignment</span>
             <Link href="/assignments">
               <span className="text-[#565656] text-xs">View All</span>
@@ -268,14 +272,25 @@ export default function Home() {
           <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} />
 
         </div>
-        <div className="mt-10">
+        <div className="mt-8">
+          {/* <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] md:h-[367px]">
+            <Calendar
+              value={now}
+              locale="en-US"
+              showNavigation={false}
+              formatShortWeekday={formatShortWeekday}
+              className="border border-pink-400 h-full w-full"
+            />
+          </div> */}
+
+
           <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] md:h-[367px]">
             <Calendar
               value={now}
               locale="en-US"
               showNavigation={false}
               formatShortWeekday={formatShortWeekday}
-              className="border-none h-full w-full"
+              className="h-full w-full rounded-lg  border-0"
             />
           </div>
         </div>
@@ -305,8 +320,8 @@ export default function Home() {
             </div>
 
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
-              <div className="flex flex-col md:flex-row items-center gap-6">
-                <div className="flex justify-center items-center" style={{ width: '180px', height: '150px' }}>
+              <div className="flex flex-col md:flex-row items-center gap-6 justify-between">
+                <div className="flex justify-between items-center p-2" style={{ width: '180px', height: '150px' }}>
                   <CircularProgressbar
                     value={percentage}
                     text={`${percentage}%`}
@@ -317,11 +332,12 @@ export default function Home() {
                       pathColor: '#1F78B4',
                       textColor: '#1F78B4',
                       trailColor: '#FFA0A0',
+
                     })}
                   />
                 </div>
 
-                <div className="flex flex-col justify-center items-start mx-10">
+                <div className="flex flex-col justify-center items-start">
                   <div className="flex items-center bg-slate-400 rounded-xl py-1 px-3 gap-2 cursor-pointer">
                     <span className="text-xs text-white">May'2023</span>
                     <MdKeyboardArrowDown size={15} color="white" />

@@ -16,8 +16,8 @@ const ClassDetails = () => {
 
 
     return (
-        <>
-            <div className="h-[850px] bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md sm:h-full">
+        <div className='h-screen'>
+            <div className="h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md sm:h-full">
                 <div className="flex justify-between items-center border-b border-gray-300 pb-2 m-2">
                     <div className="relative flex flex-col justify-between p-4 mb-11 rounded-lg w-full max-w-[441px] h-[150px] sm:h-[250px] md:h-[150px]">
                         <div
@@ -133,7 +133,7 @@ const ClassDetails = () => {
                 </div>
 
             </div>
-        </>
+        </div>
     )
 
 

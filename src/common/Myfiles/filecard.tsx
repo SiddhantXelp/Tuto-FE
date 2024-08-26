@@ -53,6 +53,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
         <div
             className="bg-white p-6 rounded-xl shadow-md h-[12rem] flex flex-col cursor-pointer relative"
             ref={dropdownRef}
+            onClick={handleCardClick}
         >
             <div className="flex items-center">
                 <GoFileDirectoryFill size={40} color="#565656" />
@@ -118,7 +119,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
                 </div>
             </div>
 
-            <div className="mt-auto" onClick={handleCardClick}>
+            <div className="mt-auto" >
                 <h2 className="text-lg font-normal text-[#565656]">{data.title}</h2>
             </div>
         </div>

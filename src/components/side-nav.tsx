@@ -19,7 +19,7 @@ const SideNav = () => {
           href="/"
           className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full"
         >
-          <span className="h-7 w-7 bg-zinc-300 rounded-lg" />
+          <span className="h-7 w-7 bg-white rounded-lg" />
           <span className=" text-base hidden md:flex text-blue-600 font-bold">TutorNow</span>
         </Link>
 

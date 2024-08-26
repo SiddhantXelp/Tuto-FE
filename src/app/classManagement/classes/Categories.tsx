@@ -44,20 +44,45 @@ export const CategoriesPage: React.FC = () => {
   const formattedDate = (isoDateString: any) => isoDateString ? moment(isoDateString).format('MMMM Do YYYY') : "NA";
 
   const handleRowClick = (rowData: any) => {
-    console.log(":::::::::::::>>>>>>>>>>>>>>", rowData?.id);
     router.push(`/assignments/viewAssignment/${rowData?.id}`)
   };
+
+
+  const calculateDuration = (startTime: string, endTime: string) => {
+    if (startTime && endTime) {
+      const startMoment = moment(startTime, 'HH:mm');
+      const endMoment = moment(endTime, 'HH:mm');
+
+
+      if (endMoment.isBefore(startMoment)) {
+        endMoment.add(1, 'day');
+      }
+
+      const durationMinutes = endMoment.diff(startMoment, 'minutes');
+      const durationHours = Math.floor(durationMinutes / 60);
+      const durationMins = durationMinutes % 60;
+
+      const formattedDuration = `${durationHours} hr ${durationMins} min`;
+
+      return formattedDuration;
+    } else {
+      return "Invalid time input";
+    }
+  };
+
+
 
   useEffect(() => {
     if (classesData && classesData.length > 0) {
 
       const updatedTableData = classesData.map((classData: any) => ({
+        id: classData?.id,
         classTitle: classData?.title,
         subject: classData.subject.name,
         student: "Raj",
         date: formattedDate(classData?.scheduleDate),
-        time: formatTime(classData.classStartTime),
-        duration: "1hr",
+        time: `${formatTime(classData.classStartTime)} - ${formatTime(classData.classEndTime)}`,
+        duration: calculateDuration(classData?.classStartTime, classData?.classEndTime),
         assignment: classData?.materialUrl,
         material: (
           <a href={classData.materialUrl} download>

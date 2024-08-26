@@ -1,32 +1,30 @@
-
-
 "use client"
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, Suspense, lazy } from 'react';
 import { GrAdd } from "react-icons/gr";
 import Link from 'next/link';
 import { recentStudentColumns, cardData } from './data';
 import Table from '@/components/table';
 import TabNavigator from "../TabNavigator/page";
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import PerformanceChart from '@/common/PerformanceChart';
 import { getStudents } from '@/app/store/actions/student';
 
+const PerformanceChart = lazy(() => import('@/common/PerformanceChart'));
 
-const StudentPage: React.FC = () => {
+const Student: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const token = "skldjsldslkdjskldjskjd"
-
+  const token = "skldjsldslkdjskldjskjd";
 
   const studentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
 
   useEffect(() => {
     const page = "1";
-    const limit = "100"
-    dispatch(getStudents(token, page, limit))
-
-  }, [dispatch, token])
+    const limit = "100";
+    if (token) {
+      dispatch(getStudents(token, page, limit));
+    }
+  }, [dispatch, token]);
 
   const handleClick = (index: number) => {
     if (index === 0) {
@@ -36,14 +34,13 @@ const StudentPage: React.FC = () => {
     }
   };
 
-
-  const processedStudentData = (studentData?.students || []).map((student: any) => ({
-    ...student,
-    grade: student.educationalDetails?.grade || 'No Grade',
-    subjects: student.educationalDetails?.subjects?.join(', ') || 'No Subjects',
-  }));
-
-
+  const processedStudentData = useMemo(() =>
+    (studentData?.students || []).map((student: any) => ({
+      ...student,
+      grade: student.educationalDetails?.grade || 'No Grade',
+      subjects: student.educationalDetails?.subjects?.join(', ') || 'No Subjects',
+    }))
+    , [studentData]);
 
   return (
     <TabNavigator>
@@ -66,10 +63,13 @@ const StudentPage: React.FC = () => {
 
           <div>
             <span className='text-sm font-semibold text-[#565656]'>Performance</span>
-            <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between mt-2'>
-              <PerformanceChart />
+            <div className='w-full h-36 bg-white border rounded-md  mt-2'>
+              <Suspense fallback={<div>Loading...</div>}>
+                <PerformanceChart />
+              </Suspense>
             </div>
           </div>
+
           <div>
             <span className='text-sm font-semibold mb-4 text-[#565656]'>Progress reports</span>
             <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
@@ -145,7 +145,7 @@ const StudentPage: React.FC = () => {
           <Link href="/onboarding">
             <div className='bg-[#707070] border rounded-md shadow-sm flex items-center justify-center p-4 cursor-pointer h-28 w-full sm:w-48 mt-7'>
               <div className='flex flex-col items-center'>
-                <GrAdd color='white' size={"24px"} className='font-extrabold'/>
+                <GrAdd color='white' size={"24px"} className='font-extrabold' />
                 <p className='text-white text-sm mt-2'>Add Student</p>
               </div>
             </div>
@@ -158,8 +158,7 @@ const StudentPage: React.FC = () => {
         </div>
       </div>
     </TabNavigator>
-
   );
 };
 
-export default StudentPage;
+export default Student;

@@ -39,3 +39,40 @@ select:focus {
   outline: none;
   box-shadow: none;
 }
+
+.react-calendar {
+  border: none;
+}
+
+
+/* styles/globals.css */
+
+/* Customize scrollbar for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Adjust width as needed */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+/* Customize scrollbar for Firefox */
+* {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #888 #f1f1f1; /* Scrollbar color and track color */
+}
+
+/* Optional: For a more consistent scrollbar design across browsers */
+html {
+  scroll-behavior: smooth;
+}
+
