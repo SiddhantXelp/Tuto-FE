@@ -5,6 +5,7 @@ import { ClassesReducer } from './classes';
 import { AuthReducer } from "./auth";
 import { StudentReducer } from "./student";
 import { AssignmentReducer } from "./assignment"
+import { usersReducer } from "./user"
 
 
 
@@ -14,7 +15,8 @@ export const rootReducer = combineReducers({
   classes: ClassesReducer,
   auth: AuthReducer,
   student: StudentReducer,
-  assignment: AssignmentReducer
+  assignment: AssignmentReducer,
+  user: usersReducer
 
 });
 

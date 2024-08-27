@@ -9,17 +9,16 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClasses } from '@/app/store/actions/classes';
 import StartClassDialog from "./StartClass";
 import { MdModeEdit } from 'react-icons/md';
-import ViewClass from "./ViewClass";
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
 
 const OverviewTabContent: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   const [open, setOpen] = useState(false);
   const [openStart, setOpenStart] = useState(false);
   const [month, setMonth] = useState("Weekly")
   const router = useRouter();
-
-  const dispatch = useAppDispatch();
   const memberAuthToken = 'bJHGWGEuiWHAYEAHEwJKHEIUWQDJNASDJgdiUWKJEh';
   const [localClassesData, setLocalClassesData] = useState<any[]>([]);
 

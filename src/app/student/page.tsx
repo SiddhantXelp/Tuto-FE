@@ -4,10 +4,20 @@ import React, { useEffect, useMemo, Suspense, lazy } from 'react';
 import { GrAdd } from "react-icons/gr";
 import Link from 'next/link';
 import { recentStudentColumns, cardData } from './data';
-import Table from '@/components/table';
-import TabNavigator from "../TabNavigator/page";
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getStudents } from '@/app/store/actions/student';
+import dynamic from 'next/dynamic';
+import Spinner from '@/common/Spinner';
+
+const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const Table = dynamic(() => import("@/components/table"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
 
 const PerformanceChart = lazy(() => import('@/common/PerformanceChart'));
 

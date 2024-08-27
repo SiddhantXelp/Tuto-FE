@@ -2,55 +2,49 @@ import * as actionTypes from '../actionTypes/user';
 import { GenericAction, reducingFunction } from '../helpers/createReducer';
 
 export interface IStudents {
-  setStudents: any;
-  setStudentsError: any;
-  setStudentsLoading: any;
+  setUsers: any;
+  error: any;
+  loading: any;
 
 }
 
 const initialState: IStudents = {
-  setStudents: null,
-  setStudentsError: null,
-  setStudentsLoading: null,
+  setUsers: null,
+  error: null,
+  loading: null,
 
 };
 
-const setStudents = ({ setStudents }: { setStudents: any }, state: IStudents) => ({
+const setUserList = ({ setUsers }: { setUsers: any }, state: IStudents) => ({
   ...state,
-  setStudents,
+  setUsers,
 });
 
 
-const setStudentsError = (
-  { setStudentsError }: { setStudentsError: any },
+const setUsersError = (
+  { error }: { error: any },
   state: IStudents,
 ) => ({
   ...state,
-  setStudentsError,
+  error,
 });
 
-const setStudentsLoading = (
-  { setStudentsLoading }: { setStudentsLoading: any },
+const setUsersLoading = (
+  { loading }: { loading: any },
   state: IStudents,
 ) => ({
   ...state,
-  setStudentsLoading,
+  loading,
 });
 
-// const getClasses = ({getClasses}: {getClasses: any}, state: IClasses) => ({
-//   ...state,
-//   getClasses,
-// });
 
 export const actionReducers = {
-  [actionTypes.SET_STUDENTS]: setStudents,
-  [actionTypes.SET_STUDENTS_ERROR]: setStudentsError,
-  [actionTypes.SET_STUDENTS_LOADING]: setStudentsLoading,
-
-  // [actionTypes.GET_Classes]: getClasses,
+  [actionTypes.SET_USER_LIST]: setUserList,
+  [actionTypes.SET_USER_ERROR]: setUsersError,
+  [actionTypes.SET_USER_LOADING]: setUsersLoading
 };
 
-export const studentsReducer = (
+export const usersReducer = (
   state: IStudents = initialState,
   action: GenericAction,
 ): IStudents => reducingFunction<IStudents>(actionReducers, state, action);

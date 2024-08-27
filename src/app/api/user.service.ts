@@ -9,12 +9,12 @@ export const DISCLOSURE_CANCEL = 'cancel';
 
 
 
-export const getStudents = async (token: string) => {
+export const getUsersList = async (token: string) => {
   console.log('getStudents', token);
 
   try {
     const response = await axios.get(
-      apis.getStudents,
+      apis.getUsers,
       // {},
       {
         cancelToken: new CancelToken(c => {

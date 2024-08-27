@@ -55,7 +55,7 @@ export default function Home() {
   const [activeStep, setActiveStep] = useState(1);
   const [open, setOpen] = useState(false);
 
-  const viewClassData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes || []); 4
+  const viewClassData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes || []);
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
 
   const now: Date = new Date();
@@ -69,6 +69,15 @@ export default function Home() {
   let previousClass: ClassData | null = null;
   let nextClass: ClassData | null = null;
   const upcomingClasses: ClassData[] = [];
+  const sevenDaysLater: Date = new Date(now);
+  sevenDaysLater.setDate(now.getDate() + 7);
+
+  const upcomingClassesInNext7Days = viewClassData.filter((cls: ClassData) => {
+    const classStartDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classStartTime}:00`);
+    return classStartDateTime > now && classStartDateTime <= sevenDaysLater;
+  });
+  
+  const upcomingClassCount = upcomingClassesInNext7Days.length || 0;
 
   for (let cls of viewClassData) {
     const classStartDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classStartTime}:00`);
@@ -98,7 +107,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getClasses(memberAuthToken));
-    dispatch(getStudents(memberAuthToken, "1", "100"));
+    dispatch(getStudents(memberAuthToken, "1", "10"));
 
   }, [dispatch]);
 
@@ -186,7 +195,7 @@ export default function Home() {
             <span className="text-[#565656] text-sm font-semibold mb-2">Class Management</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex-1">
-                <div className="text-[#565656] text-sm break-words font-semibold">{upcomingClasses.length} classes scheduled for next 7 days</div>
+                <div className="text-[#565656] text-sm break-words font-semibold">{upcomingClassCount} classes scheduled for next 7 days</div>
                 <div className="text-[#565656] text-sm">2 classes available</div>
 
                 <div className="text-[#565656] text-sm flex justify-end items-center mb-2">
@@ -273,17 +282,6 @@ export default function Home() {
 
         </div>
         <div className="mt-8">
-          {/* <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] md:h-[367px]">
-            <Calendar
-              value={now}
-              locale="en-US"
-              showNavigation={false}
-              formatShortWeekday={formatShortWeekday}
-              className="border border-pink-400 h-full w-full"
-            />
-          </div> */}
-
-
           <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] md:h-[367px]">
             <Calendar
               value={now}
@@ -339,7 +337,7 @@ export default function Home() {
 
                 <div className="flex flex-col justify-center items-start">
                   <div className="flex items-center bg-slate-400 rounded-xl py-1 px-3 gap-2 cursor-pointer">
-                    <span className="text-xs text-white">May'2023</span>
+                    <span className="text-xs text-white">May'2024</span>
                     <MdKeyboardArrowDown size={15} color="white" />
                   </div>
                   <div className="flex flex-col mt-4">

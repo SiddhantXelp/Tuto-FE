@@ -46,18 +46,22 @@ const RecentClasses: React.FC = () => {
                         <div className="w-64">
                             <SearchComponent onSearch={handleChange} />
                         </div>
-                        <button className='bg-[#707070] p-2 rounded-3xl text-white flex items-center justify-center space-x-2 w-40 mb-2'>
-                            <span className="text-sm">Filters</span>
+                        <button className='bg-[#707070] rounded-3xl text-white flex items-center justify-center space-x-2 w-40 mb-[5px]'>
+                            <span className="text-sm ">Filters</span>
                             <FaFilter className="text-sm" />
                         </button>
                     </div>
 
-                    <Table
-                        columns={allStudentsColumns}
-                        data={allStudentsData}
-                        includeCheckbox={false}
-                        onRowClick={(row) => handleRowClick(row)}
-                    />
+                    <div className='mt-[-1px]'>
+
+                        <Table
+                            columns={allStudentsColumns}
+                            data={allStudentsData}
+                            includeCheckbox={false}
+                            onRowClick={(row) => handleRowClick(row)}
+                        />
+                    </div>
+
                 </>
             )}
 

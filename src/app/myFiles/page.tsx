@@ -1,12 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import TabNavigator from "../TabNavigator/page";
-import Card from '../../common/Myfiles/filecard';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getMyFiles, setCreateFolder } from '@/app/store/actions/assignment';
-import Spinner from "@/common/Spinner";
 import AddFolderModel from "@/common/Myfiles/AddFolderModel";
+import dynamic from 'next/dynamic';
+import Spinner from '@/common/Spinner';
+
+const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const Card = dynamic(() => import("../../common/Myfiles/filecard"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
 
 const MyFilesPage = () => {
   const [openFolder, setOpenFolder] = useState(false);
@@ -19,7 +28,7 @@ const MyFilesPage = () => {
   const createFolder = useAppSelector(state => state.assignment.setCreateFolder);
   const deleteFolderResponse = useAppSelector(state => state.assignment.setDeleteFolders);
 
-  console.log(">>>>>>>>>>>>>>>>>>>deleteFolderResponse",deleteFolderResponse)
+  console.log(">>>>>>>>>>>>>>>>>>>deleteFolderResponse", deleteFolderResponse)
 
   useEffect(() => {
     if (token) {

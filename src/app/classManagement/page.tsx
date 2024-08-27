@@ -2,12 +2,34 @@
 
 import React, { useEffect, useState } from 'react';
 import { TiArrowSortedUp } from "react-icons/ti";
-import Card from './overView/Card';
-import ClassTable from './classes/page';
-import TimeTable from './timeTable/page';
-import Attendance from './attendence/page';
-import TabNavigator from "../TabNavigator/page";
 import { useRouter, useSearchParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
+import Spinner from '@/common/Spinner';
+
+const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const ClassTable = dynamic(() => import("./classes/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const TimeTable = dynamic(() => import("./timeTable/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const Attendance = dynamic(() => import("./attendence/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+const Card = dynamic(() => import("./overView/Card"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
 
 type Tab = 'Overview' | 'Classes' | 'Time table' | 'Attendance';
 

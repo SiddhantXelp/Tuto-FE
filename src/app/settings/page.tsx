@@ -1,8 +1,13 @@
 
 "use client"
 import React, { useState } from 'react';
-import TabNavigator from "../TabNavigator/page";
+import Spinner from '@/common/Spinner';
+import dynamic from 'next/dynamic';
 
+const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
 type ToggleProps = {
   id: string;
   label: string;

@@ -1,13 +1,30 @@
 'use client';
 
-import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import { GrAdd } from "react-icons/gr";
-import SubmitTable from './SubmitTable';
-import PendingTable from './PendingTable';
-import CompletedTable from './CompletedTable';
 import Link from 'next/link';
-import TabNavigator from "../TabNavigator/page";
+import Spinner from "@/common/Spinner";
+
+const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const SubmitTable = dynamic(() => import("./SubmitTable"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const PendingTable = dynamic(() => import("./PendingTable"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
+
+const CompletedTable = dynamic(() => import("./CompletedTable"), {
+  loading: () => <Spinner />,
+  ssr: false,
+});
 
 type Tab = 'Submitted' | 'Pending' | 'Completed';
 

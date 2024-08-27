@@ -112,8 +112,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { FaSmile, FaPaperclip } from 'react-icons/fa';
-import io from 'socket.io-client';
 import { IoSendSharp } from "react-icons/io5";
+import { socket } from "@/app/api/socket";
+import { useAppSelector } from '@/app/store/hooks';
 
 interface Message {
   id: number;
@@ -124,7 +125,7 @@ interface Message {
 
 interface Chat {
   id: number;
-  name: string;
+  fullName: string;
   message: string;
   time: string;
   image: string;
@@ -135,12 +136,14 @@ interface ChatWindowProps {
   selectedChat: Chat | null;
 }
 
-const socket = io("http://tutor.xelpmoc.in:6800");
 
 const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
+  const senderId = useAppSelector((state: { auth: any }) => state.auth?.login?.user?.id || []);
+  const receiverId = selectedChat?.id || 0;
   const [message, setMessage] = useState('');
   const [messagesReceived, setMessagesReceived] = useState<Message[]>([]);
   const [file, setFile] = useState<File | null>(null);
+
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
@@ -149,6 +152,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
         ...prevMessages,
         { text: message, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }), sender: 'me', id: prevMessages.length + 1 }
       ]);
+      socket.emit('send-message', { senderId, receiverId, content: message });
+
       setMessage('');
     }
   };
@@ -162,7 +167,20 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
   };
 
   useEffect(() => {
+
     if (selectedChat) {
+
+      socket.emit('join-chat', { senderId, receiverId });
+
+      socket.on('chat-history', (chatHistory) => {
+        setMessagesReceived(chatHistory);
+      });
+
+      socket.on('message', (message) => {
+        setMessagesReceived((prevMessages) => [...prevMessages, message]);
+      });
+
+
       socket.on('receive_message', (data: { message: string }) => {
         setMessagesReceived((prevMessages) => [
           ...prevMessages,
@@ -173,6 +191,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
 
     return () => {
       socket.off('receive_message');
+      socket.off('chat-history');
+      socket.off('message');
     };
   }, [selectedChat]);
 
@@ -181,24 +201,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
       {selectedChat ? (
         <>
           <div className="flex items-center mb-4 bg-white border-b p-4 md:p-4">
-            <img src={selectedChat.image} alt={selectedChat.name} className="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3" />
+            <img src={"/Chatprofile.jpg"} alt={selectedChat.fullName} className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover mr-3" />
+            {/* <span className="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3 bg-gray-500" /> */}
+
             <div className="flex flex-col">
-              <h2 className="text-sm md:text-sm font-bold">{selectedChat.name}</h2>
+              <h2 className="text-sm md:text-sm font-bold">{selectedChat.fullName}</h2>
               <span className="text-xs md:text-xs text-gray-500">Active now</span>
             </div>
           </div>
           <div className="flex-1 overflow-y-auto p-2">
-            {/* {messagesReceived.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
-                <div
-                  className={`p-2 md:p-3 rounded-lg ${msg.sender === 'me' ? 'bg-blue-500 text-white rounded-tr-none' : 'bg-gray-200 rounded-tl-none ml-2'
-                    } ${msg.sender === 'me' ? 'w-1/2 ml-2' : 'w-1/2 ml-2'}`}
-                >
-                  <p className="text-xs md:text-xs">{msg.text}</p>
-                  <span className="text-xs">{msg.time}</span>
-                </div>
-              </div>
-            ))} */}
+
             {messagesReceived.map((msg) => (
               <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-2`}>
                 <div

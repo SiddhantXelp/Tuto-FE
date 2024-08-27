@@ -1,9 +1,10 @@
 import Table from '@/components/table'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { SubmitTableColumns } from '../assignments/data';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getAssignments, setAssignments } from '@/app/store/actions/assignment';
 import { useRouter } from 'next/navigation';
+import { formattedDate } from "@/common/DateAndTimeCommon";
 
 const SubmitTable = () => {
   const dispatch = useAppDispatch();
@@ -17,14 +18,20 @@ const SubmitTable = () => {
   }, [dispatch, token]);
 
   const handleRowClick = (rowData: any) => {
-    console.log(":::::::::::::>>>>>>>>>>>>>>", rowData?.id);
     router.push(`/assignments/viewAssignment/${rowData?.id}`)
   };
+
+  const assignment = useMemo(() =>
+    (assignmentData || []).map((student: any) => ({
+      ...student,
+      date: formattedDate(student.date),
+    }))
+    , [assignmentData]);
 
 
   return (
     <div className='h-full'>
-      <Table columns={SubmitTableColumns} data={assignmentData} includeCheckbox={false} onRowClick={handleRowClick} />
+      <Table columns={SubmitTableColumns} data={assignment} includeCheckbox={false} onRowClick={handleRowClick} />
     </div>
   )
 }
