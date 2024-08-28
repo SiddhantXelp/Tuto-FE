@@ -274,7 +274,7 @@ const CreatePackage: React.FC = () => {
                     } hover:bg-[#505050] hover:text-white focus:outline-none`}
                   onClick={() => handleButtonClick(item.name)}
                 >
-                  <p className={`text-sm ${formData.selectedDays.includes(item.name) ? 'text-white' : 'text-[#707070]'}`}>
+                  <p className={`text-sm ${formData.selectedDays.includes(item.name) ? 'text-white' : 'text-[#707070] hover:text-white'}`}>
                     {item.name}
                   </p>
                 </button>
@@ -321,6 +321,7 @@ const CreatePackage: React.FC = () => {
                   value={formData.selectedOptions[option.name]}
                   onChange={handleChange}
                   label={""}
+                  lablename={option?.label}
                 />
               ))}
             </div>

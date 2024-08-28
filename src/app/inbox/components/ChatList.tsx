@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { BsFilter } from "react-icons/bs";
-import { FaAngleDown } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 
 interface Message {
@@ -9,7 +8,7 @@ interface Message {
   text: string;
   time: string;
   sender: "me" | "other";
-  gender:string
+  gender: string;
 }
 
 interface Chat {
@@ -19,9 +18,8 @@ interface Chat {
   time: string;
   image: string;
   messages: Message[];
-  gender:string
+  gender: string;
 }
-
 
 interface ChatListProps {
   chats: Chat[];
@@ -34,18 +32,16 @@ const ChatList: React.FC<ChatListProps> = ({
   selectedChat,
   setSelectedChat,
 }) => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredChats = chats.filter(chat =>
+    chat.fullName?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="sm:w-2/4 md:w-2/4 lg:w-2/4 xl:w-1/4 border-r border-gray-300 sm:p-0">
       <div className="flex items-center mb-4 bg-white border-b p-3 rounded-tl-lg">
-        {/* <img
-          src="https://img.freepik.com/free-photo/3d-illustration-cute-cartoon-boy-with-backpack-his-back_1142-40542.jpg?size=626&ext=jpg"
-          alt={"You"}
-          className="w-12 h-12 rounded-full mr-3 ml-4 p-1"
-        /> */}
         <img src={"/Chatprofile.jpg"} alt={"YOU"} className="w-12 h-12 rounded-full object-cover mr-3 ml-4 p-1" />
-
-        {/* <span className="w-12 h-12 rounded-full mr-3 ml-4 p-1 bg-gray-500" /> */}
-
         <span>You</span>
       </div>
 
@@ -58,7 +54,9 @@ const ChatList: React.FC<ChatListProps> = ({
           <input
             type="text"
             placeholder="Search"
-            className="w-full pl-10 pr-4 py-2 border rounded-lg border-[#D1D1D1]"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border rounded-xl border-[#D1D1D1]"
           />
         </div>
       </div>
@@ -72,7 +70,7 @@ const ChatList: React.FC<ChatListProps> = ({
 
       <div className="overflow-y-auto h-[600px]">
         <ul>
-          {chats.map((chat) => (
+          {filteredChats.map((chat) => (
             <li
               key={chat.id}
               className={`flex items-center py-2 border-t-2 border-[#ECECEC] hover:bg-[#ECECEC] cursor-pointer ${selectedChat?.id === chat.id ? "bg-[#ECECEC] opacity-100" : ""
@@ -84,8 +82,6 @@ const ChatList: React.FC<ChatListProps> = ({
                 alt={chat.fullName}
                 className="w-10 h-10 rounded-full mx-5 object-cover"
               />
-              {/* <span className="w-10 h-10 rounded-full mx-5 bg-gray-500" /> */}
-
               <div className="flex-1">
                 <h3 className="font-bold text-xs text-[#565656]">{chat.fullName}</h3>
                 <p className="text-[12px] text-[#161819]">{chat.message}</p>
