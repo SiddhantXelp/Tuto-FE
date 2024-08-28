@@ -76,7 +76,7 @@ export default function Home() {
     const classStartDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classStartTime}:00`);
     return classStartDateTime > now && classStartDateTime <= sevenDaysLater;
   });
-  
+
   const upcomingClassCount = upcomingClassesInNext7Days.length || 0;
 
   for (let cls of viewClassData) {
@@ -278,11 +278,11 @@ export default function Home() {
               <span className="text-[#565656] text-xs">View All</span>
             </Link>
           </div>
-          <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} />
+          <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} border={"rounded-2xl"} />
 
         </div>
         <div className="mt-8">
-          <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] md:h-[367px]">
+          <div className="bg-white shadow-2xl p-4 rounded-lg md:w-[384px] md:h-[367px]">
             <Calendar
               value={now}
               locale="en-US"

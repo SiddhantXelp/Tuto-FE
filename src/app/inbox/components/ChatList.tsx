@@ -9,6 +9,7 @@ interface Message {
   text: string;
   time: string;
   sender: "me" | "other";
+  gender:string
 }
 
 interface Chat {
@@ -18,7 +19,9 @@ interface Chat {
   time: string;
   image: string;
   messages: Message[];
+  gender:string
 }
+
 
 interface ChatListProps {
   chats: Chat[];
@@ -77,7 +80,7 @@ const ChatList: React.FC<ChatListProps> = ({
               onClick={() => setSelectedChat(chat)}
             >
               <img
-                src={"/Chatprofile.jpg"}
+                src={`${chat?.gender === "M" ? "MaleUser.jpg" : "femaleUser.png"}`}
                 alt={chat.fullName}
                 className="w-10 h-10 rounded-full mx-5 object-cover"
               />

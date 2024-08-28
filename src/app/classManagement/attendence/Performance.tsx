@@ -80,7 +80,7 @@ const SubjectsBasedTable = () => {
                     </div>
 
                     <div className="w-full overflow-x-auto">
-                        <Table columns={performanceColumns} data={allStudentsData} includeCheckbox={false} showRowColor={true} />
+                        <Table columns={performanceColumns} data={allStudentsData} includeCheckbox={false} showRowColor={true} border={"rounded-2xl"}/>
                     </div>
                 </>
             ) : (
@@ -97,7 +97,7 @@ const SubjectsBasedTable = () => {
                                 </div>
                             </div>
                         </div>
-                        <Table columns={performanceColumns} data={allStudentsData} includeCheckbox={false} showRowColor={true} />
+                        <Table columns={performanceColumns} data={allStudentsData} includeCheckbox={false} showRowColor={true} border={"rounded-b-2xl rounded-tl-2xl"}/>
                     </div>
                 </div>
             )}

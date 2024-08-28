@@ -11,10 +11,11 @@ interface Props {
   data: any[];
   includeCheckbox?: boolean;
   onRowClick?: (rowData: any) => void;
-  showRowColor?: boolean
+  showRowColor?: boolean;
+  border: String;
 }
 
-const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true, onRowClick, showRowColor }) => {
+const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true, onRowClick, showRowColor, border }) => {
   const handleRowClick = (rowData: any) => {
     if (onRowClick) {
       onRowClick(rowData);
@@ -22,8 +23,8 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true, onRowCl
   };
 
   return (
-    <div className="overflow-x-auto shadow-lg">
-      <table className="min-w-full bg-white border border-gray-200">
+    <div className={`overflow-x-auto shadow-lg ${border}`}>
+      <table className={`min-w-full bg-white border border-gray-200 `}>
         <thead>
           <tr>
             {includeCheckbox && (

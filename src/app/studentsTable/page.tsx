@@ -55,42 +55,45 @@ const NumberStudents = () => {
 
   return (
     <TabNavigator>
-      <div className='flex flex-row items-center gap-10'>
-        <div >
-          <select
-            name=""
-            value={selectedOption}
-            onChange={handleSelectChange}
-            className="block w-60 h-10 p-2 mt-1 text-buttonGray border-buttonGray rounded-md border-1 shadow-sm focus:ring-indigo-500 focus:border-gray-300 sm:text-sm bg-white"
-          >
-            <option className="text-buttonGray text-sm">All Students :280</option>
-            <option className="text-buttonGray text-sm mt-2">All Students</option>
-            <option className="text-buttonGray text-sm">. Groups</option>
-            {Selectoptions[0]?.options.map(option => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-            <option className="text-buttonGray text-sm">. Subjects</option>
-            {Selectoptions[0]?.Secondoptions.map(option => (
-              <option key={option.value} value={option.value} className="bg-white text-sm">
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <Link href="/onboarding">
-          <div className='w-60 h-10 bg-buttonGray flex justify-center items-center border rounded-lg  p-1'>
-            <span className='text-white text-sm'>Add student  +</span>
+      <div className='m-5'>
+        <div className='flex flex-row items-center gap-10'>
+          <div >
+            <select
+              name=""
+              value={selectedOption}
+              onChange={handleSelectChange}
+              className="block w-60 h-10 p-2 mt-1 text-buttonGray border-buttonGray rounded-md border-1 shadow-sm focus:ring-indigo-500 focus:border-gray-300 sm:text-sm bg-white"
+            >
+              <option className="text-buttonGray text-sm">All Students :280</option>
+              <option className="text-buttonGray text-sm mt-2">All Students</option>
+              <option className="text-buttonGray text-sm">. Groups</option>
+              {Selectoptions[0]?.options.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+              <option className="text-buttonGray text-sm">. Subjects</option>
+              {Selectoptions[0]?.Secondoptions.map(option => (
+                <option key={option.value} value={option.value} className="bg-white text-sm">
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
-        </Link>
-      </div>
-      <div className="mt-10 ">
-        <div className='w-64 border-white ml-auto flex items-end mr-2'>
-          <SearchComponent onSearch={handleChange} />
+          <Link href="/onboarding">
+            <div className='w-60 h-10 bg-buttonGray flex justify-center items-center border rounded-lg  p-1'>
+              <span className='text-white text-sm'>Add student  +</span>
+            </div>
+          </Link>
         </div>
-        <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} />
+        <div className="mt-10 ">
+          <div className='w-64 border-white ml-auto flex items-end mr-2'>
+            <SearchComponent onSearch={handleChange} />
+          </div>
+          <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} border={"rounded-b-2xl rounded-tl-2xl"} />
+        </div>
       </div>
+
     </TabNavigator>
   );
 };

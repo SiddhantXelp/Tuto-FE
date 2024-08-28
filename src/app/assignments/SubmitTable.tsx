@@ -31,7 +31,7 @@ const SubmitTable = () => {
 
   return (
     <div className='h-full'>
-      <Table columns={SubmitTableColumns} data={assignment} includeCheckbox={false} onRowClick={handleRowClick} />
+      <Table columns={SubmitTableColumns} data={assignment} includeCheckbox={false} onRowClick={handleRowClick} border={"rounded-b-2xl rounded-tr-2xl"}/>
     </div>
   )
 }

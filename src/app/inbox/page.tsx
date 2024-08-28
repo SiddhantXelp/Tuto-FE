@@ -24,7 +24,7 @@ const ChatWindow = dynamic(() => import("./components/ChatWindow"), {
 export default function IndexPage() {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state: { auth: any }) => state.auth?.login || []);
-  const getUsers = useAppSelector((state: { user: any }) => state.user?.setUsers || []);
+  const getUsers = useAppSelector((state: { user: any }) => state.user?.setUsers?.users || []);
 
   useEffect(() => {
     if (token) {

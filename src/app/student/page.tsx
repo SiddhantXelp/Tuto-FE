@@ -164,7 +164,7 @@ const Student: React.FC = () => {
 
         <div className="mt-5">
           <h2 className="text-sm font-semibold mb-4 text-[#565656]">Recently added students</h2>
-          <Table columns={recentStudentColumns} data={processedStudentData.slice(0, 10)} includeCheckbox={false} />
+          <Table columns={recentStudentColumns} data={processedStudentData.slice(0, 10)} includeCheckbox={false} border={"rounded-2xl"}/>
         </div>
       </div>
     </TabNavigator>

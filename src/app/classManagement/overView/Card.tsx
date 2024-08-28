@@ -110,7 +110,7 @@ const OverviewTabContent: React.FC = () => {
             </div>
           ))}
           <div
-            className="shadow-lg w-full sm:w-[48%] md:w-[23.5%] lg:w-[12%] h-32 bg-white rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer mt-2"
+            className="shadow-lg w-full sm:w-[48%] md:w-[23.5%] lg:w-[8%] h-32 bg-white rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer mt-2"
             onClick={dialogOpen}
           >
             <Icon icon="mingcute:add-line" width="40" height="35" color="black" />

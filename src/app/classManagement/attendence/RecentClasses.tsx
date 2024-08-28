@@ -59,6 +59,7 @@ const RecentClasses: React.FC = () => {
                             data={allStudentsData}
                             includeCheckbox={false}
                             onRowClick={(row) => handleRowClick(row)}
+                            border={"rounded-b-2xl rounded-tr-2xl"}
                         />
                     </div>
 

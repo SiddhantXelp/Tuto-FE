@@ -27,7 +27,7 @@ const SubjectsBasedTable = () => {
                         </div>
                     </div>
                 </div>
-                <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} showRowColor={true}/>
+                <Table columns={allStudentsColumns} data={allStudentsData} includeCheckbox={false} showRowColor={true} border={"rounded-b-2xl rounded-tl-2xl"}/>
             </div>
         </>
     );

@@ -97,7 +97,7 @@ export const CategoriesPage: React.FC = () => {
 
   return (
     <div>
-      <Table columns={columns} data={tableData} includeCheckbox={true} onRowClick={handleRowClick} />
+      <Table columns={columns} data={tableData} includeCheckbox={true} onRowClick={handleRowClick} border={"rounded-b-2xl rounded-tr-2xl"}/>
     </div>
   );
 };

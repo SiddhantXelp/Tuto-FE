@@ -515,7 +515,7 @@ const Attendance: React.FC = () => {
             Students
           </span>
         </div>
-        <Table columns={columns} data={data} includeCheckbox={false} onRowClick={handleTableClick} showRowColor={true} />
+        <Table columns={columns} data={data} includeCheckbox={false} onRowClick={handleTableClick} showRowColor={true} border={"rounded-b-2xl rounded-tr-2xl"}/>
       </div>
     );
   };
