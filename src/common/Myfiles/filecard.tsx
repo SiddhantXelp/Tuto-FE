@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { GoFileDirectoryFill } from "react-icons/go";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useAppDispatch } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getDeleteFolder } from '@/app/store/actions/assignment';
 
 interface CardProps {
@@ -31,7 +31,8 @@ const Card: React.FC<CardProps> = ({ data }) => {
         router.push(`/myFiles/SubFiles/${data.id}`);
     };
 
-    const token = "jkadfjaskdaskdkasdhjaksljdsajd";
+    const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+    
     const handelDelete = () => {
         dispatch(getDeleteFolder(token, String(data?.id)));
     };

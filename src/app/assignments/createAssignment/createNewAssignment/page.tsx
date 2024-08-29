@@ -48,7 +48,7 @@ const CreateNewAssignment = () => {
   const [radioInput, setRadioInput] = useState('');
   const [checkboxInput, setCheckboxInput] = useState<string>('');
   const [showInput, setInput] = useState(false);
-  const token = "hsjdhsjkdhskjhdkjshdkjhahdkajsdhjk"
+  const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
   const [cards, setCards] = useState([
     {

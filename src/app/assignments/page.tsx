@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { GrAdd } from "react-icons/gr";
 import Link from 'next/link';
 import Spinner from "@/common/Spinner";
+import { cardData } from "./data"
 
 const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
   loading: () => <Spinner />,
@@ -29,34 +30,6 @@ const CompletedTable = dynamic(() => import("./CompletedTable"), {
 type Tab = 'Submitted' | 'Pending' | 'Completed';
 
 const ClassManagementPage: React.FC = () => {
-
-  const data = [
-    {
-      cardName: "Subjects",
-      cardNametwo: "",
-      subject: 'English',
-      details: ['20 Total', '10 Pending']
-    },
-    {
-      cardName: "",
-      cardNametwo: "View all",
-      subject: 'Telugu',
-      details: ['20 Total', '10 Pending']
-    },
-    {
-      cardName: "Groups",
-      cardNametwo: "View all",
-      subject: 'Group A',
-      details: ['20 Total', '10 Pending']
-    },
-    {
-      cardName: "Groups",
-      cardNametwo: "",
-      subject: 'Group B',
-      details: ['20 Total', '10 Pending']
-    }
-  ];
-
   const [selectedTab, setSelectedTab] = useState<Tab>('Submitted');
 
   const renderContent = () => {
@@ -89,7 +62,7 @@ const ClassManagementPage: React.FC = () => {
     <TabNavigator>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-4'>
-          {data.map((item, index) => (
+          {cardData.map((item, index) => (
             <Link href={getLinkHref(index)} key={index} passHref>
               <div className='bg-transparent rounded-md p-4 cursor-pointer flex flex-col h-full'>
                 <div className='flex justify-between items-center mb-2'>

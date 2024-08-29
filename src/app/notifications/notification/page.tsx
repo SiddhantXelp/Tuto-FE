@@ -24,14 +24,14 @@ const notifications: Notification[] = [
     message: "Seema's child Ranveer fee is outstanding since 2 months to notify Seema",
     time: '09:30am',
     link: 'click here',
-    icon: <img src="/user-avatar.png" alt="User" className="w-8 h-8 rounded-full" />,
+    icon: <img src="/MaleUser.jpg" alt="User" className="w-10 h-10 rounded-full" />,
   },
   {
     id: 2,
     message: "Upcoming className in 10min, English Grammar at 11:30am, Wednesday",
     time: '09:30am',
     link: 'click here',
-    icon: <img src="/className-icon.png" alt="className" className="w-8 h-8 rounded-full" />,
+    icon: <img src="/MaleUser.jpg" alt="className" className="w-10 h-10 rounded-full" />,
   },
 ];
 
@@ -44,7 +44,7 @@ const page = () => {
           className='w-full transform  h-auto rounded-xl'
         >
 
-          <div className="flex items-center justify-between p-4 border-b cursor-pointer bg-white">
+          <div className="flex items-center justify-between p-4 border-b cursor-pointer bg-white rounded-tr-xl rounded-tl-xl">
             <Link href='/'>
               <span className="text-lg font-semibold whitespace-nowrap">
                 Notifications ({notifications.length})
@@ -57,7 +57,7 @@ const page = () => {
 
           <div className="overflow-y-auto bg-[#F2F2F2]">
             {notifications.map((notification) => (
-              <div key={notification.id} className="flex items-start p-4 border-b border-[#9e9d9d]">
+              <div key={notification.id} className="flex items-start p-4 border-b border-[#B9B9B9]">
                 <div className="mr-4">{notification.icon}</div>
                 <div className="flex-1">
                   <p className="text-xs text-gray-800">{notification.message}</p>

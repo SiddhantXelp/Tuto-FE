@@ -403,3 +403,4 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
 };
 
 export default ChatWindow;
+  

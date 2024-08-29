@@ -25,7 +25,7 @@ const ClassDetails = () => {
     const dispatch = useAppDispatch();
     const viewClassData = useAppSelector((state: { classes: any }) => state.classes.ClassById);
     const id = params.id
-    const memberAuthToken = "hasidfhiuewhrhsdjsahksjhfsuidjhsyujx";
+    const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
     useEffect(() => {
         if (id) {

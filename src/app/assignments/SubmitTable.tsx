@@ -9,7 +9,7 @@ import { formattedDate } from "@/common/DateAndTimeCommon";
 const SubmitTable = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const token = "jaSflkASDOIQJWkjaklsdnklandhoiadjklmasnjdi"
+  const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.assignments || []);
   useEffect(() => {
     if (token) {

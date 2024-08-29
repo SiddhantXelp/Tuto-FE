@@ -24,8 +24,7 @@ const PerformanceChart = lazy(() => import('@/common/PerformanceChart'));
 const Student: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const token = "skldjsldslkdjskldjskjd";
-
+  const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const studentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
 
   useEffect(() => {
@@ -164,7 +163,7 @@ const Student: React.FC = () => {
 
         <div className="mt-5">
           <h2 className="text-sm font-semibold mb-4 text-[#565656]">Recently added students</h2>
-          <Table columns={recentStudentColumns} data={processedStudentData.slice(0, 10)} includeCheckbox={false} border={"rounded-2xl"}/>
+          <Table columns={recentStudentColumns} data={processedStudentData.slice(0, 10)} includeCheckbox={false} border={"rounded-2xl"} />
         </div>
       </div>
     </TabNavigator>

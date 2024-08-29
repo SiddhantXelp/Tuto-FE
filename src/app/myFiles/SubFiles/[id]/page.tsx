@@ -16,7 +16,7 @@ const MyFilesPage = () => {
     const router = useRouter();
     const { id: paramId } = useParams();
     const dispatch = useAppDispatch();
-    const memberAuthToken = "njdkfhsdkjfhsdkjfsdhdfkjsdkhfsjkdfhsdkjf";
+    const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
     const myFiles = useAppSelector(state => state.assignment.setMyFilesById);
     const isLoading = useAppSelector(state => state.assignment.loading);
     const createFolder = useAppSelector(state => state.assignment.setCreateFolder);

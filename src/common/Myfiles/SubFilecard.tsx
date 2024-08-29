@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaFilePdf } from "react-icons/fa";
 import { GoFileDirectoryFill } from "react-icons/go";
-import { useAppDispatch } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getDeleteFiles, getDeleteFolder } from '@/app/store/actions/assignment';
 
 interface CardProps {
@@ -43,7 +43,8 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
         }
     };
 
-    const token = "smdklsdjskdhsjkdsjkdnsjkdnskndsjnd";
+    const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+
     const handelDelete = () => {
         if (type === "folder") {
             dispatch(getDeleteFolder(token, String(id)))

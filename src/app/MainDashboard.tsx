@@ -54,10 +54,9 @@ export default function Home() {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(1);
   const [open, setOpen] = useState(false);
-
   const viewClassData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes || []);
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
-
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const now: Date = new Date();
 
   viewClassData.sort((a: ClassData, b: ClassData) => {
@@ -103,13 +102,13 @@ export default function Home() {
   const previousClassName = previousClass ? previousClass.title : "N/A";
   const nextClassName = nextClass ? nextClass.title : "N/A";
 
-  const memberAuthToken = "jzoskjdkasdkaskdksajdn";
 
   useEffect(() => {
-    dispatch(getClasses(memberAuthToken));
+    if (!open) {
+      dispatch(getClasses(memberAuthToken));
+    }
     dispatch(getStudents(memberAuthToken, "1", "10"));
-
-  }, [dispatch]);
+  }, [dispatch, open, memberAuthToken]);
 
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -161,9 +160,8 @@ export default function Home() {
       </div>
     )
   }));
-
-
   const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
+
   const dialogOpen = () => {
     setOpen(true);
   };
@@ -171,6 +169,7 @@ export default function Home() {
   const handelViewAll = () => {
     router.push("/classManagement?tab=Classes")
   }
+
   return (
     <div className="pt-2 px-4 mt-5">
       <DialogComponent open={open} setOpen={setOpen} />

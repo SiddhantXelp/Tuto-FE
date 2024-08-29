@@ -25,7 +25,7 @@ interface ClassesState {
 export const CategoriesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const memberAuthToken = 'sid';
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
   const GETClassData = useAppSelector((state: { classes: any }) => state.classes);
 
@@ -97,7 +97,7 @@ export const CategoriesPage: React.FC = () => {
 
   return (
     <div>
-      <Table columns={columns} data={tableData} includeCheckbox={true} onRowClick={handleRowClick} border={"rounded-b-2xl rounded-tr-2xl"}/>
+      <Table columns={columns} data={tableData} includeCheckbox={true} onRowClick={handleRowClick} border={"rounded-b-2xl rounded-tr-2xl"} />
     </div>
   );
 };

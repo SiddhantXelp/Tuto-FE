@@ -11,20 +11,13 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getStudentGroup, getCreateclass, setCreateClasses } from '@/app/store/actions/classes';
 import CustomDropDown from './CustomDropDown';
 import Spinner from "../common/Spinner"
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Swal from 'sweetalert2'
-
-
+import { buttons, Selectoptions, Tabbuttons, options, groups } from './commonData';
 interface DialogComponentProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
-
-interface ButtonItem {
-  id: number;
-  name: string;
-}
-
 interface FormData {
   typeMeeting: string[];
   classTitle?: string;
@@ -44,74 +37,33 @@ interface FormData {
 }
 
 const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
-  const buttons: ButtonItem[] = [
-    { id: 1, name: 'Zoom' },
-    { id: 2, name: 'Google meet' },
-  ];
-
-  const options = [
-    { label: 'Every day', value: 'Everyday' },
-    { label: 'Monday', value: 'Monday' },
-    { label: 'Tuesday', value: 'Tuesday' },
-    { label: 'Wednesday', value: 'Wednesday' },
-    { label: 'Thursday', value: 'Thursday' },
-    { label: 'Friday', value: 'Friday' },
-    { label: 'Saturday', value: 'Saturday' },
-    { label: 'Sunday', value: 'Sunday' },
-
-
-
-  ];
-
-  const Selectoptions = [
-    {
-      label: "Filter",
-      name: "Filter",
-      Optionlabel: "",
-      options: [
-        { label: "English", value: "English" },
-        { label: "Social", value: "Social" },
-        { label: "GroupA", value: "GroupA" },
-        { label: "Group B", value: "Group B" },
-      ],
-    },
-
-  ]
-
-
-  const Tabbuttons: ButtonItem[] = [
-    { id: 1, name: 'Create new class' },
-    { id: 2, name: 'Virtual platform' },
-  ];
-
   const dispatch = useAppDispatch();
-
-  const memberAuthToken = "hiaJDFKljkajdkaklsdmabksjdlm,asdasd"
-  useEffect(() => {
-    if (open) {
-      dispatch(getStudentGroup(memberAuthToken));
-
-    }
-  }, [dispatch, memberAuthToken, open]);
-
-
-  const classesData = useAppSelector((state: { classes: any }) => state.classes.getstudentgroup);
-
   const [formData, setFormData] = useState<FormData>({
     typeMeeting: [],
     selectedOptions: [],
   });
+  const [errors, setErrors] = useState<string[]>([]);
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+  const classesData = useAppSelector((state: { classes: any }) => state.classes.getstudentgroup);
+  const receivedCreatedClass = useAppSelector((state: { classes: any }) => state.classes.createclass);
+  const isLoading = useAppSelector(state => state.student.loading);
+  const isError = useAppSelector((state: { classes: any }) => state.classes.setClassesError);
   const [tabValue, setTabValue] = useState('Create new class');
   const [showNewContent, setShowNewContent] = useState(false);
-
-  const handleTabClick = (name: string) => {
-    setTabValue(name);
-  };
-
   const [devdata, setDevdata] = useState({
     searchQuery: '',
     filter: {}
   });
+
+  useEffect(() => {
+    if (open) {
+      dispatch(getStudentGroup(memberAuthToken));
+    }
+  }, [dispatch, memberAuthToken, open]);
+
+  const handleTabClick = (name: string) => {
+    setTabValue(name);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -121,8 +73,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }));
   };
 
-
-  // Handle the change specifically for SelectMain options
   const handleSelectChangedev = (name: string, value: any) => {
     setDevdata((prevState) => ({
       ...prevState,
@@ -133,11 +83,8 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }));
   };
 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-
-    console.log(":::::::::::::::::::::::::::::::name", name, value);
     setFormData(prevFormData => ({
       ...prevFormData,
       [name]: value
@@ -146,12 +93,10 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const handleCheckboxChangeNew = (value: string) => {
     setFormData(prevFormData => {
-      // If the item is already selected, clear the selection (or you can decide to keep it selected)
       const newSelectedDay = prevFormData.typeMeeting.includes(value) ? null : value;
-
       return {
         ...prevFormData,
-        typeMeeting: newSelectedDay ? [newSelectedDay] : [], // Keep only one selected item or clear selection
+        typeMeeting: newSelectedDay ? [newSelectedDay] : [],
       };
     });
   };
@@ -163,6 +108,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
       [name]: value
     }));
   };
+
   const handleSelectChange = (options: string[]) => {
     setFormData(prevFormData => ({
       ...prevFormData,
@@ -170,19 +116,13 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }));
   };
 
-
   const handelNext = (event: any) => {
-
     event.preventDefault();
-
     if (validateForm()) {
       setTabValue("Virtual platform")
     } else {
       errors.forEach(error => toast.error(error));
     }
-
-
-
   }
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -197,9 +137,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     setFormData(prev => ({ ...prev, endTime: e.target.value }));
   };
 
-  const [errors, setErrors] = useState<string[]>([]);
-
-
   const validateForm = () => {
     const validationErrors: string[] = [];
     if (!formData.classTitle) validationErrors.push("Class title is required.");
@@ -208,7 +145,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     if (!formData.subject) validationErrors.push("Subject is required.");
 
     validationErrors.forEach(error => toast.error(error));
-
     return validationErrors.length === 0;
   };
 
@@ -248,9 +184,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const handelCreate = (e: any) => {
     e.preventDefault();
-
-
-
     if (validateFormFinal() && validateForm()) {
       const data = {
         "title": formData.classTitle,
@@ -260,8 +193,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
         "scheduleDate": formData.startDate,
         "classStartTime": formData.startTime,
         "classEndTime": formData.endTime,
-        // "classStartTime": "2024-08-05T15:29:56.143Z",
-        // "classEndTime": "2024-08-05T15:29:56.143Z",
         "videoCallLink": formData.videoLink,
         "repeatClass": formData.selectedOptions,
         "subject": {
@@ -275,40 +206,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     } else {
       errors.forEach(error => toast.error(error));
     }
-
-
   }
-  const SubjectOptions = [
-    { label: "English", value: "English" },
-    { label: "Social", value: "Social" },
-  ];
-
-  const groups = [
-    {
-      id: "56be1cdb-b891-4f74-8062-8dfc200b30f5",
-      title: "Select Subject"
-    },
-    {
-      id: "68b1b474-3120-4c44-af88-2a7fdd70723d",
-      title: "English"
-    },
-    {
-      id: "faecf314-5ea4-4536-adac-ef0343161e21",
-      title: "Science"
-    },
-    {
-      id: "d8b5e2f4-9d9d-4f42-9d5e-2c8b8a4f2b70",
-      title: "Mathematics"
-    },
-    {
-      id: "3bfa20f7-905b-4c39-9d21-1b2c8b7c4f90",
-      title: "History"
-    },
-    {
-      id: "7f8c2a5b-914d-4f4f-89a2-4e6f2b8e5a8c",
-      title: "Geography"
-    }
-  ];
 
   const optionsGroup = classesData?.groups?.map((group: any) => ({
     id: group.id,
@@ -319,11 +217,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     id: group.id,
     title: group.title
   })) ?? [];
-
-  const isLoading = useAppSelector(state => state.student.loading);
-
-  const receivedCreatedClass = useAppSelector((state: { classes: any }) => state.classes.createclass);
-
 
   useEffect(() => {
     if (receivedCreatedClass) {
@@ -340,15 +233,13 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }
   }, [receivedCreatedClass]);
 
-
-  const isError = useAppSelector((state: { classes: any }) => state.classes.setClassesError);
-
   useEffect(() => {
     if (isError) {
       toast.error(isError)
     }
+  }, [isError]);
 
-  }, [isError])
+
   return (
     <Dialog open={open} onClose={() => setOpen(false)} className="fixed inset-0 z-10">
       {
@@ -384,13 +275,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
               <div className='p-1  border border-buttonGray rounded-md'>
 
                 <table className="w-full   rounded-md">
-                  <thead>
-                    {/* <tr className="bg-gray-300 w-full h-14">
-        <th className="px-4 py-2 text-left">Song</th>
-        <th className="px-4 py-2 text-left">Artist</th>
-        <th className="px-4 py-2 text-left">Year</th>
-      </tr> */}
-                  </thead>
+
                   <tbody>
                     <tr className="bg-gray-100 w-full h-14 border-b-1 border-buttonGray ">
                       <td className="px-4 py-2 text-buttonGray text-xxs">1. Suresh</td>
@@ -447,6 +332,9 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       value={formData.classTitle || ''}
                       onChange={handleInputChange}
                       placeholder="Enter class title"
+                      label=""
+                      type=""
+                      id=""
                     />
                   </div>
                   <div className="mb-4">
@@ -455,7 +343,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       name="selectedSubject"
                       lablename=""
                       options={transformedSubjectOptions}
-                      value={formData.subject}
+                      value={String(formData.subject)}
                       onChange={(e) => handleChange({ target: { name: 'subject', value: e.target.value } })}
                     />
                   </div>
@@ -466,7 +354,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       name="selectedGroup"
                       lablename=""
                       options={optionsGroup}
-                      value={formData.selectedGroup}
+                      value={String(formData.selectedGroup)}
                       onChange={(e) => handleChange({ target: { name: 'selectedGroup', value: e.target.value } })}
                     />
                     {/* </div> */}
@@ -478,6 +366,9 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       value={formData.material || ''}
                       onChange={handleFileChange}
                       placeholder="Enter material URL"
+                      label=""
+                      type=""
+                      id=""
                     />
                   </div>
                   <button
@@ -552,6 +443,9 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       value={formData.videoLink || ''}
                       onChange={handleInputChange}
                       placeholder="Enter Video call link"
+                      label=""
+                      type=""
+                      id=""
                     />
                   </div>
                   <div className="mt-5">

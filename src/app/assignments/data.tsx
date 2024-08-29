@@ -229,3 +229,31 @@ export const SubmitTableColumns = [
   { header: 'Status', key: 'status' },
   { header: 'Download', key: 'download' },
 ];
+
+
+export const cardData = [
+  {
+    cardName: "Subjects",
+    cardNametwo: "",
+    subject: 'English',
+    details: ['20 Total', '10 Pending']
+  },
+  {
+    cardName: "",
+    cardNametwo: "View all",
+    subject: 'Telugu',
+    details: ['20 Total', '10 Pending']
+  },
+  {
+    cardName: "Groups",
+    cardNametwo: "View all",
+    subject: 'Group A',
+    details: ['20 Total', '10 Pending']
+  },
+  {
+    cardName: "Groups",
+    cardNametwo: "",
+    subject: 'Group B',
+    details: ['20 Total', '10 Pending']
+  }
+];

@@ -183,7 +183,7 @@ const CreatePackage: React.FC = () => {
   }
 
   const pricingCategory = transformPricingInputs(filteredPricingInputs);
-  const memberAuthToken = "bjksabhdjashduakdjkasdhjaskhdkj"
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const studentPackage = useAppSelector((state: { student: any }) => state.student.createStudentPackage);
 
   const validateForm = () => {

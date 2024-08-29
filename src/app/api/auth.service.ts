@@ -9,7 +9,7 @@ export const DISCLOSURE_CANCEL = 'cancel';
 export const postSignup = async (token: string, data: any) => {
     console.log('Data:', data);
     try {
-        const response = await axios.post(
+        const response = await axios.post(  
             apis.signup,
             data,
             {

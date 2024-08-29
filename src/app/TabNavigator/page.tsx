@@ -8,6 +8,9 @@ import SideNav from '@/components/side-nav';
 import '../../styles/globals.css';
 import PageWrapper from '@/components/page-wrapper';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 interface TabNavigatorProps {
     children?: React.ReactNode;
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { OverviewCard, overviewData } from './data';
 import { Icon } from '@iconify/react';
 import Table from './Table';
 import DialogComponent from '@/common/Card';
@@ -9,58 +8,23 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClasses } from '@/app/store/actions/classes';
 import StartClassDialog from "./StartClass";
 import { MdModeEdit } from 'react-icons/md';
-import moment from 'moment';
 import { useRouter } from 'next/navigation';
-
+import { formatTime, formattedDate } from "@/common/DateAndTimeCommon";
 const OverviewTabContent: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const [open, setOpen] = useState(false);
   const [openStart, setOpenStart] = useState(false);
   const [month, setMonth] = useState("Weekly")
   const router = useRouter();
-  const memberAuthToken = 'bJHGWGEuiWHAYEAHEwJKHEIUWQDJNASDJgdiUWKJEh';
-  const [localClassesData, setLocalClassesData] = useState<any[]>([]);
-
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
+
   useEffect(() => {
     if (!open) {
       dispatch(getClasses(memberAuthToken));
-
     }
   }, [dispatch, memberAuthToken, open]);
 
-  useEffect(() => {
-    if (classesData) {
-      setLocalClassesData(classesData);
-    }
-  }, [classesData]);
-
-
-  const dialogOpen = () => {
-    setOpen(true);
-  };
-
-  const dialogStart = () => {
-    setOpenStart(true);
-  };
-
-  const handelViewClass = (id: number) => {
-    router.push(`/classManagement/classDetails/${id}`);
-
-  };
-
-  const formatTime = (time: string) => {
-    return time ? moment(time, 'HH:mm').format('hh:mm A') : 'NA';
-  };
-  const formattedDate = (isoDateString: any) => isoDateString ? moment(isoDateString).format('MMMM Do YYYY') : "NA";
-
-
-  const handelRedirect = () => {
-
-    router.push("/classManagement?tab=Classes")
-
-  }
   return (
     <>
 
@@ -72,12 +36,12 @@ const OverviewTabContent: React.FC = () => {
             <span className="text-sm text-[#565656] font-semibold">Recent classes</span>
           </div>
           <div className="my-2 mr-60">
-            <span className="text-sm text-[#565656]  cursor-pointer" onClick={handelRedirect}>View All</span>
+            <span className="text-sm text-[#565656]  cursor-pointer" onClick={() => router.push("/classManagement?tab=Classes")}>View All</span>
           </div>
         </div>
 
         <div className="flex flex-wrap justify-between">
-          {localClassesData && localClassesData.slice(0, 5).map((card: any, index: number) => (
+          {classesData && classesData.slice(0, 5).map((card: any, index: number) => (
             <div
               key={index}
               className="w-full sm:w-[48%] md:w-[23.5%] lg:w-[16%] h-35 bg-white rounded-lg p-4 flex flex-col gap-y-1.5 mb-4 shadow-lg"
@@ -87,7 +51,7 @@ const OverviewTabContent: React.FC = () => {
                   <Icon icon="mdi:clock" width="16" height="16" className="text-black" />
                   <p className="text-xs text-black">{formatTime(card.classStartTime) || "NA"} to {formatTime(card.classEndTime) || "NA"}</p>
                 </div>
-                <MdModeEdit size={16} className="text-black cursor-pointer" onClick={() => handelViewClass(card.id)} />
+                <MdModeEdit size={16} className="text-black cursor-pointer" onClick={() => router.push(`/classManagement/classDetails/${card?.id}`)} />
               </div>
               <div className="flex items-center space-x-2">
                 <Icon icon="carbon:document-subject" width="12" height="12" className="text-black" />
@@ -103,7 +67,7 @@ const OverviewTabContent: React.FC = () => {
               </div>
               <div
                 className="bg-buttonGray rounded-full flex items-center justify-center cursor-pointer mt-1"
-                onClick={dialogStart}
+                onClick={() => setOpenStart(true)}
               >
                 <p className="text-xs my-1 text-white">Start Class</p>
               </div>
@@ -111,7 +75,7 @@ const OverviewTabContent: React.FC = () => {
           ))}
           <div
             className="shadow-lg w-full sm:w-[48%] md:w-[23.5%] lg:w-[8%] h-32 bg-white rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer mt-2"
-            onClick={dialogOpen}
+            onClick={() => setOpen(true)}
           >
             <Icon icon="mingcute:add-line" width="40" height="35" color="black" />
             <h3 className="text-xs mt-2">Create</h3>
