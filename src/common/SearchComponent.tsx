@@ -3,7 +3,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { IoSearch } from 'react-icons/io5';
 
 interface SearchComponentProps {
-  onSearch: (query: string) => void;
+  onSearch: (query: any) => void;
 }
 
 const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {

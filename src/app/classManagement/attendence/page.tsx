@@ -500,22 +500,22 @@ const Attendance: React.FC = () => {
           </div>
           {renderStatsSection("Groups", commonStats.Groups)}
         </div>
-
-        <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
+        <div className="relative w-full sm:w-6/12 md:w-4/12 lg:w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
           <span
-            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tl-lg relative ${selectedOption === 'option1' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+            className={`flex-1 text-gray-600 text-xs sm:text-sm md:text-sm cursor-pointer px-2 sm:px-4 py-2 rounded-tl-lg relative ${selectedOption === 'option1' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
             onClick={() => handleOptionChange('option1')}
           >
             Recent Classes
           </span>
           <span
-            className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tr-lg relative ${selectedOption === 'option2' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
+            className={`flex-1 text-gray-600 text-xs sm:text-sm md:text-sm cursor-pointer px-2 sm:px-4 py-2 rounded-tr-lg relative ${selectedOption === 'option2' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}
             onClick={() => handleOptionChange('option2')}
           >
             Students
           </span>
         </div>
-        <Table columns={columns} data={data} includeCheckbox={false} onRowClick={handleTableClick} showRowColor={true} border={"rounded-b-2xl rounded-tr-2xl"}/>
+
+        <Table columns={columns} data={data} includeCheckbox={false} onRowClick={handleTableClick} showRowColor={true} border={"rounded-b-2xl rounded-tr-2xl"} />
       </div>
     );
   };

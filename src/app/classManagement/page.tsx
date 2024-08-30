@@ -70,10 +70,10 @@ const ClassManagementPage: React.FC = () => {
 
   return (
     <TabNavigator>
-      <div className="w-full h-auto md:h-14 flex space-x-20 bg-white pl-10 border border-t-zinc-200 ml-[-1px] flex-wrap">
+      <div className="w-full h-auto md:h-14 flex flex-wrap justify-between md:justify-start space-x-4 md:space-x-20 bg-white pl-4 md:pl-10 border border-t-zinc-200 ml-[-1px]">
         <div className="relative mt-3">
           <span
-            className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Overview' ? 'font-bold' : ''}`}
+            className={`text-[#565656] text-xs md:text-sm cursor-pointer ${selectedTab === 'Overview' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Overview')}
           >
             Overview
@@ -84,7 +84,7 @@ const ClassManagementPage: React.FC = () => {
         </div>
         <div className="relative mt-3">
           <span
-            className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Classes' ? 'font-bold' : ''}`}
+            className={`text-[#565656] text-xs md:text-sm cursor-pointer ${selectedTab === 'Classes' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Classes')}
           >
             Classes
@@ -95,7 +95,7 @@ const ClassManagementPage: React.FC = () => {
         </div>
         <div className="relative mt-3">
           <span
-            className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Time table' ? 'font-bold' : ''}`}
+            className={`text-[#565656] text-xs md:text-sm cursor-pointer ${selectedTab === 'Time table' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Time table')}
           >
             Time table
@@ -106,7 +106,7 @@ const ClassManagementPage: React.FC = () => {
         </div>
         <div className="relative mt-3">
           <span
-            className={`text-[#565656] text-sm cursor-pointer ${selectedTab === 'Attendance' ? 'font-bold' : ''}`}
+            className={`text-[#565656] text-xs md:text-sm cursor-pointer ${selectedTab === 'Attendance' ? 'font-bold' : ''}`}
             onClick={() => setSelectedTab('Attendance')}
           >
             Attendance
@@ -118,6 +118,7 @@ const ClassManagementPage: React.FC = () => {
       </div>
       {renderContent()}
     </TabNavigator>
+
   );
 };
 
