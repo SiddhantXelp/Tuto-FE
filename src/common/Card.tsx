@@ -305,12 +305,12 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
             </div>
           </DialogPanel>
         ) : (
-          <DialogPanel className="bg-white shadow-xl w-full md:w-1/2 lg:w-1/3 h-auto">
-            <div className="flex flex-col md:flex-row p-0 gap-0 rounded-lg">
+          <DialogPanel className="bg-white w-full md:w-1/2 lg:w-1/3 h-auto rounded-2xl overflow-hidden">
+            <div className="flex flex-col md:flex-row p-0 gap-0">
               {Tabbuttons.map((item) => (
                 <button
                   key={item.id}
-                  className={`h-14 flex-1 border-t-2 border-l-2 border-r-2 border-white-500 ${tabValue === item.name ? 'bg-white' : 'bg-[#ECEAEA]'
+                  className={`h-14 flex-1 ${tabValue === item.name ? 'bg-white' : 'bg-[#ECEAEA]'
                     } `}
                   onClick={() => handleTabClick(item.name)}
                 >

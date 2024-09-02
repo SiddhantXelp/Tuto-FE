@@ -12,9 +12,9 @@ const FullScreenLoader = () => (
             wrapperClass="loader-wrapper"
         />
     </div>
-  )
+)
 
-  export default FullScreenLoader;
+export default FullScreenLoader;
 
 
 

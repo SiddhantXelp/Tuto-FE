@@ -107,7 +107,9 @@ export default function Home() {
     if (!open) {
       dispatch(getClasses(memberAuthToken));
     }
-    dispatch(getStudents(memberAuthToken, "1", "10"));
+    const page = "1";
+    const limit = "10"
+    dispatch(getStudents(memberAuthToken, page, limit));
   }, [dispatch, open, memberAuthToken]);
 
 
@@ -368,14 +370,21 @@ export default function Home() {
 
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
               <div className="space-y-2">
-                {upcomingClasses?.slice(0, 3).map((item) => (
-                  <div key={item.id} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100">
-                    <span className="text-[#565656] text-xs">{item?.title}</span>
-                    <span className="text-[#565656] text-xs">{item?.classStartTime} - {item?.classEndTime}</span>
-                    {/* <span className="text-[#565656] text-xs">{item?.scheduleDate}</span> */}
+                {
+                  upcomingClasses.length > 0 ?
+                    <div>
+                      {upcomingClasses?.slice(0, 3).map((item) => (
+                        <div key={item.id} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100">
+                          <span className="text-[#565656] text-xs">{item?.title}</span>
+                          <span className="text-[#565656] text-xs">{item?.classStartTime} - {item?.classEndTime}</span>
 
-                  </div>
-                ))}
+                        </div>
+                      ))}</div>
+
+                    : <div>
+                      <h1>N/A</h1>
+                    </div>
+                }
               </div>
             </div>
           </div>
