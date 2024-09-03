@@ -136,7 +136,7 @@ const Table: React.FC<ScheduleProps> = ({ month }) => {
   const router = useRouter();
   const [calendar, setCalendar] = useState<DayPilotCalendar | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
-  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
+  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
 
   const formatEventData = (classes: any[]): Event[] => {
     return classes.map((cls) => {
@@ -169,7 +169,7 @@ const Table: React.FC<ScheduleProps> = ({ month }) => {
   };
 
   return (
-    <div className='bg-white'>
+    <div className='bg-white mt-2'>
       <DayPilotCalendar
         viewType={"Days"}
         days={7}

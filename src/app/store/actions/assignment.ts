@@ -90,9 +90,11 @@ export const setCreateAssignment = (setCreateAssignments: any) => ({
     setCreateAssignments,
 });
 
-export const getAssignments = (token: string) => ({
+export const getAssignments = (token: string,page:string,limit:string) => ({
     type: actionTypes.GET_ASSIGNMENTS,
-    token
+    token,
+    page,
+    limit
 });
 
 

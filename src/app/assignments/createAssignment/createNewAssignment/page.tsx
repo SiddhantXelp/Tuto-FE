@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation';
 import { handelStudents, formFields } from "./data";
+import { getStudents } from '@/app/store/actions/student';
 
 interface FormData {
   titleName: string;
@@ -40,6 +41,20 @@ const CreateNewAssignment = () => {
     checkboxInput: '',
     checkboxOptions: []
   });
+  const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+
+
+  useEffect(() => {
+    if (memberAuthToken) {
+      const page = "1";
+      const limit = "10"
+      dispatch(getStudents(memberAuthToken, page, limit));
+    }
+
+  }, [dispatch, memberAuthToken]);
+
+
   const [storedQuestions, setStoredQuestions] = useState(null);
   const isLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
   const userData = useAppSelector((state: { auth: any }) => state.auth.login);
@@ -386,6 +401,14 @@ const CreateNewAssignment = () => {
     }
 
   }, [createAssignmentResponse])
+
+
+
+  const optionsStudents = viewStudentData?.students?.map((group: any) => ({
+    label: group.fullName,
+    value: group.fullName
+  })) ?? [];
+
   return (
     <TabNavigator>
       {isLoading && <Spinner />}
@@ -433,7 +456,7 @@ const CreateNewAssignment = () => {
                               <label className="block text-buttonGray text-sm mb-2">Students</label>
                               <div className="w-full  h-12">
                                 <SelectWithCheckboxes
-                                  options={handelStudents}
+                                  options={optionsStudents}
                                   selectedOptions={formData.student}
                                   setSelectedOptions={handleSelectChange}
                                 />

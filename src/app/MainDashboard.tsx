@@ -4,9 +4,9 @@ import { BiSolidBarChartAlt2 } from "react-icons/bi";
 import { FaRegClock, FaBook } from "react-icons/fa";
 import Image from 'next/image';
 import Table from "../components/table";
-import { dashBordTableColumns, dashBordTableData } from './student/data';
+import { dashBordTableColumns } from './student/data';
 import { MdKeyboardArrowDown } from "react-icons/md";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -20,6 +20,9 @@ import { getStudents } from '@/app/store/actions/student';
 import { GoDotFill } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { getAssignments } from "./store/actions/assignment";
+import { formattedDate } from "@/common/DateAndTimeCommon";
+import { BsDownload } from "react-icons/bs";
 
 
 interface UserInfo {
@@ -54,10 +57,17 @@ export default function Home() {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(1);
   const [open, setOpen] = useState(false);
-  const viewClassData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes || []);
+  const viewClassData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data || []);
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
+  const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
+
   const now: Date = new Date();
+
+  useEffect(() => {
+  }, [viewClassData]);
 
   viewClassData.sort((a: ClassData, b: ClassData) => {
     const dateA = new Date(`${a.scheduleDate.split("T")[0]}T${a.classStartTime}:00`);
@@ -105,25 +115,23 @@ export default function Home() {
 
   useEffect(() => {
     if (!open) {
+      const page = "1";
+      const limit = "10";
+      const assignmentLimit = "5"
       dispatch(getClasses(memberAuthToken));
+      dispatch(getStudents(memberAuthToken, page, limit));
+      dispatch(getAssignments(memberAuthToken, page, assignmentLimit));
     }
-    const page = "1";
-    const limit = "10"
-    dispatch(getStudents(memberAuthToken, page, limit));
-  }, [dispatch, open, memberAuthToken]);
 
+  }, [dispatch, open, memberAuthToken])
 
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
-
+    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo")
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
     }
   }, []);
-
-  const percentage = 60
 
   const formatShortWeekday = (locale: any, date: any) => {
     const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -151,7 +159,6 @@ export default function Home() {
     </div>
   ];
 
-
   const steps = stepContents.map((_, index) => ({
     label: `Step ${index + 1}`,
     content: (
@@ -162,20 +169,31 @@ export default function Home() {
       </div>
     )
   }));
-  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
 
-  const dialogOpen = () => {
-    setOpen(true);
+  const handleRowClick = (rowData: any) => {
+    router.push(`/assignments/viewAssignment/${rowData?.id}`);
   };
 
-  const handelViewAll = () => {
-    router.push("/classManagement?tab=Classes")
-  }
+  const assignment = useMemo(() => {
+    return (assignmentData || []).flatMap((assignment: any) => {
+      const students = assignment.students.split(',');
+      return students.map((student: string) => ({
+        id: assignment.id,
+        assignmentTitle: assignment.assignmentTitle,
+        subject: assignment.subject,
+        student: student.trim(),
+        material: assignment.material,
+        DateofSubmission: formattedDate(assignment.date),
+        type: "N/A",
+        status: "Pending",
+        download: <BsDownload color="gray" size={13} />
+      }));
+    });
+  }, [assignmentData]);
 
   return (
     <div className="pt-2 px-4 mt-5">
       <DialogComponent open={open} setOpen={setOpen} />
-
       <div className="grid grid-cols-1 lg:grid-cols-[70%_28%] gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
           <div className="flex flex-col h-auto md:h-24 lg:h-24">
@@ -191,7 +209,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           <div className="flex flex-col h-auto md:h-24 lg:h-24">
             <span className="text-[#565656] text-sm font-semibold mb-2">Class Management</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
@@ -246,7 +263,7 @@ export default function Home() {
 
         <div className="flex flex-col lg:flex-row gap-6 mt-6">
           <div className="flex flex-col gap-2 mx-4 lg:mx-10 mt-5">
-            <button className="bg-[#707070] w-full lg:w-44 py-2 px-4 rounded-2xl text-white text-sm flex" onClick={dialogOpen}>
+            <button className="bg-[#707070] w-full lg:w-44 py-2 px-4 rounded-2xl text-white text-sm flex" onClick={() => setOpen(true)}>
               Create new class <FiPlus className="mt-1 ml-2" color="white" />
             </button>
             <button className="bg-[#E2E2E2] w-full lg:w-44 py-2 px-4 rounded-2xl text-[#2A2A2A] text-sm shadow-lg border border-[#E2E2E2] flex justify-center items-center space-x-2 opacity-100">
@@ -279,7 +296,7 @@ export default function Home() {
               <span className="text-[#565656] text-xs">View All</span>
             </Link>
           </div>
-          <Table columns={dashBordTableColumns} data={dashBordTableData} includeCheckbox={false} border={"rounded-2xl"} />
+          <Table columns={dashBordTableColumns} data={assignment.slice(0, 7)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={handleRowClick} />
 
         </div>
         <div className="mt-8">
@@ -322,8 +339,8 @@ export default function Home() {
               <div className="flex flex-col md:flex-row items-center gap-6 justify-between">
                 <div className="flex justify-between items-center p-2" style={{ width: '180px', height: '150px' }}>
                   <CircularProgressbar
-                    value={percentage}
-                    text={`${percentage}%`}
+                    value={60}
+                    text={`${60}%`}
                     styles={buildStyles({
                       strokeLinecap: 'butt',
                       textSize: '16px',
@@ -365,24 +382,25 @@ export default function Home() {
           <div className="relative">
             <div className="flex justify-between mb-3">
               <span className="text-[#565656] text-sm font-semibold">Upcoming Classes</span>
-              <span className="text-xs text-[#565656] cursor-pointer" onClick={handelViewAll}>View All</span>
+              <span className="text-xs text-[#565656] cursor-pointer" onClick={() => router.push("/classManagement?tab=Classes")}>View All</span>
             </div>
-
             <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
               <div className="space-y-2">
                 {
                   upcomingClasses.length > 0 ?
                     <div>
                       {upcomingClasses?.slice(0, 3).map((item) => (
-                        <div key={item.id} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100">
+                        <div key={item.id} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100 mt-2">
                           <span className="text-[#565656] text-xs">{item?.title}</span>
                           <span className="text-[#565656] text-xs">{item?.classStartTime} - {item?.classEndTime}</span>
 
                         </div>
-                      ))}</div>
+                      ))}
+                    </div>
 
-                    : <div>
-                      <h1>N/A</h1>
+                    :
+                    <div className="flex items-center mt-auto justify-center h-44">
+                      <h1 className="text-buttonGray">There are no upcoming classes right now.</h1>
                     </div>
                 }
               </div>

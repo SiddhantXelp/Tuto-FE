@@ -143,7 +143,7 @@ const TimeTable: React.FC = () => {
   const [startDate, setStartDate] = useState<string>(moment().format('YYYY-MM-DD'));
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
 
-  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
+  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
 
   useEffect(() => {
     if (classesData) {

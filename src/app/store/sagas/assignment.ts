@@ -133,7 +133,7 @@ function* getAssignmentsEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setAssignments(null));
 
-        const response = yield call(getAssignments, action.token);
+        const response = yield call(getAssignments, action.token,action.page,action.limit);
         yield put(setAssignments(response));
 
         yield put(setAssignmentLoading(false));

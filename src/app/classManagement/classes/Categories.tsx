@@ -26,7 +26,7 @@ export const CategoriesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
-  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
+  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
   const GETClassData = useAppSelector((state: { classes: any }) => state.classes);
 
 

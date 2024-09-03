@@ -22,8 +22,6 @@ const MyFilesPage = () => {
     const createFolder = useAppSelector(state => state.assignment.setCreateFolder);
     const createFiles = useAppSelector(state => state?.assignment?.setCreateFiles);
     const deleteFolderResponse = useAppSelector(state => state.assignment.setDeleteFolders);
-
-    console.log(":::::::::::::myFiles", myFiles);
     const [id, setId] = useState<string | null>(null);
     const [previousId, setPreviousId] = useState<string | null>(null);
     const [openFolder, setOpenFolder] = useState(false);
@@ -86,6 +84,18 @@ const MyFilesPage = () => {
         setOpenFolder(true);
     };
 
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value.toLowerCase());
+    };
+    const filteredFiles = myFiles?.Files?.filter((file: any) =>
+        file.fileName.toLowerCase().includes(searchQuery)
+    ) || [];
+
+    const filteredChildren = myFiles?.Children?.filter((child: any) =>
+        child.title.toLowerCase().includes(searchQuery)
+    ) || [];
     return (
         <TabNavigator>
             {isLoading && <Spinner />}
@@ -99,11 +109,6 @@ const MyFilesPage = () => {
                                 {data.find(file => file.id === Number(id))?.totalFiles} files
                             </p>
                         </div>
-                        {/* <BsThreeDotsVertical
-                            size={20}
-                            color="grey"
-                            className="cursor-pointer hover:text-gray-600"
-                        /> */}
                     </div>
 
                     <div className="mt-4 md:mt-0 md:ml-4 w-full md:w-1/3 relative">
@@ -111,6 +116,7 @@ const MyFilesPage = () => {
                             type="search"
                             placeholder="Search"
                             className="w-full p-3 pr-10 border border-gray-300 rounded-[10rem] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onChange={handleSearchChange}
                         />
                         <div className="absolute inset-y-0 right-2 flex items-center pr-3">
                             <CiSearch className="text-gray-400" size={25} />
@@ -120,7 +126,7 @@ const MyFilesPage = () => {
 
                 <div className="p-4 md:p-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {myFiles?.Files?.map((subFile: any) => (
+                        {filteredFiles.map((subFile: any) => (
                             <SubFilecard
                                 key={subFile.id}
                                 data={subFile.fileName}
@@ -129,7 +135,7 @@ const MyFilesPage = () => {
                             />
                         ))}
 
-                        {myFiles?.Children?.map((subFile: any) => (
+                        {filteredChildren.map((subFile: any) => (
                             <SubFilecard
                                 key={subFile.id}
                                 data={subFile.title}
@@ -138,7 +144,6 @@ const MyFilesPage = () => {
                                 onClick={handleCardClick}
                             />
                         ))}
-
                     </div>
                 </div>
 

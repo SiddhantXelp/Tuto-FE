@@ -389,7 +389,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                         <button
                           key={item.id}
                           type="button"
-                          className={`rounded-md transition-colors duration-300 ease-in-out border-2 w-50 h-12 ${formData.typeMeeting.includes(item.name) ? 'bg-[#707070] text-white border-[#707070]' : 'bg-white text-[#707070] border-[#707070]'} hover:bg-[#505050] hover:text-white focus:outline-none border-[#707070]`}
+                          className={`rounded-md transition-colors duration-300 ease-in-out border w-50 h-12 ${formData.typeMeeting.includes(item.name) ? 'bg-[#707070] text-white border-[#707070]' : 'bg-white text-[#707070] border-[#707070]'} hover:bg-[#505050] hover:text-white focus:outline-none border-[#707070]`}
                           onClick={() => handleCheckboxChangeNew(item.name)}
                         >
                           <p className='text-base'>{item.name}</p>
@@ -407,20 +407,20 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                           value={formData.startDate || "DD-MM-YYY"}
                           onChange={handleDateChange}
                           placeholder='DD-MM-YYY'
-                          className="border border-buttonGray rounded-md w-full md:w-[150px] h-10"
+                          className="border border-buttonGray rounded-md w-full md:w-[150px] h-10 text-buttonGray text-sm pl-2"
                         />
                         <input
                           type="time"
                           value={formData.startTime || "00:00"}
                           onChange={handleStartTimeChange}
-                          className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2"
+                          className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2 text-buttonGray text-sm"
                         />
                         <span className="text-[#707070] text-[12px] md:text-[14px] mt-2">to</span>
                         <input
                           type="time"
                           value={formData.endTime || "00:00"}
                           onChange={handleEndTimeChange}
-                          className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2"
+                          className="border border-[#707070] rounded-md w-full md:w-[110px] h-10 bg-white p-2 text-buttonGray text-sm"
                         />
                       </div>
                       <div className="w-full md:w-1/3 mt-2 md:mt-0">

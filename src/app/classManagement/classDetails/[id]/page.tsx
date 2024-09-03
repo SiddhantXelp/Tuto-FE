@@ -69,7 +69,7 @@ const ClassDetails = () => {
         <TabNavigator>
             <StartClassDialog open={open} setOpen={setOpen} />
 
-            <div className="m-5  h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md mt-10 sm:h-full">
+            <div className="m-5  h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md mt-5 sm:h-full">
                 <div className="flex justify-between items-center border-b border-gray-300 pb-2 m-2">
                     <div className="relative flex flex-col justify-between p-4 mb-11 rounded-lg w-full max-w-[441px] h-[200px] sm:h-[250px] md:h-[200px]">
                         <div className="relative w-full h-full">

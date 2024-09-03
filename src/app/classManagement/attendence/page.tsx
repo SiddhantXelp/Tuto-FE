@@ -368,7 +368,7 @@ import moment from 'moment';
 const Attendance: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState('option1');
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
+  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
   const [tableData, setTableData] = useState([]);
 
   const formatTime = (time: string) => {

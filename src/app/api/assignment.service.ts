@@ -211,12 +211,12 @@ export const createAssignment = async (token: string, data: any) => {
 };
 
 
-export const getAssignments = async (token: string) => {
+export const getAssignments = async (token: string, page: string, limit: string) => {
     console.log('Get Assignment', token);
 
     try {
         const response = await axios.get(
-            apis.getAssignments,
+            apis.getAssignments(page, limit),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;

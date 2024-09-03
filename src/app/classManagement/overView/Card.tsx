@@ -17,7 +17,7 @@ const OverviewTabContent: React.FC = () => {
   const [month, setMonth] = useState("Weekly")
   const router = useRouter();
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
-  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.classes);
+  const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
 
   useEffect(() => {
     if (!open) {
@@ -84,7 +84,7 @@ const OverviewTabContent: React.FC = () => {
         </div>
 
         <div>
-          <div className="my-3 flex justify-between items-center">
+          <div className="flex justify-between items-center">
             <span className="text-sm text-[#565656] font-semibold">Schedule</span>
             {/* <div>
               <select className="p-2 border rounded-md bg-white" onChange={(e) => setMonth(e.target.value)}>
