@@ -412,7 +412,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
             </div>
           </div>
           <div className="flex-1 overflow-y-auto p-2">
-            {messagesReceived.map((msg) => (
+            {/* {messagesReceived.map((msg) => (
               <div key={msg.id} className={`flex ${msg.senderId === senderId ? 'justify-end' : 'justify-start'} mb-2`}>
                 <div
                   className={`w-full max-w-md p-2 md:p-3 rounded-lg ${msg.senderId === senderId ? 'bg-white text-black rounded-tr-none' : 'bg-white rounded-tl-none ml-2 text-black'}`}
@@ -440,7 +440,52 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
                   </div>
                 </div>
               </div>
+            ))} */}
+
+            {messagesReceived.map((msg) => (
+              <div key={msg.id} className={`flex ${msg.senderId === senderId ? 'justify-end' : 'justify-start'} mb-2`}>
+                <div className={`relative w-full max-w-md p-2 md:p-3 rounded-lg ${msg.senderId === senderId ? 'bg-white text-black' : 'bg-white ml-2 text-black'}`}>
+
+                  {msg.senderId !== senderId && (
+                    <div
+                      className="absolute -left-2 top-1 w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-r-[10px] border-r-white"
+                    ></div>
+                  )}
+
+                  {/* Triangle pointer for sent messages */}
+                  {msg.senderId === senderId && (
+                    <div
+                      className="absolute -right-2 top-1 w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[10px] border-l-white"
+                    ></div>
+                  )}
+
+                  <p className="text-sm md:text-sm break-words">{msg.content}</p>
+                  {msg.fileUrl && (
+                    <div className="mt-2">
+                      <img
+                        src={getFileIcon(msg.fileUrl)}
+                        alt="file icon"
+                        className="w-10 h-10 mr-2"
+                      />
+                      <a
+                        href={msg.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        View File
+                      </a>
+                    </div>
+                  )}
+                  <div className="flex justify-end">
+                    <span className="text-xs mt-1">
+                      {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                    </span>
+                  </div>
+                </div>
+              </div>
             ))}
+
 
             {/* {files.length > 0 && (
               <div className="flex justify-end mb-2 flex-wrap gap-3">

@@ -90,7 +90,7 @@ export const setCreateAssignment = (setCreateAssignments: any) => ({
     setCreateAssignments,
 });
 
-export const getAssignments = (token: string,page:string,limit:string) => ({
+export const getAssignments = (token: string, page: string, limit: string) => ({
     type: actionTypes.GET_ASSIGNMENTS,
     token,
     page,
@@ -114,6 +114,22 @@ export const setAssignmentById = (setAssignmentById: any) => ({
     type: actionTypes.SET_ASSIGNMENT_BY_ID,
     setAssignmentById,
 });
+
+
+export const getCompleteAssignment = (token: string, data: any, id: any) => ({
+    type: actionTypes.GET_COMPLETED_ASSIGNMENT,
+    token,
+    data,
+    id
+});
+
+
+export const setCompleteAssignment = (setCompletedAssignment: any) => ({
+    type: actionTypes.SET_COMPLETED_ASSIGNMENT,
+    setCompletedAssignment,
+});
+
+
 
 
 export const setAssignmentError = (error: any) => ({

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import TabNavigator from "@/app/TabNavigator/page";
 import { MdKeyboardArrowRight, MdDownload, MdKeyboardArrowLeft, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { BsPencilSquare, BsEraserFill } from "react-icons/bs";
@@ -9,17 +9,37 @@ import { CiText } from "react-icons/ci";
 import { RiEditBoxFill } from "react-icons/ri";
 import { useRouter, useParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getAssignmentById } from '@/app/store/actions/assignment';
+import { getAssignmentById, getCompleteAssignment, setCompleteAssignment } from '@/app/store/actions/assignment';
 import Spinner from "@/common/Spinner";
-import moment from 'moment';
+import CommonModel from "@/common/CommonModel";
+import Swal from 'sweetalert2';
+import { formatDate } from '@/common/DateAndTimeCommon';
 
 const MyFilesPage = () => {
+    const router = useRouter();
     const dispatch = useAppDispatch();
-    const getAssignmentResponse = useAppSelector(state => state.assignment.setAssignmentById?.assignment || []);
-    const isLoading = useAppSelector(state => state.assignment.loading);
+    const getAssignmentResponse = useAppSelector(state => state?.assignment?.setAssignmentById?.assignment || []);
+    const getCompletedAssignmentResponse = useAppSelector(state => state?.assignment?.setCompletedAssignment || []);
+    const isLoading = useAppSelector(state => state?.assignment?.loading);
+    const token = useAppSelector((state: { auth: any }) => state?.auth?.login?.token);
+    const [open, setOpen] = useState(false);
+    const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
     const { id } = useParams();
-    console.log(":::::::::::::::id", id);
-    const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+
+    const assignment = useMemo(() => {
+        return (assignmentData || [])
+            .flatMap((assignment: any) => {
+                const students = assignment.students.split(',');
+                return students.map((student: string) => ({
+                    id: assignment.id,
+                    status: assignment.status
+                }));
+            })
+            .filter((assignment: any) => assignment.status === 'pending');
+    }, [assignmentData]);
+
+    const currentIndex = assignment.findIndex((item: any) => item.id === id);
+    const nextAssignmentId = assignment.slice(currentIndex + 1).find((item: any) => item.id !== id)?.id || null;
 
     useEffect(() => {
         if (id) {
@@ -27,16 +47,65 @@ const MyFilesPage = () => {
         }
     }, [dispatch, token, id]);
 
-    const formatDate = (dateString: string) => {
-        return moment(dateString).format('DD-MM-YYYY');
+    const handelCompleteAssignment = () => {
+        const status = {
+            status: "completed"
+        }
+        dispatch(getCompleteAssignment(token, status, id));
     }
+
+    useEffect(() => {
+
+        if (getCompletedAssignmentResponse?.status) {
+            router.push("/assignments/subjects");
+            Swal.fire({
+                title: 'Success!',
+                text: 'Paper completed!',
+                icon: 'success',
+                confirmButtonText: 'Done'
+            });
+            dispatch(setCompleteAssignment(null));
+        }
+
+    }, [getCompletedAssignmentResponse?.status])
+
+
+    const handleNextClick = () => {
+        if (nextAssignmentId) {
+            router.push(`/assignments/viewAssignment/${nextAssignmentId}`);
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'No more assignments!',
+                icon: 'error',
+                confirmButtonText: 'ok'
+            });
+        }
+    };
 
     return (
         <TabNavigator>
             {
                 isLoading && <Spinner />
             }
-            <div className="p-4 md:p-8 bg-white rounded-xl m-2">
+            <CommonModel open={open} setOpen={setOpen}>
+                <button
+                    type="button"
+                    className="w-full bg-[#6D6D6D] text-white py-2 rounded"
+                    onClick={handelCompleteAssignment}
+                >
+                    Finish and exit
+                </button>
+                <h1 className='flex justify-center text-[#707070] m-3'>or</h1>
+                <button
+                    type="button"
+                    className="w-full bg-[#6D6D6D] text-white py-2 rounded"
+                    onClick={handleNextClick}
+                >
+                    Next paper
+                </button>
+            </CommonModel>
+            <div className="p-4 md:p-7 bg-white rounded-xl m-2">
                 <div className="flex flex-col md:flex-row gap-4 h-full">
                     <div className="w-full md:w-1/4 flex flex-col space-y-4">
 
@@ -188,8 +257,8 @@ const MyFilesPage = () => {
                                 />
                             </div>
 
-                            <div className="flex-1 text-center md:text-right">
-                                <button className="rounded-3xl bg-[#565656] text-white p-2 mt-4 md:mt-8 w-full md:w-48">
+                            <div className="flex-1 text-center md:text-right" onClick={() => setOpen(true)}>
+                                <button className="rounded-3xl bg-[#565656] text-white p-2 mt-4 md:mt-8 w-full md:w-44">
                                     Finish Paper
                                 </button>
                             </div>

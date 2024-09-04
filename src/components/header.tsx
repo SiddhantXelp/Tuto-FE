@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import useScroll from '@/hooks/use-scroll';
@@ -32,6 +32,8 @@ const Header: React.FC = () => {
     setOpen(true);
   };
 
+  const dropdownRef = useRef(null);
+
   const handleToggleDropdown = () => {
     setIsDropdownOpen(prevState => !prevState);
   };
@@ -43,6 +45,19 @@ const Header: React.FC = () => {
     dispatch(setLogin(null));
     router.push('/auth/Login');
   };
+
+  const handleClickOutside = (event: any) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
@@ -117,9 +132,9 @@ const Header: React.FC = () => {
                 )}
               </span>
             </button>
-
             {isDropdownOpen && (
               <div
+                ref={dropdownRef}
                 id="dropdownDivider"
                 className="z-10 absolute right-0 mt-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
               >

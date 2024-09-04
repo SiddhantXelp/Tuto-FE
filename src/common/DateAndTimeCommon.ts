@@ -9,6 +9,12 @@ export const formatTime = (time: string) => {
 export const formattedDate = (date: any) => date ? moment(date).format('MMMM Do YYYY') : "NA";
 
 
+//Convert to Date Like DD-MM-YYYY
+export const formatDate = (dateString: string) => {
+    return moment(dateString).format('DD-MM-YYYY');
+}
+
+
 const combinedDateTime = (scheduleDate: any, classStartTime: any) => moment(scheduleDate).format('YYYY-MM-DD') + ' ' + classStartTime;
 
 //Combine Time and Date

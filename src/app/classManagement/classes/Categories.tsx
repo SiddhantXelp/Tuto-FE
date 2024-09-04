@@ -27,9 +27,6 @@ export const CategoriesPage: React.FC = () => {
   const router = useRouter();
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
-  const GETClassData = useAppSelector((state: { classes: any }) => state.classes);
-
-
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -79,7 +76,7 @@ export const CategoriesPage: React.FC = () => {
         id: classData?.id,
         classTitle: classData?.title,
         subject: classData.subject.name,
-        student: "Raj",
+        student: "0",
         date: formattedDate(classData?.scheduleDate),
         time: `${formatTime(classData.classStartTime)} - ${formatTime(classData.classEndTime)}`,
         duration: calculateDuration(classData?.classStartTime, classData?.classEndTime),

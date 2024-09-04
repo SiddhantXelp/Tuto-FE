@@ -185,7 +185,7 @@ export default function Home() {
         material: assignment.material,
         DateofSubmission: formattedDate(assignment.date),
         type: "N/A",
-        status: "Pending",
+        status: assignment.status,
         download: <BsDownload color="gray" size={13} />
       }));
     });
@@ -384,13 +384,13 @@ export default function Home() {
               <span className="text-[#565656] text-sm font-semibold">Upcoming Classes</span>
               <span className="text-xs text-[#565656] cursor-pointer" onClick={() => router.push("/classManagement?tab=Classes")}>View All</span>
             </div>
-            <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
+            <div className="bg-white shadow-lg rounded-xl p-4 h-[13.5rem] overflow-auto">
               <div className="space-y-2">
                 {
                   upcomingClasses.length > 0 ?
                     <div>
                       {upcomingClasses?.slice(0, 3).map((item) => (
-                        <div key={item.id} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100 mt-2">
+                        <div key={item.id} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100 mb-1">
                           <span className="text-[#565656] text-xs">{item?.title}</span>
                           <span className="text-[#565656] text-xs">{item?.classStartTime} - {item?.classEndTime}</span>
 

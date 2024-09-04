@@ -1,9 +1,14 @@
+
+"use client"
+
 import Link from 'next/link';
 import React from 'react'
 import { GrAdd } from 'react-icons/gr';
 import TabNavigator from "../../../TabNavigator/page";
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const data = [
     {
       subject: 'Maths',
@@ -64,10 +69,10 @@ const page = () => {
         <div className='flex flex-row justify-between items-center '>
           <span className='text-[#565656] text-sm font-bold'>Subjects</span>
 
-          <div className='md:w-28  lg:w-48  h-10 bg-[#D1D1D1] border rounded-3xl mt-2 flex items-center justify-center lg:mr-5'>
-            <div className='flex flex-row items-center gap-1'>
+          <div className='md:w-28  lg:w-48  h-10 bg-[#D1D1D1] border rounded-3xl mt-2 flex items-center justify-center lg:mr-5 cursor-pointer' onClick={()=> router.push("/assignments/createAssignment/createNewAssignment")}>
+            <div className='flex flex-row items-center gap-1' >
               <p className='text-black sm:text-xs text-xs font-bold'>Create new assignment</p>
-              <GrAdd color='black' size={"13px"} className='font-bold'/>
+              <GrAdd color='black' size={"13px"} className='font-bold' />
             </div>
           </div>
         </div>

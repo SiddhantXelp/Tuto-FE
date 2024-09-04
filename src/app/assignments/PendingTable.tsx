@@ -16,7 +16,7 @@ const PendingTable = () => {
     if (token) {
       const page = "1";
       const assignmentLimit = "10"
-      dispatch(getAssignments(token,page,assignmentLimit));
+      dispatch(getAssignments(token, page, assignmentLimit));
     }
   }, [dispatch, token]);
 
@@ -25,20 +25,23 @@ const PendingTable = () => {
   };
 
   const assignment = useMemo(() => {
-    return (assignmentData || []).flatMap((assignment: any) => {
-      const students = assignment.students.split(',');
-      return students.map((student: string) => ({
-        id: assignment.id,
-        assignmentTitle: assignment.assignmentTitle,
-        subject: assignment.subject,
-        students: student.trim(),
-        material: assignment.material,
-        date: formattedDate(assignment.date),
-        questions: assignment.questions,
-        createdAt: formattedDate(assignment.createdAt),
-        updatedAt: formattedDate(assignment.updatedAt),
-      }));
-    });
+    return (assignmentData || [])
+      .flatMap((assignment: any) => {
+        const students = assignment.students.split(',');
+        return students.map((student: string) => ({
+          id: assignment.id,
+          assignmentTitle: assignment.assignmentTitle,
+          subject: assignment.subject,
+          students: student.trim(),
+          material: assignment.material,
+          date: formattedDate(assignment.date),
+          questions: assignment.questions,
+          createdAt: formattedDate(assignment.createdAt),
+          updatedAt: formattedDate(assignment.updatedAt),
+          status: assignment.status
+        }));
+      })
+      .filter((assignment: any) => assignment.status === 'pending');
   }, [assignmentData]);
 
   return (

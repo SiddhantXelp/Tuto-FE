@@ -2,8 +2,8 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes/assignment';
 
-import { getMyFiles, getMyFilesById, createFolder, createFiles, deleteFolders, deleteFiles, createAssignment, getAssignments, getAssignmentById } from '../../api/assignment.service';
-import { setMyFiles, setAssignmentError, setAssignmentLoading, setMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFolder, setDeleteFiles, setCreateAssignment, setAssignments, setAssignmentById } from '../actions/assignment';
+import { getMyFiles, getMyFilesById, createFolder, createFiles, deleteFolders, deleteFiles, createAssignment, getAssignments, getAssignmentById, completeAssignment } from '../../api/assignment.service';
+import { setMyFiles, setAssignmentError, setAssignmentLoading, setMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFolder, setDeleteFiles, setCreateAssignment, setAssignments, setAssignmentById, setCompleteAssignment } from '../actions/assignment';
 
 function* getMyFilesEffect(action: any): Generator<any, any, any> {
     // console.log('getAssignmentEffect......API CALLING', action);
@@ -133,7 +133,7 @@ function* getAssignmentsEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setAssignments(null));
 
-        const response = yield call(getAssignments, action.token,action.page,action.limit);
+        const response = yield call(getAssignments, action.token, action.page, action.limit);
         yield put(setAssignments(response));
 
         yield put(setAssignmentLoading(false));
@@ -161,6 +161,24 @@ function* getAssignmentByIdEffect(action: any): Generator<any, any, any> {
     }
 }
 
+
+function* getCompletedAssignmentEffect(action: any): Generator<any, any, any> {
+    try {
+        yield put(setAssignmentLoading(true));
+        yield put(setAssignmentError(''));
+        yield put(setCompleteAssignment(null));
+
+        const response = yield call(completeAssignment, action.token, action.data, action.id);
+        yield put(setCompleteAssignment(response));
+
+        yield put(setAssignmentLoading(false));
+    } catch (e: any) {
+        yield put(setAssignmentLoading(false));
+        yield put(setAssignmentError(e.response));
+    }
+}
+
+
 export function* AssignmentSaga() {
     yield takeEvery(actionTypes.GET_MY_FILES, getMyFilesEffect);
     yield takeEvery(actionTypes.GET_MY_FILES_BY_ID, getMyFilesBYIdEffect);
@@ -171,10 +189,7 @@ export function* AssignmentSaga() {
     yield takeEvery(actionTypes.GET_CREATE_ASSIGNMENT, getCreateAssignmentEffect);
     yield takeEvery(actionTypes.GET_ASSIGNMENTS, getAssignmentsEffect);
     yield takeEvery(actionTypes.GET_ASSIGNMENT_BY_ID, getAssignmentByIdEffect);
-
-
-
-
+    yield takeEvery(actionTypes.GET_COMPLETED_ASSIGNMENT, getCompletedAssignmentEffect);
 
 
 
