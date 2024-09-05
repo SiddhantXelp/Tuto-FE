@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { FaChevronDown } from 'react-icons/fa'; // Import your custom icon
+import { FaChevronDown } from 'react-icons/fa';
 
 interface Option {
     id: string;

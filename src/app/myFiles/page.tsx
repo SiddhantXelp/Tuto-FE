@@ -28,12 +28,9 @@ const MyFilesPage = () => {
   const createFolder = useAppSelector(state => state.assignment.setCreateFolder);
   const deleteFolderResponse = useAppSelector(state => state.assignment.setDeleteFolders);
 
-  console.log(">>>>>>>>>>>>>>>>>>>deleteFolderResponse", deleteFolderResponse)
-
   useEffect(() => {
     if (token) {
       dispatch(getMyFiles(token))
-      console.log("Calling Api First Time")
     }
 
   }, [dispatch, token]);
@@ -41,8 +38,6 @@ const MyFilesPage = () => {
   useEffect(() => {
     if (createFolder || deleteFolderResponse) {
       dispatch(getMyFiles(token));
-      console.log("Calling Api Secound Time")
-
       dispatch(setCreateFolder(null));
 
     }

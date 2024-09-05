@@ -5,12 +5,14 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getAssignments } from '@/app/store/actions/assignment';
 import { useRouter } from 'next/navigation';
 import { formattedDate } from "@/common/DateAndTimeCommon";
+import Spinner from '@/common/Spinner';
 
 const CompletedTable = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
+  const assignmentLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
 
   useEffect(() => {
     if (token) {
@@ -46,6 +48,9 @@ const CompletedTable = () => {
 
   return (
     <div className='h-full'>
+      {
+        assignmentLoading && <Spinner />
+      }
       <Table
         columns={SubmitTableColumns}
         data={assignment}

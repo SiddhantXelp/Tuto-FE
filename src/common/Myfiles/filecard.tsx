@@ -22,18 +22,22 @@ const Card: React.FC<CardProps> = ({ data }) => {
         setIsDropdownOpen(prevState => !prevState);
     };
 
-    const handleCopyLink = () => {
+    const handleCopyLink = (e: React.MouseEvent) => {
+        e.stopPropagation();
         alert(data.fileLink);
         setIsDropdownOpen(false);
     };
 
     const handleCardClick = () => {
-        router.push(`/myFiles/SubFiles/${data.id}`);
+        if (!isDropdownOpen) {
+            router.push(`/myFiles/SubFiles/${data.id}`);
+        }
     };
 
     const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
-    
-    const handelDelete = () => {
+
+    const handleDelete = (e: React.MouseEvent) => {
+        e.stopPropagation();
         dispatch(getDeleteFolder(token, String(data?.id)));
     };
 
@@ -65,64 +69,75 @@ const Card: React.FC<CardProps> = ({ data }) => {
                         onClick={handleToggleDropdown}
                         id="dropdownDividerButton"
                     />
-                    {isDropdownOpen && (
-                        <div
-                            id="dropdownDivider"
-                            className="absolute right-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-lg z-10"
-                        >
-                            <ul
-                                className="py-2 text-sm text-gray-700"
-                                aria-labelledby="dropdownDividerButton"
-                            >
-                                <li>
-                                    <button
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                        onClick={() => console.log('Share clicked')}
-                                    >
-                                        Share
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                        onClick={handleCopyLink}
-                                    >
-                                        Copy link
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                        onClick={() => console.log('Rename clicked')}
-                                    >
-                                        Rename
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                        onClick={() => console.log('Download clicked')}
-                                    >
-                                        Download
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                        onClick={handelDelete}
-                                    >
-                                        Delete
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    )}
                 </div>
             </div>
 
-            <div className="mt-auto" >
+            <div className="mt-auto">
                 <h2 className="text-lg font-normal text-[#565656]">{data.title}</h2>
             </div>
+
+            {isDropdownOpen && (
+                <div
+                    id="dropdownDivider"
+                    className="absolute right-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-lg z-10"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <ul
+                        className="py-2 text-sm text-gray-700"
+                        aria-labelledby="dropdownDividerButton"
+                    >
+                        <li>
+                            <button
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log('Share clicked');
+                                }}
+                            >
+                                Share
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={handleCopyLink}
+                            >
+                                Copy link
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log('Rename clicked');
+                                }}
+                            >
+                                Rename
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log('Download clicked');
+                                }}
+                            >
+                                Download
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={handleDelete}
+                            >
+                                Delete
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };

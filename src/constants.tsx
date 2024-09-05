@@ -5,13 +5,13 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: 'Dashboard',
     path: '/',
-    icon: <Icon icon="material-symbols:dashboard" width="24" height="24" color='gray' />,
+    icon: <Icon icon="material-symbols:dashboard" width="20" height="20" color='gray' />,
     activePaths: ['/dashboard', '/dashboard/overview']
   },
   {
     title: 'Class Management',
     path: '/classManagement',
-    icon: <Icon icon="ic:baseline-class" width="24" height="24" color='gray' />,
+    icon: <Icon icon="ic:baseline-class" width="20" height="20" color='gray' />,
     activePaths: ['/classManagement']
 
   },

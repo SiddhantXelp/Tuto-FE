@@ -7,9 +7,8 @@ export const DISCLOSURE_CANCEL = 'cancel';
 
 
 export const postSignup = async (token: string, data: any) => {
-    console.log('Data:', data);
     try {
-        const response = await axios.post(  
+        const response = await axios.post(
             apis.signup,
             data,
             {
@@ -29,7 +28,6 @@ export const postSignup = async (token: string, data: any) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('SignupERROR......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -38,7 +36,6 @@ export const postSignup = async (token: string, data: any) => {
 
 
 export const login = async (data: any) => {
-    console.log('Data:', data);
     try {
         const response = await axios.post(
             apis.login,
@@ -60,7 +57,6 @@ export const login = async (data: any) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('SignupERROR......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;

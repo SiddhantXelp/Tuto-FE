@@ -6,8 +6,6 @@ let cancelAuth: Canceler;
 export const DISCLOSURE_CANCEL = 'cancel';
 
 export const createPackage = async (token: string, data: any) => {
-    console.log('getClasses', token);
-
     try {
         const response = await axios.post(
             apis.createPackage,
@@ -29,7 +27,6 @@ export const createPackage = async (token: string, data: any) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('classes......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -39,8 +36,6 @@ export const createPackage = async (token: string, data: any) => {
 
 
 export const getStudent = async (token: string, page: string, limit: string) => {
-    console.log('getStudents', token);
-
     try {
         const response = await axios.get(
             apis.getStudents(page, limit),
@@ -54,7 +49,6 @@ export const getStudent = async (token: string, page: string, limit: string) => 
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('getStudents......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;

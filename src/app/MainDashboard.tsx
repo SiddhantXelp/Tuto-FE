@@ -21,9 +21,10 @@ import { GoDotFill } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getAssignments } from "./store/actions/assignment";
-import { formattedDate } from "@/common/DateAndTimeCommon";
+import { formattedDate, formatShortWeekday, currentDate } from "@/common/DateAndTimeCommon";
 import { BsDownload } from "react-icons/bs";
-
+import Spinner from "@/common/Spinner";
+import { steps } from "@/common/CommonDesign";
 
 interface UserInfo {
   name: string;
@@ -57,14 +58,18 @@ export default function Home() {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(1);
   const [open, setOpen] = useState(false);
+  //Loading Variables
+  const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
+  const studentLoading = useAppSelector((state: { student: any }) => state.student.loading);
+  const assignmentLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
+  //Data Variables
   const viewClassData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data || []);
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
   const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
-
-  const now: Date = new Date();
 
   useEffect(() => {
   }, [viewClassData]);
@@ -78,23 +83,20 @@ export default function Home() {
   let previousClass: ClassData | null = null;
   let nextClass: ClassData | null = null;
   const upcomingClasses: ClassData[] = [];
-  const sevenDaysLater: Date = new Date(now);
-  sevenDaysLater.setDate(now.getDate() + 7);
+  const sevenDaysLater: Date = new Date(currentDate);
+  sevenDaysLater.setDate(currentDate.getDate() + 7);
 
   const upcomingClassesInNext7Days = viewClassData.filter((cls: ClassData) => {
     const classStartDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classStartTime}:00`);
-    return classStartDateTime > now && classStartDateTime <= sevenDaysLater;
+    return classStartDateTime > currentDate && classStartDateTime <= sevenDaysLater;
   });
-
-  const upcomingClassCount = upcomingClassesInNext7Days.length || 0;
 
   for (let cls of viewClassData) {
     const classStartDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classStartTime}:00`);
     const classEndDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classEndTime}:00`);
-
-    if (classEndDateTime <= now) {
+    if (classEndDateTime <= currentDate) {
       previousClass = cls;
-    } else if (classStartDateTime > now) {
+    } else if (classStartDateTime > currentDate) {
       if (!nextClass) {
         nextClass = cls;
       } else {
@@ -112,7 +114,6 @@ export default function Home() {
   const previousClassName = previousClass ? previousClass.title : "N/A";
   const nextClassName = nextClass ? nextClass.title : "N/A";
 
-
   useEffect(() => {
     if (!open) {
       const page = "1";
@@ -125,54 +126,12 @@ export default function Home() {
 
   }, [dispatch, open, memberAuthToken])
 
-
   useEffect(() => {
     const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo")
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
     }
   }, []);
-
-  const formatShortWeekday = (locale: any, date: any) => {
-    const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    return weekdays[date.getDay()];
-  };
-
-  const stepContents = [
-    <div key="step1" className="bg-white shadow-md rounded-lg border border-gray-300 p-4 mt-0">
-      <div className="flex flex-col gap-2">
-        <span className="text-gray-800 text-sm font-semibold">Meeting with Mr. Mishra</span>
-        <span className="text-gray-600 text-xs">At 07:00pm - 08:00pm, Friday Aug 23, 2023</span>
-      </div>
-    </div>,
-    <div key="step2" className="bg-white shadow-md rounded-lg border border-gray-300 p-4 mt-3">
-      <div className="flex flex-col gap-2">
-        <span className="text-gray-800 text-sm font-semibold">Meeting with Mr. Mishra</span>
-        <span className="text-gray-600 text-xs">At 09:00pm - 10:00pm, Friday Aug 23, 2023</span>
-      </div>
-    </div>,
-    <div key="step3" className="bg-white shadow-md rounded-lg border border-gray-300 p-4 mt-3">
-      <div className="flex flex-col gap-2">
-        <span className="text-gray-800 text-sm font-semibold">Content for Step 3</span>
-        <span className="text-gray-600 text-xs">Additional details or content for step 3 go here.</span>
-      </div>
-    </div>
-  ];
-
-  const steps = stepContents.map((_, index) => ({
-    label: `Step ${index + 1}`,
-    content: (
-      <div>
-        {stepContents.slice(0, index + 1).map((content, contentIndex) => (
-          <div key={contentIndex}>{content}</div>
-        ))}
-      </div>
-    )
-  }));
-
-  const handleRowClick = (rowData: any) => {
-    router.push(`/assignments/viewAssignment/${rowData?.id}`);
-  };
 
   const assignment = useMemo(() => {
     return (assignmentData || []).flatMap((assignment: any) => {
@@ -187,12 +146,17 @@ export default function Home() {
         type: "N/A",
         status: assignment.status,
         download: <BsDownload color="gray" size={13} />
-      }));
+      }))
+        .filter((assignment: any) => assignment.status === 'completed')
+
     });
   }, [assignmentData]);
 
   return (
     <div className="pt-2 px-4 mt-5">
+      {
+        (classLoading || studentLoading || assignmentLoading) && <Spinner />
+      }
       <DialogComponent open={open} setOpen={setOpen} />
       <div className="grid grid-cols-1 lg:grid-cols-[70%_28%] gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
@@ -213,7 +177,7 @@ export default function Home() {
             <span className="text-[#565656] text-sm font-semibold mb-2">Class Management</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex-1">
-                <div className="text-[#565656] text-sm break-words font-semibold">{upcomingClassCount} classes scheduled for next 7 days</div>
+                <div className="text-[#565656] text-sm break-words font-semibold">{upcomingClassesInNext7Days.length || 0} classes scheduled for next 7 days</div>
                 <div className="text-[#565656] text-sm">2 classes available</div>
 
                 <div className="text-[#565656] text-sm flex justify-end items-center mb-2">
@@ -296,13 +260,13 @@ export default function Home() {
               <span className="text-[#565656] text-xs">View All</span>
             </Link>
           </div>
-          <Table columns={dashBordTableColumns} data={assignment.slice(0, 7)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={handleRowClick} />
+          <Table columns={dashBordTableColumns} data={assignment.slice(0, 7)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.id}`)} />
 
         </div>
         <div className="mt-8">
-          <div className="bg-white shadow-2xl p-4 rounded-lg md:w-[384px] md:h-[367px]">
+          <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] md:h-[367px]">
             <Calendar
-              value={now}
+              value={currentDate}
               locale="en-US"
               showNavigation={false}
               formatShortWeekday={formatShortWeekday}
@@ -386,23 +350,17 @@ export default function Home() {
             </div>
             <div className="bg-white shadow-lg rounded-xl p-4 h-[13.5rem] overflow-auto">
               <div className="space-y-2">
-                {
-                  upcomingClasses.length > 0 ?
-                    <div>
-                      {upcomingClasses?.slice(0, 3).map((item) => (
-                        <div key={item.id} className="flex flex-col gap-1  h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100 mb-1">
-                          <span className="text-[#565656] text-xs">{item?.title}</span>
-                          <span className="text-[#565656] text-xs">{item?.classStartTime} - {item?.classEndTime}</span>
-
-                        </div>
-                      ))}
+                {upcomingClasses.length > 0 ? (
+                  upcomingClasses.slice(0, 3).map((item) => (
+                    <div key={item.id} className="flex flex-col gap-1 h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100 mb-1">
+                      <span className="text-[#565656] text-xs">{item?.title}</span>
+                      <span className="text-[#565656] text-xs">{item?.classStartTime} - {item?.classEndTime}</span>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center text-[#565656] text-xs">No upcoming classes</div>
+                )}
 
-                    :
-                    <div className="flex items-center mt-auto justify-center h-44">
-                      <h1 className="text-buttonGray">There are no upcoming classes right now.</h1>
-                    </div>
-                }
               </div>
             </div>
           </div>

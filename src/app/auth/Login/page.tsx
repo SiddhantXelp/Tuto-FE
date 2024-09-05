@@ -6,15 +6,16 @@ import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
 import Spinner from "../../../common/Spinner";
-import { getLogin, setLogin } from "../../store/actions/auth";
+import { getLogin } from "../../store/actions/auth";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
 const Login: React.FC = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
-
     const [showLogin, setLoginGoogle] = useState(true);
     const [isLoading, setisLoading] = useState(false);
     const [username, setUsername] = useState("");
@@ -91,39 +92,32 @@ const Login: React.FC = () => {
         }
 
         dispatch(getLogin(data));
-
-        console.log("datadatadatadata", data);
     }
 
 
     useEffect(() => {
         if (responsesLogin) {
-            // const userData = {
-            //     responsesLogin
-            // };
-
             console.log("responsesLogin", responsesLogin);
             const userData = {
                 name: responsesLogin?.user?.fullName,
                 email: responsesLogin?.user?.email,
                 picture: responsesLogin?.user?.picture
             };
-
             localStorage.setItem('user', JSON.stringify(userData));
-
+            // const token = responsesLogin?.token
+            // if (token) {
+            //     document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=${60 * 60 * 24};`;
+            // }
             router.push('/');
-            // dispatch(setLogin(null));
 
         }
-    }, [responsesLogin]);
+    }, [responsesLogin, router]);
+
     const isError = useAppSelector((state: { auth: any }) => state.auth.error);
 
     useEffect(() => {
         if (isError) {
-            console.log(":::::::::::::::isError", isError);
-
             toast.error(isError)
-
         }
 
     }, [isError])

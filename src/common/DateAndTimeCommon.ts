@@ -1,5 +1,9 @@
 import moment from "moment";
 
+//CurrentDate
+export const currentDate: Date = new Date();
+
+
 //Convert Time to AM/PM
 export const formatTime = (time: string) => {
     return time ? moment(time, 'HH:mm').format('hh:mm A') : 'NA';
@@ -13,6 +17,11 @@ export const formattedDate = (date: any) => date ? moment(date).format('MMMM Do 
 export const formatDate = (dateString: string) => {
     return moment(dateString).format('DD-MM-YYYY');
 }
+
+export const formatShortWeekday = (locale: any, date: any) => {
+    const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    return weekdays[date.getDay()];
+};
 
 
 const combinedDateTime = (scheduleDate: any, classStartTime: any) => moment(scheduleDate).format('YYYY-MM-DD') + ' ' + classStartTime;

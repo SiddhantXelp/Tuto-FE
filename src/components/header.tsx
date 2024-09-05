@@ -9,8 +9,8 @@ import { PiStepsFill } from "react-icons/pi";
 import DialogComponent from '@/common/Card';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { getLogin, setLogin } from "@/app/store/actions/auth";
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { setLogin, setSignup } from "@/app/store/actions/auth";
+import { useAppDispatch } from '@/app/store/hooks';
 import NotificationDrawer from '@/app/notifications/page';
 
 interface UserInfo {
@@ -39,10 +39,12 @@ const Header: React.FC = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logged out');
+    // console.log('Logged out');
+    // document.cookie = 'token=; path=/; max-age=0;';
     localStorage.removeItem('userInfo');
     localStorage.removeItem('user');
     dispatch(setLogin(null));
+    dispatch(setSignup(null))
     router.push('/auth/Login');
   };
 

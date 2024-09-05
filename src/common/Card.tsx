@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxes';
 import InputMain from './InputMain';
-import SearchComponent from '@/common/SearchComponent';
 import SelectMain from './SelectMain';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getStudentGroup, getCreateclass, setCreateClasses } from '@/app/store/actions/classes';
@@ -375,7 +374,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       id=""
                     />
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-2">
                     <CustomDropDown
                       label="Select Subject"
                       name="selectedSubject"
@@ -385,7 +384,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       onChange={(e) => handleChange({ target: { name: 'subject', value: e.target.value } })}
                     />
                   </div>
-                  <h1 className='flex justify-end text-blue-300' onClick={() => setShowNewContent(true)}>+ Add Student</h1>
+                  <div className='flex justify-end cursor-pointer' onClick={() => setShowNewContent(true)}><span className='text-[#6282FF] underline text-sm'>+ Add Student</span> </div>
                   <div className="mb-4">
                     {/* <div className="w-full md:w-1/2"> */}
                     <CustomDropDown
@@ -431,7 +430,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                           className={`rounded-md transition-colors duration-300 ease-in-out border w-50 h-12 ${formData.typeMeeting.includes(item.name) ? 'bg-[#707070] text-white border-[#707070]' : 'bg-white text-[#707070] border-[#707070]'} hover:bg-[#505050] hover:text-white focus:outline-none border-[#707070]`}
                           onClick={() => handleCheckboxChangeNew(item.name)}
                         >
-                          <p className='text-base'>{item.name}</p>
+                          <p className='text-sm'>{item.name}</p>
                         </button>
                       ))}
                     </div>

@@ -7,7 +7,6 @@ export const DISCLOSURE_CANCEL = 'cancel';
 
 
 export const getMyFiles = async (token: string) => {
-    console.log('GetFiles', token);
 
     try {
         const response = await axios.get(
@@ -22,7 +21,6 @@ export const getMyFiles = async (token: string) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('Students......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -45,7 +43,6 @@ export const getMyFilesById = async (token: string, id: string) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('Students......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -53,7 +50,6 @@ export const getMyFilesById = async (token: string, id: string) => {
 };
 
 export const createFolder = async (token: string, data: any) => {
-    console.log('createFolder:', data);
     try {
         const response = await axios.post(
             apis.createFolder,
@@ -75,7 +71,6 @@ export const createFolder = async (token: string, data: any) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('createFolderERRROOORRR......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -85,7 +80,6 @@ export const createFolder = async (token: string, data: any) => {
 
 
 export const createFiles = async (token: string, data: any) => {
-    console.log('createFiles:', data);
     try {
         const response = await axios.post(
             apis.createFiles,
@@ -107,7 +101,6 @@ export const createFiles = async (token: string, data: any) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('createFilesRRROOORRR......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -118,7 +111,6 @@ export const createFiles = async (token: string, data: any) => {
 
 
 export const deleteFolders = async (token: string, id: any) => {
-    console.log('createFiles:', id);
     try {
         const response = await axios.delete(
             apis.deleteFolder(id),
@@ -135,12 +127,9 @@ export const deleteFolders = async (token: string, id: any) => {
                 },
             },
         );
-        console.log(":>>>>>>>>>>>>:response", response);
-
         return response;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('createFilesRRROOORRR......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -151,7 +140,6 @@ export const deleteFolders = async (token: string, id: any) => {
 
 
 export const deleteFiles = async (token: string, id: any) => {
-    console.log('createFiles:', id);
     try {
         const response = await axios.delete(
             apis.deleteFiles(id),
@@ -172,7 +160,6 @@ export const deleteFiles = async (token: string, id: any) => {
         return response;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('createFilesRRROOORRR......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -203,7 +190,6 @@ export const createAssignment = async (token: string, data: any) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('createAssignmentERRROOORRR......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -212,8 +198,6 @@ export const createAssignment = async (token: string, data: any) => {
 
 
 export const getAssignments = async (token: string, page: string, limit: string) => {
-    console.log('Get Assignment', token);
-
     try {
         const response = await axios.get(
             apis.getAssignments(page, limit),
@@ -227,7 +211,6 @@ export const getAssignments = async (token: string, page: string, limit: string)
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('getAssignments......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;
@@ -252,7 +235,6 @@ export const getAssignmentById = async (token: string, id: string) => {
         return response.data;
     } catch (e) {
         if (axios.isCancel(e)) {
-            console.log('Students......', e);
             throw new Error(DISCLOSURE_CANCEL);
         }
         throw e;

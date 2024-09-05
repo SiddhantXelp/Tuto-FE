@@ -10,8 +10,6 @@ export const DISCLOSURE_CANCEL = 'cancel';
 
 
 export const getClasses = async (token: string) => {
-  console.log('getClasses', token);
-
   try {
     const response = await axios.get(
       apis.getClasses,
@@ -20,20 +18,12 @@ export const getClasses = async (token: string) => {
         cancelToken: new CancelToken(c => {
           cancelAuth = c;
         }),
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        //   'User-Agent': 'PostmanRuntime/7.36.1',
-        //   Accept: '/',
-        //   'Accept-Encoding': 'gzip, deflate, br',
-        //   Connection: 'keep-alive',
-        // },
       },
     );
 
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('classes......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;
@@ -41,7 +31,6 @@ export const getClasses = async (token: string) => {
 };
 
 export const createClass = async (token: string, data: any) => {
-  console.log('Data:', data);
   try {
     const response = await axios.post(
       apis.createClass,
@@ -63,7 +52,6 @@ export const createClass = async (token: string, data: any) => {
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('SignupERROR......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;
@@ -72,8 +60,6 @@ export const createClass = async (token: string, data: any) => {
 
 
 export const getStudentGroup = async (token: string) => {
-  console.log('getClasses', token);
-
   try {
     const response = await axios.get(
       apis.getStudentGroup,
@@ -88,7 +74,6 @@ export const getStudentGroup = async (token: string) => {
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('classes......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;
@@ -97,8 +82,6 @@ export const getStudentGroup = async (token: string) => {
 
 
 export const getClassesById = async (token: string, id: string) => {
-  console.log('getClasses', token);
-
   try {
     const response = await axios.get(
       apis.getClassId(id),
@@ -107,20 +90,13 @@ export const getClassesById = async (token: string, id: string) => {
         cancelToken: new CancelToken(c => {
           cancelAuth = c;
         }),
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        //   'User-Agent': 'PostmanRuntime/7.36.1',
-        //   Accept: '/',
-        //   'Accept-Encoding': 'gzip, deflate, br',
-        //   Connection: 'keep-alive',
-        // },
+
       },
     );
 
     return response.data;
   } catch (e) {
     if (axios.isCancel(e)) {
-      console.log('classes......', e);
       throw new Error(DISCLOSURE_CANCEL);
     }
     throw e;

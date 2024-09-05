@@ -14,8 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const Signup: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,14 +23,11 @@ const Signup: React.FC = () => {
   const responsesignup = useAppSelector((state: { auth: any }) => state.auth.signupData);
   const isLoading = useAppSelector(state => state.auth.loading);
 
-  console.log(">>>>>>>>>>>>>>>>>>>>.responsesignup", responsesignup);
-
   useEffect(() => {
     const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
 
-
     if (storedUserInfo) {
-      router.push('/');
+      router.push('/auth/Login');
     }
   }, [router]);
 
@@ -134,22 +129,6 @@ const Signup: React.FC = () => {
   });
 
   const handleSubmit = () => {
-
-    // if (confirmPassword !== password) {
-    //   alert("Password Not Matched");
-    //   return;
-    // }
-
-    // const data = {
-    //   username: username,
-    //   email: email,
-    //   phoneNumber: 1234567890,
-    //   password: password,
-    //   roleId: "046294f6-0555-4f87-9562-da798b09ec23"
-    // }
-
-    // dispatch(getSignup(memberAuthToken, data));
-
     if (validateForm()) {
       const data = {
         username,
@@ -171,10 +150,16 @@ const Signup: React.FC = () => {
         responsesignup
       };
 
-      localStorage.setItem('user', JSON.stringify(userData));
+      // localStorage.setItem('user', JSON.stringify(userData));
 
-      router.push('/');
-      dispatch(setSignup(null));
+      // router.push('/');
+      // dispatch(setSignup(null));
+      // const token = responsesignup?.token
+      // if (token) {
+      //   document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=${60 * 60 * 24};`;
+      // }
+      router.push('/auth/Login');
+      toast.success("User Has been Created Successfully")
 
     }
   }, [responsesignup]);

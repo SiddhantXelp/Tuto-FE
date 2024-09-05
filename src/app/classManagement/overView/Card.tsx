@@ -10,6 +10,8 @@ import StartClassDialog from "./StartClass";
 import { MdModeEdit } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import { formatTime, formattedDate } from "@/common/DateAndTimeCommon";
+import Spinner from "@/common/Spinner";
+
 const OverviewTabContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
@@ -18,6 +20,7 @@ const OverviewTabContent: React.FC = () => {
   const router = useRouter();
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
+  const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
 
   useEffect(() => {
     if (!open) {
@@ -27,7 +30,9 @@ const OverviewTabContent: React.FC = () => {
 
   return (
     <>
-
+      {
+        classLoading && <Spinner />
+      }
       <div className="px-4">
         <DialogComponent open={open} setOpen={setOpen} />
         <StartClassDialog open={openStart} setOpen={setOpenStart} />
