@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useMemo, Suspense, lazy } from 'react';
+import React, { useEffect, useMemo, Suspense, lazy ,useCallback} from 'react';
 import { GrAdd } from "react-icons/gr";
 import Link from 'next/link';
 import { recentStudentColumns, cardData } from './data';
@@ -9,12 +9,12 @@ import { getStudents } from '@/app/store/actions/student';
 import dynamic from 'next/dynamic';
 import Spinner from '@/common/Spinner';
 
-const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
+const TabNavigator = dynamic(() => import("../TabNavigator/page"),{
   loading: () => <Spinner />,
   ssr: false,
 });
 
-const Table = dynamic(() => import("@/components/table"), {
+const Table = dynamic(() => import("@/components/table"),{
   loading: () => <Spinner />,
   ssr: false,
 });
@@ -35,13 +35,20 @@ const Student: React.FC = () => {
     }
   }, [dispatch, token]);
 
-  const handleClick = (index: number) => {
+  // const handleClick = (index: number) => {
+  //   if (index === 0) {
+  //     router.push('/SubjectsBasedTable');
+  //   } else if (index === 2) {
+  //     router.push('/groupBasedTable');
+  //   }
+  // };
+  const handleClick = useCallback((index: number) => {
     if (index === 0) {
       router.push('/SubjectsBasedTable');
     } else if (index === 2) {
       router.push('/groupBasedTable');
     }
-  };
+  }, [router]);
 
   const processedStudentData = useMemo(() =>
     (studentData?.students || []).map((student: any) => ({

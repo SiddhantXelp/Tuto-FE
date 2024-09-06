@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import InputWithIcon from '@/common/InputWithIcon';
 import { RxCross2 } from "react-icons/rx";
-import SelectWithCheckboxes from '@/common/SelectWithCheckboxesFull';
-import TabNavigator from "../../TabNavigator/page";
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import SelectMain from '@/common/SelectMain';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getCreateStudentPackage, setCreateStudentPackages } from "@/app/store/actions/student";
 import { useRouter } from 'next/navigation';
 import Spinner from "../../../common/Spinner"
 import { toast } from 'react-toastify';
+
+const InputWithIcon = React.lazy(() => import('@/common/InputWithIcon'));
+const SelectWithCheckboxes = React.lazy(() => import('@/common/SelectWithCheckboxesFull'));
+const TabNavigator = React.lazy(() => import('../../TabNavigator/page'));
+const SelectMain = React.lazy(() => import('@/common/SelectMain'));
+
 
 const CreatePackage: React.FC = () => {
   const params = useParams();

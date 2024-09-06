@@ -1,9 +1,10 @@
 "use client";
-import SearchComponent from '@/common/SearchComponent';
-import Table from '@/components/table';
 import { allStudentsColumns, allStudentsData } from './leastAttendanceData';
 import React from 'react';
 import { FaFilter } from "react-icons/fa";
+const SearchComponent = React.lazy(() => import('@/common/SearchComponent'));
+const Table = React.lazy(() => import('@/components/table'));
+
 
 const SubjectsBasedTable = () => {
 
