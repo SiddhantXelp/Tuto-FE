@@ -239,8 +239,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
         icon: 'success',
         confirmButtonText: 'Done'
       });
-      dispatch(setCreateClasses(null))
-
+      dispatch(setCreateClasses(null));
       setOpen(false)
 
     }
@@ -374,17 +373,17 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       id=""
                     />
                   </div>
-                  <div className="mb-2">
+                  <div className="mb-4">
                     <CustomDropDown
                       label="Select Subject"
-                      name="selectedSubject"
-                      lablename=""
+                      name=""
+                      lablename="Select Subject"
                       options={transformedSubjectOptions}
                       value={String(formData.subject)}
                       onChange={(e) => handleChange({ target: { name: 'subject', value: e.target.value } })}
                     />
                   </div>
-                  <div className='flex justify-end cursor-pointer' onClick={() => setShowNewContent(true)}><span className='text-[#6282FF] underline text-sm'>+ Add Student</span> </div>
+                  {/* <div className='flex justify-end cursor-pointer' onClick={() => setShowNewContent(true)}><span className='text-[#6282FF] underline text-sm'>+ Add Student</span> </div> */}
                   <div className="mb-4">
                     {/* <div className="w-full md:w-1/2"> */}
                     <CustomDropDown

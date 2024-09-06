@@ -268,7 +268,7 @@ const CreatePackage: React.FC = () => {
               {buttons.map((item) => (
                 <button
                   key={item.id}
-                  className={`transition-colors duration-300 ease-in-out border-2 w-50 h-12 rounded-md ${formData.selectedDays.includes(item.name)
+                  className={`transition-colors duration-300 ease-in-out border w-50 h-12 rounded-md ${formData.selectedDays.includes(item.name)
                     ? 'bg-[#707070] text-white border-[#707070]'
                     : 'bg-white text-[#707070] border-[#707070]'
                     } hover:bg-[#505050] hover:text-white focus:outline-none`}
@@ -287,7 +287,7 @@ const CreatePackage: React.FC = () => {
                 {PricingButtons.map((item) => (
                   <React.Fragment key={item.id}>
                     <button
-                      className={`transition-colors duration-300 ease-in-out border-2 w-20 h-10 rounded-md ${selectedPricing === item.name
+                      className={`transition-colors duration-300 ease-in-out border w-20 h-10 rounded-md ${selectedPricing === item.name
                         ? 'bg-[#707070] text-white border-[#707070]'
                         : 'bg-white text-[#707070] border-[#707070]'
                         } hover:bg-[#505050] hover:text-white focus:outline-none`}
@@ -332,7 +332,7 @@ const CreatePackage: React.FC = () => {
                   {radioButtons.map((option) => (
                     <div
                       key={option.value}
-                      className={`flex py-2 px-4 gap-8 justify-center align-middle border-2 rounded-lg transition-colors duration-300 ease-in-out ${formData.radioValue === option.value
+                      className={`flex py-2 px-4 gap-8 justify-center align-middle border rounded-lg transition-colors duration-300 ease-in-out ${formData.radioValue === option.value
                         ? 'bg-[#707070] text-white border-[#707070]'
                         : 'bg-white text-[#707070] border-gray-500'
                         }`}

@@ -25,17 +25,22 @@ export default function IndexPage() {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state: { auth: any }) => state.auth?.login || []);
   const getUsers = useAppSelector((state: { user: any }) => state.user?.setUsers?.users || []);
+  const usersLoading = useAppSelector((state: { user: any }) => state.user?.loading);
+
 
   useEffect(() => {
-    if (token) {
-      dispatch(getUsersList(token));
-    }
-  }, [dispatch, token])
+    // if (token) {
+    dispatch(getUsersList(token));
+    // }
+  }, [])
 
   const [selectedChat, setSelectedChat] = useState(null);
 
   return (
     <TabNavigator>
+      {
+        usersLoading && <Spinner />
+      }
       <div className="flex h-[850px] bg-white shadow-2xl rounded-xl mt-3 ml-2">
         <ChatList chats={getUsers} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
         <ChatWindow selectedChat={selectedChat} />

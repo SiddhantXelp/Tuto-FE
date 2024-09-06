@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useMemo, Suspense, lazy } from 'react';
+import React, { useEffect, useMemo, Suspense, lazy, useState } from 'react';
 import { GrAdd } from "react-icons/gr";
 import Link from 'next/link';
 import { recentStudentColumns, cardData } from './data';
@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getStudents } from '@/app/store/actions/student';
 import dynamic from 'next/dynamic';
 import Spinner from '@/common/Spinner';
+import Pagination from '@/common/Pagination';
 
 const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
   loading: () => <Spinner />,
@@ -26,14 +27,17 @@ const Student: React.FC = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const studentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
+  const studentLoading = useAppSelector((state: { student: any }) => state.student?.loading);
 
+  const totalPages = studentData?.totalPages;
+  const storedCurrentPage = studentData?.currentPage;
+  const [currentPage, setCurrentPage] = useState(storedCurrentPage);
   useEffect(() => {
-    const page = "1";
-    const limit = "100";
+    const limit = "10";
     if (token) {
-      dispatch(getStudents(token, page, limit));
+      dispatch(getStudents(token, currentPage, limit));
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, currentPage]);
 
   const handleClick = (index: number) => {
     if (index === 0) {
@@ -51,8 +55,20 @@ const Student: React.FC = () => {
     }))
     , [studentData]);
 
+
+
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
   return (
     <TabNavigator>
+      {
+        studentLoading && <Spinner />
+      }
       <div className='w-full h-auto p-4 sm:p-4 md:p-5'>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 2xl:gap-12">
           <Link href="/studentsTable">
@@ -164,6 +180,11 @@ const Student: React.FC = () => {
         <div className="mt-5">
           <h2 className="text-sm font-semibold mb-4 text-[#565656]">Recently added students</h2>
           <Table columns={recentStudentColumns} data={processedStudentData.slice(0, 10)} includeCheckbox={false} border={"rounded-2xl"} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </TabNavigator>

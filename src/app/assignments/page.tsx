@@ -35,11 +35,11 @@ const ClassManagementPage: React.FC = () => {
   const renderContent = () => {
     switch (selectedTab) {
       case 'Submitted':
-        return <div className="w-full h-98 bg-gray-100 rounded-lg overflow-auto"><SubmitTable /></div>;
+        return <div className="w-full h-98"><SubmitTable /></div>;
       case 'Pending':
-        return <div className="w-full h-98 bg-gray-100 rounded-lg overflow-auto"><PendingTable /></div>;
+        return <div className="w-full"><PendingTable /></div>;
       case 'Completed':
-        return <div className="w-full h-98 bg-gray-100 rounded-lg overflow-auto"><CompletedTable /></div>;
+        return <div className="w-full"><CompletedTable /></div>;
       default:
         return null;
     }
@@ -94,8 +94,8 @@ const ClassManagementPage: React.FC = () => {
           </Link>
         </div>
 
-        <div className="relative w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
-          <div
+        <div className="relative w-full sm:w-8/12 md:w-6/12 lg:w-4/12 xl:w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
+        <div
           />
           <span
             className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tl-lg relative ${selectedTab === 'Submitted' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}

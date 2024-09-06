@@ -130,6 +130,18 @@ export const setCompleteAssignment = (setCompletedAssignment: any) => ({
 });
 
 
+export const getCreateStudentAssignment = (token: string, data: any) => ({
+    type: actionTypes.GET_CREATE_STUDENT_ASSIGNMENT,
+    token,
+    data
+});
+
+
+export const setCreateStudentAssignment = (setStudentCreateAssignment: any) => ({
+    type: actionTypes.SET_CREATE_STUDENT_ASSIGNMENT,
+    setStudentCreateAssignment,
+});
+
 
 
 export const setAssignmentError = (error: any) => ({

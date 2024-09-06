@@ -71,7 +71,7 @@ const Table: React.FC<Props> = ({ columns, data, includeCheckbox = true, onRowCl
         </tbody>
       </table>
       {data.length === 0 && (
-        <div className="px-6 py-3 text-center text-gray-500 h-80 flex justify-center items-center mt-auto">
+        <div className="px-6 py-3 text-center text-gray-500 h-80 flex justify-center items-center mt-auto bg-gray-100 rounded-lg">
           No data available at the moment.
         </div>
       )}

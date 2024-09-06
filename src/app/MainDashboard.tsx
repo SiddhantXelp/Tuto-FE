@@ -358,10 +358,10 @@ export default function Home() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center text-[#565656] text-xs">No upcoming classes</div>
+                  <div className="text-[#565656] text-sm flex mt-auto justify-center items-center">No upcoming classes</div>
                 )}
 
-              </div>
+              </div> 
             </div>
           </div>
 

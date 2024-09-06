@@ -26,9 +26,9 @@ const SelectMain: React.FC<SelectMainProps> = ({ label, name, options, lablename
                     onChange={onChange}
                     className="block w-full h-10 md:h-12 p-2 pr-8 text-buttonGray bg-white border border-[#707070] rounded-[8px] shadow-sm focus:ring-indigo-500 focus:border-gray-300 text-sm md:text-base opacity-100 appearance-none"
                 >
-                    <option value="" disabled={!value} className='text-sm md:text-base block text-[#707070] text-[14px] mb-2'>
+                    {/* <option value="" disabled={!value} className='text-sm md:text-base block text-[#707070] text-[14px] mb-2'>
                         {lablename}
-                    </option>
+                    </option> */}
                     {options.map(option => (
                         <option key={option.id} value={option.title}>
                             {option.title}

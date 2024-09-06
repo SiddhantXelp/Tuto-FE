@@ -4,18 +4,23 @@ import { FaChevronDown, FaTimes } from 'react-icons/fa';
 interface Option {
     label: string;
     value: string;
+    id: string
 }
 
 interface SelectWithCheckboxesProps {
     options: Option[];
     selectedOptions: string[];
     setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+    setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
+    selectedStudentId: string[]
 }
 
 const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
     options,
     selectedOptions,
     setSelectedOptions,
+    setSelectedIds,
+    selectedStudentId
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -27,6 +32,15 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
             setSelectedOptions([...selectedOptions, option]);
         }
     };
+
+    const toggleId = (id: string) => {
+        if (selectedStudentId.includes(id)) {
+            setSelectedIds(selectedStudentId.filter((item) => item !== id));
+        } else {
+            setSelectedIds([...selectedStudentId, id]);
+        }
+    };
+
 
     const clearSelection = () => {
         setSelectedOptions([]);
@@ -76,11 +90,14 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
             {isOpen && (
                 <div className="absolute border border-gray-300 bg-white rounded-md mt-1 w-full max-h-60 overflow-y-auto z-10 shadow-lg">
                     {options.map((option) => (
-                        <label key={option.value} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                        <label key={option.id} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
                             <input
                                 type="checkbox"
                                 checked={selectedOptions.includes(option.value)}
-                                onChange={() => toggleOption(option.value)}
+                                onChange={() => {
+                                    toggleOption(option.value);
+                                    toggleId(option.id)
+                                }}
                                 className="accent-blue-500"
                             />
                             <span className="ml-2 text-xs text-buttonGray">{option.label}</span>

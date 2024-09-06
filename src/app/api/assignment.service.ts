@@ -270,3 +270,33 @@ export const completeAssignment = async (token: string, status: any, id: any) =>
         throw e;
     }
 };
+
+
+
+export const createStudentAssignment = async (token: string, data: any) => {
+    try {
+        const response = await axios.post(
+            apis.createStudentAssignment,
+            data,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};

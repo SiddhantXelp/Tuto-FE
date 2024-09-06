@@ -6,7 +6,7 @@ import TabNavigator from "../../../TabNavigator/page";
 import { MdOutlineCancel } from "react-icons/md";
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxesFull';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getCreateAssignment, setCreateAssignment } from '@/app/store/actions/assignment';
+import { getCreateAssignment, getCreateStudentAssignment, setCreateAssignment } from '@/app/store/actions/assignment';
 import Spinner from "@/common/Spinner";
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2'
@@ -43,7 +43,7 @@ const CreateNewAssignment = () => {
   });
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
-
+  const [selectedStudentId, setSelectedId] = useState([]);
 
   useEffect(() => {
     if (memberAuthToken) {
@@ -63,7 +63,8 @@ const CreateNewAssignment = () => {
   const [radioInput, setRadioInput] = useState('');
   const [checkboxInput, setCheckboxInput] = useState<string>('');
   const [showInput, setInput] = useState(false);
-  const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+  const token = useAppSelector((state: { auth: any }) => state.auth.login);
+  console.log("token:::::::::::token", token)
 
   const [cards, setCards] = useState([
     {
@@ -202,6 +203,7 @@ const CreateNewAssignment = () => {
 
   const handleSubmit = () => {
 
+    console.log(":::::::::::::;selectedStudentId", selectedStudentId)
     if (validateForm()) {
       const formattedData = {
         assignmentTitle: formData.titleName,
@@ -316,6 +318,13 @@ const CreateNewAssignment = () => {
     }));
   };
 
+  const setSelectedIds = (options: string[]) => {
+    console.log("::::::::::::options", options)
+
+    setSelectedId(options);
+
+  }
+
   const handleMaterialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     console.log("PPPPPPPPPPPPPPPPPfiles", files);
@@ -371,18 +380,18 @@ const CreateNewAssignment = () => {
     };
 
     const data = new FormData();
-    data.append("student_id", userData?.user?.id)
+    data.append("tutor_id", token?.user?.id)
     data.append('assignmentTitle', formattedData.assignmentTitle);
     data.append('subject', formattedData.subject);
-    data.append('students', formattedData.students);
+    const selectedStudentIds: string[] = selectedStudentId;
+    const selectedStudentIdsJson = JSON.stringify(selectedStudentId);
+    data.append('students', selectedStudentIdsJson);
     data.append('date', formattedData.date);
-
     if (formattedData.material) {
       data.append('material', formattedData.material);
     }
-
     data.append('questions', JSON.stringify(formattedData.questions));
-    dispatch(getCreateAssignment(token, data));
+    dispatch(getCreateAssignment(token?.token, data));
 
   }
 
@@ -396,6 +405,13 @@ const CreateNewAssignment = () => {
         confirmButtonText: 'Done'
       });
       dispatch(setCreateAssignment(null));
+
+      const data = {
+        student_id: token?.user?.id,
+        assignment_id: createAssignmentResponse?.id
+      }
+      dispatch(getCreateStudentAssignment(token?.token, data));
+
       router.push("/assignments")
 
     }
@@ -405,6 +421,7 @@ const CreateNewAssignment = () => {
 
 
   const optionsStudents = viewStudentData?.students?.map((group: any) => ({
+    id: group?.id,
     label: group.fullName,
     value: group.fullName
   })) ?? [];
@@ -459,6 +476,8 @@ const CreateNewAssignment = () => {
                                   options={optionsStudents}
                                   selectedOptions={formData.student}
                                   setSelectedOptions={handleSelectChange}
+                                  setSelectedIds={setSelectedIds}
+                                  selectedStudentId={selectedStudentId}
                                 />
                               </div>
                             </div>

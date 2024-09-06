@@ -19,7 +19,8 @@ const config: Config = {
       },
       colors: {
         buttonGray: '#838383',
-        selectedButton:'#565656'
+        selectedButton:'#565656',
+        primaryColor:"#707070"
       
       },
       fontSize: {
