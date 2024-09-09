@@ -106,7 +106,7 @@ const CreateNewAssignment = () => {
           paragraph: '',
           radioGroup: radioInput,
           checkboxes: checkboxInput,
-          file: null,
+          file: "",
           radioInput: "",
           radioOptions: [],
           checkboxInput: "",
@@ -404,13 +404,14 @@ const CreateNewAssignment = () => {
         icon: 'success',
         confirmButtonText: 'Done'
       });
-      dispatch(setCreateAssignment(null));
 
       const data = {
         student_id: token?.user?.id,
         assignment_id: createAssignmentResponse?.id
       }
+
       dispatch(getCreateStudentAssignment(token?.token, data));
+      dispatch(setCreateAssignment(null));
 
       router.push("/assignments")
 

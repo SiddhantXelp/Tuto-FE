@@ -39,7 +39,7 @@ const StudentRequirementForm: React.FC = () => {
 
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [subjects, setSubjects] = useState<string[]>([]);
-  const [next, setNext] = useState(false);
+  const [selectedStudentId, setSelectedId] = useState([]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -73,18 +73,24 @@ const StudentRequirementForm: React.FC = () => {
 
 
   const handelSubjects = [
-    { label: "English", value: "English" },
-    { label: "Mathematics", value: "Mathematics" },
-    { label: "Science", value: "Science" },
-    { label: "Social Studies", value: "Social Studies" },
-    { label: "Hindi", value: "Hindi" },
-    { label: "Second Language", value: "Second Language" },
-    { label: "Art/Music", value: "Art/Music" },
-    { label: "Computer Science/Information Technology", value: "Computer Science/Information Technology" },
-    { label: "Environmental Studies", value: "Environmental Studies" },
-    { label: "Moral Science", value: "Moral Science" },
+    { id: 1, label: "English", value: "English" },
+    { id: 2, label: "Mathematics", value: "Mathematics" },
+    { id: 3, label: "Science", value: "Science" },
+    { id: 4, label: "Social Studies", value: "Social Studies" },
+    { id: 5, label: "Hindi", value: "Hindi" },
+    { id: 6, label: "Second Language", value: "Second Language" },
+    { id: 7, label: "Art/Music", value: "Art/Music" },
+    { id: 8, label: "Computer Science/Information Technology", value: "Computer Science/Information Technology" },
+    { id: 9, label: "Environmental Studies", value: "Environmental Studies" },
+    { id: 10, label: "Moral Science", value: "Moral Science" },
 
   ];
+
+  const optionsSubjects = handelSubjects?.map((group: any) => ({
+    id: group?.id,
+    label: group.label,
+    value: group.value
+  })) ?? [];
 
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
@@ -187,6 +193,9 @@ const StudentRequirementForm: React.FC = () => {
     }
   }, [isError])
 
+  const setSelectedIds = (options: string[]) => {
+    setSelectedId(options);
+  }
 
   return (
     <>
@@ -215,9 +224,11 @@ const StudentRequirementForm: React.FC = () => {
 
                 <div className="w-full  h-12">
                   <SelectWithCheckboxes
-                    options={handelSubjects}
+                    options={optionsSubjects}
                     selectedOptions={subjects}
                     setSelectedOptions={handleSelectChange}
+                    setSelectedIds={setSelectedIds}
+                    selectedStudentId={selectedStudentId}
                   />
                 </div>
               </div>

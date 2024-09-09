@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getMyFiles, setCreateFolder } from '@/app/store/actions/assignment';
+import { getMyFiles, setCreateFolder } from '@/app/store/actions/myFiles';
 import AddFolderModel from "@/common/Myfiles/AddFolderModel";
 import dynamic from 'next/dynamic';
 import Spinner from '@/common/Spinner';
@@ -23,10 +23,10 @@ const MyFilesPage = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
-  const isLoading = useAppSelector(state => state.assignment.loading);
-  const myFiles = useAppSelector(state => state.assignment.setMyFiles?.folders);
-  const createFolder = useAppSelector(state => state.assignment.setCreateFolder);
-  const deleteFolderResponse = useAppSelector(state => state.assignment.setDeleteFolders);
+  const isLoading = useAppSelector(state => state.myFiles.loading);
+  const myFiles = useAppSelector(state => state.myFiles.setMyFiles?.folders);
+  const createFolder = useAppSelector(state => state.myFiles.setCreateFolder);
+  const deleteFolderResponse = useAppSelector(state => state.myFiles.setDeleteFolders);
 
   useEffect(() => {
     if (token) {

@@ -126,6 +126,7 @@ import { DayPilotCalendar, DayPilotMonth, DayPilotEvent } from "@daypilot/daypil
 import { useAppSelector } from '@/app/store/hooks';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
+import { currentMonthYear } from "@/common/DateAndTimeCommon";
 
 interface Event {
   id: number;
@@ -242,7 +243,7 @@ const TimeTable: React.FC = () => {
           </button>
         </div>
         <div className='rounded-md flex items-center justify-center mb-3 py-1.5 px-8 bg-selectedButton text-white'>
-          <p className="text-sm">Month</p>
+          <p className="text-sm">{currentMonthYear}</p>
         </div>
       </div>
 

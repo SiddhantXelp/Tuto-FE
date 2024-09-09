@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { GoFileDirectoryFill } from "react-icons/go";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getDeleteFolder } from '@/app/store/actions/assignment';
+import { getDeleteFolder } from '@/app/store/actions/myFiles';
 
 interface CardProps {
     data: any;

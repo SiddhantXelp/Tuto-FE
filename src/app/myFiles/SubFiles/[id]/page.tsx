@@ -8,7 +8,7 @@ import { data } from "../../data";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFiles, setDeleteFolder } from '@/app/store/actions/assignment';
+import { getMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFiles, setDeleteFolder } from '@/app/store/actions/myFiles';
 import Spinner from "@/common/Spinner";
 import AddFolderModel from "@/common/Myfiles/AddFolderModel";
 
@@ -17,11 +17,11 @@ const MyFilesPage = () => {
     const { id: paramId } = useParams();
     const dispatch = useAppDispatch();
     const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
-    const myFiles = useAppSelector(state => state.assignment.setMyFilesById);
-    const isLoading = useAppSelector(state => state.assignment.loading);
-    const createFolder = useAppSelector(state => state.assignment.setCreateFolder);
-    const createFiles = useAppSelector(state => state?.assignment?.setCreateFiles);
-    const deleteFolderResponse = useAppSelector(state => state.assignment.setDeleteFolders);
+    const myFiles = useAppSelector(state => state.myFiles.setMyFilesById);
+    const isLoading = useAppSelector(state => state.myFiles.loading);
+    const createFolder = useAppSelector(state => state.myFiles.setCreateFolder);
+    const createFiles = useAppSelector(state => state?.myFiles?.setCreateFiles);
+    const deleteFolderResponse = useAppSelector(state => state.myFiles.setDeleteFolders);
     const [id, setId] = useState<string | null>(null);
     const [previousId, setPreviousId] = useState<string | null>(null);
     const [openFolder, setOpenFolder] = useState(false);

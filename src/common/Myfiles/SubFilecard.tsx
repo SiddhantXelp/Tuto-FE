@@ -6,7 +6,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaFilePdf } from "react-icons/fa";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getDeleteFiles, getDeleteFolder } from '@/app/store/actions/assignment';
+import { getDeleteFiles, getDeleteFolder } from '@/app/store/actions/myFiles';
 
 interface CardProps {
     data: any;

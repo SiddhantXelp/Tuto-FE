@@ -7,6 +7,7 @@ import { AuthSaga } from "./auth"
 import { StudentSaga } from "./student"
 import { AssignmentSaga } from "./assignment"
 import { UsersSaga } from "./user"
+import { MyFilesSaga } from "./myFiles"
 
 
 
@@ -20,6 +21,8 @@ export function* rootSaga() {
     yield spawn(StudentSaga);
     yield spawn(AssignmentSaga);
     yield spawn(UsersSaga);
+    yield spawn(MyFilesSaga);
+
 
 
 

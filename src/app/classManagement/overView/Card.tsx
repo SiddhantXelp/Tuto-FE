@@ -16,7 +16,7 @@ const OverviewTabContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [openStart, setOpenStart] = useState(false);
-  const [month, setMonth] = useState("Weekly")
+  const [month, setMonth] = useState("Daily")
   const router = useRouter();
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
@@ -91,17 +91,33 @@ const OverviewTabContent: React.FC = () => {
         <div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-[#565656] font-semibold">Schedule</span>
-            {/* <div>
-              <select className="p-2 border rounded-md bg-white" onChange={(e) => setMonth(e.target.value)}>
-                <option>Weekly</option>
-                <option>Monthly</option>
-                <option>Yearly</option>
+            <div className="relative">
+              <select
+                className="p-2 border rounded-2xl bg-white text-sm pl-3 pr-8 appearance-none"
+                onChange={(e) => setMonth(e.target.value)}
+              >
+                <option className='text-sm'>Daily</option>
+                <option className='text-sm'>Weekly</option>
+                <option className='text-sm'>Monthly</option>
               </select>
-            </div> */}
+              <svg
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
           </div>
 
-
-          <Table month={month} />
+          <Table view={month} />
         </div>
       </div>
     </>

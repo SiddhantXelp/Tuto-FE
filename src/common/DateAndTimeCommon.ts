@@ -3,6 +3,9 @@ import moment from "moment";
 //CurrentDate
 export const currentDate: Date = new Date();
 
+//Current Date and Year
+export const currentMonthYear = moment().format('MMMM YYYY');
+
 
 //Convert Time to AM/PM
 export const formatTime = (time: string) => {

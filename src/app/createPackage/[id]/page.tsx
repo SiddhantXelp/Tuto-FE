@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import InputWithIcon from '@/common/InputWithIcon';
-import { RxCross2 } from "react-icons/rx";
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxesFull';
 import TabNavigator from "../../TabNavigator/page";
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import SelectMain from '@/common/SelectMain';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -148,17 +146,25 @@ const CreatePackage: React.FC = () => {
 
 
   const handelSubjects = [
-    { label: "English", value: "English" },
-    { label: "Mathematics", value: "Mathematics" },
-    { label: "Science", value: "Science" },
-    { label: "Social Studies", value: "Social Studies" },
-    { label: "Hindi", value: "Hindi" },
-    { label: "Second Language", value: "Second Language" },
-    { label: "Art/Music", value: "Art/Music" },
-    { label: "Computer Science/Information Technology", value: "Computer Science/Information Technology" },
-    { label: "Environmental Studies", value: "Environmental Studies" },
-    { label: "Moral Science", value: "Moral Science" },
+    { id: 1, label: "English", value: "English" },
+    { id: 2, label: "Mathematics", value: "Mathematics" },
+    { id: 3, label: "Science", value: "Science" },
+    { id: 4, label: "Social Studies", value: "Social Studies" },
+    { id: 5, label: "Hindi", value: "Hindi" },
+    { id: 6, label: "Second Language", value: "Second Language" },
+    { id: 7, label: "Art/Music", value: "Art/Music" },
+    { id: 8, label: "Computer Science/Information Technology", value: "Computer Science/Information Technology" },
+    { id: 9, label: "Environmental Studies", value: "Environmental Studies" },
+    { id: 10, label: "Moral Science", value: "Moral Science" },
+
   ];
+
+  const optionsSubjects = handelSubjects?.map((group: any) => ({
+    id: group?.id,
+    label: group.label,
+    value: group.value
+  })) ?? [];
+
   type PricingInput = {
     [key: string]: string;
   };
@@ -242,6 +248,11 @@ const CreatePackage: React.FC = () => {
     }
   }, [studentPackage, router]);
   const isLoading = useAppSelector(state => state.student.loading);
+  const [selectedStudentId, setSelectedId] = useState([]);
+
+  const setSelectedIds = (options: string[]) => {
+    setSelectedId(options);
+  }
 
   return (
     <TabNavigator>
@@ -256,9 +267,11 @@ const CreatePackage: React.FC = () => {
             <label className="block text-[#707070] text-[14px] mb-2">No. of Subjects you would like to offer?</label>
             <div className="w-full">
               <SelectWithCheckboxes
-                options={handelSubjects}
+                options={optionsSubjects}
                 selectedOptions={subjects}
                 setSelectedOptions={handleSelectChange}
+                setSelectedIds={setSelectedIds}
+                selectedStudentId={selectedStudentId}
               />
             </div>
           </div>

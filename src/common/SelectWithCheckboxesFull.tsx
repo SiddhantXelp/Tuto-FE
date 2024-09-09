@@ -4,7 +4,7 @@ import { FaChevronDown, FaTimes } from 'react-icons/fa';
 interface Option {
     label: string;
     value: string;
-    id: string
+    id: string;
 }
 
 interface SelectWithCheckboxesProps {
@@ -12,7 +12,7 @@ interface SelectWithCheckboxesProps {
     selectedOptions: string[];
     setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
     setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
-    selectedStudentId: string[]
+    selectedStudentId: string[];
 }
 
 const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
@@ -20,30 +20,27 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
     selectedOptions,
     setSelectedOptions,
     setSelectedIds,
-    selectedStudentId
+    selectedStudentId,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const toggleOption = (option: string) => {
-        if (selectedOptions.includes(option)) {
-            setSelectedOptions(selectedOptions.filter((item) => item !== option));
+    const toggleOption = (optionId: string, optionLabel: string) => {
+        // Toggle by id, not label
+        if (selectedStudentId.includes(optionId)) {
+            // Remove both the id and the corresponding label
+            setSelectedIds(selectedStudentId.filter((id) => id !== optionId));
+            setSelectedOptions(selectedOptions.filter((label) => label !== optionLabel));
         } else {
-            setSelectedOptions([...selectedOptions, option]);
+            // Add both the id and the corresponding label
+            setSelectedIds([...selectedStudentId, optionId]);
+            setSelectedOptions([...selectedOptions, optionLabel]);
         }
     };
-
-    const toggleId = (id: string) => {
-        if (selectedStudentId.includes(id)) {
-            setSelectedIds(selectedStudentId.filter((item) => item !== id));
-        } else {
-            setSelectedIds([...selectedStudentId, id]);
-        }
-    };
-
 
     const clearSelection = () => {
         setSelectedOptions([]);
+        setSelectedIds([]);
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -93,11 +90,8 @@ const SelectWithCheckboxes: React.FC<SelectWithCheckboxesProps> = ({
                         <label key={option.id} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
                             <input
                                 type="checkbox"
-                                checked={selectedOptions.includes(option.value)}
-                                onChange={() => {
-                                    toggleOption(option.value);
-                                    toggleId(option.id)
-                                }}
+                                checked={selectedStudentId.includes(option.id)}
+                                onChange={() => toggleOption(option.id, option.label)}
                                 className="accent-blue-500"
                             />
                             <span className="ml-2 text-xs text-buttonGray">{option.label}</span>

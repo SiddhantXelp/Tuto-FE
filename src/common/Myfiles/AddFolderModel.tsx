@@ -3,7 +3,7 @@ import { Dialog, DialogPanel } from '@headlessui/react';
 import InputMain from '@/common/InputMain';
 import { getFileTypeFromExtension } from '@/common/fileUtils';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getCreateFiles, getCreateFolder } from '@/app/store/actions/assignment';
+import { getCreateFiles, getCreateFolder } from '@/app/store/actions/myFiles';
 import Spinner from "@/common/Spinner";
 import { toast } from 'react-toastify';
 
@@ -28,7 +28,7 @@ const AddFolderModel: React.FC<AddFolderModalProps> = ({ isOpen, onClose, isFold
     const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
     const responsesLogin = useAppSelector((state: { auth: any }) => state.auth.login?.user?.id);
     console.log(":>>>>>>>>>>>>>auth", responsesLogin);
-    const isLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
+    const isLoading = useAppSelector((state: { myFiles: any }) => state.myFiles.loading);
 
     const [formData, setFormData] = useState<FormData>({});
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

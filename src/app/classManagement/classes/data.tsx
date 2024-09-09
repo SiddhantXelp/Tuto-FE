@@ -116,9 +116,19 @@ export const data = [
   // Add more data as needed
 ];
 
+// export const columns = [
+//   { header: 'Class Title', key: 'classTitle' },
+//   { header: 'Subject', key: 'subject' },
+//   { header: 'Student', key: 'student' },
+//   { header: 'Date', key: 'date' },
+//   { header: 'Time', key: 'time' },
+//   { header: 'Duration', key: 'duration' },
+//   { header: 'Assignment', key: 'assignment' },
+//   { header: 'Material', key: 'material' },
+// ];
 export const columns = [
   { header: 'Class Title', key: 'classTitle' },
-  { header: 'Subject', key: 'subject' },
+  { header: 'Subject', key: 'subject', dropdownOptions: ['Math', 'Science', 'History'] },
   { header: 'Student', key: 'student' },
   { header: 'Date', key: 'date' },
   { header: 'Time', key: 'time' },

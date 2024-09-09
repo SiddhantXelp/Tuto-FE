@@ -44,6 +44,11 @@ export const CategoriesPage: React.FC = () => {
     router.push(`/assignments/viewAssignment/${rowData?.id}`)
   };
 
+  const handelGetId = (id: any) => {
+    console.log("::::::::::id", id)
+
+  }
+
 
   const calculateDuration = (startTime: string, endTime: string) => {
     if (startTime && endTime) {
@@ -94,7 +99,7 @@ export const CategoriesPage: React.FC = () => {
 
   return (
     <div>
-      <Table columns={columns} data={tableData} includeCheckbox={true} onRowClick={handleRowClick} border={"rounded-b-2xl rounded-tr-2xl"} />
+      <Table columns={columns} data={tableData} includeCheckbox={true} onRowClick={handleRowClick} border={"rounded-b-2xl rounded-tr-2xl"} onCheckboxChange={handelGetId} />
     </div>
   );
 };

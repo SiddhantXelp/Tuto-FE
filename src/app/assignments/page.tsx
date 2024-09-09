@@ -64,7 +64,7 @@ const ClassManagementPage: React.FC = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-4'>
           {cardData.map((item, index) => (
             <Link href={getLinkHref(index)} key={index} passHref>
-              <div className='bg-transparent rounded-md p-4 cursor-pointer flex flex-col h-full'>
+              <div className='bg-transparent rounded-md cursor-pointer flex flex-col h-full pt-4 pb-4'>
                 <div className='flex justify-between items-center mb-2'>
                   <span className='text-gray-600 text-sm'>{item.cardName}</span>
                   {item.cardNametwo && (
