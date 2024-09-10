@@ -18,9 +18,7 @@ const Signup: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const memberAuthToken = " andbWBAEKHWDAJASMNDJSKHEOUIWELKMNWADjaskihdyuawoekjwa,mdnkjADHIUAJWKDS";
-  const responsesignup = useAppSelector((state: { auth: any }) => state.auth.signupData);
+  // const responsesignup = useAppSelector((state: { auth: any }) => state.auth.signupData);
   const isLoading = useAppSelector(state => state.auth.loading);
 
   useEffect(() => {
@@ -87,12 +85,10 @@ const Signup: React.FC = () => {
 
   const isError = useAppSelector((state: { auth: any }) => state.auth.error);
 
-
   useEffect(() => {
     if (isError) {
       toast.error(isError);
-      dispatch(setAuthError(null))
-
+      dispatch(setAuthError(null));
     }
 
   }, [isError])
@@ -128,41 +124,37 @@ const Signup: React.FC = () => {
     },
   });
 
+  // const handleSubmit = () => {
+  //   if (validateForm()) {
+  //     // const data = {
+  //     //   username,
+  //     //   email,
+  //     //   phoneNumber: 1234567890,
+  //     //   password,
+  //     //   roleId: "046294f6-0555-4f87-9562-da798b09ec23"
+  //     // };
+
+  //     // dispatch(getSignup(memberAuthToken, data));
+  //     router.push("/roleScreen");
+  //   }
+
+  // };
+
+
   const handleSubmit = () => {
     if (validateForm()) {
       const data = {
         username,
         email,
         phoneNumber: 1234567890,
-        password,
-        roleId: "046294f6-0555-4f87-9562-da798b09ec23"
+        password
       };
 
-      dispatch(getSignup(memberAuthToken, data));
+      const queryString = new URLSearchParams(data as any).toString();
+      router.push(`/roleScreen?${queryString}`);
     }
-
   };
 
-
-  useEffect(() => {
-    if (responsesignup) {
-      const userData = {
-        responsesignup
-      };
-
-      // localStorage.setItem('user', JSON.stringify(userData));
-
-      // router.push('/');
-      // dispatch(setSignup(null));
-      // const token = responsesignup?.token
-      // if (token) {
-      //   document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=${60 * 60 * 24};`;
-      // }
-      router.push('/auth/Login');
-      toast.success("User Has been Created Successfully")
-
-    }
-  }, [responsesignup]);
 
   return (
     <BackgroundComponent className="flex items-center justify-center">

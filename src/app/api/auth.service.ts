@@ -62,3 +62,26 @@ export const login = async (data: any) => {
         throw e;
     }
 };
+
+
+
+export const getRole = async () => {
+    try {
+        const response = await axios.get(
+            apis.getRoles,
+            // {},
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};

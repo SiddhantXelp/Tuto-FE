@@ -5,6 +5,7 @@ export interface ISignup {
     signupData: any;
     createUser: any;
     login: any;
+    roles: any;
     error: any;
     loading: any;
 }
@@ -13,6 +14,7 @@ const initialState: ISignup = {
     signupData: null,
     createUser: null,
     login: null,
+    roles: null,
     error: null,
     loading: null,
 };
@@ -31,6 +33,12 @@ const setLogin = ({ login }: { login: any }, state: ISignup) => ({
     ...state,
     login,
 });
+
+const setRoles = ({ roles }: { roles: any }, state: ISignup) => ({
+    ...state,
+    roles,
+});
+
 
 
 const setSignupError = (
@@ -53,6 +61,7 @@ export const actionReducers = {
     [actionTypes.SET_SIGN_UP]: setSignup,
     [actionTypes.SET_CREATE_USER]: setCreateUser,
     [actionTypes.SET_LOGIN_USER]: setLogin,
+    [actionTypes.SET_ROLES]: setRoles,
     [actionTypes.SET_SIGNUP_ERROR]: setSignupError,
     [actionTypes.SET_SIGNUP_LOADING]: setSignupLoading
 

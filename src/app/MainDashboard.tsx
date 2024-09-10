@@ -25,7 +25,7 @@ import { formattedDate, formatShortWeekday, currentDate } from "@/common/DateAnd
 import { BsDownload } from "react-icons/bs";
 import Spinner from "@/common/Spinner";
 import { steps } from "@/common/CommonDesign";
-
+import ScheduleModel from "@/common/ScheduleModel";
 interface UserInfo {
   name: string;
   email: string;
@@ -56,8 +56,9 @@ type ClassData = {
 export default function Home() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(2);
   const [open, setOpen] = useState(false);
+  const [scheduleModel, setScheduleModel] = useState(false);
   //Loading Variables
   const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
   const studentLoading = useAppSelector((state: { student: any }) => state.student.loading);
@@ -67,7 +68,7 @@ export default function Home() {
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
   const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
-
+  const eventDates = viewClassData.map((date: any) => new Date(date.scheduleDate || date));
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
 
@@ -117,11 +118,10 @@ export default function Home() {
   useEffect(() => {
     if (!open) {
       const page = "1";
-      const limit = "10";
       const assignmentLimit = "5"
       dispatch(getClasses(memberAuthToken));
-      dispatch(getStudents(memberAuthToken, page, limit));
-      dispatch(getAssignments(memberAuthToken, page, assignmentLimit));
+      dispatch(getStudents(memberAuthToken, page, "1"));
+      dispatch(getAssignments(memberAuthToken, page, assignmentLimit, "completed"));
     }
 
   }, [dispatch, open, memberAuthToken])
@@ -134,23 +134,38 @@ export default function Home() {
   }, []);
 
   const assignment = useMemo(() => {
-    return (assignmentData || []).flatMap((assignment: any) => {
-      const students = assignment.students.split(',');
-      return students.map((student: string) => ({
+    return (assignmentData || [])
+      .map((assignment: any) => ({
         id: assignment.id,
-        assignmentTitle: assignment.assignmentTitle,
-        subject: assignment.subject,
-        student: student.trim(),
-        material: assignment.material,
-        DateofSubmission: formattedDate(assignment.date),
-        type: "N/A",
-        status: assignment.status,
-        download: <BsDownload color="gray" size={13} />
-      }))
-        .filter((assignment: any) => assignment.status === 'completed')
+        assignmentTitle: assignment?.assignment.assignmentTitle,
+        subject: assignment?.assignment?.subject,
+        students: assignment?.fullName,
+        material: assignment?.assignment?.material,
+        date: formattedDate(assignment?.assignment.date),
+        status: assignment?.assignment?.status,
+        assignmentId: assignment?.assignment.id,
 
-    });
+      }));
   }, [assignmentData]);
+
+  const hasEvent = (date: any) => {
+    return eventDates.some((eventDate: any) =>
+      eventDate.getFullYear() === date.getFullYear() &&
+      eventDate.getMonth() === date.getMonth() &&
+      eventDate.getDate() === date.getDate()
+    );
+  };
+
+  const isToday = (date: any) => {
+    const today = new Date();
+    return (
+      today.getFullYear() === date.getFullYear() &&
+      today.getMonth() === date.getMonth() &&
+      today.getDate() === date.getDate()
+    );
+  };
+
+  const formatShortWeekday = (locale: any, date: any) => date.toLocaleDateString(locale, { weekday: 'short' }).substring(0, 1);
 
   return (
     <div className="pt-2 px-4 mt-5">
@@ -158,15 +173,16 @@ export default function Home() {
         (classLoading || studentLoading || assignmentLoading) && <Spinner />
       }
       <DialogComponent open={open} setOpen={setOpen} />
+      <ScheduleModel isOpen={scheduleModel} onClose={() => setScheduleModel(false)} />
       <div className="grid grid-cols-1 lg:grid-cols-[70%_28%] gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
           <div className="flex flex-col h-auto md:h-24 lg:h-24">
             <span className="text-[#565656] text-sm font-semibold mb-2">Students</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col h-full">
               <div className="flex-1">
-                <div className="text-[#565656] text-sm break-words font-semibold">{viewStudentData?.totalItems || 0} students</div>
-                <div className="text-[#565656] text-sm mt-1">{viewStudentData?.totalItems || 0}  Active students</div>
-                <div className="text-[#565656] text-sm flex justify-between items-center mt-1">
+                <div className="text-[#707070] text-sm break-words font-semibold">{viewStudentData?.totalItems || 0} students</div>
+                <div className="text-[#707070] text-sm mt-1">{viewStudentData?.totalItems || 0}  Active students</div>
+                <div className="text-[#707070] text-sm flex justify-between items-center mt-1">
                   <span>14 Newly registered</span>
                   <TiGroup size={20} color="gray" className="ml-2" />
                 </div>
@@ -177,10 +193,10 @@ export default function Home() {
             <span className="text-[#565656] text-sm font-semibold mb-2">Class Management</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex-1">
-                <div className="text-[#565656] text-sm break-words font-semibold">{upcomingClassesInNext7Days.length || 0} classes scheduled for next 7 days</div>
-                <div className="text-[#565656] text-sm">2 classes available</div>
+                <div className="text-[#707070] text-sm break-words font-semibold">{upcomingClassesInNext7Days.length || 0} classes scheduled for next 7 days</div>
+                <div className="text-[#707070] text-sm">2 classes available</div>
 
-                <div className="text-[#565656] text-sm flex justify-end items-center mb-2">
+                <div className="text-[#707070] text-sm flex justify-end items-center mb-2">
                   <BiSolidBarChartAlt2 size={18} color="gray" className="ml-2" />
                 </div>
 
@@ -189,19 +205,19 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col h-auto md:h-24 lg:h-24">
-            <span className="text-[#565656] text-sm font-semibold mb-2">Previous</span>
+            <span className="text-[#707070] text-sm font-semibold mb-2">Previous</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex items-center gap-2 font-semibold">
                 <FaRegClock size={14} color="gray" />
-                <span className="text-[#565656] text-sm">{previousTime}</span>
+                <span className="text-[#707070] text-sm">{previousTime}</span>
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <FaBook size={14} color="gray" />
-                <span className="text-[#565656] text-sm">{previousClassName}</span>
+                <span className="text-[#707070] text-sm">{previousClassName}</span>
               </div>
               <div className="flex items-center gap-2 justify-end">
                 <Link href="/assignments">
-                  <span className="text-[#565656] text-sm">View</span>
+                  <span className="text-[#707070] text-sm">View</span>
                 </Link>
               </div>
             </div>
@@ -212,11 +228,11 @@ export default function Home() {
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex items-center gap-2 font-semibold">
                 <FaRegClock size={14} color="gray" />
-                <span className="text-[#565656] text-sm">{nextClassTime}</span>
+                <span className="text-[#707070] text-sm">{nextClassTime}</span>
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <FaBook size={14} color="gray" />
-                <span className="text-[#565656] text-sm">{nextClassName}</span>
+                <span className="text-[#707070] text-sm">{nextClassName}</span>
               </div>
               <div className="flex items-center gap-2 justify-end">
                 <span className="text-[#B404C8] text-sm">Start</span>
@@ -231,7 +247,7 @@ export default function Home() {
               Create new class <FiPlus className="mt-1 ml-2" color="white" />
             </button>
             <button className="bg-[#E2E2E2] w-full lg:w-44 py-2 px-4 rounded-2xl text-[#2A2A2A] text-sm shadow-lg border border-[#E2E2E2] flex justify-center items-center space-x-2 opacity-100">
-              <span>Schedule</span>
+              <span onClick={() => setScheduleModel(true)}>Schedule</span>
               <GoDotFill color="#6B6BFF" />
             </button>
 
@@ -260,17 +276,28 @@ export default function Home() {
               <span className="text-[#565656] text-xs">View All</span>
             </Link>
           </div>
-          <Table columns={dashBordTableColumns} data={assignment.slice(0, 7)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.id}`)} />
+          <Table columns={dashBordTableColumns} data={assignment.slice(0, 5)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.assignmentId}`)} />
 
         </div>
         <div className="mt-8">
-          <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] md:h-[367px]">
+          <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] ">
             <Calendar
               value={currentDate}
               locale="en-US"
               showNavigation={false}
               formatShortWeekday={formatShortWeekday}
-              className="h-full w-full rounded-lg  border-0"
+              className="h-full w-full rounded-lg border-0"
+              tileContent={({ date, view }) =>
+                view === 'month' && hasEvent(date) ? (
+                  <div className="flex justify-center items-center mt-1">
+                    <span className="w-2 h-2 bg-primaryColor rounded-full"></span>
+                  </div>
+                ) : null
+              }
+              tileClassName={({ date, view }) =>
+                view === 'month' && isToday(date) ? 'current-day' : ''
+              }
+
             />
           </div>
         </div>
@@ -285,7 +312,7 @@ export default function Home() {
               <span className="text-xs text-[#565656] cursor-pointer">View All</span>
             </div>
 
-            <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
+            <div className="bg-white shadow-lg rounded-xl p-4 h-full overflow-auto">
               <Stepper
                 steps={steps}
                 activeStep={activeStep}
@@ -299,9 +326,15 @@ export default function Home() {
               <span className="text-[#565656] text-sm font-semibold">Revenue</span>
             </div>
 
-            <div className="bg-white shadow-lg rounded-xl p-4 max-h-64 overflow-auto">
+            <div className="bg-white shadow-lg rounded-xl p-4 h-full overflow-auto relative">
+              {/* Date element positioned to the top-right */}
+              <div className="absolute top-3 right-3 flex items-center bg-[#D1D1D1] rounded-2xl py-1 px-3 gap-2 cursor-pointer w-40 h-8 text-center justify-center">
+                <span className="text-sm text-white">May'2024</span>
+                <MdKeyboardArrowDown size={15} color="white" />
+              </div>
+
               <div className="flex flex-col md:flex-row items-center gap-6 justify-between">
-                <div className="flex justify-between items-center p-2" style={{ width: '180px', height: '150px' }}>
+                <div className="flex justify-between items-center p-2 h-60 w-60">
                   <CircularProgressbar
                     value={60}
                     text={`${60}%`}
@@ -312,56 +345,52 @@ export default function Home() {
                       pathColor: '#1F78B4',
                       textColor: '#1F78B4',
                       trailColor: '#FFA0A0',
-
                     })}
                   />
                 </div>
 
-                <div className="flex flex-col justify-center items-start">
-                  <div className="flex items-center bg-slate-400 rounded-xl py-1 px-3 gap-2 cursor-pointer">
-                    <span className="text-xs text-white">May'2024</span>
-                    <MdKeyboardArrowDown size={15} color="white" />
-                  </div>
-                  <div className="flex flex-col mt-4">
-                    <span className="text-[#565656] text-xs">1,50000 Overall</span>
-                    <span className="text-[#565656] text-xs">10 Pending payments</span>
-                    <p className="underline text-xs text-[#565656] cursor-pointer">Payment History</p>
+                <div className="flex flex-col mr-16">
+                  <div className="flex flex-col">
+                    <span className="text-[#707070] text-sm font-bold">1,50000 Overall</span>
+                    <span className="text-[#707070] text-sm mt-2">10 Pending payments</span>
+                    <p className="underline text-sm text-[#707070] cursor-pointer mt-2">Payment History</p>
                   </div>
                 </div>
               </div>
 
-              <div className="flex gap-4 mt-5">
+              <div className="flex gap-4 mt-5 justify-evenly">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-600"></div>
-                  <span className="text-xs text-[#565656]">Payment Received</span>
+                  <div className="w-5 h-5 bg-[#1F78B4]"></div>
+                  <span className="text-sm text-[#565656]">Payment Received</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-red-300"></div>
-                  <span className="text-xs text-[#565656]">Pending Payment</span>
+                  <div className="w-5 h-5 bg-[#FFA0A0]"></div>
+                  <span className="text-sm text-[#565656]">Pending Payment</span>
                 </div>
               </div>
             </div>
+
           </div>
 
           <div className="relative">
             <div className="flex justify-between mb-3">
-              <span className="text-[#565656] text-sm font-semibold">Upcoming Classes</span>
+              <span className="text-[#565656] text-sm font-semibold flex justify-center items-center"><GoDotFill /> Upcoming Classes</span>
               <span className="text-xs text-[#565656] cursor-pointer" onClick={() => router.push("/classManagement?tab=Classes")}>View All</span>
             </div>
-            <div className="bg-white shadow-lg rounded-xl p-4 h-[13.5rem] overflow-auto">
+            <div className="bg-white shadow-lg rounded-xl p-4 h-full overflow-auto">
               <div className="space-y-2">
                 {upcomingClasses.length > 0 ? (
-                  upcomingClasses.slice(0, 3).map((item) => (
-                    <div key={item.id} className="flex flex-col gap-1 h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100 mb-1">
-                      <span className="text-[#565656] text-xs">{item?.title}</span>
-                      <span className="text-[#565656] text-xs">{item?.classStartTime} - {item?.classEndTime}</span>
+                  upcomingClasses.slice(0, 4).map((item) => (
+                    <div key={item.id} className="flex flex-col gap-1 h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100">
+                      <span className="text-[#565656] text-sm font-bold">{item?.title}</span>
+                      <span className="text-[#565656] text-sm">{item?.classStartTime} - {item?.classEndTime}</span>
                     </div>
                   ))
                 ) : (
                   <div className="text-[#565656] text-sm flex mt-auto justify-center items-center">No upcoming classes</div>
                 )}
 
-              </div> 
+              </div>
             </div>
           </div>
 

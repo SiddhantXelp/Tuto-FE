@@ -405,12 +405,6 @@ const CreateNewAssignment = () => {
         confirmButtonText: 'Done'
       });
 
-      const data = {
-        student_id: token?.user?.id,
-        assignment_id: createAssignmentResponse?.id
-      }
-
-      dispatch(getCreateStudentAssignment(token?.token, data));
       dispatch(setCreateAssignment(null));
 
       router.push("/assignments")

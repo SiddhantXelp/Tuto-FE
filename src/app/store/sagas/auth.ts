@@ -2,9 +2,9 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes/auth';
 
-import { setSignup, setCreateUser, setAuthError, setAuthLoading, setLogin } from '../actions/auth';
+import { setSignup, setCreateUser, setAuthError, setAuthLoading, setLogin, setRoles } from '../actions/auth';
 
-import { postSignup, login } from '../../api/auth.service';
+import { postSignup, login, getRole } from '../../api/auth.service';
 
 function* getAuthEffect(action: any): Generator<any, any, any> {
     try {
@@ -59,10 +59,31 @@ function* LoginEffect(action: any): Generator<any, any, any> {
 }
 
 
+
+function* getRolesEffect(action: any): Generator<any, any, any> {
+    try {
+        yield put(setAuthLoading(true));
+        yield put(setAuthError(''));
+        yield put(setRoles(null));
+
+        const response = yield call(getRole);
+        yield put(setRoles(response));
+
+        yield put(setAuthLoading(false));
+    } catch (e: any) {
+        yield put(setAuthLoading(false));
+        yield put(setAuthError(e.response?.data?.message));
+    }
+}
+
+
+
 export function* AuthSaga() {
     yield takeEvery(actionTypes.GET_SIGNUP, getAuthEffect);
     yield takeEvery(actionTypes.GET_CREATE_USER, CreateUserEffect);
     yield takeEvery(actionTypes.GET_LOGIN_USER, LoginEffect);
+    yield takeEvery(actionTypes.GET_ROLES, getRolesEffect);
+
 
 
 }

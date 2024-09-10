@@ -42,9 +42,32 @@ select:focus {
   box-shadow: none;
 }
 
+/* Remove border from the entire calendar */
 .react-calendar {
-  border: none;
+  border: none !important;
+  /* Ensure the border is completely removed */
+  box-shadow: none;
+  /* In case there is a shadow effect creating a border-like appearance */
 }
+
+/* Add a border and style for the current day */
+.current-day {
+  border: 1px solid blue !important;
+  background-color: transparent !important;
+  color: #8D7EA8 !important;
+  /* Add !important to override other styles */
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 255, 0.3); /* Adjust shadow color and opacity */
+
+}
+
+/* Remove the background color from the selected day */
+.react-calendar__tile--now {
+  background: none !important;
+  color: #8D7EA8 !important;
+  /* Ensure the color shows for the current date */
+}
+
 
 
 /* styles/globals.css */

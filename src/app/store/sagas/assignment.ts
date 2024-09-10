@@ -29,7 +29,7 @@ function* getAssignmentsEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setAssignments(null));
 
-        const response = yield call(getAssignments, action.token, action.page, action.limit);
+        const response = yield call(getAssignments, action.token, action.page, action.limit, action.status);
         yield put(setAssignments(response));
 
         yield put(setAssignmentLoading(false));
@@ -99,7 +99,7 @@ function* getStudentAssignmentsEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setStudentAssignments(null));
 
-        const response = yield call(getAssignments, action.token, action.page, action.limit);
+        const response = yield call(getAssignments, action.token, action.page, action.limit, action.status);
         yield put(setStudentAssignments(response));
 
         yield put(setAssignmentLoading(false));

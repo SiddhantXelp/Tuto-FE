@@ -12,11 +12,12 @@ export const setCreateAssignment = (setCreateAssignments: any) => ({
     setCreateAssignments,
 });
 
-export const getAssignments = (token: string, page: string, limit: string) => ({
+export const getAssignments = (token: string, page: string, limit: string,status:string) => ({
     type: actionTypes.GET_ASSIGNMENTS,
     token,
     page,
-    limit
+    limit,
+    status
 });
 
 

@@ -24,18 +24,18 @@ const MyFilesPage = () => {
     const token = useAppSelector((state: { auth: any }) => state?.auth?.login?.token);
     const [open, setOpen] = useState(false);
     const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
-    const { id } = useParams();
+    const { id } = useParams()
 
     const assignment = useMemo(() => {
         return (assignmentData || [])
-            .flatMap((assignment: any) => {
-                const students = assignment.students.split(',');
-                return students.map((student: string) => ({
-                    id: assignment.id,
-                    status: assignment.status
-                }));
-            })
-            .filter((assignment: any) => assignment.status === 'pending');
+            .map((assignment: any) => ({
+                id: assignment.id,
+                assignmentTitle: assignment?.assignment.assignmentTitle,
+                subject: assignment?.assignment?.subject,
+                students: assignment?.fullName,
+                material: assignment?.assignment?.material,
+                status: assignment?.assignment?.status
+            }));
     }, [assignmentData]);
 
     const currentIndex = assignment.findIndex((item: any) => item.id === id);
@@ -113,7 +113,7 @@ const MyFilesPage = () => {
                         <div className="bg-[#D1D1D1] rounded-lg h-20 w-56 flex items-center p-2 md:p-4">
                             <img src="/profile.png" className="h-10 w-10 rounded-full" alt="Profile" />
                             <div className="ml-2 md:ml-5 flex-1">
-                                <h1 className="text-xs md:text-sm font-medium">{getAssignmentResponse?.students?.slice(0, 10) || "NA"}</h1>
+                                <h1 className="text-xs md:text-sm font-medium">{"NA" || "NA"}</h1>
                                 <h1 className="text-xs ">6th grade</h1>
                             </div>
                             <div className="border-l border-black h-16 md:h-full mx-2 md:mx-4"></div>

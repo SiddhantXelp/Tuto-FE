@@ -21,8 +21,8 @@ const Stepper: React.FC<StepperProps> = ({ steps, activeStep, onStepChange }) =>
             <div
               className={`flex items-center justify-center w-7 h-7 text-sm rounded-full mb-2 ${
                 index === activeStep
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-400 text-white'
+                  ? 'bg-primaryColor text-white'
+                  : 'bg-primaryColor text-white'
               } cursor-pointer transition-colors duration-300 ease-in-out`}
               onClick={() => onStepChange(index)}
             >

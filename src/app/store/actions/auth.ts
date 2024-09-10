@@ -36,6 +36,19 @@ export const setLogin = (login: any) => ({
     login,
 });
 
+
+
+export const getRoles = () => ({
+    type: actionTypes.GET_ROLES
+});
+
+export const setRoles = (roles: any) => ({
+    type: actionTypes.SET_ROLES,
+    roles,
+});
+
+
+
 export const setAuthError = (error: any) => ({
     type: actionTypes.SET_SIGNUP_ERROR,
     error,

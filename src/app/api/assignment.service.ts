@@ -34,10 +34,10 @@ export const createAssignment = async (token: string, data: any) => {
 };
 
 
-export const getAssignments = async (token: string, page: string, limit: string) => {
+export const getAssignments = async (token: string, page: string, limit: string,status:string) => {
     try {
         const response = await axios.get(
-            apis.getAssignments(page, limit),
+            apis.getAssignments(page, limit,status),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;
@@ -140,10 +140,10 @@ export const createStudentAssignment = async (token: string, data: any) => {
 
 
 
-export const getStudentsAssignments = async (token: string, page: string, limit: string) => {
+export const getStudentsAssignments = async (token: string, page: string, limit: string, status: string) => {
     try {
         const response = await axios.get(
-            apis.getAssignmentStudents(page, limit),
+            apis.getAssignmentStudents(page, limit, status),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;
