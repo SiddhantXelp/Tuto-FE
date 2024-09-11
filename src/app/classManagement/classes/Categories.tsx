@@ -41,7 +41,7 @@ export const CategoriesPage: React.FC = () => {
   const formattedDate = (isoDateString: any) => isoDateString ? moment(isoDateString).format('MMMM Do YYYY') : "NA";
 
   const handleRowClick = (rowData: any) => {
-    router.push(`/assignments/viewAssignment/${rowData?.id}`)
+    router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`);
   };
 
   const handelGetId = (id: any) => {

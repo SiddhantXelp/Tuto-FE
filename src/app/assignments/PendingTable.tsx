@@ -16,18 +16,18 @@ const PendingTable = () => {
   const assignmentPages = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments || []);
   const assignmentLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
   const storedCurrentPage = assignmentPages?.currentPage;
-  const assignmentLimit = 10; // Number of items per page
+  const assignmentLimit = 10;
 
-  const [currentPage, setCurrentPage] = useState(storedCurrentPage);
+  const [currentPage, setCurrentPage] = useState(storedCurrentPage || 1);
 
   useEffect(() => {
     if (token) {
-      dispatch(getAssignments(token, currentPage.toString(), assignmentLimit.toString(), "pending"));
+      dispatch(getAssignments(token, currentPage, assignmentLimit.toString(), "pending"));
     }
   }, [dispatch, token, currentPage]);
 
   const handleRowClick = (rowData: any) => {
-    router.push(`/assignments/viewAssignment/${rowData?.assignmentId}`);
+    router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`);
   };
 
 
@@ -45,7 +45,7 @@ const PendingTable = () => {
         material: assignment?.assignment?.material,
         date: formattedDate(assignment?.assignment.date),
         status: assignment?.assignment?.status,
-        assignmentId:assignment?.assignment.id,
+        assignmentId: assignment?.assignment.id,
       }));
   }, [assignmentData]);
 

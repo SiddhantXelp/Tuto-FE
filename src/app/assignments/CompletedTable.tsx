@@ -119,7 +119,7 @@ const PendingTable = () => {
   }, [dispatch, token, currentPage]);
 
   const handleRowClick = (rowData: any) => {
-    router.push(`/assignments/viewAssignment/${rowData?.assignmentId}`);
+    router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`);
   };
 
   // Memoize assignment data and filter by status

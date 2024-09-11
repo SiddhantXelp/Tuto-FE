@@ -7,7 +7,7 @@ import { BsPencilSquare, BsEraserFill } from "react-icons/bs";
 import { LuPencilRuler } from "react-icons/lu";
 import { CiText } from "react-icons/ci";
 import { RiEditBoxFill } from "react-icons/ri";
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getAssignmentById, getCompleteAssignment, setCompleteAssignment } from '@/app/store/actions/assignment';
 import Spinner from "@/common/Spinner";
@@ -18,13 +18,17 @@ import { formatDate } from '@/common/DateAndTimeCommon';
 const MyFilesPage = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const getAssignmentResponse = useAppSelector(state => state?.assignment?.setAssignmentById?.assignment || []);
-    const getCompletedAssignmentResponse = useAppSelector(state => state?.assignment?.setCompletedAssignment || []);
-    const isLoading = useAppSelector(state => state?.assignment?.loading);
+    const getAssignmentResponse = useAppSelector((state: { assignment: any }) => state?.assignment?.setAssignmentById?.data[0] || []);
+    const getCompletedAssignmentResponse = useAppSelector((state: { assignment: any }) => state?.assignment?.setCompletedAssignment || []);
+    const isLoading = useAppSelector((state: { assignment: any }) => state?.assignment?.loading);
     const token = useAppSelector((state: { auth: any }) => state?.auth?.login?.token);
     const [open, setOpen] = useState(false);
     const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
-    const { id } = useParams()
+    const { id } = useParams();
+    const searchParams = useSearchParams();
+    const studentId = searchParams.get('studentId');
+    const [currentAssignmentId, setCurrentAssignmentId] = useState(id);
+    const [currentStudentId, setCurrentStudentId] = useState(studentId);
 
     const assignment = useMemo(() => {
         return (assignmentData || [])
@@ -34,18 +38,18 @@ const MyFilesPage = () => {
                 subject: assignment?.assignment?.subject,
                 students: assignment?.fullName,
                 material: assignment?.assignment?.material,
-                status: assignment?.assignment?.status
+                status: assignment?.assignment?.status,
+                assignmentId: assignment?.assignment.id,
+
             }));
     }, [assignmentData]);
 
-    const currentIndex = assignment.findIndex((item: any) => item.id === id);
-    const nextAssignmentId = assignment.slice(currentIndex + 1).find((item: any) => item.id !== id)?.id || null;
-
     useEffect(() => {
-        if (id) {
-            dispatch(getAssignmentById(token, String(id)));
+        if (currentAssignmentId) {
+            dispatch(getAssignmentById(token, String(currentAssignmentId), String(currentStudentId)));
         }
-    }, [dispatch, token, id]);
+    }, [dispatch, token, currentAssignmentId]);
+
 
     const handelCompleteAssignment = () => {
         const status = {
@@ -70,9 +74,31 @@ const MyFilesPage = () => {
     }, [getCompletedAssignmentResponse?.status])
 
 
+    function getIndexByAssignmentAndStudent(assignmentId: any, studentId: any) {
+        const assignments = assignment;
+        const index = assignments.findIndex((entry: any) =>
+            entry.assignmentId === assignmentId && entry.id === studentId
+        );
+        if (index === -1) {
+            console.log('No matching assignment found.');
+            return null;
+        }
+        const nextAssignment = assignments[index + 1];
+        return {
+            index,
+            nextAssignment: nextAssignment || null
+        };
+    }
+
     const handleNextClick = () => {
-        if (nextAssignmentId) {
-            router.push(`/assignments/viewAssignment/${nextAssignmentId}`);
+        const result = getIndexByAssignmentAndStudent(currentAssignmentId, currentStudentId);
+
+        if (result?.nextAssignment) {
+            const nextAssignmentId = result.nextAssignment.assignmentId;
+            const nextStudentId = result.nextAssignment.id;
+            setCurrentAssignmentId(nextAssignmentId);
+            setCurrentStudentId(nextStudentId);
+            router.push(`/assignments/viewAssignment/${nextAssignmentId}?studentId=${nextStudentId}`);
         } else {
             Swal.fire({
                 title: 'Error!',
@@ -83,6 +109,7 @@ const MyFilesPage = () => {
         }
     };
 
+    console.log(":::::::::::::::getAssignmentResponse?.assignment", getAssignmentResponse?.fullName);
     return (
         <TabNavigator>
             {
@@ -113,7 +140,7 @@ const MyFilesPage = () => {
                         <div className="bg-[#D1D1D1] rounded-lg h-20 w-56 flex items-center p-2 md:p-4">
                             <img src="/profile.png" className="h-10 w-10 rounded-full" alt="Profile" />
                             <div className="ml-2 md:ml-5 flex-1">
-                                <h1 className="text-xs md:text-sm font-medium">{"NA" || "NA"}</h1>
+                                <h1 className="text-xs md:text-sm font-medium">{getAssignmentResponse?.fullName || "NA"}</h1>
                                 <h1 className="text-xs ">6th grade</h1>
                             </div>
                             <div className="border-l border-black h-16 md:h-full mx-2 md:mx-4"></div>
@@ -126,7 +153,7 @@ const MyFilesPage = () => {
                         <div className="pt-5 flex justify-between items-center">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Subject</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{getAssignmentResponse?.subject || "NA"}</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{getAssignmentResponse?.assignment?.subject || "NA"}</h1>
                             </div>
                             <div className="flex items-center gap-2">
                                 <MdDownload className="text-[#565656] text-base" />
@@ -148,11 +175,11 @@ const MyFilesPage = () => {
                         <div className="flex justify-between">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Due date</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{formatDate(getAssignmentResponse?.date) || "NA"}</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{formatDate(getAssignmentResponse?.assignment?.date) || "NA"}</h1>
                             </div>
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Submitted date</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{formatDate(getAssignmentResponse?.date) || "NA"}</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{formatDate(getAssignmentResponse?.assignment?.date) || "NA"}</h1>
                             </div>
                         </div>
                         <div className='border-b border-gray-300 mb-3'></div>
@@ -247,18 +274,20 @@ const MyFilesPage = () => {
                             </button>
                         </div>
                         {/* Total and Finish Paper Section */}
-                        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                            <div className="flex-1">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            {/* Total Marks Section */}
+                            <div className="flex-1 w-full md:w-auto">
                                 <h1 className="text-sm font-semibold text-[#565656]">Total</h1>
                                 <input
                                     type="text"
-                                    className="border border-gray-300 w-full md:w-48 rounded-md h-10 mt-2 p-2"
+                                    className="border border-gray-300 w-full rounded-md h-10 mt-2 p-2"
                                     placeholder="Marks"
                                 />
                             </div>
 
-                            <div className="flex-1 text-center md:text-right" onClick={() => setOpen(true)}>
-                                <button className="rounded-3xl bg-[#565656] text-white p-2 mt-4 md:mt-8 w-full md:w-44">
+                            {/* Finish Paper Button Section */}
+                            <div className="flex-1 w-full md:w-auto text-center md:text-right" onClick={() => setOpen(true)}>
+                                <button className="rounded-3xl bg-[#565656] text-white py-2 px-6 mt-4 md:mt-8 w-full md:w-auto">
                                     Finish Paper
                                 </button>
                             </div>

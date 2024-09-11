@@ -276,7 +276,7 @@ export default function Home() {
               <span className="text-[#565656] text-xs">View All</span>
             </Link>
           </div>
-          <Table columns={dashBordTableColumns} data={assignment.slice(0, 5)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.assignmentId}`)} />
+          <Table columns={dashBordTableColumns} data={assignment} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`)} />
 
         </div>
         <div className="mt-8">
@@ -377,21 +377,28 @@ export default function Home() {
               <span className="text-[#565656] text-sm font-semibold flex justify-center items-center"><GoDotFill /> Upcoming Classes</span>
               <span className="text-xs text-[#565656] cursor-pointer" onClick={() => router.push("/classManagement?tab=Classes")}>View All</span>
             </div>
-            <div className="bg-white shadow-lg rounded-xl p-4 h-full overflow-auto">
-              <div className="space-y-2">
+            <div className="bg-white shadow-lg rounded-xl p-4 h-full flex items-center justify-center">
+              <div className="space-y-2 w-full">
                 {upcomingClasses.length > 0 ? (
                   upcomingClasses.slice(0, 4).map((item) => (
-                    <div key={item.id} className="flex flex-col gap-1 h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100">
+                    <div
+                      key={item.id}
+                      className="flex flex-col gap-1 h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100"
+                    >
                       <span className="text-[#565656] text-sm font-bold">{item?.title}</span>
-                      <span className="text-[#565656] text-sm">{item?.classStartTime} - {item?.classEndTime}</span>
+                      <span className="text-[#565656] text-sm">
+                        {item?.classStartTime} - {item?.classEndTime}
+                      </span>
                     </div>
                   ))
                 ) : (
-                  <div className="text-[#565656] text-sm flex mt-auto justify-center items-center">No upcoming classes</div>
+                  <div className="text-[#565656] text-sm flex justify-center items-center h-full">
+                    No upcoming classes
+                  </div>
                 )}
-
               </div>
             </div>
+
           </div>
 
         </div>

@@ -57,11 +57,11 @@ export const getAssignments = async (token: string, page: string, limit: string,
 
 
 
-export const getAssignmentById = async (token: string, id: string) => {
+export const getAssignmentById = async (token: string, id: string,studentId:string) => {
 
     try {
         const response = await axios.get(
-            apis.getAssignmentById(id),
+            apis.getAssignmentById(id,studentId),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;

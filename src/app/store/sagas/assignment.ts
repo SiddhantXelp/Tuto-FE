@@ -47,7 +47,7 @@ function* getAssignmentByIdEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setAssignmentById(null));
 
-        const response = yield call(getAssignmentById, action.token, action.id);
+        const response = yield call(getAssignmentById, action.token, action.id,action.studentId);
         yield put(setAssignmentById(response));
 
         yield put(setAssignmentLoading(false));

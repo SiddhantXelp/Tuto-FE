@@ -26,10 +26,11 @@ export const setAssignments = (setAssignments: any) => ({
     setAssignments,
 });
 
-export const getAssignmentById = (token: string, id: string) => ({
+export const getAssignmentById = (token: string, id: string,studentId:string) => ({
     type: actionTypes.GET_ASSIGNMENT_BY_ID,
     token,
-    id
+    id,
+    studentId
 });
 
 
