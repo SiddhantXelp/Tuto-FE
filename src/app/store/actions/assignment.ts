@@ -40,11 +40,12 @@ export const setAssignmentById = (setAssignmentById: any) => ({
 });
 
 
-export const getCompleteAssignment = (token: string, data: any, id: any) => ({
+export const getCompleteAssignment = (token: string, data: any, id: any,studentId:string) => ({
     type: actionTypes.GET_COMPLETED_ASSIGNMENT,
     token,
     data,
-    id
+    id,
+    studentId
 });
 
 

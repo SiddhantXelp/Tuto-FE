@@ -80,10 +80,10 @@ export const getAssignmentById = async (token: string, id: string,studentId:stri
 
 
 
-export const completeAssignment = async (token: string, status: any, id: any) => {
+export const completeAssignment = async (token: string, status: any, id: any,studentId:string) => {
     try {
         const response = await axios.patch(
-            apis.completeAssignment(id),
+            apis.completeAssignment(id,studentId),
             status,
             {
                 cancelToken: new CancelToken(c => {

@@ -6,9 +6,7 @@ import Image from 'next/image';
 import Table from "../components/table";
 import { dashBordTableColumns } from './student/data';
 import { MdKeyboardArrowDown } from "react-icons/md";
-import React, { useEffect, useMemo, useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import React, { useEffect, useMemo, useState } from 'react';;
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Stepper from "@/common/Stepper";
@@ -26,6 +24,9 @@ import { BsDownload } from "react-icons/bs";
 import Spinner from "@/common/Spinner";
 import { steps } from "@/common/CommonDesign";
 import ScheduleModel from "@/common/ScheduleModel";
+import CommonCalendar from "@/common/CommonCalendar";
+import { processClassData } from "@/utils/classUtils";
+
 interface UserInfo {
   name: string;
   email: string;
@@ -68,6 +69,7 @@ export default function Home() {
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
   const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+
   const eventDates = viewClassData.map((date: any) => new Date(date.scheduleDate || date));
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
@@ -75,50 +77,12 @@ export default function Home() {
   useEffect(() => {
   }, [viewClassData]);
 
-  viewClassData.sort((a: ClassData, b: ClassData) => {
-    const dateA = new Date(`${a.scheduleDate.split("T")[0]}T${a.classStartTime}:00`);
-    const dateB = new Date(`${b.scheduleDate.split("T")[0]}T${b.classStartTime}:00`);
-    return dateA.getTime() - dateB.getTime();
-  });
 
-  let previousClass: ClassData | null = null;
-  let nextClass: ClassData | null = null;
-  const upcomingClasses: ClassData[] = [];
-  const sevenDaysLater: Date = new Date(currentDate);
-  sevenDaysLater.setDate(currentDate.getDate() + 7);
-
-  const upcomingClassesInNext7Days = viewClassData.filter((cls: ClassData) => {
-    const classStartDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classStartTime}:00`);
-    return classStartDateTime > currentDate && classStartDateTime <= sevenDaysLater;
-  });
-
-  for (let cls of viewClassData) {
-    const classStartDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classStartTime}:00`);
-    const classEndDateTime: Date = new Date(`${cls.scheduleDate.split("T")[0]}T${cls.classEndTime}:00`);
-    if (classEndDateTime <= currentDate) {
-      previousClass = cls;
-    } else if (classStartDateTime > currentDate) {
-      if (!nextClass) {
-        nextClass = cls;
-      } else {
-        upcomingClasses.push(cls);
-      }
-    }
-  }
-  const previousTime = previousClass
-    ? `${previousClass.classStartTime} - ${previousClass.classEndTime}`
-    : "N/A";
-  const nextClassTime = nextClass
-    ? `${nextClass.classStartTime} - ${nextClass.classEndTime}`
-    : "N/A";
-
-  const previousClassName = previousClass ? previousClass.title : "N/A";
-  const nextClassName = nextClass ? nextClass.title : "N/A";
 
   useEffect(() => {
     if (!open) {
       const page = "1";
-      const assignmentLimit = "5"
+      const assignmentLimit = "4"
       dispatch(getClasses(memberAuthToken));
       dispatch(getStudents(memberAuthToken, page, "1"));
       dispatch(getAssignments(memberAuthToken, page, assignmentLimit, "completed"));
@@ -137,35 +101,29 @@ export default function Home() {
     return (assignmentData || [])
       .map((assignment: any) => ({
         id: assignment.id,
-        assignmentTitle: assignment?.assignment.assignmentTitle,
         subject: assignment?.assignment?.subject,
-        students: assignment?.fullName,
-        material: assignment?.assignment?.material,
-        date: formattedDate(assignment?.assignment.date),
-        status: assignment?.assignment?.status,
+        student: assignment?.fullName,
+        status: assignment?.assignment?.status
+          ? assignment.assignment.status.charAt(0).toUpperCase() + assignment.assignment.status.slice(1)
+          : "",
         assignmentId: assignment?.assignment.id,
+        DateofSubmission: formattedDate(assignment?.assignment?.date),
+        download:<BsDownload color="gray" size={13} />
 
       }));
   }, [assignmentData]);
 
-  const hasEvent = (date: any) => {
-    return eventDates.some((eventDate: any) =>
-      eventDate.getFullYear() === date.getFullYear() &&
-      eventDate.getMonth() === date.getMonth() &&
-      eventDate.getDate() === date.getDate()
-    );
-  };
+  const {
+    previousTime,
+    nextClassTime,
+    previousClassName,
+    nextClassName,
+    upcomingClassesInNext7Days,
+    upcomingClasses,
 
-  const isToday = (date: any) => {
-    const today = new Date();
-    return (
-      today.getFullYear() === date.getFullYear() &&
-      today.getMonth() === date.getMonth() &&
-      today.getDate() === date.getDate()
-    );
-  };
+  } = useMemo(() => processClassData(viewClassData, currentDate), [viewClassData, currentDate]);
 
-  const formatShortWeekday = (locale: any, date: any) => date.toLocaleDateString(locale, { weekday: 'short' }).substring(0, 1);
+
 
   return (
     <div className="pt-2 px-4 mt-5">
@@ -276,28 +234,15 @@ export default function Home() {
               <span className="text-[#565656] text-xs">View All</span>
             </Link>
           </div>
-          <Table columns={dashBordTableColumns} data={assignment} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`)} />
+          <Table columns={dashBordTableColumns} data={assignment.slice(0,5)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`)} />
 
         </div>
         <div className="mt-8">
           <div className="bg-white shadow-lg p-4 rounded-lg md:w-[384px] ">
-            <Calendar
-              value={currentDate}
-              locale="en-US"
-              showNavigation={false}
-              formatShortWeekday={formatShortWeekday}
-              className="h-full w-full rounded-lg border-0"
-              tileContent={({ date, view }) =>
-                view === 'month' && hasEvent(date) ? (
-                  <div className="flex justify-center items-center mt-1">
-                    <span className="w-2 h-2 bg-primaryColor rounded-full"></span>
-                  </div>
-                ) : null
-              }
-              tileClassName={({ date, view }) =>
-                view === 'month' && isToday(date) ? 'current-day' : ''
-              }
-
+            <CommonCalendar
+              currentDate={new Date()}
+              events={eventDates}
+              primaryColor="#1F78B4"
             />
           </div>
         </div>
@@ -380,9 +325,9 @@ export default function Home() {
             <div className="bg-white shadow-lg rounded-xl p-4 h-full flex items-center justify-center">
               <div className="space-y-2 w-full">
                 {upcomingClasses.length > 0 ? (
-                  upcomingClasses.slice(0, 4).map((item) => (
+                  upcomingClasses.slice(0, 4).map((item,index) => (
                     <div
-                      key={item.id}
+                      key={index}
                       className="flex flex-col gap-1 h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100"
                     >
                       <span className="text-[#565656] text-sm font-bold">{item?.title}</span>

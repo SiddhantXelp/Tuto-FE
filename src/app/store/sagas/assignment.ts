@@ -64,7 +64,7 @@ function* getCompletedAssignmentEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setCompleteAssignment(null));
 
-        const response = yield call(completeAssignment, action.token, action.data, action.id);
+        const response = yield call(completeAssignment, action.token, action.data, action.id,action.studentId);
         yield put(setCompleteAssignment(response));
 
         yield put(setAssignmentLoading(false));

@@ -35,6 +35,7 @@ interface FormData {
   scheduleStartTime?: string;
   scheduleEndTime?: string;
   selectedOptions?: string[];
+  addGroupStudent?: string
 }
 
 const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
@@ -52,11 +53,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   const [tabValue, setTabValue] = useState('Create new class');
   const [showNewContent, setShowNewContent] = useState(false);
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents?.students || []);
-
-  const [devdata, setDevdata] = useState({
-    searchQuery: '',
-    filter: {}
-  });
 
   useEffect(() => {
     if (open) {
@@ -85,17 +81,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
       [name]: value
     }));
   };
-
-  const handleSelectChangedev = (name: string, value: any) => {
-    setDevdata((prevState) => ({
-      ...prevState,
-      filter: {
-        ...prevState.filter,
-        [name]: value
-      }
-    }));
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevFormData => ({
@@ -212,8 +197,8 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
           "name": formData.subject,
           "description": formData.description
         },
-        "studentGroupId": "10bee614-b67e-4d66-8a23-7bb140ae8900",
-        "scheduleId": "03159c49-cfcf-4592-9f8e-91c29c3b08c1"
+        "studentGroupId": "a6682603-902e-4e45-855c-1412ab089295",
+        "scheduleId": "66b69b7e-79bb-4890-b456-0a9ae9593f7d"
       }
       dispatch(getCreateclass(memberAuthToken, data))
     } else {
@@ -278,7 +263,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
               </div>
               <div>
-                <label className='block text-sm mb-2 text-[#707070]'>Search by name</label>
+                <label className='block texttext-sm mb-2 text-[#707070]'>Search by name</label>
               </div>
               <div className="w-full flex items-center bg-white border border-[#707070] h-10 md:h-12 rounded-lg p-2">
                 <input
@@ -289,18 +274,15 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                 />
                 <IoSearch className="text-gray-500" size={25} />
               </div>
-              <div className='mt-2 '>
-                {Selectoptions.map((option) => (
-                  <SelectMain
-                    key={option.name}
-                    label={option.label}
-                    name={option.name}
-                    options={option.options}
-                    value={devdata.filter[option.name]}
-                    onChange={(value) => handleSelectChangedev(option.name, value)}
-                    lablename={option.Optionlabel}
-                  />
-                ))}
+              <div className='mt-2 mb-2'>
+                <CustomDropDown
+                  label="Select Group"
+                  name="addGroupStudent"
+                  lablename=""
+                  options={optionsGroup}
+                  value={String(formData.addGroupStudent)}
+                  onChange={(e) => handleChange({ target: { name: 'addGroupStudent', value: e.target.value } })}
+                />
               </div>
 
               <span className='text-buttonGray '>Result</span>
@@ -328,10 +310,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                   )}
                 </div>
               </div>
-
-
-
-
               <button
                 onClick={() => setShowNewContent(false)}
                 className='bg-[#707070] w-full h-12 mt-4 text-white rounded-lg'
@@ -383,7 +361,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       onChange={(e) => handleChange({ target: { name: 'subject', value: e.target.value } })}
                     />
                   </div>
-                  {/* <div className='flex justify-end cursor-pointer' onClick={() => setShowNewContent(true)}><span className='text-[#6282FF] underline text-sm'>+ Add Student</span> </div> */}
+                  <div className='flex justify-end cursor-pointer' onClick={() => setShowNewContent(true)}><span className='text-[#6282FF] underline text-sm'>+ Add Student</span> </div>
                   <div className="mb-4">
                     {/* <div className="w-full md:w-1/2"> */}
                     <CustomDropDown

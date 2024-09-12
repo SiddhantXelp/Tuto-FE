@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { formattedDate } from "@/common/DateAndTimeCommon";
 import Spinner from '@/common/Spinner';
 import Pagination from 'react-js-pagination';
+import { BsDownload } from 'react-icons/bs';
 
 const PendingTable = () => {
   const dispatch = useAppDispatch();
@@ -44,8 +45,11 @@ const PendingTable = () => {
         students: assignment?.fullName,
         material: assignment?.assignment?.material,
         date: formattedDate(assignment?.assignment.date),
-        status: assignment?.assignment?.status,
+        status: assignment?.assignment?.status
+          ? assignment.assignment.status.charAt(0).toUpperCase() + assignment.assignment.status.slice(1)
+          : "",
         assignmentId: assignment?.assignment.id,
+        download:<BsDownload color="gray" size={13} />
       }));
   }, [assignmentData]);
 

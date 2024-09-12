@@ -14,7 +14,7 @@ import Spinner from "@/common/Spinner";
 import CommonModel from "@/common/CommonModel";
 import Swal from 'sweetalert2';
 import { formatDate } from '@/common/DateAndTimeCommon';
-
+import { data } from "./data";
 const MyFilesPage = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -45,17 +45,17 @@ const MyFilesPage = () => {
     }, [assignmentData]);
 
     useEffect(() => {
-        if (currentAssignmentId) {
+        if (currentAssignmentId && currentStudentId) {
             dispatch(getAssignmentById(token, String(currentAssignmentId), String(currentStudentId)));
         }
-    }, [dispatch, token, currentAssignmentId]);
+    }, [dispatch, token, currentAssignmentId, currentStudentId]);
 
 
     const handelCompleteAssignment = () => {
         const status = {
             status: "completed"
         }
-        dispatch(getCompleteAssignment(token, status, id));
+        dispatch(getCompleteAssignment(token, status, id, String(currentStudentId)));
     }
 
     useEffect(() => {
@@ -94,11 +94,15 @@ const MyFilesPage = () => {
         const result = getIndexByAssignmentAndStudent(currentAssignmentId, currentStudentId);
 
         if (result?.nextAssignment) {
-            const nextAssignmentId = result.nextAssignment.assignmentId;
-            const nextStudentId = result.nextAssignment.id;
+            const { assignmentId: nextAssignmentId, id: nextStudentId } = result.nextAssignment;
+
+            // Instead of waiting for the state update, directly push to the new route
+            router.push(`/assignments/viewAssignment/${nextAssignmentId}?studentId=${nextStudentId}`);
+
+            // Update state after routing
             setCurrentAssignmentId(nextAssignmentId);
             setCurrentStudentId(nextStudentId);
-            router.push(`/assignments/viewAssignment/${nextAssignmentId}?studentId=${nextStudentId}`);
+            setOpen(false)
         } else {
             Swal.fire({
                 title: 'Error!',
@@ -109,7 +113,21 @@ const MyFilesPage = () => {
         }
     };
 
-    console.log(":::::::::::::::getAssignmentResponse?.assignment", getAssignmentResponse?.fullName);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const nextPage = () => {
+        if (currentIndex < data.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
+    };
+
+    const previousPage = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
+    };
+
+
     return (
         <TabNavigator>
             {
@@ -141,7 +159,7 @@ const MyFilesPage = () => {
                             <img src="/profile.png" className="h-10 w-10 rounded-full" alt="Profile" />
                             <div className="ml-2 md:ml-5 flex-1">
                                 <h1 className="text-xs md:text-sm font-medium">{getAssignmentResponse?.fullName || "NA"}</h1>
-                                <h1 className="text-xs ">6th grade</h1>
+                                {/* <h1 className="text-xs ">6th grade</h1> */}
                             </div>
                             <div className="border-l border-black h-16 md:h-full mx-2 md:mx-4"></div>
                             <div className="ml-2 md:ml-3">
@@ -166,7 +184,7 @@ const MyFilesPage = () => {
                         <div className="flex justify-between">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Type</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">Written</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">N/A</h1>
                             </div>
                         </div>
                         <div className='border-b border-gray-300 mb-3'></div>
@@ -188,7 +206,7 @@ const MyFilesPage = () => {
                         <div className="flex justify-between">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Total marks</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">100</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">N/A</h1>
                             </div>
                         </div>
                         <div className='border-b border-gray-300 mb-3'></div>
@@ -197,30 +215,42 @@ const MyFilesPage = () => {
                         <div className="flex justify-between">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Marks gained</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">100</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">N/A</h1>
                             </div>
                         </div>
                         <div className='border-b border-gray-300 mb-3'></div>
 
                     </div>
 
+                    <div className="bg-gray-100 p-4 rounded-lg w-full md:w-2/4  h-auto flex flex-col items-center justify-center">
+                        {/* Image Display */}
+                        <img
+                            src={data[currentIndex].imageUrl}
+                            alt={`Homework ${currentIndex + 1}`}
+                            className="object-cover rounded-lg h-[700px] w-[500px]"
+                        />
 
-                    <div className="w-full md:w-2/4 flex flex-col items-center">
-                        <div className="bg-gray-100 p-4 rounded-lg w-full h-auto flex flex-col items-center justify-center">
-                            <img src="/homeWork.png" alt="Large Image" className="object-cover rounded-lg h-[700px] w-[500px]" />
+                        <div className="flex justify-between w-full mt-4">
+                            {/* View Question Paper Section */}
+                            <div className="flex items-center gap-2">
+                                <BsPencilSquare className="text-[#565656] text-base" />
+                                <h1 className="text-xs md:text-sm text-[#565656] cursor-pointer">View question paper</h1>
+                            </div>
 
-                            <div className="flex justify-between w-full mt-4">
-                                <div className="flex items-center gap-2">
-                                    <BsPencilSquare className="text-[#565656] text-base" />
-                                    <h1 className="text-xs md:text-sm text-[#565656] cursor-pointer">View question paper</h1>
-                                </div>
-                                <div className="flex items-center gap-2 border  border-[#707070] p-2 rounded-md w-28">
-                                    <h1 className="text-sm font-medium text-[#565656] mr-2">Page 2</h1>
-                                    <MdOutlineKeyboardArrowUp className="text-[#565656]" size={25} />
-
-                                </div>
-
-
+                            {/* Page Dropdown */}
+                            <div className="flex items-center gap-2 border border-[#707070] p-2 rounded-md">
+                                <select
+                                    value={currentIndex}
+                                    onChange={(e) => setCurrentIndex(Number(e.target.value))}
+                                    className="text-sm text-[#565656] bg-transparent outline-none"
+                                >
+                                    {data.map((_, index) => (
+                                        <option key={index} value={index} className="bg-gray-100 hover:bg-gray-200 text-[#565656] py-2"
+                                        >
+                                            Page {index + 1}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -229,16 +259,16 @@ const MyFilesPage = () => {
                     <div className="w-full md:w-1/4 flex flex-col space-y-4 p-4">
                         {/* Item List */}
                         <div className="bg-gray-100 p-4 rounded-lg flex flex-wrap justify-center gap-4">
-                            <div className="flex items-center justify-center w-1/4 md:w-1/6 p-2">
+                            <div className="flex items-center justify-center w-1/4 p-2">
                                 <LuPencilRuler size={25} className="text-gray-700" />
                             </div>
-                            <div className="flex items-center justify-center w-1/4 md:w-1/6 p-2">
+                            <div className="flex items-center justify-center w-1/6 p-2">
                                 <BsEraserFill size={25} className="text-gray-700" />
                             </div>
-                            <div className="flex items-center justify-center w-1/4 md:w-1/6 p-2">
+                            <div className="flex items-center justify-center w-1/6 p-2">
                                 <CiText size={25} className="text-gray-700" />
                             </div>
-                            <div className="flex items-center justify-center w-1/4 md:w-1/6 p-2">
+                            <div className="flex items-center justify-center w-1/6 p-2">
                                 <RiEditBoxFill size={25} className="text-gray-700" />
                             </div>
                         </div>
@@ -254,7 +284,7 @@ const MyFilesPage = () => {
 
                         {/* Page Input Section */}
                         <div>
-                            <h1 className="text-sm text-[#565656] font-semibold">Page 2</h1>
+                            <h1 className="text-sm text-[#565656] font-semibold"> Page {currentIndex + 1}</h1>
                             <input
                                 type="text"
                                 className="border border-gray-300 w-full rounded-md h-10 mt-2 p-2"
@@ -262,17 +292,29 @@ const MyFilesPage = () => {
                             />
                         </div>
 
-                        {/* Navigation Buttons */}
-                        <div className="flex flex-col md:flex-row justify-between gap-2">
-                            <button className="rounded-3xl border border-[#707070] w-full p-2 flex items-center justify-center gap-2">
+                        <div className="flex flex-col md:flex-row justify-between gap-2 mt-4">
+                            {/* Previous Button */}
+                            <button
+                                onClick={previousPage}
+                                className={`rounded-3xl border border-[#707070] w-full p-2 flex items-center justify-center gap-2 ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={currentIndex === 0}
+                            >
                                 <MdKeyboardArrowLeft color={"#565656"} />
-                                <span className='text-[#565656] text-sm'>Page 1</span>
+                                <span className='text-[#565656] text-sm'>Page {currentIndex === 0 ? 1 : currentIndex}</span>
                             </button>
-                            <button className="rounded-3xl border border-[#707070] w-full p-2 flex items-center justify-center gap-2 md:ml-3">
-                                <span className='text-[#565656] text-sm'>Page 3</span>
+
+                            {/* Next Button */}
+                            <button
+                                onClick={nextPage}
+                                className={`rounded-3xl border border-[#707070] w-full p-2 flex items-center justify-center gap-2 md:ml-3 ${currentIndex === data.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={currentIndex === data.length - 1}
+                            >
+                                <span className='text-[#565656] text-sm'>Page {currentIndex + 2 > data.length ? data.length : currentIndex + 2}</span>
                                 <MdKeyboardArrowRight color={"#565656"} />
                             </button>
                         </div>
+
+
                         {/* Total and Finish Paper Section */}
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                             {/* Total Marks Section */}
