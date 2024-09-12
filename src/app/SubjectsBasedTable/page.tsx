@@ -36,7 +36,7 @@ const SubjectsBasedTable: React.FC = () => {
   const [formData, setFormData] = useState({});
    const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
+    setFormData((prevState) => ({ 
       ...prevState,
       [name]: value,
     }));
