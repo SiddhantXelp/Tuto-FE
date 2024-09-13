@@ -3,23 +3,24 @@ import { TiGroup } from "react-icons/ti";
 import { BiSolidBarChartAlt2 } from "react-icons/bi";
 import { FaRegClock, FaBook } from "react-icons/fa";
 import Image from 'next/image';
-import Table from "../components/table";
 import { dashBordTableColumns, dashBordTableData } from './student/data';
 import { MdKeyboardArrowDown } from "react-icons/md";
-import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
+import React, { lazy, useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
-import Stepper from "@/common/Stepper";
 import { FiPlus } from "react-icons/fi";
-import DialogComponent from '@/common/Card';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClasses } from '@/app/store/actions/classes';
 import { getStudents } from '@/app/store/actions/student';
 import { GoDotFill } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
+const Table = lazy(() => import('../components/table'));
+const Calendar = lazy(() => import('react-calendar'));
+const Stepper = lazy(() => import('@/common/Stepper'));
+const DialogComponent = lazy(() => import('@/common/Card'));
 
 
 interface UserInfo {
@@ -283,17 +284,17 @@ export default function Home() {
 
         </div>
         <div className="mt-8">
-          <div className="bg-white shadow-2xl p-4 rounded-lg md:w-[384px] md:h-[367px]">
-            <Calendar
-              value={now}
-              locale="en-US"
-              showNavigation={false}
-              formatShortWeekday={formatShortWeekday}
-              className="h-full w-full rounded-lg  border-0"
-            />
-          </div>
+        <div className="bg-white shadow-2xl p-4 rounded-lg md:w-[384px] md:h-[367px]">
+        <Calendar
+         value={now}
+         locale="en-US"
+         showNavigation={false}
+         formatShortWeekday={formatShortWeekday}
+         className="h-full w-full rounded-lg !border-0" 
+         tileClassName={() => 'border-none'} 
+         />
         </div>
-
+        </div>
       </div>
 
       <div className="w-full h-auto mt-2">
