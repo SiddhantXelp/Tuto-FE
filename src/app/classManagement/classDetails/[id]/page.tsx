@@ -35,7 +35,7 @@ const ClassDetails = () => {
     }, [id]);
 
 
-    const combinedDateTime = moment(viewClassData?.scheduleDate).format('YYYY-MM-DD') + ' ' + viewClassData?.classStartTime;
+    const combinedDateTime = moment(viewClassData?.classSchedule?.scheduleDate).format('YYYY-MM-DD') + ' ' + viewClassData?.classSchedule?.classStartTime;
 
     const formattedDateTime = moment(combinedDateTime, 'YYYY-MM-DD HH:mm').format('h:mm A, MMM D');
 
@@ -63,7 +63,7 @@ const ClassDetails = () => {
     };
 
 
-    const duration = calculateDuration(viewClassData?.classStartTime, viewClassData?.classEndTime);
+    const duration = calculateDuration(viewClassData?.classSchedule?.classStartTime, viewClassData?.classSchedule?.classEndTime);
 
     return (
         <TabNavigator>

@@ -59,7 +59,17 @@ export const setStudentGroup = (getstudentgroup: any) => ({
 
 
 
+export const getAddStudentGroup= (token: string, data: any) => ({
+  type: actionTypes.GET_STUDENT_GROUP_ADD,
+  token,
+  data
+});
 
+
+export const setAddStudentGroup = (addStudentGroup: any) => ({
+  type: actionTypes.SET_STUDENT_GROUP_ADD,
+  addStudentGroup,
+});
 
 
 

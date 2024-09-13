@@ -2,9 +2,9 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes/classes';
 
-import { setClasses, setClassesError, setClassesLoading, setCreateClasses, setStudentGroup, setClassById } from '../actions/classes';
+import { setClasses, setClassesError, setClassesLoading, setCreateClasses, setStudentGroup, setClassById, setAddStudentGroup } from '../actions/classes';
 
-import { getClasses, createClass, getStudentGroup, getClassesById } from '../../api/classes.service';
+import { getClasses, createClass, getStudentGroup, getClassesById, addStudentGroup } from '../../api/classes.service';
 
 function* getClassesEffect(action: any): Generator<any, any, any> {
   try {
@@ -74,9 +74,31 @@ function* getCreateClassesByIdEffect(action: any): Generator<any, any, any> {
   }
 }
 
+
+function* getAddStudentGroupEffect(action: any): Generator<any, any, any> {
+
+  try {
+    yield put(setClassesLoading(true));
+    yield put(setClassesError(''));
+    yield put(setAddStudentGroup(null));
+
+    const response = yield call(addStudentGroup, action.token, action.data);
+    console.log("::::::::::::response", response);
+    yield put(setAddStudentGroup(response));
+
+    yield put(setClassesLoading(false));
+  } catch (e: any) {
+    yield put(setClassesLoading(false));
+    yield put(setClassesError(e.response?.data?.message));
+  }
+}
+
+
 export function* ClassesSaga() {
   yield takeEvery(actionTypes.GET_CLASSES, getClassesEffect);
   yield takeEvery(actionTypes.GET_CREATE_CLASS, getCreateClassesEffect);
   yield takeEvery(actionTypes.GET_STUDENT_GROUP, getStudentGroupEffect);
-  yield takeEvery(actionTypes.GET_CLASSES_ID, getCreateClassesByIdEffect)
+  yield takeEvery(actionTypes.GET_CLASSES_ID, getCreateClassesByIdEffect);
+  yield takeEvery(actionTypes.GET_STUDENT_GROUP_ADD, getAddStudentGroupEffect)
+
 }

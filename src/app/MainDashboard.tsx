@@ -33,27 +33,6 @@ interface UserInfo {
   picture: string;
 }
 
-type ClassData = {
-  id: string;
-  materialUrl: string;
-  subject: {
-    name: string;
-    description: string;
-  };
-  studentGroupId: string;
-  scheduleId: string;
-  platform: string;
-  title: string;
-  videoCallLink: string;
-  repeatClass: string[];
-  scheduleDate: string;
-  classStartTime: string;
-  classEndTime: string;
-  group: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
 export default function Home() {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -70,7 +49,7 @@ export default function Home() {
   const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
-  const eventDates = viewClassData.map((date: any) => new Date(date.scheduleDate || date));
+  const eventDates = viewClassData.map((date: any) => new Date(date?.classSchedule?.scheduleDate || date));
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
 
@@ -108,7 +87,7 @@ export default function Home() {
           : "",
         assignmentId: assignment?.assignment.id,
         DateofSubmission: formattedDate(assignment?.assignment?.date),
-        download:<BsDownload color="gray" size={13} />
+        download: <BsDownload color="gray" size={13} />
 
       }));
   }, [assignmentData]);
@@ -122,6 +101,7 @@ export default function Home() {
     upcomingClasses,
 
   } = useMemo(() => processClassData(viewClassData, currentDate), [viewClassData, currentDate]);
+
 
 
 
@@ -234,7 +214,7 @@ export default function Home() {
               <span className="text-[#565656] text-xs">View All</span>
             </Link>
           </div>
-          <Table columns={dashBordTableColumns} data={assignment.slice(0,5)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`)} />
+          <Table columns={dashBordTableColumns} data={assignment.slice(0, 5)} includeCheckbox={false} border={"rounded-2xl"} onRowClick={(rowData) => router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`)} />
 
         </div>
         <div className="mt-8">
@@ -325,14 +305,14 @@ export default function Home() {
             <div className="bg-white shadow-lg rounded-xl p-4 h-full flex items-center justify-center">
               <div className="space-y-2 w-full">
                 {upcomingClasses.length > 0 ? (
-                  upcomingClasses.slice(0, 4).map((item,index) => (
+                  upcomingClasses.slice(0, 4).map((item, index) => (
                     <div
                       key={index}
                       className="flex flex-col gap-1 h-auto w-auto bg-white border border-[#D1D1D1] rounded-lg p-2 opacity-100"
                     >
                       <span className="text-[#565656] text-sm font-bold">{item?.title}</span>
                       <span className="text-[#565656] text-sm">
-                        {item?.classStartTime} - {item?.classEndTime}
+                        {item?.classSchedule?.classStartTime} - {item?.classSchedule?.classEndTime}
                       </span>
                     </div>
                   ))

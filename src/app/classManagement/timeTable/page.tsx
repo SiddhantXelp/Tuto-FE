@@ -159,9 +159,9 @@ const TimeTable: React.FC = () => {
 
   const formatEventData = (classes: any[]): Event[] => {
     return classes.map((cls) => {
-      const startDate = moment(cls.scheduleDate).format('YYYY-MM-DD');
-      const startTime = cls.classStartTime;
-      const endTime = cls.classEndTime;
+      const startDate = moment(cls?.classSchedule?.scheduleDate).format('YYYY-MM-DD');
+      const startTime = cls?.classSchedule?.classStartTime;
+      const endTime = cls?.classSchedule?.classEndTime;
       const start = `${startDate}T${startTime}:00`;
       const end = `${startDate}T${endTime}:00`;
       // const eventText = `${cls.title} - ${cls.subject.description}`;

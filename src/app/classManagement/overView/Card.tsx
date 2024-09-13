@@ -54,21 +54,21 @@ const OverviewTabContent: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Icon icon="mdi:clock" width="16" height="16" className="text-black" />
-                  <p className="text-xs text-black">{formatTime(card.classStartTime) || "NA"} to {formatTime(card.classEndTime) || "NA"}</p>
+                  <p className="text-xs text-black">{formatTime(card?.classSchedule?.classStartTime) || "NA"} to {formatTime(card?.classSchedule?.classEndTime) || "NA"}</p>
                 </div>
                 <MdModeEdit size={16} className="text-black cursor-pointer" onClick={() => router.push(`/classManagement/classDetails/${card?.id}`)} />
               </div>
               <div className="flex items-center space-x-2">
                 <Icon icon="carbon:document-subject" width="12" height="12" className="text-black" />
-                <p className="text-xs text-black">{card.subject?.name || "NA"}</p>
+                <p className="text-xs text-black">{card?.subject?.name || "NA"}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Icon icon="uis:calender" width="12" height="12" className="text-black" />
-                <p className="text-xs text-black">{formattedDate(card.scheduleDate) || "NA"}</p>
+                <p className="text-xs text-black">{formattedDate(card?.classSchedule?.scheduleDate) || "NA"}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Icon icon="ph:student-bold" width="12" height="12" className="text-black" />
-                <p className="text-xs text-black">{card.count || 0} student</p>
+                <p className="text-xs text-black">{card?.count || 0} student</p>
               </div>
               <div
                 className="bg-buttonGray rounded-full flex items-center justify-center cursor-pointer mt-1"
@@ -117,7 +117,7 @@ const OverviewTabContent: React.FC = () => {
             </div>
           </div>
 
-          <Table view={month} />
+          <Table view={month}/>
         </div>
       </div>
     </>

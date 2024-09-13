@@ -5,16 +5,15 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxes';
 import InputMain from './InputMain';
-import SelectMain from './SelectMain';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getStudentGroup, getCreateclass, setCreateClasses } from '@/app/store/actions/classes';
 import CustomDropDown from './CustomDropDown';
 import Spinner from "../common/Spinner"
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2'
-import { buttons, Selectoptions, Tabbuttons, options, groups } from './commonData';
-import { IoSearch } from 'react-icons/io5';
+import { buttons, TabButtons, options, groups } from './commonData';
 import { getStudents } from '@/app/store/actions/student';
+import AddStudentGroup from "./CreateClass/AddStudetGroup"
 interface DialogComponentProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -52,7 +51,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   const isError = useAppSelector((state: { classes: any }) => state.classes.setClassesError);
   const [tabValue, setTabValue] = useState('Create new class');
   const [showNewContent, setShowNewContent] = useState(false);
-  const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents?.students || []);
+  const students = useAppSelector((state: { student: any }) => state.student?.getStudents?.students || []);
 
   useEffect(() => {
     if (open) {
@@ -63,9 +62,8 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   useEffect(() => {
     if (showNewContent) {
       const page = "1";
-      const limit = "100";
+      const limit = "10";
       dispatch(getStudents(memberAuthToken, page, limit));
-
     }
   }, [dispatch, memberAuthToken, showNewContent]);
 
@@ -76,11 +74,12 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
+    setFormData(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevFormData => ({
@@ -184,21 +183,22 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     e.preventDefault();
     if (validateFormFinal() && validateForm()) {
       const data = {
-        "title": formData.classTitle,
-        "group": formData.selectedGroup,
-        "materialUrl": formData.material,
-        "platform": formData.typeMeeting[0],
-        "scheduleDate": formData.startDate,
-        "classStartTime": formData.startTime,
-        "classEndTime": formData.endTime,
-        "videoCallLink": formData.videoLink,
-        "repeatClass": formData.selectedOptions,
-        "subject": {
-          "name": formData.subject,
-          "description": formData.description
+        title: formData.classTitle,
+        groups: formData.selectedGroup,
+        materialUrl: formData.material,
+        platform: formData.typeMeeting[0],
+        videoCallLink: formData.videoLink,
+        repeatClass: formData.selectedOptions,
+        subject: {
+          name: formData.subject,
+          description: formData.description
         },
-        "studentGroupId": "a6682603-902e-4e45-855c-1412ab089295",
-        "scheduleId": "66b69b7e-79bb-4890-b456-0a9ae9593f7d"
+        classSchedule: {
+          scheduleDate: formData.startDate,
+          classStartTime: formData.startTime,
+          classEndTime: formData.endTime,
+        },
+        scheduleId: "66b69b7e-79bb-4890-b456-0a9ae9593f7d"
       }
       dispatch(getCreateclass(memberAuthToken, data))
     } else {
@@ -206,11 +206,19 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }
   }
 
-  const optionsGroup = classesData?.groups?.map((group: any) => ({
+  const optionsAddGroup = classesData?.data?.map((group: any) => ({
     id: group.id,
     title: group.title
   })) ?? [];
 
+  const optionsGroup = [
+    // { id: 'Choose students', title: 'Choose students' }, 
+    { id: 'select-all', title: 'Select All' },
+    ...(classesData?.data?.map((group: any) => ({
+      id: group.id,
+      title: group.title
+    })) ?? [])
+  ];
   const transformedSubjectOptions = groups?.map((group: any) => ({
     id: group.id,
     title: group.title
@@ -236,92 +244,79 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     }
   }, [isError]);
 
-  const [searchInput, setSearchInput] = useState('');
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState<any[]>([]);
 
-  const handleInputChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value);
+  const handleSearchChange = (e: any) => {
+    const searchValue = e.target.value.toLowerCase();
+    const filtered = students.filter((student: any) =>
+      student.fullName.toLowerCase().includes(searchValue)
+    );
+    setFilteredStudents(filtered);
   };
 
-  const filteredStudents = viewStudentData.filter((student: any) =>
-    student.fullName.toLowerCase().includes(searchInput.toLowerCase())
-  );
+  const handleSelectStudent = (student: any) => {
+    const isSelected = selectedStudents.some(
+      (selected) => selected.id === student.id
+    );
+    if (isSelected) {
+      setSelectedStudents(
+        selectedStudents.filter((selected) => selected.id !== student.id)
+      );
+    } else {
+      setSelectedStudents([...selectedStudents, student]);
+    }
+  };
+
+  const handelAddStudent = (finalSelection: any) => {
+    console.log("Selected Student:", finalSelection);
+    setShowNewContent(false);
+  }
+
+  const handleAddStudentsToGroup = () => {
+    if (formData.addGroupStudent) {
+      const updatedStudents = selectedStudents.map(student => ({
+        ...student,
+        group: formData.addGroupStudent
+      }));
+      setSelectedStudents(updatedStudents);
+    }
+  };
+
+  const handleSelectAll = () => {
+    const allGroupTitles = optionsGroup
+      .filter((group: any) => group.id !== 'select-all')
+      .map((group: any) => group.id);
+
+    handleChange({ target: { name: 'selectedGroup', value: allGroupTitles } });
+  };
 
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} className="fixed inset-0 z-10">
-      {
-        isLoading ? <Spinner /> : ""
-      }
-
+    <Dialog open={open} onClose={() => { setOpen(false); setShowNewContent(false) }} className="fixed inset-0 z-10">
+      {isLoading ? <Spinner /> : ""}
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
       <div className="fixed inset-0 z-10 flex items-center justify-center">
         {showNewContent ? (
           <DialogPanel className="bg-white w-full md:w-1/2 lg:w-1/3 h-auto rounded-2xl overflow-hidden">
-            <div className='p-12'>
-              <div className='flex justify-center items-center'>
-                <span className='font-medium text-xl text-[#707070] block mb-4'> +Add student</span>
+            <AddStudentGroup
+              isLoading={isLoading}
+              filteredStudents={filteredStudents}
+              selectedStudents={selectedStudents}
+              formData={formData}
+              handleSearchChange={handleSearchChange}
+              handleSelectStudent={handleSelectStudent}
+              handleChange={(e: any) => handleChange(e)}
+              handelAddStudent={handelAddStudent}
+              optionsGroup={optionsAddGroup}
+              handleAddStudentsToGroup={handleAddStudentsToGroup}
 
-              </div>
-              <div>
-                <label className='block texttext-sm mb-2 text-[#707070]'>Search by name</label>
-              </div>
-              <div className="w-full flex items-center bg-white border border-[#707070] h-10 md:h-12 rounded-lg p-2">
-                <input
-                  type="text"
-                  onChange={handleInputChangeSearch}
-                  placeholder="Enter name here"
-                  className="w-full h-auto bg-transparent outline-none px-2"
-                />
-                <IoSearch className="text-gray-500" size={25} />
-              </div>
-              <div className='mt-2 mb-2'>
-                <CustomDropDown
-                  label="Select Group"
-                  name="addGroupStudent"
-                  lablename=""
-                  options={optionsGroup}
-                  value={String(formData.addGroupStudent)}
-                  onChange={(e) => handleChange({ target: { name: 'addGroupStudent', value: e.target.value } })}
-                />
-              </div>
-
-              <span className='text-buttonGray '>Result</span>
-              <div className="border border-buttonGray rounded-md overflow-hidden mt-2">
-                <div className="max-h-64 overflow-y-auto">
-                  {filteredStudents.length > 0 ? (
-                    <table className="w-full">
-                      <tbody>
-                        {filteredStudents.map((student: any, index: number) => (
-                          <tr
-                            key={index}
-                            className={`w-full h-12 border-b border-buttonGray hover:bg-[#E2E2E2]`}
-                          >
-                            <td className="px-4 py-2 text-buttonGray text-sm">{index + 1}. {student.fullName}</td>
-                            <td className="px-4 py-2 text-buttonGray text-sm">{student.grade}</td>
-                            <td className="px-4 py-2 text-buttonGray text-sm">{student.group}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  ) : (
-                    <div className="p-4 text-center text-buttonGray text-sm">
-                      Student Not Found
-                    </div>
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={() => setShowNewContent(false)}
-                className='bg-[#707070] w-full h-12 mt-4 text-white rounded-lg'
-              >
-                Add
-              </button>
-            </div>
+            />
           </DialogPanel>
         ) : (
           <DialogPanel className="bg-white w-full md:w-1/2 lg:w-1/3 h-auto rounded-2xl overflow-hidden">
             <div className="flex flex-col md:flex-row p-0 gap-0">
-              {Tabbuttons.map((item) => (
+              {TabButtons.map((item) => (
                 <button
                   key={item.id}
                   className={`h-14 flex-1 ${tabValue === item.name ? 'bg-white' : 'bg-[#ECEAEA]'
@@ -335,10 +330,9 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                 </button>
               ))}
             </div>
-
             <div className='p-5'>
               {tabValue === 'Create new class' && (
-                <form>
+                <>
                   <div className="mb-4">
                     <label className="block text-[#707070] text-[12px] md:text-[14px] mb-0">Class title</label>
                     <InputMain
@@ -363,7 +357,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                   </div>
                   <div className='flex justify-end cursor-pointer' onClick={() => setShowNewContent(true)}><span className='text-[#6282FF] underline text-sm'>+ Add Student</span> </div>
                   <div className="mb-4">
-                    {/* <div className="w-full md:w-1/2"> */}
                     <CustomDropDown
                       label="Select Group"
                       name="selectedGroup"
@@ -371,8 +364,9 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                       options={optionsGroup}
                       value={String(formData.selectedGroup)}
                       onChange={(e) => handleChange({ target: { name: 'selectedGroup', value: e.target.value } })}
+                      handleSelectAll={handleSelectAll}
+
                     />
-                    {/* </div> */}
                   </div>
                   <div className="mb-4">
                     <label className="block text-[#707070] text-[12px] md:text-[14px] mb-0">Material Url</label>
@@ -393,7 +387,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                   >
                     Next
                   </button>
-                </form>
+                </>
               )}
               {tabValue === 'Virtual platform' && (
                 <>
@@ -449,8 +443,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
                     </div>
                   </div>
 
-
-
                   <div className="mt-5">
                     <label className="block text-[#707070] text-[12px] md:text-[14px]">Video call link</label>
                     <InputMain
@@ -482,7 +474,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
               )}
             </div>
           </DialogPanel>
-
         )}
       </div>
     </Dialog>

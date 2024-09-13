@@ -13,9 +13,19 @@ interface SelectMainProps {
     options: Option[];
     value: string;
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+    handleSelectAll: () => void; // New prop to handle "Select All"
 }
 
-const SelectMain: React.FC<SelectMainProps> = ({ label, name, options, lablename, value, onChange }) => {
+const SelectMain: React.FC<SelectMainProps> = ({ label, name, options, value, onChange, handleSelectAll }) => {
+    const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const selectedValue = e.target.value;
+        if (selectedValue === 'select-all') {
+            handleSelectAll(); // Trigger "Select All"
+        } else {
+            onChange(e); // Handle normal change
+        }
+    };
+
     return (
         <div className='relative mb-0'>
             <label className="block text-[#707070] text-[14px] mb-2">{label}</label>
@@ -23,14 +33,11 @@ const SelectMain: React.FC<SelectMainProps> = ({ label, name, options, lablename
                 <select
                     name={name}
                     value={value}
-                    onChange={onChange}
+                    onChange={handleSelectChange}
                     className="block w-full h-10 md:h-12 p-2 pr-8 text-buttonGray bg-white border border-[#707070] rounded-[8px] shadow-sm focus:ring-indigo-500 focus:border-gray-300 text-sm md:text-base opacity-100 appearance-none"
                 >
-                    {/* <option value="" disabled={!value} className='text-sm md:text-base block text-[#707070] text-[14px] mb-2'>
-                        {lablename}
-                    </option> */}
                     {options.map(option => (
-                        <option key={option.id} value={option.title}>
+                        <option key={option.id} value={option.id}>
                             {option.title}
                         </option>
                     ))}

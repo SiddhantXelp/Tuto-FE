@@ -82,9 +82,9 @@ export const CategoriesPage: React.FC = () => {
         classTitle: classData?.title,
         subject: classData.subject.name,
         student: "0",
-        date: formattedDate(classData?.scheduleDate),
-        time: `${formatTime(classData.classStartTime)} - ${formatTime(classData.classEndTime)}`,
-        duration: calculateDuration(classData?.classStartTime, classData?.classEndTime),
+        date: formattedDate(classData?.classSchedule?.scheduleDate),
+        time: `${formatTime(classData.classSchedule?.classStartTime)} - ${formatTime(classData?.classSchedule?.classEndTime)}`,
+        duration: calculateDuration(classData?.classSchedule?.classStartTime, classData?.classSchedule?.classEndTime),
         assignment: classData?.materialUrl,
         material: (
           <a href={classData.materialUrl} download>

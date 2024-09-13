@@ -137,6 +137,7 @@
 // export default Table;
 
 import React, { useState } from 'react';
+import { BsDownload } from 'react-icons/bs';
 
 interface Column {
   header: string;
@@ -276,10 +277,19 @@ const Table: React.FC<Props> = ({
                 <td
                   key={colIndex}
                   className="px-6 py-3 text-sm text-gray-500 h-[40px]"
-                  onClick={() => handleRowClick(item)} // Row click handler
+                  onClick={() => handleRowClick(item)}
                 >
                   {column.isCheckbox ? (
                     <input type="checkbox" />
+                  ) : column.key === 'download' ? (
+                    <a
+                      href={"./homework1.jpg"}
+                      download={"./homework1.jpg"}
+                      style={{ textDecoration: 'none' }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <BsDownload color="gray" size={13} style={{ cursor: 'pointer' }} />
+                    </a>
                   ) : (
                     item[column.key] || 'NA'
                   )}

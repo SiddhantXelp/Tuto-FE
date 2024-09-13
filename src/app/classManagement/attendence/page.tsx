@@ -385,8 +385,8 @@ const Attendance: React.FC = () => {
         classTitle: classData?.title,
         subject: classData.subject.name,
         student: "Raj",
-        date: formattedDate(classData?.scheduleDate),
-        time: formatTime(classData.classStartTime),
+        date: formattedDate(classData?.classSchedule?.scheduleDate),
+        time: formatTime(classData?.classSchedule?.classStartTime),
         duration: "1hr",
         assignment: classData?.materialUrl
 

@@ -36,6 +36,7 @@ const PendingTable = () => {
     setCurrentPage(pageNumber);
   };
 
+
   const assignment = useMemo(() => {
     return (assignmentData || [])
       .map((assignment: any) => ({
@@ -49,7 +50,7 @@ const PendingTable = () => {
           ? assignment.assignment.status.charAt(0).toUpperCase() + assignment.assignment.status.slice(1)
           : "",
         assignmentId: assignment?.assignment.id,
-        download:<BsDownload color="gray" size={13} />
+        download: <BsDownload color="gray" size={13} />
       }));
   }, [assignmentData]);
 

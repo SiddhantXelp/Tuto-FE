@@ -38,7 +38,7 @@ export const Selectoptions = [
 ]
 
 
-export const Tabbuttons: ButtonItem[] = [
+export const TabButtons: ButtonItem[] = [
   { id: 1, name: 'Create new class' },
   { id: 2, name: 'Virtual platform' },
 ];
@@ -46,27 +46,27 @@ export const Tabbuttons: ButtonItem[] = [
 
 export const groups = [
   {
-    id: "56be1cdb-b891-4f74-8062-8dfc200b30f5",
+    id: "Select Subject",
     title: "Select Subject"
   },
   {
-    id: "68b1b474-3120-4c44-af88-2a7fdd70723d",
+    id: "English",
     title: "English"
   },
   {
-    id: "faecf314-5ea4-4536-adac-ef0343161e21",
+    id: "Science",
     title: "Science"
   },
   {
-    id: "d8b5e2f4-9d9d-4f42-9d5e-2c8b8a4f2b70",
+    id: "Mathematics",
     title: "Mathematics"
   },
   {
-    id: "3bfa20f7-905b-4c39-9d21-1b2c8b7c4f90",
+    id: "History",
     title: "History"
   },
   {
-    id: "7f8c2a5b-914d-4f4f-89a2-4e6f2b8e5a8c",
+    id: "Geography",
     title: "Geography"
   }
 ];
