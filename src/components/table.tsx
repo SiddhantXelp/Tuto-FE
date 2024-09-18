@@ -154,6 +154,8 @@ interface Props {
   onCheckboxChange?: (selectedIds: string[]) => void; // Pass selected IDs
   showRowColor?: boolean;
   border: String;
+  onDownloadClick?: (rowData: any) => void; // Pass row data without ID
+
 }
 
 const Table: React.FC<Props> = ({
@@ -164,6 +166,7 @@ const Table: React.FC<Props> = ({
   onCheckboxChange, // New prop for handling checkbox selections
   showRowColor,
   border,
+  onDownloadClick
 }) => {
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
@@ -175,6 +178,13 @@ const Table: React.FC<Props> = ({
       onRowClick(rowData);
     }
   };
+
+  const handelDownloadFile = (rowData: any) => {
+    if (onDownloadClick) {
+      onDownloadClick(rowData);
+    }
+
+  }
 
   // Handle individual row checkbox click
   const handleCheckboxChange = (id: string) => {
@@ -282,11 +292,10 @@ const Table: React.FC<Props> = ({
                   {column.isCheckbox ? (
                     <input type="checkbox" />
                   ) : column.key === 'download' ? (
+                    // <div onClick={() => handelDownloadFile(item)}></div>
                     <a
-                      href={"./homework1.jpg"}
-                      download={"./homework1.jpg"}
-                      style={{ textDecoration: 'none' }}
-                      onClick={(e) => e.stopPropagation()}
+                      style={{ textDecoration: 'none',width:"200px" }}
+                      onClick={(e) => { e.stopPropagation(); handelDownloadFile(item) }}
                     >
                       <BsDownload color="gray" size={13} style={{ cursor: 'pointer' }} />
                     </a>

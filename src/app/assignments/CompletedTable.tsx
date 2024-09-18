@@ -96,6 +96,7 @@ import { formattedDate } from "@/common/DateAndTimeCommon";
 import Spinner from '@/common/Spinner';
 import Pagination from 'react-js-pagination'; // Import react-js-pagination
 import { BsDownload } from 'react-icons/bs';
+import { generatePdf } from '@/common/AssignmentReportDownload';
 
 const PendingTable = () => {
   const dispatch = useAppDispatch();
@@ -137,7 +138,9 @@ const PendingTable = () => {
           ? assignment.assignment.status.charAt(0).toUpperCase() + assignment.assignment.status.slice(1)
           : "",
         assignmentId: assignment?.assignment.id,
-        download:<BsDownload color="gray" size={13} />
+        download: <BsDownload color="gray" size={13} />,
+        totalMarks: assignment?.assignment?.totalMarks,
+        marksGained: assignment?.assignment?.marksGained
 
       }));
   }, [assignmentData]);
@@ -145,6 +148,22 @@ const PendingTable = () => {
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber); // Update current page state
   };
+
+
+  const handelDownload = (rowData: any) => {
+    const data = {
+      studentName: rowData?.students,
+      grade: "N/A",
+      subject: rowData?.subject,
+      totalMarks: rowData?.totalMarks || 0,
+      marksGained: rowData?.marksGained || 0,
+      submittedDate: rowData?.date,
+      dueDate: rowData?.date
+    };
+    generatePdf(data);
+  }
+
+
 
   return (
     <div className='h-full'>
@@ -155,6 +174,8 @@ const PendingTable = () => {
         includeCheckbox={false}
         onRowClick={handleRowClick}
         border={"rounded-b-2xl rounded-tr-2xl"}
+        onDownloadClick={handelDownload}
+
       />
       <div className="flex justify-center mt-4">
         <Pagination

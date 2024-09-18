@@ -23,7 +23,7 @@ const ClassDetails = () => {
 
     const params = useParams();
     const dispatch = useAppDispatch();
-    const viewClassData = useAppSelector((state: { classes: any }) => state.classes.ClassById);
+    const viewClassData = useAppSelector((state: { classes: any }) => state.classes.ClassById?.data[0]);
     const id = params.id
     const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
@@ -67,7 +67,7 @@ const ClassDetails = () => {
 
     return (
         <TabNavigator>
-            <StartClassDialog open={open} setOpen={setOpen} />
+            <StartClassDialog open={open} setOpen={setOpen} classLink={viewClassData?.videoCallLink} />
 
             <div className="m-5  h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md mt-5 sm:h-full">
                 <div className="flex justify-between items-center border-b border-gray-300 pb-2 m-2">
@@ -188,17 +188,19 @@ const ClassDetails = () => {
                                 </thead>
 
                                 <tbody>
-                                    {students.map((student, index) => (
+                                    {viewClassData && viewClassData?.students.map((student: any, index: any) => (
                                         <tr key={index} className="border-b p-5">
-                                            <td className="py-5 px-4 font-normal text-[#565656]">{student.name}</td>
-                                            <td className="py-5 px-4 font-normal text-[#565656]">{student.grade}</td>
-                                            <td className="py-5 px-4 font-normal text-[#565656]">{student.attendance}</td>
-                                            <td className="py-5 px-4 font-normal text-[#565656]">{student.parentInfo}</td>
-                                            <td className="py-5 px-4 font-normal text-[#565656]">{student.group}</td>
-                                            <td className="py-5 px-4 font-normal text-[#565656]">{student.assignment}</td>
-                                            <td className="py-5 px-4 font-normal text-[#565656]">{student.remark}</td>
+                                            <td className="py-5 px-4 font-normal text-[#565656]">{student?.studentFullName || "N/A"}</td>
+                                            <td className="py-5 px-4 font-normal text-[#565656]">{student?.grade || "N/A"}</td>
+                                            <td className="py-5 px-4 font-normal text-[#565656]">{student?.attendance || "N/A"}</td>
+                                            <td className="py-5 px-4 font-normal text-[#565656]">{student?.parentInfo || "N/A"}</td>
+                                            <td className="py-5 px-4 font-normal text-[#565656]">{student?.groupTitle || "N/A"}</td>
+                                            <td className="py-5 px-4 font-normal text-[#565656]">{student?.assignment || "N/A"}</td>
+                                            <td className="py-5 px-4 font-normal text-[#565656]">{student?.remark || "N/A"}</td>
                                         </tr>
                                     ))}
+
+                                    {/* { viewClassData.length > 0 && <div>There is no any student added in this class</div>} */}
                                 </tbody>
                             </table>
                             <span className="text-xs md:text-sm font-semibold text-[#565656]"><IoMdPersonAdd size={20} /></span>

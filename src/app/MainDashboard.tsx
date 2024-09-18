@@ -40,23 +40,21 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const [scheduleModel, setScheduleModel] = useState(false);
   //Loading Variables
-  const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
-  const studentLoading = useAppSelector((state: { student: any }) => state.student.loading);
-  const assignmentLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
+  const classLoading = useAppSelector((state: { classes: any }) => state?.classes?.setClassesLoading);
+  const studentLoading = useAppSelector((state: { student: any }) => state?.student?.loading);
+  const assignmentLoading = useAppSelector((state: { assignment: any }) => state?.assignment?.loading);
   //Data Variables
-  const viewClassData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data || []);
+  const viewClassData = useAppSelector((state: { classes: any }) => state?.classes?.setClasses?.data || []);
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
-  const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
-  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+  const assignmentData = useAppSelector((state: { assignment: any }) => state?.assignment?.setAssignments?.data || []);
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state?.auth.login?.token);
 
   const eventDates = viewClassData.map((date: any) => new Date(date?.classSchedule?.scheduleDate || date));
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
+  const imageUrl = userInfo && userInfo?.picture ? userInfo?.picture : "/profile.png";
 
   useEffect(() => {
   }, [viewClassData]);
-
-
 
   useEffect(() => {
     if (!open) {
@@ -79,13 +77,13 @@ export default function Home() {
   const assignment = useMemo(() => {
     return (assignmentData || [])
       .map((assignment: any) => ({
-        id: assignment.id,
+        id: assignment?.id,
         subject: assignment?.assignment?.subject,
         student: assignment?.fullName,
         status: assignment?.assignment?.status
-          ? assignment.assignment.status.charAt(0).toUpperCase() + assignment.assignment.status.slice(1)
+          ? assignment?.assignment?.status.charAt(0).toUpperCase() + assignment?.assignment?.status.slice(1)
           : "",
-        assignmentId: assignment?.assignment.id,
+        assignmentId: assignment?.assignment?.id,
         DateofSubmission: formattedDate(assignment?.assignment?.date),
         download: <BsDownload color="gray" size={13} />
 
@@ -101,9 +99,6 @@ export default function Home() {
     upcomingClasses,
 
   } = useMemo(() => processClassData(viewClassData, currentDate), [viewClassData, currentDate]);
-
-
-
 
   return (
     <div className="pt-2 px-4 mt-5">
@@ -131,7 +126,7 @@ export default function Home() {
             <span className="text-[#565656] text-sm font-semibold mb-2">Class Management</span>
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex-1">
-                <div className="text-[#707070] text-sm break-words font-semibold">{upcomingClassesInNext7Days.length || 0} classes scheduled for next 7 days</div>
+                <div className="text-[#707070] text-sm break-words font-semibold">{upcomingClassesInNext7Days?.length || 0} classes scheduled for next 7 days</div>
                 <div className="text-[#707070] text-sm">2 classes available</div>
 
                 <div className="text-[#707070] text-sm flex justify-end items-center mb-2">
@@ -302,7 +297,7 @@ export default function Home() {
               <span className="text-[#565656] text-sm font-semibold flex justify-center items-center"><GoDotFill /> Upcoming Classes</span>
               <span className="text-xs text-[#565656] cursor-pointer" onClick={() => router.push("/classManagement?tab=Classes")}>View All</span>
             </div>
-            <div className="bg-white shadow-lg rounded-xl p-4 h-full flex items-center justify-center">
+            <div className="bg-white shadow-lg rounded-xl p-4 h-full flex ">
               <div className="space-y-2 w-full">
                 {upcomingClasses.length > 0 ? (
                   upcomingClasses.slice(0, 4).map((item, index) => (
@@ -317,7 +312,7 @@ export default function Home() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-[#565656] text-sm flex justify-center items-center h-full">
+                  <div className="text-[#565656] text-sm flex justify-center items-center h-full ">
                     No upcoming classes
                   </div>
                 )}

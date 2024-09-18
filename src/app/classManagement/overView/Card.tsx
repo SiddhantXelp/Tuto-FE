@@ -82,7 +82,7 @@ const OverviewTabContent: React.FC = () => {
             className="shadow-lg w-full sm:w-[48%] md:w-[23.5%] lg:w-[8%] h-32 bg-white rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer mt-2"
             onClick={() => setOpen(true)}
           >
-            <Icon icon="mingcute:add-line" width="40" height="35" color="black" />
+            <Icon icon="mingcute:add-line" width="80" height="50" color="black" />
             <h3 className="text-xs mt-2">Create</h3>
             <span className="text-xs">New Class</span>
           </div>
@@ -117,7 +117,7 @@ const OverviewTabContent: React.FC = () => {
             </div>
           </div>
 
-          <Table view={month}/>
+          <Table view={month} />
         </div>
       </div>
     </>

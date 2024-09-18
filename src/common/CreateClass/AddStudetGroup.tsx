@@ -118,8 +118,6 @@ const AddStudentPanel: React.FC<AddStudentPanelProps> = ({
     const token = useAppSelector(state => state?.auth?.login);
     // const addGroupResponse = useAppSelector(state => state?.classes?.addStudentGroup);
     const addGroupResponse = useAppSelector((state: { classes: any }) => state.classes.addStudentGroup);
-
-    console.log(":::::::::::addGroupResponse", addGroupResponse)
     const onAddClick = () => {
         const formattedOutput = transformData(finalSelection);
 
@@ -127,13 +125,23 @@ const AddStudentPanel: React.FC<AddStudentPanelProps> = ({
     };
 
     useEffect(() => {
-        if (addGroupResponse?.status) {
+        if (addGroupResponse?.data != null) {
             const formattedOutput = transformData(finalSelection);
             handelAddStudent(formattedOutput);
             dispatch(setAddStudentGroup(null));
         }
 
     }, [addGroupResponse])
+
+    useEffect(() => {
+        if (addGroupResponse?.alreadyAssigned === true) {
+            alert(addGroupResponse?.message);
+            dispatch(setAddStudentGroup(null));
+
+        }
+
+    }, [addGroupResponse])
+
     return (
         <div className="p-12">
             {isLoading && <Spinner />}

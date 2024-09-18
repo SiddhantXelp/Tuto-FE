@@ -184,7 +184,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     if (validateFormFinal() && validateForm()) {
       const data = {
         title: formData.classTitle,
-        groups: formData.selectedGroup,
+        groups: [formData.selectedGroup],
         materialUrl: formData.material,
         platform: formData.typeMeeting[0],
         videoCallLink: formData.videoLink,

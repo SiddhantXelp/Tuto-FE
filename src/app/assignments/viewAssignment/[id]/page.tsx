@@ -15,6 +15,7 @@ import CommonModel from "@/common/CommonModel";
 import Swal from 'sweetalert2';
 import { formatDate } from '@/common/DateAndTimeCommon';
 import { data } from "./data";
+import { toast } from 'react-toastify';
 const MyFilesPage = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -29,7 +30,7 @@ const MyFilesPage = () => {
     const studentId = searchParams.get('studentId');
     const [currentAssignmentId, setCurrentAssignmentId] = useState(id);
     const [currentStudentId, setCurrentStudentId] = useState(studentId);
-
+    const [totalMarks, setTotalMarks] = useState("");
     const assignment = useMemo(() => {
         return (assignmentData || [])
             .map((assignment: any) => ({
@@ -52,8 +53,14 @@ const MyFilesPage = () => {
 
 
     const handelCompleteAssignment = () => {
+        if (!totalMarks) {
+            // alert("Please Add Total Marks");
+            toast.error("Please Add Total Marks");
+            return;
+        }
         const status = {
-            status: "completed"
+            status: "completed",
+            marksGained: Number(totalMarks || 0)
         }
         dispatch(getCompleteAssignment(token, status, id, String(currentStudentId)));
     }
@@ -206,7 +213,7 @@ const MyFilesPage = () => {
                         <div className="flex justify-between">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Total marks</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">N/A</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{getAssignmentResponse?.assignment?.totalMarks}</h1>
                             </div>
                         </div>
                         <div className='border-b border-gray-300 mb-3'></div>
@@ -215,7 +222,7 @@ const MyFilesPage = () => {
                         <div className="flex justify-between">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Marks gained</h1>
-                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">N/A</h1>
+                                <h1 className="text-sm md:text-base font-semibold text-[#565656]">{getAssignmentResponse?.assignment?.marksGained === null ? 0 : getAssignmentResponse?.assignment?.marksGained}</h1>
                             </div>
                         </div>
                         <div className='border-b border-gray-300 mb-3'></div>
@@ -324,6 +331,8 @@ const MyFilesPage = () => {
                                     type="text"
                                     className="border border-gray-300 w-full rounded-md h-10 mt-2 p-2"
                                     placeholder="Marks"
+                                    value={totalMarks}
+                                    onChange={(e) => setTotalMarks(e.target.value)}
                                 />
                             </div>
 
