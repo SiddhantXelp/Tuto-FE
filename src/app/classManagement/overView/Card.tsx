@@ -21,12 +21,17 @@ const OverviewTabContent: React.FC = () => {
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
   const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
-
+  const [classLink, setClassLink] = useState("");
   useEffect(() => {
     if (!open) {
       dispatch(getClasses(memberAuthToken));
     }
   }, [dispatch, memberAuthToken, open]);
+
+  const handelStartClassLink = (classLink: string) => {
+    setClassLink(classLink);
+    setOpenStart(true);
+  }
 
   return (
     <>
@@ -35,7 +40,7 @@ const OverviewTabContent: React.FC = () => {
       }
       <div className="px-4">
         <DialogComponent open={open} setOpen={setOpen} />
-        <StartClassDialog open={openStart} setOpen={setOpenStart} />
+        <StartClassDialog open={openStart} setOpen={setOpenStart} classLink={classLink} />
         <div className='flex justify-between'>
           <div className="my-2">
             <span className="text-sm text-[#565656] font-semibold">Recent classes</span>
@@ -72,7 +77,7 @@ const OverviewTabContent: React.FC = () => {
               </div>
               <div
                 className="bg-buttonGray rounded-full flex items-center justify-center cursor-pointer mt-1"
-                onClick={() => setOpenStart(true)}
+                onClick={() => handelStartClassLink(card?.videoCallLink)}
               >
                 <p className="text-xs my-1 text-white">Start Class</p>
               </div>

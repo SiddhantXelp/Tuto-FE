@@ -101,6 +101,7 @@ import { generatePdf } from '@/common/AssignmentReportDownload';
 const PendingTable = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const assignmentData = useAppSelector((state: { assignment: any }) => state.assignment.setAssignments?.data || []);
@@ -150,7 +151,7 @@ const PendingTable = () => {
   };
 
 
-  const handelDownload = (rowData: any) => {
+  const handelDownload = async (rowData: any) => {
     const data = {
       studentName: rowData?.students,
       grade: "N/A",
@@ -160,14 +161,14 @@ const PendingTable = () => {
       submittedDate: rowData?.date,
       dueDate: rowData?.date
     };
-    generatePdf(data);
+    await generatePdf(data, setLoading);
   }
 
 
 
   return (
     <div className='h-full'>
-      {assignmentLoading && <Spinner />}
+      {assignmentLoading || loading && <Spinner />}
       <Table
         columns={SubmitTableColumns}
         data={assignment}

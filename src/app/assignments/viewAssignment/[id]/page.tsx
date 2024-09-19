@@ -16,6 +16,9 @@ import Swal from 'sweetalert2';
 import { formatDate } from '@/common/DateAndTimeCommon';
 import { data } from "./data";
 import { toast } from 'react-toastify';
+import { generatePdf } from '@/common/AssignmentReportDownload';
+import { formattedDate } from '@/common/DateAndTimeCommon';
+
 const MyFilesPage = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -31,6 +34,8 @@ const MyFilesPage = () => {
     const [currentAssignmentId, setCurrentAssignmentId] = useState(id);
     const [currentStudentId, setCurrentStudentId] = useState(studentId);
     const [totalMarks, setTotalMarks] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const assignment = useMemo(() => {
         return (assignmentData || [])
             .map((assignment: any) => ({
@@ -134,11 +139,26 @@ const MyFilesPage = () => {
         }
     };
 
+    const handelDownload = async () => {
+        const data = {
+            studentName: getAssignmentResponse?.fullName,
+            grade: "N/A",
+            subject: getAssignmentResponse?.assignment?.subject,
+            totalMarks: getAssignmentResponse?.assignment?.totalMarks || 0,
+            marksGained: getAssignmentResponse?.assignment?.marksGained || 0,
+            submittedDate: formattedDate(getAssignmentResponse?.assignment?.date),
+            dueDate: formattedDate(getAssignmentResponse?.assignment?.date)
+        };
+        await generatePdf(data, setLoading);
+
+    }
+
+
 
     return (
         <TabNavigator>
             {
-                isLoading && <Spinner />
+                isLoading || loading && <Spinner />
             }
             <CommonModel open={open} setOpen={setOpen}>
                 <button
@@ -180,7 +200,7 @@ const MyFilesPage = () => {
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Subject</h1>
                                 <h1 className="text-sm md:text-base font-semibold text-[#565656]">{getAssignmentResponse?.assignment?.subject || "NA"}</h1>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2" onClick={handelDownload}>
                                 <MdDownload className="text-[#565656] text-base" />
                                 <h1 className="text-xs md:text-sm text-[#565656] cursor-pointer">Download</h1>
                             </div>

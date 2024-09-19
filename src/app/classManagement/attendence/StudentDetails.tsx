@@ -3,8 +3,31 @@
 import React, { useState, useEffect, useRef } from 'react';;
 import Link from 'next/link';
 import { FaCaretDown } from 'react-icons/fa';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { getClassesWithStudentDetails } from '@/app/store/actions/classes';
+import moment from 'moment';
+import Spinner from '@/common/Spinner';
 
-const ClassDetails = () => {
+interface StudentClassDetailsProps {
+    studentId: string;
+    classId: string;
+}
+
+
+const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, classId }) => {
+
+    const dispatch = useAppDispatch();
+    const token = useAppSelector(state => state?.auth?.login?.token);
+    const receivedStudentWithClasses = useAppSelector(state => state?.classes?.getClassesWithStudentDetails?.data[0]);
+    const classLoading = useAppSelector(state => state?.classes?.setClassesLoading);
+
+    console.log("token", token)
+    useEffect(() => {
+        if (token) {
+            dispatch(getClassesWithStudentDetails(token, classId, studentId))
+        }
+
+    }, [studentId, classId, token])
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
@@ -15,8 +38,36 @@ const ClassDetails = () => {
     };
 
 
+    const calculateDuration = (startTime: string, endTime: string) => {
+        if (startTime && endTime) {
+            const startMoment = moment(startTime, 'HH:mm');
+            const endMoment = moment(endTime, 'HH:mm');
+
+
+            if (endMoment.isBefore(startMoment)) {
+                endMoment.add(1, 'day');
+            }
+
+            const durationMinutes = endMoment.diff(startMoment, 'minutes');
+            const durationHours = Math.floor(durationMinutes / 60);
+            const durationMins = durationMinutes % 60;
+
+            const formattedDuration = `${durationHours} hr ${durationMins} min`;
+
+            return formattedDuration;
+        } else {
+            return "Invalid time input";
+        }
+    };
+
+
+    const duration = calculateDuration(receivedStudentWithClasses?.classSchedule?.classStartTime, receivedStudentWithClasses?.classSchedule?.classEndTime);
+
+
+
     return (
         <div className='h-screen'>
+            {classLoading && <Spinner />}
             <div className="h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md sm:h-full">
                 <div className="flex justify-between items-center border-b border-gray-300 pb-2 m-2">
                     <div className="relative flex flex-col justify-between p-4 mb-11 rounded-lg w-full max-w-[441px] h-[150px] sm:h-[250px] md:h-[150px]">
@@ -27,8 +78,8 @@ const ClassDetails = () => {
                             }}
                         >
                             <div>
-                                <h1 className='text-white'>Harsh</h1>
-                                <h1 className='text-white'>6th Grade</h1>
+                                <h1 className='text-white'>{receivedStudentWithClasses?.student?.studentFullName || "N/A"}</h1>
+                                {/* <h1 className='text-white'>6th Grade</h1> */}
                             </div>
                             <div className="mt-auto">
                                 <span className='text-white flex justify-end cursor-pointer'>View Profile</span>
@@ -42,7 +93,7 @@ const ClassDetails = () => {
                                 className="bg-gray-500 text-white py-2 px-4 rounded-[23px] hover:bg-gray-600 w-48 text-sm flex items-center justify-between"
                             >
                                 <span className='ml-10'>Remarks</span>
-                                
+
                                 <FaCaretDown className="ml-2" />
                             </button>
 
@@ -86,11 +137,11 @@ const ClassDetails = () => {
                 <div className="flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2">
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Class title:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">English grammar</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">{receivedStudentWithClasses?.title || "N/A"}</span>
                     </div>
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Status:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">Incomplete</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
                     </div>
                 </div>
 
@@ -102,15 +153,15 @@ const ClassDetails = () => {
                     </div>
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Duration:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">30 minutes</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">{duration || "N/A"}</span>
                     </div>
                     <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Assignments:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">Pending</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
                     </div>
                     <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Class Materials:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">English grammar material</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">{receivedStudentWithClasses?.materialUrl}</span>
 
                     </div>
                 </div>
@@ -118,16 +169,16 @@ const ClassDetails = () => {
                 <div className="relative flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2">
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto cursor-pointer" >
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Attendance</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">Present</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
 
                     </div>
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Remarks</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">Good</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
                     </div>
                     <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Parent Contact</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">+95 95845 95555</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
                     </div>
 
                 </div>
@@ -140,4 +191,4 @@ const ClassDetails = () => {
 }
 
 
-export default ClassDetails;
+export default StudentClassDetails;

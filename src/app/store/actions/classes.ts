@@ -59,7 +59,7 @@ export const setStudentGroup = (getstudentgroup: any) => ({
 
 
 
-export const getAddStudentGroup= (token: string, data: any) => ({
+export const getAddStudentGroup = (token: string, data: any) => ({
   type: actionTypes.GET_STUDENT_GROUP_ADD,
   token,
   data
@@ -70,6 +70,22 @@ export const setAddStudentGroup = (addStudentGroup: any) => ({
   type: actionTypes.SET_STUDENT_GROUP_ADD,
   addStudentGroup,
 });
+
+
+export const getClassesWithStudentDetails = (token: string, studentId: string, classId: string) => ({
+  type: actionTypes.GET_CLASSES_WITH_STUDENT,
+  token,
+  studentId,
+  classId
+});
+
+
+export const setClassesWithStudentDetails = (getClassesWithStudentDetails: any) => ({
+  type: actionTypes.SET_CLASSES_WITH_STUDENT,
+  getClassesWithStudentDetails,
+});
+
+
 
 
 

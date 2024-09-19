@@ -19,6 +19,7 @@ const PendingTable = () => {
   const assignmentLoading = useAppSelector((state: { assignment: any }) => state.assignment.loading);
   const storedCurrentPage = assignmentPages?.currentPage;
   const assignmentLimit = 10;
+  const [loading, setLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(storedCurrentPage || 1);
 
@@ -52,14 +53,14 @@ const PendingTable = () => {
           : "",
         assignmentId: assignment?.assignment.id,
         download: <BsDownload color="gray" size={13} />,
-        totalMarks:assignment?.assignment?.totalMarks,
-        marksGained:assignment?.assignment?.marksGained
+        totalMarks: assignment?.assignment?.totalMarks,
+        marksGained: assignment?.assignment?.marksGained
 
       }));
   }, [assignmentData]);
 
 
-  const handelDownload = (rowData: any) => {
+  const handelDownload = async (rowData: any) => {
     const data = {
       studentName: rowData?.students,
       grade: "N/A",
@@ -69,12 +70,12 @@ const PendingTable = () => {
       submittedDate: rowData?.date,
       dueDate: rowData?.date
     };
-    generatePdf(data);
+    await generatePdf(data, setLoading);
   }
 
   return (
     <div className='h-full'>
-      {assignmentLoading && <Spinner />}
+      {assignmentLoading || loading && <Spinner />}
       <Table
         columns={SubmitTableColumns}
         data={assignment}

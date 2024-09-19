@@ -130,3 +130,25 @@ export const addStudentGroup = async (token: string, data: any) => {
     throw e;
   }
 };
+
+export const getClassWithStudents = async (token: string, studentId: string, classId: string) => {
+  try {
+    const response = await axios.get(
+      apis.getClassWithStudentDetails(studentId, classId),
+      // {},
+      {
+        cancelToken: new CancelToken(c => {
+          cancelAuth = c;
+        }),
+      },
+    );
+
+    return response.data;
+  } catch (e) {
+    if (axios.isCancel(e)) {
+      throw new Error(DISCLOSURE_CANCEL);
+    }
+    throw e;
+  }
+};
+

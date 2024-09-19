@@ -1,30 +1,30 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClassById } from '@/app/store/actions/classes';
 import TabNavigator from "../../../TabNavigator/page";
 import moment from 'moment';
 import StartClassDialog from '../../overView/StartClass';
 import Image from 'next/image';
-import { students } from "./data";
 import { IoMdPersonAdd } from "react-icons/io";
 import CommonModel from "./CommonModel";
 import Link from 'next/link';
+import Spinner from '@/common/Spinner';
 
 const ClassDetails = () => {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [openAssignmentModel, setAssignmentModel] = useState(false);
     const [openClassModel, setClassModel] = useState(false);
     const [openRecordingModel, setRecordingModel] = useState(false);
     const [openTimeDateModel, setTimeDateModel] = useState(false);
-
-
     const params = useParams();
     const dispatch = useAppDispatch();
     const viewClassData = useAppSelector((state: { classes: any }) => state.classes.ClassById?.data[0]);
-    const id = params.id
+    const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
+    const id = params.id || 0
     const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
     useEffect(() => {
@@ -67,8 +67,8 @@ const ClassDetails = () => {
 
     return (
         <TabNavigator>
-            <StartClassDialog open={open} setOpen={setOpen} classLink={viewClassData?.videoCallLink} />
-
+            <StartClassDialog open={open} setOpen={setOpen} classLink={viewClassData?.videoCallLink || ""} />
+            {classLoading && <Spinner />}
             <div className="m-5  h-full bg-white rounded-lg p-4 flex flex-col gap-y-4 shadow-md mt-5 sm:h-full">
                 <div className="flex justify-between items-center border-b border-gray-300 pb-2 m-2">
                     <div className="relative flex flex-col justify-between p-4 mb-11 rounded-lg w-full max-w-[441px] h-[200px] sm:h-[250px] md:h-[200px]">
@@ -189,7 +189,7 @@ const ClassDetails = () => {
 
                                 <tbody>
                                     {viewClassData && viewClassData?.students.map((student: any, index: any) => (
-                                        <tr key={index} className="border-b p-5">
+                                        <tr key={index} className="border-b p-5 hover:bg-gray-100 cursor-pointer" onClick={() => router.push(`/classManagement?tab=Attendance&subTab=StudentClassDetails&classId=${id}&studentId=${student?.studentId}`)}>
                                             <td className="py-5 px-4 font-normal text-[#565656]">{student?.studentFullName || "N/A"}</td>
                                             <td className="py-5 px-4 font-normal text-[#565656]">{student?.grade || "N/A"}</td>
                                             <td className="py-5 px-4 font-normal text-[#565656]">{student?.attendance || "N/A"}</td>
