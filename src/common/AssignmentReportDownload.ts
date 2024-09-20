@@ -1,10 +1,8 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { useState } from 'react';
 
-// Styles for dynamic class application
-const tableHeaderClasses = 'p-5 text-2xl font-semibold border-b border-gray-300 bg-gray-50'; // Increased font size
-const tableDataClasses = 'p-5 text-2xl border-b border-gray-300'; // Increased font size
+const tableHeaderClasses = 'p-5 text-2xl font-semibold border-b border-gray-300 bg-gray-50';
+const tableDataClasses = 'p-5 text-2xl border-b border-gray-300'; 
 const imageClasses = 'rounded-lg border border-gray-300 object-cover shadow-md';
 
 const pdfTemplate = (data: {

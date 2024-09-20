@@ -1,69 +1,35 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';;
+import React, { useState, useEffect } from 'react';;
 import Link from 'next/link';
 import { FaCaretDown } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClassesWithStudentDetails } from '@/app/store/actions/classes';
-import moment from 'moment';
 import Spinner from '@/common/Spinner';
-
+import { duration } from "@/common/DateAndTimeCommon"
 interface StudentClassDetailsProps {
     studentId: string;
     classId: string;
 }
 
-
 const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, classId }) => {
-
     const dispatch = useAppDispatch();
+    const [isOpen, setIsOpen] = useState(false);
+    const [remark, setRemark] = useState('Remarks');
     const token = useAppSelector(state => state?.auth?.login?.token);
     const receivedStudentWithClasses = useAppSelector(state => state?.classes?.getClassesWithStudentDetails?.data[0]);
     const classLoading = useAppSelector(state => state?.classes?.setClassesLoading);
 
-    console.log("token", token)
     useEffect(() => {
         if (token) {
             dispatch(getClassesWithStudentDetails(token, classId, studentId))
         }
-
     }, [studentId, classId, token])
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (option: string) => {
-        console.log(option);
         setIsOpen(false);
+        setRemark(option)
     };
-
-
-    const calculateDuration = (startTime: string, endTime: string) => {
-        if (startTime && endTime) {
-            const startMoment = moment(startTime, 'HH:mm');
-            const endMoment = moment(endTime, 'HH:mm');
-
-
-            if (endMoment.isBefore(startMoment)) {
-                endMoment.add(1, 'day');
-            }
-
-            const durationMinutes = endMoment.diff(startMoment, 'minutes');
-            const durationHours = Math.floor(durationMinutes / 60);
-            const durationMins = durationMinutes % 60;
-
-            const formattedDuration = `${durationHours} hr ${durationMins} min`;
-
-            return formattedDuration;
-        } else {
-            return "Invalid time input";
-        }
-    };
-
-
-    const duration = calculateDuration(receivedStudentWithClasses?.classSchedule?.classStartTime, receivedStudentWithClasses?.classSchedule?.classEndTime);
-
-
 
     return (
         <div className='h-screen'>
@@ -89,10 +55,10 @@ const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, cl
                     <div className="flex flex-col space-y-2 mt-0">
                         <div className="relative inline-block text-left">
                             <button
-                                onClick={toggleDropdown}
+                                onClick={() => setIsOpen(!isOpen)}
                                 className="bg-gray-500 text-white py-2 px-4 rounded-[23px] hover:bg-gray-600 w-48 text-sm flex items-center justify-between"
                             >
-                                <span className='ml-10'>Remarks</span>
+                                <span className='ml-10'>{remark}</span>
 
                                 <FaCaretDown className="ml-2" />
                             </button>
@@ -153,7 +119,7 @@ const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, cl
                     </div>
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Duration:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{duration || "N/A"}</span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2">{duration(receivedStudentWithClasses?.classSchedule?.classStartTime, receivedStudentWithClasses?.classSchedule?.classEndTime)}</span>
                     </div>
                     <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Assignments:</span>
@@ -180,9 +146,7 @@ const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, cl
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Parent Contact</span>
                         <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
                     </div>
-
                 </div>
-
             </div>
         </div>
     )

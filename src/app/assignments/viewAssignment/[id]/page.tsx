@@ -22,7 +22,7 @@ import { formattedDate } from '@/common/DateAndTimeCommon';
 const MyFilesPage = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const getAssignmentResponse = useAppSelector((state: { assignment: any }) => state?.assignment?.setAssignmentById?.data[0] || []);
+    const getAssignmentResponse = useAppSelector((state: { assignment: any }) => state?.assignment?.setAssignmentById?.data[0] || "");
     const getCompletedAssignmentResponse = useAppSelector((state: { assignment: any }) => state?.assignment?.setCompletedAssignment || []);
     const isLoading = useAppSelector((state: { assignment: any }) => state?.assignment?.loading);
     const token = useAppSelector((state: { auth: any }) => state?.auth?.login?.token);
