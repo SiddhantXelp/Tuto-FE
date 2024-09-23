@@ -1,11 +1,13 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GrAdd } from "react-icons/gr";
 import Link from 'next/link';
 import Spinner from "@/common/Spinner";
 import { cardData } from "./data"
+import { getStudentGroup } from '@/app/store/actions/classes';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
   loading: () => <Spinner />,
@@ -31,6 +33,16 @@ type Tab = 'Submitted' | 'Pending' | 'Completed';
 
 const ClassManagementPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<Tab>('Submitted');
+  const dispatch = useAppDispatch();
+  const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+  const studentGroups = useAppSelector((state: { classes: any }) => state.classes.getstudentgroup?.data || []);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getStudentGroup(token));
+
+    }
+  }, [token])
 
   const renderContent = () => {
     switch (selectedTab) {
@@ -84,6 +96,38 @@ const ClassManagementPage: React.FC = () => {
               </div>
             </Link>
           ))}
+
+          {studentGroups && studentGroups.slice(0, 2).map((item: any, index: number) => (
+            <div key={index} className='bg-transparent rounded-md cursor-pointer flex flex-col h-full pt-4 pb-4'>
+              <div
+                className={`mb-2 flex justify-between items-center`}
+              // onClick={() => handleClick(item?.id)}
+              >
+                <span className='text-sm  text-gray-600'>
+                  {index === 0 ? "Groups" : ""}
+                </span>
+
+                {index !== 0 && (
+                  <span className='text-sm text-[#565656]'>View All</span>
+                )}
+              </div>
+
+              <div className={`rounded-md flex flex-col justify-between`}
+              // onClick={() => handleClick(item?.id)}
+              >
+                <div className='flex flex-col items-center'>
+                  <div className='w-full bg-[#707070] border rounded-md p-4'>
+                    <h1 className='text-white text-base font-bold mb-2'>{item.title}</h1>
+                    <ul className='text-white space-y-1'>
+                      <li className='text-sm'>10 Total</li>
+                      <li className='text-sm'>20 Pending</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
           <Link href="/assignments/createAssignment">
             <div className='bg-white border rounded-md shadow-sm flex items-center justify-center p-4 cursor-pointer h-28 w-full sm:w-48 mt-11'>
               <div className='flex flex-col items-center'>
@@ -95,7 +139,7 @@ const ClassManagementPage: React.FC = () => {
         </div>
 
         <div className="relative w-full sm:w-8/12 md:w-6/12 lg:w-4/12 xl:w-3/12 h-10 flex bg-white text-center rounded-tl-lg rounded-tr-lg">
-        <div
+          <div
           />
           <span
             className={`flex-1 text-gray-600 text-sm cursor-pointer px-4 py-2 rounded-tl-lg relative ${selectedTab === 'Submitted' ? 'font-bold text-black bg-[#F5F5F5]' : 'hover:bg-gray-100'}`}

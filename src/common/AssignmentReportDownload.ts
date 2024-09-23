@@ -2,7 +2,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 const tableHeaderClasses = 'p-5 text-2xl font-semibold border-b border-gray-300 bg-gray-50';
-const tableDataClasses = 'p-5 text-2xl border-b border-gray-300'; 
+const tableDataClasses = 'p-5 text-2xl border-b border-gray-300';
 const imageClasses = 'rounded-lg border border-gray-300 object-cover shadow-md';
 
 const pdfTemplate = (data: {
@@ -13,6 +13,7 @@ const pdfTemplate = (data: {
   marksGained: string;
   submittedDate: string;
   dueDate: string;
+  remark: string
 }) => `
   <div class="bg-white w-full border border-gray-300 rounded-lg p-10 box-border font-sans text-gray-800 shadow-lg">
     <h1 class="text-center text-5xl text-[#2c3e50] mb-8 font-bold">Assignment Report</h1>
@@ -32,6 +33,7 @@ const pdfTemplate = (data: {
           <td class="${tableHeaderClasses}">Subject:</td>
           <td class="${tableDataClasses}">${data.subject}</td>
         </tr>
+             
         <tr>
           <td class="${tableHeaderClasses}">Total Marks:</td>
           <td class="${tableDataClasses}">${data.totalMarks}</td>
@@ -47,6 +49,10 @@ const pdfTemplate = (data: {
         <tr class="bg-gray-100">
           <td class="${tableHeaderClasses}">Due Date:</td>
           <td class="${tableDataClasses}">${data.dueDate}</td>
+        </tr>
+        <tr >
+          <td class="${tableHeaderClasses}">Remark:</td>
+          <td class="${tableDataClasses}">${data.remark}</td>
         </tr>
       </tbody>
     </table>
@@ -120,6 +126,7 @@ export const generatePdf = async (data: {
   marksGained: string;
   submittedDate: string;
   dueDate: string;
+  remark: string
 }, setLoading: (loading: boolean) => void) => {
   // Show the spinner
   setLoading(true);

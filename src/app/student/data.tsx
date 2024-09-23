@@ -13,16 +13,16 @@ export const cardData = [
       subject: 'Telugu',
       details: ['20 Total', '10 Pending']
     },
-    {
-      cardName: "Students according to subjects",
-      subject: 'Group A',
-      details: ['20 Total', '10 Pending']
-    },
-    {
-      cardNameEnd: "View all",
-      subject: 'Group B',
-      details: ['20 Total', '10 Pending']
-    }
+    // {
+    //   cardName: "Students according to subjects",
+    //   subject: 'Group A',
+    //   details: ['20 Total', '10 Pending']
+    // },
+    // {
+    //   cardNameEnd: "View all",
+    //   subject: 'Group B',
+    //   details: ['20 Total', '10 Pending']
+    // }
   ];
 
 export const recentStudentColumns = [

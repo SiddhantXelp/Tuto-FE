@@ -24,6 +24,19 @@ export const setStudents = (getStudents: any) => ({
     getStudents,
 });
 
+
+export const getStudentGroup = (token: string, id: string) => ({
+    type: actionTypes.GET_STUDENTS_GROUP,
+    token,
+    id,
+});
+
+export const setStudentGroup = (getStudentGroup: any) => ({
+    type: actionTypes.SET_STUDENTS_GROUP,
+    getStudentGroup,
+});
+
+
 export const setStudentError = (error: any) => ({
     type: actionTypes.SET_STUDENT_ERROR,
     error,

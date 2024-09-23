@@ -11,11 +11,13 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+    onSearch(e.target.value)
   };
 
   const handleSearch = () => {
     onSearch(query);
   };
+
 
   const styles = {
     searchContainer: {

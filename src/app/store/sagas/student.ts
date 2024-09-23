@@ -2,9 +2,9 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes/student';
 
-import { setCreateStudentPackages, setStudents, setStudentError, setStudentLoading } from '../actions/student';
+import { setCreateStudentPackages, setStudents, setStudentError, setStudentLoading, setStudentGroup } from '../actions/student';
 
-import { createPackage, getStudent } from '../../api/student.service';
+import { createPackage, getStudent, getStudentGroup } from '../../api/student.service';
 
 function* getStudentPackagesEffect(action: any): Generator<any, any, any> {
     try {
@@ -40,8 +40,27 @@ function* getStudentsEffect(action: any): Generator<any, any, any> {
 }
 
 
+function* getStudentGroupEffect(action: any): Generator<any, any, any> {
+    try {
+        yield put(setStudentLoading(true));
+        yield put(setStudentError(''));
+        yield put(setStudentGroup(null));
+
+        const response = yield call(getStudentGroup, action.token, action.id);
+        yield put(setStudentGroup(response));
+
+        yield put(setStudentLoading(false));
+    } catch (e: any) {
+        yield put(setStudentLoading(false));
+        yield put(setStudentError(e.response));
+    }
+}
+
+
 export function* StudentSaga() {
     yield takeEvery(actionTypes.GET_CREATE_STUDENT_PACKAGES, getStudentPackagesEffect);
     yield takeEvery(actionTypes.GET_STUDENTS, getStudentsEffect);
+    yield takeEvery(actionTypes.GET_STUDENTS_GROUP, getStudentGroupEffect);
+
 
 }

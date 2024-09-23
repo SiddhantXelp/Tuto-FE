@@ -6,7 +6,7 @@ import { FaCaretDown } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClassesWithStudentDetails } from '@/app/store/actions/classes';
 import Spinner from '@/common/Spinner';
-import { duration } from "@/common/DateAndTimeCommon"
+import { duration } from "@/common/DateAndTimeCommon";
 interface StudentClassDetailsProps {
     studentId: string;
     classId: string;
@@ -59,7 +59,6 @@ const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, cl
                                 className="bg-gray-500 text-white py-2 px-4 rounded-[23px] hover:bg-gray-600 w-48 text-sm flex items-center justify-between"
                             >
                                 <span className='ml-10'>{remark}</span>
-
                                 <FaCaretDown className="ml-2" />
                             </button>
 
@@ -136,7 +135,6 @@ const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, cl
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto cursor-pointer" >
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Attendance</span>
                         <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
-
                     </div>
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
                         <span className="text-xs md:text-sm font-semibold text-[#565656]">Remarks</span>

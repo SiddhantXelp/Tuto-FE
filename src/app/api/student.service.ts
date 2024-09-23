@@ -54,3 +54,24 @@ export const getStudent = async (token: string, page: string, limit: string) => 
         throw e;
     }
 };
+
+
+export const getStudentGroup = async (token: string, id: string) => {
+    try {
+        const response = await axios.get(
+            apis.getStudentsWithGroup(id),
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};

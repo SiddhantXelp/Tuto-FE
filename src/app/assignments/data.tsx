@@ -244,16 +244,16 @@ export const cardData = [
     subject: 'Telugu',
     details: ['20 Total', '10 Pending']
   },
-  {
-    cardName: "Groups",
-    cardNametwo: "View all",
-    subject: 'Group A',
-    details: ['20 Total', '10 Pending']
-  },
-  {
-    cardName: "Groups",
-    cardNametwo: "",
-    subject: 'Group B',
-    details: ['20 Total', '10 Pending']
-  }
+  // {
+  //   cardName: "Groups",
+  //   cardNametwo: "View all",
+  //   subject: 'Group A',
+  //   details: ['20 Total', '10 Pending']
+  // },
+  // {
+  //   cardName: "Groups",
+  //   cardNametwo: "",
+  //   subject: 'Group B',
+  //   details: ['20 Total', '10 Pending']
+  // }
 ];
