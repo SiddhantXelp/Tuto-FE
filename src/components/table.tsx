@@ -143,7 +143,7 @@ interface Column {
   header: string;
   key: string;
   isCheckbox?: boolean;
-  dropdownOptions?: string[]; // Added for dropdown options
+  dropdownOptions?: string[]; 
 }
 
 interface Props {
@@ -300,7 +300,7 @@ const Table: React.FC<Props> = ({
                       <BsDownload color="gray" size={13} style={{ cursor: 'pointer' }} />
                     </a>
                   ) : (
-                    item[column.key] || 'NA'
+                    item[column.key] || 'N/A'
                   )}
                 </td>
               ))}

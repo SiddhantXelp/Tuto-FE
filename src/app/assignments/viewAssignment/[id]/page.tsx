@@ -391,7 +391,7 @@ import { toast } from 'react-toastify';
 import { generatePdf } from '@/common/AssignmentReportDownload';
 import * as fabric from 'fabric';
 
-const MyFilesPage = () => {
+const ViewAssignmentDetails = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const getAssignmentResponse = useAppSelector((state: { assignment: any }) => state?.assignment?.setAssignmentById?.data[0] || "");
@@ -406,16 +406,15 @@ const MyFilesPage = () => {
     const [currentAssignmentId, setCurrentAssignmentId] = useState(id);
     const [currentStudentId, setCurrentStudentId] = useState(studentId);
     const [totalMarks, setTotalMarks] = useState("");
-    const [remark, setRemark] = useState(getAssignmentResponse?.assignment?.remark || "");
+    const [remark, setRemark] = useState("");
     const [loading, setLoading] = useState(false);
     const [brushColor, setBrushColor] = useState('#000000');
     const [brushSize, setBrushSize] = useState(10);
-
-    // Canvas References
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const [currentIndex, setCurrentIndex] = useState(0);
     const canvasRef = useRef<fabric.Canvas | null>(null);
     const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
 
-    // Tool State
     const [activeTool, setActiveTool] = useState<'pen' | 'eraser' | 'text' | 'edit'>('pen');
 
     const assignment = useMemo(() => {
@@ -438,6 +437,13 @@ const MyFilesPage = () => {
     }, [dispatch, token, currentAssignmentId, currentStudentId]);
 
     useEffect(() => {
+        if (getAssignmentResponse) {
+            setRemark(getAssignmentResponse?.assignment?.remark === null ? "" : getAssignmentResponse?.assignment?.remark)
+        }
+
+    }, [getAssignmentResponse])
+
+    useEffect(() => {
         if (getCompletedAssignmentResponse?.status) {
             router.push("/assignments/subjects");
             Swal.fire({
@@ -450,8 +456,8 @@ const MyFilesPage = () => {
         }
     }, [getCompletedAssignmentResponse?.status]);
 
-
     const handleCompleteAssignment = () => {
+
         if (!totalMarks) {
             toast.error("Please Add Total Marks");
             return;
@@ -461,6 +467,7 @@ const MyFilesPage = () => {
             marksGained: Number(totalMarks || 0),
             remark: remark
         }
+
         dispatch(getCompleteAssignment(token, status, id, String(currentStudentId)));
     }
 
@@ -469,11 +476,7 @@ const MyFilesPage = () => {
 
         if (result?.nextAssignment) {
             const { assignmentId: nextAssignmentId, id: nextStudentId } = result.nextAssignment;
-
-            // Instead of waiting for the state update, directly push to the new route
             router.push(`/assignments/viewAssignment/${nextAssignmentId}?studentId=${nextStudentId}`);
-
-            // Update state after routing
             setCurrentAssignmentId(nextAssignmentId);
             setCurrentStudentId(nextStudentId);
             setOpen(false)
@@ -502,8 +505,6 @@ const MyFilesPage = () => {
             nextAssignment: nextAssignment || null
         };
     }
-
-    const [currentIndex, setCurrentIndex] = useState(0);
 
     const nextPage = () => {
         if (currentIndex < data.length - 1) {
@@ -547,8 +548,8 @@ const MyFilesPage = () => {
                 canvas.isDrawingMode = false; // Disable drawing mode
                 canvas.selection = true; // Allow objects to be selected for erasing
                 canvas.on('mouse:down', (event) => {
-                    if (event.target) {
-                        canvas.remove(event.target); // Remove the selected object
+                    if (event.target && event.target.type !== 'i-text') {
+                        canvas.remove(event.target); // Remove only non-text objects
                     }
                 });
                 break;
@@ -563,18 +564,15 @@ const MyFilesPage = () => {
         }
     }, [activeTool, brushColor, brushSize]);
 
-    // Handle Adding Text
     const addText = () => {
         if (!canvasRef.current) return;
         const canvas = canvasRef.current;
-
         const text = new fabric.IText('Edit me', {
             left: 50,
             top: 50,
             fill: '#000000',
             fontSize: 20,
         });
-
         canvas.add(text);
         canvas.setActiveObject(text);
         setActiveTool('edit');
@@ -583,13 +581,10 @@ const MyFilesPage = () => {
     const enableTextEditing = () => {
         if (!canvasRef.current) return;
         const canvas = canvasRef.current;
+        const activeObject: any = canvas.getActiveObject();
 
-        const activeObject = canvas.getActiveObject();
-
-        // Check if active object is an instance of fabric.IText
         if (activeObject && activeObject.type === 'i-text') {
-            const iTextObject = activeObject as fabric.IText; // Cast to fabric.IText
-            iTextObject.enterEditing(); // Now enterEditing exists
+            activeObject.enterEditing();
             canvas.renderAll();
         } else {
             toast.info("Please select a text object to edit.");
@@ -597,7 +592,6 @@ const MyFilesPage = () => {
     };
 
     useEffect(() => {
-        // Initialize Fabric.js Canvas only on client-side
         if (typeof window !== 'undefined' && canvasElementRef.current) {
             const fabricCanvas = new fabric.Canvas(canvasElementRef.current, {
                 isDrawingMode: true,
@@ -617,6 +611,8 @@ const MyFilesPage = () => {
                     selectable: false,
                     hasControls: false,
                     evented: false,
+                    scaleX: 500 / image.width,
+                    scaleY: 700 / image.height,
                 });
 
                 fabricCanvas.add(fabricImage);
@@ -626,14 +622,31 @@ const MyFilesPage = () => {
                 fabricCanvas.dispose();
             };
         }
-    }, [currentIndex, data, brushColor, brushSize]);
+    }, [currentIndex, data]);
+
+    const downloadImage = () => {
+        if (!canvasRef.current) return;
+
+        const canvas = canvasRef.current;
+        const dataURL = canvas.toDataURL({
+            format: 'png',
+            multiplier: 2,
+        });
+
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'canvas-image.png';
+        link.click();
+    };
 
     return (
         <TabNavigator>
             {
                 (isLoading || loading) && <Spinner />
             }
+
             <CommonModel open={open} setOpen={setOpen}>
+
                 <button
                     type="button"
                     className="w-full bg-[#6D6D6D] text-white py-2 rounded"
@@ -641,7 +654,9 @@ const MyFilesPage = () => {
                 >
                     Finish and exit
                 </button>
+
                 <h1 className='flex justify-center text-[#707070] m-3'>or</h1>
+
                 <button
                     type="button"
                     className="w-full bg-[#6D6D6D] text-white py-2 rounded"
@@ -649,7 +664,9 @@ const MyFilesPage = () => {
                 >
                     Next paper
                 </button>
+
             </CommonModel>
+
             <div className="p-4 md:p-7 bg-white rounded-xl m-2">
                 <div className="flex flex-col md:flex-row gap-4 h-full">
                     <div className="w-full md:w-1/4 flex flex-col space-y-4">
@@ -679,7 +696,6 @@ const MyFilesPage = () => {
                         </div>
                         <div className='border-b border-gray-300 mb-3'></div>
 
-                        {/* Type Section */}
                         <div className="flex justify-between">
                             <div>
                                 <h1 className="text-xs md:text-sm font-medium text-[#565656]">Type</h1>
@@ -727,8 +743,7 @@ const MyFilesPage = () => {
                             width={500}
                             height={700}
                             className="border border-gray-300 rounded-lg"
-                        >
-
+                        >u
                         </canvas>
                         <div className="flex justify-between w-full mt-4">
                             {/* View Question Paper Section */}
@@ -737,23 +752,41 @@ const MyFilesPage = () => {
                                 <h1 className="text-xs md:text-sm text-[#565656] cursor-pointer">View question paper</h1>
                             </div>
 
-                            {/* Page Dropdown */}
-                            <div className="flex items-center gap-2 border border-[#707070] p-2 rounded-md">
-                                <select
-                                    value={currentIndex}
-                                    onChange={(e) => setCurrentIndex(Number(e.target.value))}
-                                    className="text-sm text-[#565656] bg-transparent outline-none"
+                            {/* Page Dropdown Upside */}
+                            <div className="relative">
+                                <div
+                                    className="flex items-center gap-2 border border-[#707070] p-2 rounded-md cursor-pointer"
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
                                 >
-                                    {data.map((_, index) => (
-                                        <option key={index} value={index} className="bg-gray-100 hover:bg-gray-200 text-[#565656] py-2"
-                                        >
-                                            Page {index + 1}
-                                        </option>
-                                    ))}
-                                </select>
+                                    <span className="text-sm text-[#565656]">
+                                        Page {currentIndex + 1}
+                                    </span>
+                                    <svg
+                                        className={`w-4 h-4 transform ${dropdownOpen ? 'rotate-0' : 'rotate-180'} text-[#707070]`}
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+
+                                {dropdownOpen && (
+                                    <ul className="absolute bottom-full mb-2 w-full bg-white shadow-md rounded-md border border-[#707070] z-10">
+                                        {data.map((_, index) => (
+                                            <li
+                                                key={index}
+                                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-[#565656]"
+                                                onClick={() => {
+                                                    setCurrentIndex(index);
+                                                    setDropdownOpen(false);
+                                                }}
+                                            >
+                                                Page {index + 1}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </div>
                         </div>
-
                     </div>
 
                     <div className="w-full md:w-1/4 flex flex-col space-y-4 p-4">
@@ -766,7 +799,6 @@ const MyFilesPage = () => {
                                 <BsPencilSquare size={25} />
                             </button>
 
-
                             <button
                                 onClick={() => setActiveTool('eraser')}
                                 className={`p-2 rounded ${activeTool === 'eraser' ? 'bg-[#565656] text-white' : 'bg-gray-200'}`}
@@ -774,6 +806,7 @@ const MyFilesPage = () => {
                             >
                                 <BsEraserFill size={25} />
                             </button>
+
                             <button
                                 onClick={addText}
                                 className={`p-2 rounded ${activeTool === 'text' ? 'bg-[#565656] text-white' : 'bg-gray-200'}`}
@@ -781,6 +814,7 @@ const MyFilesPage = () => {
                             >
                                 <CiText size={25} />
                             </button>
+
                             <button
                                 onClick={enableTextEditing}
                                 className={`p-2 rounded ${activeTool === 'edit' ? 'bg-[#565656] text-white' : 'bg-gray-200'}`}
@@ -788,6 +822,7 @@ const MyFilesPage = () => {
                             >
                                 <RiEditBoxFill size={25} />
                             </button>
+
                         </div>
 
                         {activeTool === 'pen' && (
@@ -831,29 +866,29 @@ const MyFilesPage = () => {
                             </div>
                         )}
                         {/* 
-            {activeTool === 'eraser' && (
-              <div className="mb-4 p-4 border rounded-lg shadow-md bg-gray-50">
-                <div className="flex items-center">
-                  <label
-                    htmlFor="brushSize"
-                    className="text-gray-700 font-semibold mr-3"
-                  >
-                    Brush Size:
-                  </label>
-                  <input
-                    id="brushSize"
-                    type="range"
-                    min="1"
-                    max="50"
-                    value={brushSize}
-                    onChange={handleBrushSizeChange}
-                    className="w-24"
-                  />
-                  <span className="ml-2 text-gray-600">{brushSize}px</span>
-                </div>
-              </div>
-            )} */}
-                        {/* Remarks Section */}
+                    {activeTool === 'eraser' && (
+                    <div className="mb-4 p-4 border rounded-lg shadow-md bg-gray-50">
+                        <div className="flex items-center">
+                        <label
+                            htmlFor="brushSize"
+                            className="text-gray-700 font-semibold mr-3"
+                        >
+                            Brush Size:
+                        </label>
+                        <input
+                            id="brushSize"
+                            type="range"
+                            min="1"
+                            max="50"
+                            value={brushSize}
+                            onChange={handleBrushSizeChange}
+                            className="w-24"
+                        />
+                        <span className="ml-2 text-gray-600">{brushSize}px</span>
+                        </div>
+                    </div>
+                    )} */}
+                        {/* <button className='rounded-xl bg-[#707070] p-2 w-48 text-white text-base' onClick={downloadImage}>Download Image</button> */}
                         <div>
                             <h1 className="text-sm font-semibold mb-2 text-[#565656]">Remarks</h1>
                             <textarea
@@ -928,4 +963,4 @@ const MyFilesPage = () => {
     );
 };
 
-export default MyFilesPage;
+export default ViewAssignmentDetails;
