@@ -10,8 +10,13 @@ import DialogComponent from '@/common/Card';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { setLogin, setSignup } from "@/app/store/actions/auth";
-import { useAppDispatch } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import NotificationDrawer from '@/app/notifications/page';
+import CommonModel from '@/common/CommonModel';
+import InputMain from '@/common/InputMain';
+import { getCreateGroup, setCreateGroup } from '@/app/store/actions/student';
+import Swal from 'sweetalert2';
+import { FaUserGroup } from "react-icons/fa6";
 
 interface UserInfo {
   name: string;
@@ -20,13 +25,18 @@ interface UserInfo {
 }
 
 const Header: React.FC = () => {
+
   const dispatch = useAppDispatch();
   const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
   const [open, setOpen] = useState(false);
+  const [groupModel, setGroupModel] = useState(false);
+  const [groupTitle, setGroupTitle] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationDrawerOpen, setIsNotificationDrawerOpen] = useState(false);
   const router = useRouter();
+
+  const token = useAppSelector(state => state?.auth?.login?.token);
 
   const dialogOpen = () => {
     setOpen(true);
@@ -72,9 +82,37 @@ const Header: React.FC = () => {
   }, []);
 
   const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
+
   const toggleNotificationDrawer = () => {
+
     setIsNotificationDrawerOpen(!isNotificationDrawerOpen);
+
   };
+
+  const handelCreateGroup = () => {
+    const data = {
+      title: groupTitle
+    }
+
+    dispatch(getCreateGroup(token, data));
+  }
+
+  const createGroupResponce = useAppSelector(state => state?.student?.getCreateGroup);
+
+  useEffect(() => {
+    if (createGroupResponce) {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Group Created Successfully.',
+        icon: 'success',
+        confirmButtonText: 'Done'
+      });
+      dispatch(setCreateGroup(null));
+      setGroupModel(false);
+      setGroupTitle("")
+    }
+
+  }, [createGroupResponce])
   return (
     <div
       className={cn(
@@ -98,6 +136,12 @@ const Header: React.FC = () => {
         <div className="hidden md:block">
           <div className='flex flex-row gap-14'>
             <div className='flex flex-row gap-8 align item-center items-center'>
+
+              <div className='flex flex-row justify-center align-center gap-1 items-center content-center cursor-pointer'>
+                <p className='text-sm text-buttonGray' onClick={() => setGroupModel(true)}>Create Group</p>
+                <p className='ml-1'><FaUserGroup size={"17px"} color='gray' /></p>
+              </div>
+
               <div className='flex flex-row justify-center align-center gap-1 items-center content-center cursor-pointer'>
                 <p className='text-sm text-buttonGray' onClick={dialogOpen}>Create new class</p>
                 <p className='ml-1'><PiStepsFill size={"17px"} color='gray' /></p>
@@ -160,12 +204,28 @@ const Header: React.FC = () => {
       </div>
 
       <DialogComponent open={open} setOpen={setOpen} />
+      <CommonModel open={groupModel} setOpen={setGroupModel}>
+        <div>
+          <label className="block text-[#707070] text-[12px] md:text-[14px] mb-0">Group title</label>
+          <InputMain
+            name="groupTitle"
+            value={groupTitle}
+            onChange={(e) => setGroupTitle(e.target.value)}
+            placeholder=""
+            label=""
+            type=""
+            id=""
+          />
+          <div className='mt-8'>
+            <button type="submit" className='w-full bg-[#707070] h-10 rounded-md text-white text-sm md:text-base' onClick={handelCreateGroup}>Create Group</button>
+          </div>
+
+        </div>
+      </CommonModel>
 
       {
         isNotificationDrawerOpen && <NotificationDrawer isOpen={isNotificationDrawerOpen} setIsOpen={setIsNotificationDrawerOpen} />
       }
-
-
     </div>
   );
 };

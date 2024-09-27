@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
 import Spinner from "../../../common/Spinner";
-import { getLogin } from "../../store/actions/auth";
+import { getLogin, setAuthError, setLogin } from "../../store/actions/auth";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
@@ -104,10 +104,12 @@ const Login: React.FC = () => {
                 picture: responsesLogin?.user?.picture
             };
             localStorage.setItem('user', JSON.stringify(userData));
+
             // const token = responsesLogin?.token
             // if (token) {
             //     document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=${60 * 60 * 24};`;
             // }
+
             router.push('/');
 
         }
@@ -117,7 +119,10 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (isError) {
-            toast.error(isError)
+
+            toast.error(isError);
+
+            dispatch(setAuthError(null));
         }
 
     }, [isError])

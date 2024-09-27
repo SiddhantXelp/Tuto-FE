@@ -130,7 +130,7 @@ const Student: React.FC = () => {
             router.push(`/groupBasedTable?${queryString}`);
           }}>
             <span className='text-sm font-semibold mb-4 text-[#565656]'>Groups</span>
-            <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2'>
+            <div className='w-full h-36 bg-white border rounded-md flex flex-col justify-between p-4 mt-2 cursor-pointer'>
               <div className="flex flex-row justify-between mt-3">
                 <div>
                   {studentGroups && studentGroups.map((data: any, index: number) => (
@@ -194,7 +194,7 @@ const Student: React.FC = () => {
                 )}
               </div>
 
-              <div className={`rounded-md flex flex-col justify-between`}
+              <div className={`rounded-md flex flex-col justify-between cursor-pointer`}
                 onClick={() => handleClick(item?.id)}>
                 <div className='flex flex-col items-center'>
                   <div className='w-full bg-[#707070] border rounded-md p-4'>

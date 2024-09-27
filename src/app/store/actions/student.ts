@@ -37,6 +37,18 @@ export const setStudentGroup = (getStudentGroup: any) => ({
 });
 
 
+export const getCreateGroup = (token: string, data: any) => ({
+    type: actionTypes.GET_CREATE_GROUP,
+    token,
+    data,
+});
+
+export const setCreateGroup = (getCreateGroup: any) => ({
+    type: actionTypes.SET_CREATE_GROUP,
+    getCreateGroup,
+});
+
+
 export const setStudentError = (error: any) => ({
     type: actionTypes.SET_STUDENT_ERROR,
     error,
