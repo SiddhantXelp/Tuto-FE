@@ -108,24 +108,15 @@ export const createStudentGroup = async (token: string, data: any) => {
 
 
 export const validateStudentCredentials = async (token: string, data: any) => {
-
     console.log(data, "data>>>>>>>>>>")
-
     try {
-        const response = await axios.post(
+        const response = await axios.get(
             apis.validateCredentials(data?.email, data?.dob, data?.name, data?.gender),
-            data,
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;
                 }),
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'User-Agent': 'PostmanRuntime/7.36.1',
-                    Accept: '/',
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    Connection: 'keep-alive',
-                },
+
             },
         );
 
