@@ -245,7 +245,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   }, [isError]);
 
   const [filteredStudents, setFilteredStudents] = useState([]);
-  const [selectedStudents, setSelectedStudents] = useState<any[]>([]);
 
   const handleSearchChange = (e: any) => {
     const searchValue = e.target.value.toLowerCase();
@@ -255,33 +254,9 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     setFilteredStudents(filtered);
   };
 
-  const handleSelectStudent = (student: any) => {
-    const isSelected = selectedStudents.some(
-      (selected) => selected.id === student.id
-    );
-    if (isSelected) {
-      setSelectedStudents(
-        selectedStudents.filter((selected) => selected.id !== student.id)
-      );
-    } else {
-      setSelectedStudents([...selectedStudents, student]);
-    }
-  };
-
   const handelAddStudent = (finalSelection: any) => {
-    console.log("Selected Student:", finalSelection);
     setShowNewContent(false);
   }
-
-  const handleAddStudentsToGroup = () => {
-    if (formData.addGroupStudent) {
-      const updatedStudents = selectedStudents.map(student => ({
-        ...student,
-        group: formData.addGroupStudent
-      }));
-      setSelectedStudents(updatedStudents);
-    }
-  };
 
   const handleSelectAll = () => {
     const allGroupTitles = optionsGroup
@@ -302,14 +277,9 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
             <AddStudentGroup
               isLoading={isLoading}
               filteredStudents={filteredStudents}
-              selectedStudents={selectedStudents}
-              formData={formData}
               handleSearchChange={handleSearchChange}
-              handleSelectStudent={handleSelectStudent}
-              handleChange={(e: any) => handleChange(e)}
               handelAddStudent={handelAddStudent}
               optionsGroup={optionsAddGroup}
-              handleAddStudentsToGroup={handleAddStudentsToGroup}
 
             />
           </DialogPanel>

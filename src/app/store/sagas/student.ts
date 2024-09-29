@@ -2,9 +2,9 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes/student';
 
-import { setCreateStudentPackages, setStudents, setStudentError, setStudentLoading, setStudentGroup } from '../actions/student';
+import { setCreateStudentPackages, setStudents, setStudentError, setStudentLoading, setStudentGroup, setCreateGroup, setValidateStudent } from '../actions/student';
 
-import { createPackage, getStudent, getStudentGroup } from '../../api/student.service';
+import { createPackage, createStudentGroup, getStudent, getStudentGroup, validateStudentCredentials } from '../../api/student.service';
 
 function* getStudentPackagesEffect(action: any): Generator<any, any, any> {
     try {
@@ -57,10 +57,49 @@ function* getStudentGroupEffect(action: any): Generator<any, any, any> {
 }
 
 
+function* getCreateGroupEffect(action: any): Generator<any, any, any> {
+    try {
+        yield put(setStudentLoading(true));
+        yield put(setStudentError(''));
+        yield put(setCreateGroup(null));
+
+        const response = yield call(createStudentGroup, action.token, action.data);
+        yield put(setCreateGroup(response));
+
+        yield put(setStudentLoading(false));
+    } catch (e: any) {
+        yield put(setStudentLoading(false));
+        yield put(setStudentError(e.response));
+    }
+}
+
+
+
+function* getValidateStudentEffect(action: any): Generator<any, any, any> {
+    try {
+        yield put(setStudentLoading(true));
+        yield put(setStudentError(''));
+        yield put(setValidateStudent(null));
+
+        const response = yield call(validateStudentCredentials, action.token, action.data);
+        yield put(setValidateStudent(response));
+
+        yield put(setStudentLoading(false));
+    } catch (e: any) {
+        yield put(setStudentLoading(false));
+        yield put(setStudentError(e.response));
+    }
+}
+
+
 export function* StudentSaga() {
     yield takeEvery(actionTypes.GET_CREATE_STUDENT_PACKAGES, getStudentPackagesEffect);
     yield takeEvery(actionTypes.GET_STUDENTS, getStudentsEffect);
     yield takeEvery(actionTypes.GET_STUDENTS_GROUP, getStudentGroupEffect);
+    yield takeEvery(actionTypes.GET_CREATE_GROUP, getCreateGroupEffect);
+    yield takeEvery(actionTypes.GET_VALIDATE_STUDENT, getValidateStudentEffect);
+
+
 
 
 }
