@@ -9,3 +9,4 @@ export default {
     getAssignmentStudents: (page: string, limit: string, status: string) => `${BASE_URL}/api/v1/students-with-assignments`,
 
 };
+
