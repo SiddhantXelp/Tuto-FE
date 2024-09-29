@@ -87,7 +87,9 @@ function* getValidateStudentEffect(action: any): Generator<any, any, any> {
         yield put(setStudentLoading(false));
     } catch (e: any) {
         yield put(setStudentLoading(false));
-        yield put(setStudentError(e.response));
+        // yield put(setStudentError(e.response));
+        yield put(setStudentError(e.response?.data?.message));
+
     }
 }
 
