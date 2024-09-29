@@ -1,10 +1,13 @@
 "use client";
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import InputMain from '@/common/InputMain';
 import Link from 'next/link';
 import TabNavigator from "../TabNavigator/page";
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getCreateGroup, getValidateStudent, setCreateGroup, setStudentError, setValidateStudent } from '../store/actions/student';
+import Spinner from '@/common/Spinner';
 
 interface Field {
   labelName: string;
@@ -60,7 +63,11 @@ const fields: Field[] = [
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
+  const receivedStudentValidate = useAppSelector(state => state?.student?.getValidateStudent);
+  const token = useAppSelector(state => state?.auth?.login?.token);
+  const error = useAppSelector(state => state?.student?.error);
+  const loading = useAppSelector(state => state?.student?.loading);
   const [formData, setFormData] = useState<{ [key: string]: string }>({
     name: '',
     gender: '',
@@ -71,13 +78,6 @@ const OnboardingPage: React.FC = () => {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value
-  //   }));
-  // };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -140,13 +140,29 @@ const OnboardingPage: React.FC = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      const queryParams = new URLSearchParams(formData as any).toString();
-      router.push(`/studentRequirements?${queryParams}`);
+      dispatch(getValidateStudent(token, formData))
     }
   };
 
+  useEffect(() => {
+    if (receivedStudentValidate?.status === true) {
+      const queryParams = new URLSearchParams(formData as any).toString();
+      router.push(`/studentRequirements?${queryParams}`);
+      dispatch(setValidateStudent(null));
+    }
+  }, [receivedStudentValidate])
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(setStudentError(null))
+    }
+
+  }, [error])
+
   return (
     <>
+      {loading && <Spinner />}
       <TabNavigator>
         <div className='flex justify-center items-center mt-20 '>
           <div className='w-full max-w-xl bg-[#F8F5F5] shadow-xl border  rounded-[19px] p-6'>

@@ -11,6 +11,7 @@ import { getCreateStudentPackage, setCreateStudentPackages } from "@/app/store/a
 import { useRouter } from 'next/navigation';
 import Spinner from "../../../common/Spinner"
 import { toast } from 'react-toastify';
+import { buttons, PricingButtons, handelSubjects } from "./data";
 
 const CreatePackage: React.FC = () => {
   const params = useParams();
@@ -43,23 +44,6 @@ const CreatePackage: React.FC = () => {
   // Track the currently selected pricing option
   const [selectedPricing, setSelectedPricing] = useState<string>('');
 
-  const buttons = [
-    { id: 1, name: "Sunday", abbreviation: 'S' },
-    { id: 2, name: "Monday", abbreviation: 'M' },
-    { id: 3, name: "Tuesday", abbreviation: 'T' },
-    { id: 4, name: "Wednesday", abbreviation: 'W' },
-    { id: 5, name: "Thursday", abbreviation: 'Th' },
-    { id: 6, name: "Friday", abbreviation: 'F' },
-    { id: 7, name: "Saturday", abbreviation: 'Sa' },
-  ];
-
-  const PricingButtons = [
-    { id: 1, name: "Onetime" },
-    { id: 2, name: "Hourly" },
-    { id: 3, name: "Weekly" },
-    { id: 4, name: "Monthly" },
-    { id: 5, name: "Annually" },
-  ];
 
   const selectMainOption = [
     {
@@ -144,21 +128,6 @@ const CreatePackage: React.FC = () => {
   }
   const filteredPricingInputs = filterPricingInputs(formData.pricingInputs);
 
-
-  const handelSubjects = [
-    { id: 1, label: "English", value: "English" },
-    { id: 2, label: "Mathematics", value: "Mathematics" },
-    { id: 3, label: "Science", value: "Science" },
-    { id: 4, label: "Social Studies", value: "Social Studies" },
-    { id: 5, label: "Hindi", value: "Hindi" },
-    { id: 6, label: "Second Language", value: "Second Language" },
-    { id: 7, label: "Art/Music", value: "Art/Music" },
-    { id: 8, label: "Computer Science/Information Technology", value: "Computer Science/Information Technology" },
-    { id: 9, label: "Environmental Studies", value: "Environmental Studies" },
-    { id: 10, label: "Moral Science", value: "Moral Science" },
-
-  ];
-
   const optionsSubjects = handelSubjects?.map((group: any) => ({
     id: group?.id,
     label: group.label,
@@ -191,6 +160,7 @@ const CreatePackage: React.FC = () => {
   const pricingCategory = transformPricingInputs(filteredPricingInputs);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const studentPackage = useAppSelector((state: { student: any }) => state.student.createStudentPackage);
+  const getUser = useAppSelector(state => state?.auth?.login);
 
   const validateForm = () => {
     const errors: string[] = [];
@@ -227,22 +197,20 @@ const CreatePackage: React.FC = () => {
     }
 
     const data = {
-      "tutorId": id,
+      "tutorId": getUser?.user?.id,
       "subjects": subjects,
       "days": selectedAbbreviations[0],
       "pricingCategory": pricingCategory,
       "meetMedium": formData.selectedOptions.boardEducation,
-      "recordSession": formData.radioValue || false
+      "recordSession": formData.radioValue || false,
+      "student": id
     }
     dispatch(getCreateStudentPackage(memberAuthToken, data));
-
-    console.log(":::::::::>??????????>>>", data)
 
   }
 
   useEffect(() => {
     if (studentPackage) {
-      console.log(">>>>>>>>>>>>>>>>>>>>>>classesData", studentPackage);
       router.push(`/onboardSubmit`);
       // dispatch(setCreateStudentPackages(null))
     }

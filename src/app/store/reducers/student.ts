@@ -6,6 +6,7 @@ export interface IStudent {
     getStudents: any;
     getStudentGroup: any;
     getCreateGroup: any;
+    getValidateStudent: any;
     error: any;
     loading: any;
 }
@@ -15,6 +16,7 @@ const initialState: IStudent = {
     getStudents: null,
     getStudentGroup: null,
     getCreateGroup: null,
+    getValidateStudent: null,
     error: null,
     loading: null,
 };
@@ -41,6 +43,10 @@ const setCreateGroup = ({ getCreateGroup }: { getCreateGroup: any }, state: IStu
 });
 
 
+const setValidateStudent = ({ getValidateStudent }: { getValidateStudent: any }, state: IStudent) => ({
+    ...state,
+    getValidateStudent,
+});
 
 const setStudentError = (
     { error }: { error: any },
@@ -63,6 +69,7 @@ export const actionReducers = {
     [actionTypes.SET_STUDENTS]: setGetStudents,
     [actionTypes.SET_STUDENTS_GROUP]: setGetStudentGroup,
     [actionTypes.SET_CREATE_GROUP]: setCreateGroup,
+    [actionTypes.SET_VALIDATE_STUDENT]: setValidateStudent,
     [actionTypes.SET_STUDENT_ERROR]: setStudentError,
     [actionTypes.SET_STUDENT_LOADING]: setStudentLoading,
 };
