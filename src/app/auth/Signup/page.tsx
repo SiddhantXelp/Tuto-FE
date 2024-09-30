@@ -36,61 +36,64 @@ const Signup: React.FC = () => {
 
 
   const validateForm = () => {
+    let isValid = true; // Track whether the form is valid
 
     if (!email) {
       toast.error("Email ID is required");
-      return false;
+      isValid = false;
     }
 
     if (!username) {
       toast.error("Username is required");
-      return false;
+      isValid = false;
     }
 
     if (!fullName) {
       toast.error("FullName is required");
-      return false;
+      isValid = false;
     }
 
     if (!/[A-Z]/.test(password)) {
       toast.error("Password must contain at least one uppercase letter.");
+      isValid = false;
     }
 
-    // Lowercase letter validation
     if (!/[a-z]/.test(password)) {
       toast.error("Password must contain at least one lowercase letter.");
+      isValid = false;
     }
 
-    // Digit validation
     if (!/\d/.test(password)) {
       toast.error("Password must contain at least one digit.");
+      isValid = false;
     }
 
-    // Special character validation
     if (!/[!@#$%^&*]/.test(password)) {
       toast.error("Password must contain at least one special character.");
+      isValid = false;
     }
 
     if (!password) {
       toast.error("Password is required");
-      return false;
+      isValid = false;
     }
 
     if (!confirmPassword) {
       toast.error("Please confirm your password");
-      return false;
+      isValid = false;
     }
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
-      return false;
+      isValid = false;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
       toast.error("Invalid email address");
-      return false;
+      isValid = false;
     }
-    return true;
+
+    return isValid; // Return the validity status at the end
   };
 
   const isError = useAppSelector((state: { auth: any }) => state.auth.error);

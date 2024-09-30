@@ -71,7 +71,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
                         id="dropdownDividerButton"
                     /> */}
                     <MdDelete size={24}
-                        color="#565656"
+                        color="red"
                         onClick={handleDelete} />
 
                 </div>

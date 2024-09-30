@@ -32,7 +32,7 @@ const CompletedTable = dynamic(() => import("./CompletedTable"), {
 type Tab = 'Submitted' | 'Pending' | 'Completed';
 
 const ClassManagementPage: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<Tab>('Submitted');
+  const [selectedTab, setSelectedTab] = useState<Tab>('Pending');
   const dispatch = useAppDispatch();
   const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const studentGroups = useAppSelector((state: { classes: any }) => state.classes.getstudentgroup?.data || []);
