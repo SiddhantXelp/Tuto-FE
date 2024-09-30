@@ -198,7 +198,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
           classStartTime: formData.startTime,
           classEndTime: formData.endTime,
         },
-        scheduleId: "66b69b7e-79bb-4890-b456-0a9ae9593f7d"
+        scheduleId: "628c0702-36b6-4ff6-8d24-4c07e20953b9"
       }
       dispatch(getCreateclass(memberAuthToken, data))
     } else {

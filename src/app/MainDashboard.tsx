@@ -116,8 +116,8 @@ export default function Home() {
                 <div className="text-[#707070] text-sm break-words font-semibold">{viewStudentData?.totalItems || 0} students</div>
                 <div className="text-[#707070] text-sm mt-1">{viewStudentData?.totalItems || 0}  Active students</div>
                 <div className="text-[#707070] text-sm flex justify-between items-center mt-1">
-                  <span>14 Newly registered</span>
-                  <TiGroup size={20} color="gray" className="ml-2" />
+                  <span className="text-white">.</span>
+                  {/* <TiGroup size={20} color="gray" className="ml-2" /> */}
                 </div>
               </div>
             </div>

@@ -260,6 +260,7 @@ import { FaSmile, FaPaperclip, FaTimes } from 'react-icons/fa';
 import { IoSendSharp } from "react-icons/io5";
 import { socket } from "@/app/api/socket";
 import { useAppSelector } from '@/app/store/hooks';
+import { BASE_URL } from '@/app/api/api';
 
 interface Message {
   id: string;
@@ -330,7 +331,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
       });
 
       try {
-        const response = await fetch('http://tutor.xelpmoc.in:6800/api/v1/chat', {
+        const response = await fetch(`${BASE_URL}/api/v1/chat`
+        , {
           method: 'POST',
           body: formData,
         });
