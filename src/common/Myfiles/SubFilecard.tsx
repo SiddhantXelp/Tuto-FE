@@ -7,6 +7,7 @@ import { FaFilePdf } from "react-icons/fa";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getDeleteFiles, getDeleteFolder } from '@/app/store/actions/myFiles';
+import { MdDelete } from 'react-icons/md';
 
 interface CardProps {
     data: any;
@@ -85,12 +86,15 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
                 </div>
 
                 <div className="relative">
-                    <BsThreeDotsVertical
+                    {/* <BsThreeDotsVertical
                         size={24}
                         color="#565656"
                         onClick={handleToggleDropdown}
                         id="dropdownDividerButton"
-                    />
+                    /> */}
+                    <MdDelete size={24}
+                        color="#565656"
+                        onClick={handelDelete} />
                     {isDropdownOpen && (
                         <div
                             id="dropdownDivider"

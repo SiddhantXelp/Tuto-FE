@@ -19,7 +19,14 @@ function* getMyFilesEffect(action: any): Generator<any, any, any> {
         yield put(setMyFilesLoading(false));
     } catch (e: any) {
         yield put(setMyFilesLoading(false));
-        yield put(setMyFilesError(e.response));
+        // yield put(setMyFilesError(e.response));
+        if (e.response) {
+            yield put(setMyFilesError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setMyFilesError('Server not working. Please try again later.'));
+        } else {
+            yield put(setMyFilesError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -37,7 +44,14 @@ function* getMyFilesBYIdEffect(action: any): Generator<any, any, any> {
         yield put(setMyFilesLoading(false));
     } catch (e: any) {
         yield put(setMyFilesLoading(false));
-        yield put(setMyFilesError(e.response));
+        // yield put(setMyFilesError(e.response));
+        if (e.response) {
+            yield put(setMyFilesError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setMyFilesError('Server not working. Please try again later.'));
+        } else {
+            yield put(setMyFilesError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -54,7 +68,14 @@ function* getCreateFolderEffect(action: any): Generator<any, any, any> {
         yield put(setMyFilesLoading(false));
     } catch (e: any) {
         yield put(setMyFilesLoading(false));
-        yield put(setMyFilesError(e.response));
+        // yield put(setMyFilesError(e.response));
+        if (e.response) {
+            yield put(setMyFilesError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setMyFilesError('Server not working. Please try again later.'));
+        } else {
+            yield put(setMyFilesError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -70,7 +91,14 @@ function* getCreateFilesEffect(action: any): Generator<any, any, any> {
         yield put(setMyFilesLoading(false));
     } catch (e: any) {
         yield put(setMyFilesLoading(false));
-        yield put(setMyFilesError(e.response));
+        // yield put(setMyFilesError(e.response));
+        if (e.response) {
+            yield put(setMyFilesError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setMyFilesError('Server not working. Please try again later.'));
+        } else {
+            yield put(setMyFilesError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -88,7 +116,14 @@ function* getDeleteFolderEffect(action: any): Generator<any, any, any> {
         yield put(setMyFilesLoading(false));
     } catch (e: any) {
         yield put(setMyFilesLoading(false));
-        yield put(setMyFilesError(e.response));
+        // yield put(setMyFilesError(e.response));
+        if (e.response) {
+            yield put(setMyFilesError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setMyFilesError('Server not working. Please try again later.'));
+        } else {
+            yield put(setMyFilesError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -105,7 +140,14 @@ function* getDeleteFilesEffect(action: any): Generator<any, any, any> {
         yield put(setMyFilesLoading(false));
     } catch (e: any) {
         yield put(setMyFilesLoading(false));
-        yield put(setMyFilesError(e.response));
+        // yield put(setMyFilesError(e.response));
+        if (e.response) {
+            yield put(setMyFilesError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setMyFilesError('Server not working. Please try again later.'));
+        } else {
+            yield put(setMyFilesError('Network error. Please check your connection.'));
+        }
     }
 }
 

@@ -6,8 +6,6 @@ import { getUsersList } from '@/app/api/user.service';
 import { setUsersList, setUsersError, setUsersLoading } from '../actions/user';
 
 function* getUsersEffect(action: any): Generator<any, any, any> {
-  console.log('getStudentsEffect......API CALLING', action);
-
   try {
     yield put(setUsersLoading(true));
     yield put(setUsersError(''));
@@ -19,7 +17,14 @@ function* getUsersEffect(action: any): Generator<any, any, any> {
     yield put(setUsersLoading(false));
   } catch (e: any) {
     yield put(setUsersLoading(false));
-    yield put(setUsersError(e.response));
+    // yield put(setUsersError(e.response));
+    if (e.response) {
+      yield put(setUsersError(e.response?.data?.message));
+    } else if (e.request) {
+      yield put(setUsersError('Server not working. Please try again later.'));
+    } else {
+      yield put(setUsersError('Network error. Please check your connection.'));
+    }
   }
 }
 

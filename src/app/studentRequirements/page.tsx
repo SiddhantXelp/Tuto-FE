@@ -3,7 +3,7 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import SelectMain from '@/common/SelectMain';
 import Link from 'next/link';
 import TabNavigator from "../TabNavigator/page";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxesFull';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getCreateUser, setCreateUser } from "@/app/store/actions/auth";
@@ -14,7 +14,6 @@ import { options, handelSubjects } from "./data";
 const StudentRequirementForm: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  // const useSearchParams
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [subjects, setSubjects] = useState<string[]>([]);
   const [selectedStudentId, setSelectedId] = useState([]);
@@ -152,7 +151,7 @@ const StudentRequirementForm: React.FC = () => {
   //   }
   // }, [isError])
 
-  const setSelectedIds = (options: string[]) => {
+  const setSelectedIds = (options: any) => {
     setSelectedId(options);
   }
 

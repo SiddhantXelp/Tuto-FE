@@ -6,6 +6,7 @@ import { GoFileDirectoryFill } from "react-icons/go";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getDeleteFolder } from '@/app/store/actions/myFiles';
+import { MdDelete } from "react-icons/md";
 
 interface CardProps {
     data: any;
@@ -63,12 +64,16 @@ const Card: React.FC<CardProps> = ({ data }) => {
             <div className="flex items-center">
                 <GoFileDirectoryFill size={40} color="#565656" />
                 <div className="relative ml-auto">
-                    <BsThreeDotsVertical
+                    {/* <BsThreeDotsVertical
                         size={24}
                         color="#565656"
                         onClick={handleToggleDropdown}
                         id="dropdownDividerButton"
-                    />
+                    /> */}
+                    <MdDelete size={24}
+                        color="#565656"
+                        onClick={handleDelete} />
+
                 </div>
             </div>
 

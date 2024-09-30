@@ -18,7 +18,14 @@ function* getCreateAssignmentEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentLoading(false));
     } catch (e: any) {
         yield put(setAssignmentLoading(false));
-        yield put(setAssignmentError(e.response));
+        // yield put(setAssignmentError(e.response));
+        if (e.response) {
+            yield put(setAssignmentError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAssignmentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAssignmentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -35,7 +42,14 @@ function* getAssignmentsEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentLoading(false));
     } catch (e: any) {
         yield put(setAssignmentLoading(false));
-        yield put(setAssignmentError(e.response));
+        // yield put(setAssignmentError(e.response));
+        if (e.response) {
+            yield put(setAssignmentError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAssignmentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAssignmentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -47,13 +61,20 @@ function* getAssignmentByIdEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setAssignmentById(null));
 
-        const response = yield call(getAssignmentById, action.token, action.id,action.studentId);
+        const response = yield call(getAssignmentById, action.token, action.id, action.studentId);
         yield put(setAssignmentById(response));
 
         yield put(setAssignmentLoading(false));
     } catch (e: any) {
         yield put(setAssignmentLoading(false));
-        yield put(setAssignmentError(e.response));
+        // yield put(setAssignmentError(e.response));
+        if (e.response) {
+            yield put(setAssignmentError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAssignmentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAssignmentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -64,13 +85,20 @@ function* getCompletedAssignmentEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentError(''));
         yield put(setCompleteAssignment(null));
 
-        const response = yield call(completeAssignment, action.token, action.data, action.id,action.studentId);
+        const response = yield call(completeAssignment, action.token, action.data, action.id, action.studentId);
         yield put(setCompleteAssignment(response));
 
         yield put(setAssignmentLoading(false));
     } catch (e: any) {
         yield put(setAssignmentLoading(false));
-        yield put(setAssignmentError(e.response));
+        // yield put(setAssignmentError(e.response));
+        if (e.response) {
+            yield put(setAssignmentError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAssignmentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAssignmentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -87,7 +115,14 @@ function* getStudentCreateAssignmentEffect(action: any): Generator<any, any, any
         yield put(setAssignmentLoading(false));
     } catch (e: any) {
         yield put(setAssignmentLoading(false));
-        yield put(setAssignmentError(e.response));
+        // yield put(setAssignmentError(e.response));
+        if (e.response) {
+            yield put(setAssignmentError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAssignmentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAssignmentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -105,7 +140,14 @@ function* getStudentAssignmentsEffect(action: any): Generator<any, any, any> {
         yield put(setAssignmentLoading(false));
     } catch (e: any) {
         yield put(setAssignmentLoading(false));
-        yield put(setAssignmentError(e.response));
+        // yield put(setAssignmentError(e.response));
+        if (e.response) {
+            yield put(setAssignmentError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAssignmentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAssignmentError('Network error. Please check your connection.'));
+        }
     }
 }
 

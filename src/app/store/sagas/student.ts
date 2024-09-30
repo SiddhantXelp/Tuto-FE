@@ -18,7 +18,14 @@ function* getStudentPackagesEffect(action: any): Generator<any, any, any> {
         yield put(setStudentLoading(false));
     } catch (e: any) {
         yield put(setStudentLoading(false));
-        yield put(setStudentError(e.response));
+        // yield put(setStudentError(e.response));
+        if (e.response) {
+            yield put(setStudentError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setStudentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setStudentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -35,7 +42,14 @@ function* getStudentsEffect(action: any): Generator<any, any, any> {
         yield put(setStudentLoading(false));
     } catch (e: any) {
         yield put(setStudentLoading(false));
-        yield put(setStudentError(e.response));
+        // yield put(setStudentError(e.response));
+        if (e.response) {
+            yield put(setStudentError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setStudentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setStudentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -52,7 +66,14 @@ function* getStudentGroupEffect(action: any): Generator<any, any, any> {
         yield put(setStudentLoading(false));
     } catch (e: any) {
         yield put(setStudentLoading(false));
-        yield put(setStudentError(e.response));
+        // yield put(setStudentError(e.response));
+        if (e.response) {
+            yield put(setStudentError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setStudentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setStudentError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -69,11 +90,16 @@ function* getCreateGroupEffect(action: any): Generator<any, any, any> {
         yield put(setStudentLoading(false));
     } catch (e: any) {
         yield put(setStudentLoading(false));
-        yield put(setStudentError(e.response));
+        // yield put(setStudentError(e.response));
+        if (e.response) {
+            yield put(setStudentError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setStudentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setStudentError('Network error. Please check your connection.'));
+        }
     }
 }
-
-
 
 function* getValidateStudentEffect(action: any): Generator<any, any, any> {
     try {
@@ -87,9 +113,13 @@ function* getValidateStudentEffect(action: any): Generator<any, any, any> {
         yield put(setStudentLoading(false));
     } catch (e: any) {
         yield put(setStudentLoading(false));
-        // yield put(setStudentError(e.response));
-        yield put(setStudentError(e.response?.data?.message));
-
+        if (e.response) {
+            yield put(setStudentError(e.response?.data?.message || 'Something went wrong.'));
+        } else if (e.request) {
+            yield put(setStudentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setStudentError('Network error. Please check your connection.'));
+        }
     }
 }
 

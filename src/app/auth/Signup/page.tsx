@@ -10,14 +10,19 @@ import Spinner from "../../../common/Spinner"
 import { toast } from 'react-toastify'; // Import toast
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Signup: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState<boolean>(false);
+
   // const responsesignup = useAppSelector((state: { auth: any }) => state.auth.signupData);
   const isLoading = useAppSelector(state => state.auth.loading);
 
@@ -39,6 +44,11 @@ const Signup: React.FC = () => {
 
     if (!username) {
       toast.error("Username is required");
+      return false;
+    }
+
+    if (!fullName) {
+      toast.error("FullName is required");
       return false;
     }
 
@@ -147,7 +157,8 @@ const Signup: React.FC = () => {
         username,
         email,
         phoneNumber: 1234567890,
-        password
+        password,
+        fullName
       };
 
       const queryString = new URLSearchParams(data as any).toString();
@@ -191,6 +202,20 @@ const Signup: React.FC = () => {
 
         <div className="mb-4">
           <label htmlFor="username" className="block text-gray-700 mb-2 text-sm/[14px]">
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-gray-700 mb-2 text-sm/[14px]">
             Create Username
           </label>
           <input
@@ -202,34 +227,50 @@ const Signup: React.FC = () => {
             required
           />
         </div>
-
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <label htmlFor="password" className="block text-gray-700 mb-2 text-sm/[14px]">
             Create Your Password
           </label>
-          <input
-            type="password"
-            id="password"
-            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="relative">
+            <input
+              type={passwordVisible ? 'text' : 'password'}
+              id="password"
+              className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-6 relative">
           <label htmlFor="confirmPassword" className="block text-gray-700 mb-2 text-sm/[14px]">
             Re-Enter Your Password
           </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+          <div className="relative">
+            <input
+              type={confirmPasswordVisible ? 'text' : 'password'}
+              id="confirmPassword"
+              className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+              onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+            >
+              {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
         </div>
+
 
         <button
           type="button"
