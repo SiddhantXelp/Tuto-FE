@@ -203,18 +203,18 @@ const ClassDetails = () => {
                                     {/* { viewClassData.length > 0 && <div>There is no any student added in this class</div>} */}
                                 </tbody>
                             </table>
-                            <span className="text-xs md:text-sm font-semibold text-[#565656]"><IoMdPersonAdd size={20} /></span>
+                            {/* <span className="text-xs md:text-sm font-semibold text-[#565656]"><IoMdPersonAdd size={20} /></span> */}
 
                         </div>
                     </div>
 
                 </div>
 
-                <div className='flex justify-end'>
+                {/* <div className='flex justify-end'>
                     <button className="bg-gray-200 text-[#565656] py-2 px-4 rounded-[23px] hover:bg-gray-600 hover:text-white border border-[#707070] text-sm w-48">
                         Cancel Class
                     </button>
-                </div>
+                </div> */}
 
             </div>
         </TabNavigator>

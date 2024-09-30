@@ -24,10 +24,10 @@ const PendingTable = () => {
   const [currentPage, setCurrentPage] = useState(storedCurrentPage || 1);
 
   useEffect(() => {
-    if (token) {
-      dispatch(getAssignments(token, currentPage, assignmentLimit.toString(), "pending"));
-    }
-  }, [dispatch, token, currentPage]);
+    // if (token) {
+    dispatch(getAssignments(token, currentPage, assignmentLimit.toString(), "pending"));
+    // }
+  }, [dispatch, currentPage]);
 
   const handleRowClick = (rowData: any) => {
     router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`);

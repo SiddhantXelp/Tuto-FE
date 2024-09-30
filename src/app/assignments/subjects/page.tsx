@@ -22,7 +22,7 @@ const ClassManagementSubject: React.FC = () => {
   ]
 
 
-  const [selectedTab, setSelectedTab] = useState<Tab>('Submitted');
+  const [selectedTab, setSelectedTab] = useState<Tab>('Pending');
 
   const renderContent = () => {
     switch (selectedTab) {

@@ -116,10 +116,10 @@ const PendingTable = () => {
 
   // Fetch assignments on page load and when currentPage changes
   useEffect(() => {
-    if (token) {
-      dispatch(getAssignments(token, currentPage.toString(), assignmentLimit.toString(), "completed"));
-    }
-  }, [dispatch, token, currentPage]);
+    // if (token) {
+    dispatch(getAssignments(token, currentPage.toString(), assignmentLimit.toString(), "completed"));
+    // }
+  }, [dispatch, currentPage]);
 
   const handleRowClick = (rowData: any) => {
     router.push(`/assignments/viewAssignment/${rowData?.assignmentId}?studentId=${rowData?.id}`);

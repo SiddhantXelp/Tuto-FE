@@ -529,14 +529,14 @@ const ViewAssignmentDetails = () => {
                         </div>
 
                         {/* Page Input Section */}
-                        <div>
+                        {/* <div>
                             <h1 className="text-sm text-[#565656] font-semibold"> Page {currentIndex + 1}</h1>
                             <input
                                 type="text"
                                 className="border border-gray-300 w-full rounded-md h-10 mt-2 p-2"
                                 placeholder="Marks"
                             />
-                        </div>
+                        </div> */}
 
                         <div className="flex flex-col md:flex-row justify-between gap-2 mt-4">
                             {/* Previous Button */}
