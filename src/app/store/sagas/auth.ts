@@ -18,7 +18,14 @@ function* getAuthEffect(action: any): Generator<any, any, any> {
         yield put(setAuthLoading(false));
     } catch (e: any) {
         yield put(setAuthLoading(false));
-        yield put(setAuthError(e.response?.data?.message));
+        // yield put(setAuthError(e.response?.data?.message));
+        if (e.response) {
+            yield put(setAuthError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAuthError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAuthError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -35,8 +42,14 @@ function* CreateUserEffect(action: any): Generator<any, any, any> {
         yield put(setAuthLoading(false));
     } catch (e: any) {
         yield put(setAuthLoading(false));
-        console.log("::::::::::::::::::::::::::::::::::", e.response?.data?.message)
-        yield put(setAuthError(e.response?.data?.message));
+        // yield put(setAuthError(e.response?.data?.message));
+        if (e.response) {
+            yield put(setAuthError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAuthError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAuthError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -54,7 +67,14 @@ function* LoginEffect(action: any): Generator<any, any, any> {
         yield put(setAuthLoading(false));
     } catch (e: any) {
         yield put(setAuthLoading(false));
-        yield put(setAuthError(e.response?.data?.message));
+        // yield put(setAuthError(e.response?.data?.message));
+        if (e.response) {
+            yield put(setAuthError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAuthError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAuthError('Network error. Please check your connection.'));
+        }
     }
 }
 
@@ -72,7 +92,14 @@ function* getRolesEffect(action: any): Generator<any, any, any> {
         yield put(setAuthLoading(false));
     } catch (e: any) {
         yield put(setAuthLoading(false));
-        yield put(setAuthError(e.response?.data?.message));
+        // yield put(setAuthError(e.response?.data?.message));
+        if (e.response) {
+            yield put(setAuthError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAuthError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAuthError('Network error. Please check your connection.'));
+        }
     }
 }
 

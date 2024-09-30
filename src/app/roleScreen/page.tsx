@@ -17,6 +17,7 @@ const ScheduleModel: React.FC = () => {
     const email = searchParams.get('email');
     const phoneNumber = searchParams.get('phoneNumber');
     const password = searchParams.get('password');
+    const fullName = searchParams.get('fullName');
     const router = useRouter();
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch();
@@ -34,7 +35,6 @@ const ScheduleModel: React.FC = () => {
 
     useEffect(() => {
         if (isError) {
-            console.log("::isError", isError);
             toast.error(isError);
             dispatch(setAuthError(null));
         }
@@ -49,7 +49,7 @@ const ScheduleModel: React.FC = () => {
             phoneNumber,
             password,
             roleId,
-            fullName: username
+            fullName
         };
 
         dispatch(getSignup("AUTH", data));

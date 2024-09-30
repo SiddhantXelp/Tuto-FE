@@ -137,10 +137,10 @@ const Header: React.FC = () => {
           <div className='flex flex-row gap-14'>
             <div className='flex flex-row gap-8 align item-center items-center'>
 
-              <div className='flex flex-row justify-center align-center gap-1 items-center content-center cursor-pointer'>
+              {/* <div className='flex flex-row justify-center align-center gap-1 items-center content-center cursor-pointer'>
                 <p className='text-sm text-buttonGray' onClick={() => setGroupModel(true)}>Create Group</p>
                 <p className='ml-1'><FaUserGroup size={"17px"} color='gray' /></p>
-              </div>
+              </div> */}
 
               <div className='flex flex-row justify-center align-center gap-1 items-center content-center cursor-pointer'>
                 <p className='text-sm text-buttonGray' onClick={dialogOpen}>Create new class</p>

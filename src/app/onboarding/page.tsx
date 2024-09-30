@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import InputMain from '@/common/InputMain';
-import Link from 'next/link';
 import TabNavigator from "../TabNavigator/page";
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getCreateGroup, getValidateStudent, setCreateGroup, setStudentError, setValidateStudent } from '../store/actions/student';
+import { getValidateStudent, setStudentError, setValidateStudent } from '../store/actions/student';
 import Spinner from '@/common/Spinner';
 import { fields } from "./data"
 
@@ -17,6 +16,7 @@ const OnboardingPage: React.FC = () => {
   const token = useAppSelector(state => state?.auth?.login?.token);
   const error = useAppSelector(state => state?.student?.error);
   const loading = useAppSelector(state => state?.student?.loading);
+
   const [formData, setFormData] = useState<{ [key: string]: string }>({
     name: '',
     gender: '',
@@ -90,39 +90,37 @@ const OnboardingPage: React.FC = () => {
   const handleSubmit = () => {
     if (validateForm()) {
       dispatch(getValidateStudent(token, formData))
-      // const queryParams = new URLSearchParams(formData as any).toString();
-      // const studentIdReceived = {
-      //   studentId: receivedStudentValidate?.data?.id || 0
-
-      // }
-      // const studentId = new URLSearchParams(studentIdReceived as any).toString();
-
-      // router.push(`/studentRequirements?${queryParams}&${studentId}`);
     }
   };
 
   useEffect(() => {
     if (receivedStudentValidate?.status === true) {
-      // const queryParams = new URLSearchParams(formData as any).toString();
-      // router.push(`/studentRequirements?${queryParams}`);
+
+      toast.success("Student verification completed successfully.");
+
+
       const queryParams = new URLSearchParams(formData as any).toString();
+
       const studentIdReceived = {
         studentId: receivedStudentValidate?.data?.id || 0
-
       }
+
       const studentId = new URLSearchParams(studentIdReceived as any).toString();
 
       router.push(`/studentRequirements?${queryParams}&${studentId}`);
 
       dispatch(setValidateStudent(null));
+
     }
   }, [receivedStudentValidate])
 
   useEffect(() => {
+
     if (error) {
       toast.error(error);
       dispatch(setStudentError(null))
     }
+
   }, [error])
 
   return (
