@@ -73,7 +73,7 @@ const OverviewTabContent: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Icon icon="ph:student-bold" width="12" height="12" className="text-black" />
-                <p className="text-xs text-black">{card?.count || 0} student</p>
+                <p className="text-xs text-black">{card?.totalStudents || 0} student</p>
               </div>
               <div
                 className="bg-buttonGray rounded-full flex items-center justify-center cursor-pointer mt-1"

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getValidateStudent, setStudentError, setValidateStudent } from '../store/actions/student';
 import Spinner from '@/common/Spinner';
 import { fields } from "./data"
+import Swal from 'sweetalert2';
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
@@ -96,8 +97,13 @@ const OnboardingPage: React.FC = () => {
   useEffect(() => {
     if (receivedStudentValidate?.status === true) {
 
-      toast.success("Student verification completed successfully.");
-
+      // toast.success("Student verification completed successfully.");
+      Swal.fire({
+        title: 'Success!',
+        text: 'Student verification completed successfully.',
+        icon: 'success',
+        confirmButtonText: 'Done'
+      });
 
       const queryParams = new URLSearchParams(formData as any).toString();
 

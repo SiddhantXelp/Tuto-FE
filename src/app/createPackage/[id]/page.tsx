@@ -211,10 +211,26 @@ const CreatePackage: React.FC = () => {
 
   useEffect(() => {
     if (studentPackage) {
-      router.push(`/onboardSubmit`);
-      // dispatch(setCreateStudentPackages(null))
+
+      const paramsToSend = {
+        meetMedium: studentPackage?.data?.meetMedium,
+        subjects: studentPackage?.data?.subjects.length,
+        days: studentPackage?.data?.days,
+        recordSession: studentPackage?.data?.recordSession,
+        category: studentPackage?.data?.pricingCategory?.category,
+        price: studentPackage?.data?.pricingCategory?.price,
+      };
+
+      const queryParams = new URLSearchParams(paramsToSend).toString();
+
+
+      // router.push(`/onboardSubmit`);
+      router.push(`/onboardSubmit?${queryParams}`);
+
+      dispatch(setCreateStudentPackages(null))
     }
   }, [studentPackage, router]);
+
   const isLoading = useAppSelector(state => state.student.loading);
   const [selectedStudentId, setSelectedId] = useState([]);
 
