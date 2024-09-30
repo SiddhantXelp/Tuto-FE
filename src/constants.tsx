@@ -30,7 +30,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: 'Student',
     path: '/student',
-    activePaths: ['/student', '/onboarding','/groupBasedTable'],
+    activePaths: ['/student', '/onboarding','/groupBasedTable','/createPackage','/onboardSubmit'],
     icon: <Icon icon="ph:student-bold" width="20" height="20" color='gray' />,
   },
   {

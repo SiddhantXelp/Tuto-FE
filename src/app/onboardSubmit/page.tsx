@@ -10,11 +10,24 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { setCreateUser } from "@/app/store/actions/auth";
 import { setCreateStudentPackages } from "@/app/store/actions/student";
 import Swal from 'sweetalert2'
+import { useSearchParams } from 'next/navigation';
 
 const OnboardSubmit = () => {
-  const studentPackage = useAppSelector((state: { student: any }) => state.student.createStudentPackage);
+  // const studentPackage = useAppSelector((state: { student: any }) => state.student.createStudentPackage);
   const userData = useAppSelector((state: { auth: any }) => state.auth.createUser);
   const dispatch = useAppDispatch();
+
+  const searchParams = useSearchParams();
+
+  const meetMedium = searchParams.get('meetMedium');
+  const subjects = searchParams.get('subjects');
+
+  console.log("subjects", subjects);
+  const days = searchParams.get('days');
+  const pricingCategory = searchParams.get('category');
+  const recordSession = searchParams.get('recordSession');
+  const price = searchParams.get("price");
+
 
   const handleSubmit = () => {
     dispatch(setCreateUser(null));
@@ -49,7 +62,7 @@ const OnboardSubmit = () => {
               <div className='flex items-center space-x-3'>
                 <FaVideo size={"24"} color='gray' />
                 <p className='text-sm text-gray-600'>
-                  {studentPackage?.meetMedium === "ZO" ? "Zoom" : "Google Meet"}
+                  {meetMedium === "ZO" ? "Zoom" : "Google Meet"}
                 </p>
               </div>
             </div>
@@ -58,7 +71,7 @@ const OnboardSubmit = () => {
               <div className='flex items-center space-x-3'>
                 <HiOutlineMenuAlt2 size={"24"} color='gray' />
                 <p className='text-sm text-gray-600'>No. of Subjects</p>
-                <span className='ml-auto text-gray-600'>{studentPackage?.subjects?.length || 0}</span>
+                <span className='ml-auto text-gray-600'>{subjects?.length || 0}</span>
               </div>
             </div>
 
@@ -66,7 +79,7 @@ const OnboardSubmit = () => {
               <div className='flex items-center space-x-3'>
                 <FaCalendar size={"24"} color='gray' />
                 <p className='text-sm text-gray-600'>Days</p>
-                <span className='ml-auto text-gray-600'>{studentPackage?.days || ""}</span>
+                <span className='ml-auto text-gray-600'>{days || ""}</span>
               </div>
             </div>
 
@@ -75,7 +88,7 @@ const OnboardSubmit = () => {
                 <IoMdPricetag size={"24"} color='gray' />
                 <p className='text-sm text-gray-600'>Pricing</p>
                 <span className='ml-auto text-gray-600'>
-                  {studentPackage?.pricingCategory?.category ? `${studentPackage?.pricingCategory?.category} Rs ${studentPackage?.pricingCategory?.price}` : ""}
+                  {pricingCategory ? `${pricingCategory} Rs ${price}` : ""}
                 </span>
               </div>
             </div>
@@ -85,7 +98,7 @@ const OnboardSubmit = () => {
                 <FaFileVideo size={"24"} color='gray' />
                 <p className='text-sm text-gray-600'>Video Recording</p>
                 <span className='ml-auto text-gray-600'>
-                  {studentPackage?.recordSession ? "Available" : "Not Available"}
+                  {recordSession ? "Available" : "Not Available"}
                 </span>
               </div>
             </div>
