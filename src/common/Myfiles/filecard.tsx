@@ -7,6 +7,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getDeleteFolder } from '@/app/store/actions/myFiles';
 import { MdDelete } from "react-icons/md";
+import Swal from 'sweetalert2';
 
 interface CardProps {
     data: any;
@@ -39,7 +40,30 @@ const Card: React.FC<CardProps> = ({ data }) => {
 
     const handleDelete = (e: React.MouseEvent) => {
         e.stopPropagation();
-        dispatch(getDeleteFolder(token, String(data?.id)));
+        // dispatch(getDeleteFolder(token, String(data?.id)));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this item?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Add your delete logic here
+
+                dispatch(getDeleteFolder(token, String(data?.id)));
+
+                Swal.fire(
+                    'Deleted!',
+                    'The item has been deleted.',
+                    'success'
+                );
+
+            }
+        });
     };
 
     useEffect(() => {
@@ -70,7 +94,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
                         onClick={handleToggleDropdown}
                         id="dropdownDividerButton"
                     /> */}
-                    <MdDelete size={24}
+                    <MdDelete size={20}
                         color="red"
                         onClick={handleDelete} />
 

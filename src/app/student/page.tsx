@@ -27,6 +27,8 @@ const Student: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+  const userID = useAppSelector((state: { auth: any }) => state.auth.login?.user?.id);
+
   const studentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
   const studentLoading = useAppSelector((state: { student: any }) => state.student?.loading);
   const storedCurrentPage = studentData?.currentPage || 1; // Ensure default value
@@ -36,7 +38,7 @@ const Student: React.FC = () => {
   useEffect(() => {
     const limit = "10";
     if (token) {
-      dispatch(getStudents(token, currentPage, limit));
+      dispatch(getStudents(token, userID, currentPage, limit));
       dispatch(getStudentGroup(token));
     }
   }, [dispatch, token, currentPage]);

@@ -4,7 +4,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import DialogComponent from "@/common/CommonModel";
 import { useDispatch } from 'react-redux';
-import { getRoles, getSignup, setAuthError } from '../store/actions/auth';
+import { getRoles, getSignup, setAuthError, setLogin } from '../store/actions/auth';
 import { useAppSelector } from '../store/hooks';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -49,7 +49,8 @@ const ScheduleModel: React.FC = () => {
             phoneNumber,
             password,
             roleId,
-            fullName
+            fullName,
+            // "dateOfBirth": "1990-01-01",
         };
 
         dispatch(getSignup("AUTH", data));
@@ -67,6 +68,8 @@ const ScheduleModel: React.FC = () => {
             };
 
             localStorage.setItem('user', JSON.stringify(userData));
+
+            dispatch(setLogin(userData));
 
             const role = {
                 roleName

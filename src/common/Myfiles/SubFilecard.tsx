@@ -8,6 +8,7 @@ import { GoFileDirectoryFill } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getDeleteFiles, getDeleteFolder } from '@/app/store/actions/myFiles';
 import { MdDelete } from 'react-icons/md';
+import Swal from 'sweetalert2';
 
 interface CardProps {
     data: any;
@@ -47,11 +48,38 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
     const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
 
     const handelDelete = () => {
-        if (type === "folder") {
-            dispatch(getDeleteFolder(token, String(id)))
-        } else {
-            dispatch(getDeleteFiles(token, String(id)))
-        }
+        // if (type === "folder") {
+        //     dispatch(getDeleteFolder(token, String(id)))
+        // } else {
+        //     dispatch(getDeleteFiles(token, String(id)))
+        // }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this item?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Add your delete logic here
+
+                if (type === "folder") {
+                    dispatch(getDeleteFolder(token, String(id)))
+                } else {
+                    dispatch(getDeleteFiles(token, String(id)))
+                }
+
+                Swal.fire(
+                    'Deleted!',
+                    'The item has been deleted.',
+                    'success'
+                );
+
+            }
+        });
     };
 
     useEffect(() => {
@@ -92,7 +120,7 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
                         onClick={handleToggleDropdown}
                         id="dropdownDividerButton"
                     /> */}
-                    <MdDelete size={24}
+                    <MdDelete size={20}
                         color="red"
                         onClick={handelDelete} />
                     {isDropdownOpen && (

@@ -36,7 +36,7 @@ function* getStudentsEffect(action: any): Generator<any, any, any> {
         yield put(setStudentError(''));
         yield put(setStudents(null));
 
-        const response = yield call(getStudent, action.token, action.page, action.limit);
+        const response = yield call(getStudent, action.token, action.id, action.page, action.limit);
         yield put(setStudents(response));
 
         yield put(setStudentLoading(false));
