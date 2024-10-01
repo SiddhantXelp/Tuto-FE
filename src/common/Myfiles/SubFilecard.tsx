@@ -6,19 +6,26 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaFilePdf } from "react-icons/fa";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getDeleteFiles, getDeleteFolder } from '@/app/store/actions/myFiles';
+import { getDeleteFiles, getDeleteFolder, getUpdateFiles, getUpdateFolder } from '@/app/store/actions/myFiles';
 import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import CommonModel from "@/common/CommonModel";
+import InputMain from '../InputMain';
 
 interface CardProps {
     data: any;
     id: any;
     type: string;
     onClick?: (id: any) => void;
+    mainData: string
 }
 
-const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
+const Card: React.FC<CardProps> = ({ data, id, type, onClick, mainData }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [editFolderModel, setEditFolderModel] = useState(false);
+    // const [editFileModel, setEditFileModel] = useState(false);
+    const [editFolderName, setEditFolderName] = useState("");
+
     const router = useRouter();
     const dispatch = useAppDispatch();
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -88,18 +95,65 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
                 setIsDropdownOpen(false);
             }
         };
-
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [dropdownRef]);
 
+    const handelUpdateFolder = () => {
+
+        if (type === "folder") {
+            const payload = {
+                title: editFolderName
+            }
+            dispatch(getUpdateFolder(token, payload, id))
+        }
+        else {
+            // const payload = {
+            //     mainData,
+            //     fileName: editFolderName
+            // }
+            const payload = {
+                "folderId": mainData?.folderId,
+                "fileName": editFolderName,
+                "fileMeta": {
+                    "description": "Example PDF files"
+                },
+                "fileType": mainData?.fileType,
+                "fileUrl": mainData?.fileUrl
+            }
+            dispatch(getUpdateFiles(token, payload, id));
+            // console.log(":::::::::::::data", mainData)
+
+        }
+
+    }
+
     return (
         <div
             className="bg-white p-1 sm:p-6 rounded-xl h-auto flex flex-col relative border border-black w-auto cursor-pointer"
             ref={dropdownRef}
         >
+            <CommonModel open={editFolderModel} setOpen={setEditFolderModel}>
+                <div>
+                    <label className="block text-[#707070] text-[12px] md:text-[14px] mb-0">{type === "folder" ? "Folder Name" : "File Name"}</label>
+                    <InputMain
+                        name="groupTitle"
+                        value={editFolderName}
+                        onChange={(e) => setEditFolderName(e.target.value)}
+                        placeholder=""
+                        label=""
+                        type=""
+                        id=""
+                    />
+                    <div className='mt-8'>
+                        <button type="submit" className='w-full bg-[#707070] h-10 rounded-md text-white text-sm md:text-base' onClick={handelUpdateFolder}>Edit Folder Name</button>
+                    </div>
+
+                </div>
+            </CommonModel>
+
             <div className="flex items-center space-x-3">
                 {type === 'pdf' ? (
                     <FaFilePdf size={34} />
@@ -114,22 +168,22 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
                 </div>
 
                 <div className="relative">
-                    {/* <BsThreeDotsVertical
+                    <BsThreeDotsVertical
                         size={24}
                         color="#565656"
                         onClick={handleToggleDropdown}
                         id="dropdownDividerButton"
-                    /> */}
-                    <MdDelete size={20}
+                    />
+                    {/* <MdDelete size={20}
                         color="red"
-                        onClick={handelDelete} />
+                        onClick={handelDelete} /> */}
                     {isDropdownOpen && (
                         <div
                             id="dropdownDivider"
                             className="absolute right-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-lg z-10"
                         >
                             <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownDividerButton">
-                                <li>
+                                {/* <li>
                                     <button
                                         className="block px-4 py-2 hover:bg-gray-100"
                                         onClick={() => console.log('Share clicked')}
@@ -144,23 +198,23 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick }) => {
                                     >
                                         Copy link
                                     </button>
-                                </li>
+                                </li> */}
                                 <li>
                                     <button
                                         className="block px-4 py-2 hover:bg-gray-100"
-                                        onClick={() => console.log('Rename clicked')}
+                                        onClick={() => setEditFolderModel(true)}
                                     >
                                         Rename
                                     </button>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <button
                                         className="block px-4 py-2 hover:bg-gray-100"
                                         onClick={() => console.log('Download clicked')}
                                     >
                                         Download
                                     </button>
-                                </li>
+                                </li> */}
                                 <li>
                                     <button
                                         className="block px-4 py-2 hover:bg-gray-100"

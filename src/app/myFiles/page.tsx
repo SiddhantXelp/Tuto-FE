@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getMyFiles, setCreateFolder } from '@/app/store/actions/myFiles';
+import { getMyFiles, setCreateFolder, setUpdateFolder } from '@/app/store/actions/myFiles';
 import AddFolderModel from "@/common/Myfiles/AddFolderModel";
 import dynamic from 'next/dynamic';
 import Spinner from '@/common/Spinner';
@@ -27,6 +27,7 @@ const MyFilesPage = () => {
   const myFiles = useAppSelector(state => state.myFiles.setMyFiles?.folders);
   const createFolder = useAppSelector(state => state.myFiles.setCreateFolder);
   const deleteFolderResponse = useAppSelector(state => state.myFiles.setDeleteFolders);
+  const updateFolderResponse = useAppSelector(state => state?.myFiles?.setUpdateFolder)
 
   useEffect(() => {
     if (token) {
@@ -36,12 +37,14 @@ const MyFilesPage = () => {
   }, [dispatch, token]);
 
   useEffect(() => {
-    if (createFolder || deleteFolderResponse) {
+    if (createFolder || deleteFolderResponse || updateFolderResponse) {
       dispatch(getMyFiles(token));
       dispatch(setCreateFolder(null));
+      dispatch(setUpdateFolder(null));
+
 
     }
-  }, [createFolder, dispatch, token, deleteFolderResponse]);
+  }, [createFolder, dispatch, token, deleteFolderResponse, updateFolderResponse]);
 
   const filteredFiles = myFiles?.filter((item: any) => item.parent_id === null) || [];
 

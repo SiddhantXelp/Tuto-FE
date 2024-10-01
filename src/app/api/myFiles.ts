@@ -7,6 +7,9 @@ export default {
     createFolder: `${BASE_URL}/api/v1/folders`,
     createFiles: `${BASE_URL}/api/v1/files`,
     deleteFolder: (id: string) => `${BASE_URL}/api/v1/folders/${id}`,
-    deleteFiles: (id: string) => `${BASE_URL}/api/v1/files/${id}`
+    deleteFiles: (id: string) => `${BASE_URL}/api/v1/files/${id}`,
+    updateFolderName: (id: string) => `${BASE_URL}/api/v1/folders/${id}`,
+    updateFileName: (id: string) => `${BASE_URL}/api/v1/files/${id}`,
+
 
 };
