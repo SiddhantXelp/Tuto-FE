@@ -12,9 +12,10 @@ export const setCreateStudentPackages = (createStudentPackage: any) => ({
 });
 
 
-export const getStudents = (token: string, page: string, limit: string) => ({
+export const getStudents = (token: string, id: string, page: string, limit: string) => ({
     type: actionTypes.GET_STUDENTS,
     token,
+    id,
     page,
     limit
 });

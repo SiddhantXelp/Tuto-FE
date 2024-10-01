@@ -28,6 +28,10 @@ export default function IndexPage() {
   const usersLoading = useAppSelector((state: { user: any }) => state.user?.loading);
 
 
+  const filterUserId = token?.user?.id
+    ? getUsers?.filter((item: any) => item?.id !== token?.user?.id)
+    : [];
+
   useEffect(() => {
     // if (token) {
     dispatch(getUsersList(token));
@@ -42,7 +46,7 @@ export default function IndexPage() {
         usersLoading && <Spinner />
       }
       <div className="flex h-[850px] bg-white shadow-2xl rounded-xl mt-3 ml-2">
-        <ChatList chats={getUsers} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
+        <ChatList chats={filterUserId} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
         <ChatWindow selectedChat={selectedChat} />
       </div>
     </TabNavigator>

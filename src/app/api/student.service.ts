@@ -35,10 +35,10 @@ export const createPackage = async (token: string, data: any) => {
 
 
 
-export const getStudent = async (token: string, page: string, limit: string) => {
+export const getStudent = async (token: string, id: string, page: string, limit: string) => {
     try {
         const response = await axios.get(
-            apis.getStudents(page, limit),
+            apis.getStudents(id,page, limit),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;

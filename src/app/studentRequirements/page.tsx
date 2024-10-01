@@ -6,7 +6,7 @@ import TabNavigator from "../TabNavigator/page";
 import { useRouter } from 'next/navigation';
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxesFull';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getCreateUser, setCreateUser } from "@/app/store/actions/auth";
+import { getCreateUser, setAuthError, setCreateUser } from "@/app/store/actions/auth";
 import Spinner from "../../common/Spinner"
 import { toast } from 'react-toastify';
 import { options, handelSubjects } from "./data";
@@ -53,103 +53,105 @@ const StudentRequirementForm: React.FC = () => {
     value: group.value
   })) ?? [];
 
-  // const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
+  const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login);
 
-  // const validateForm = () => {
-  //   const { name, gender, dob, email } = formData;
-  //   let hasError = false;
-  //   let newErrors: string[] = [];
+  const validateForm = () => {
+    const { name, gender, dob, email } = formData;
+    let hasError = false;
+    let newErrors: string[] = [];
 
-  //   if (!name) {
-  //     newErrors.push("Name is required.");
-  //     hasError = true;
-  //   }
-  //   if (!gender) {
-  //     newErrors.push("Gender is required.");
-  //     hasError = true;
-  //   }
-  //   if (!dob) {
-  //     newErrors.push("Date of Birth is required.");
-  //     hasError = true;
-  //   }
-  //   if (!email) {
-  //     newErrors.push("Email is required.");
-  //     hasError = true;
-  //   } else if (!/\S+@\S+\.\S+/.test(email)) {
-  //     newErrors.push("Please enter a valid email address.");
-  //     hasError = true;
-  //   }
+    if (!name) {
+      newErrors.push("Name is required.");
+      hasError = true;
+    }
+    if (!gender) {
+      newErrors.push("Gender is required.");
+      hasError = true;
+    }
+    if (!dob) {
+      newErrors.push("Date of Birth is required.");
+      hasError = true;
+    }
+    if (!email) {
+      newErrors.push("Email is required.");
+      hasError = true;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.push("Please enter a valid email address.");
+      hasError = true;
+    }
 
-  //   if (!selectedOptions.grade) {
-  //     newErrors.push("Grade is required.");
-  //     hasError = true;
-  //   }
+    if (!selectedOptions.grade) {
+      newErrors.push("Grade is required.");
+      hasError = true;
+    }
 
-  //   if (!selectedOptions.boardeducation) {
-  //     newErrors.push("Board of Education is required.");
-  //     hasError = true;
-  //   }
+    if (!selectedOptions.boardeducation) {
+      newErrors.push("Board of Education is required.");
+      hasError = true;
+    }
 
-  //   if (subjects.length === 0) {
-  //     newErrors.push("At least one subject must be selected.");
-  //     hasError = true;
-  //   }
+    if (subjects.length === 0) {
+      newErrors.push("At least one subject must be selected.");
+      hasError = true;
+    }
 
-  //   if (hasError) {
-  //     newErrors.forEach(error => toast.error(error));
-  //     return false;
-  //   }
-  //   return true;
-  // };
+    if (hasError) {
+      newErrors.forEach(error => toast.error(error));
+      return false;
+    }
+    return true;
+  };
 
   const handelSubmit = () => {
-    // if (!validateForm()) {
-    //   return;
-    // }
+    if (!validateForm()) {
+      return;
+    }
 
-    // const data = {
-    //   "username": formData.email,
-    //   "email": formData.email,
-    //   "phoneNumber": formData.mobileNumber,
-    //   // "phoneNumber": 1234567890,
-    //   "password": "password123",
-    //   "fullName": formData.name,
-    //   "gender": formData.gender,
-    //   "dateOfBirth": formData.dob,
-    //   "currentStatus": "ACTIVE",
-    //   "employmentStatus": "FT",
-    //   "educationalDetails": {
-    //     "grade": selectedOptions.grade,
-    //     "subjects": subjects,
-    //     "boardOfEducation": selectedOptions.boardeducation
-    //   },
-    //   "roleId": "f9848546-b96c-4a61-a8cc-7ebb847fbe57"
-    // }
-    // dispatch(getCreateUser(memberAuthToken, data));
+    const data = {
+      "username": formData.email,
+      "email": formData.email,
+      "phoneNumber": formData.mobileNumber,
+      // "phoneNumber": 1234567890,
+      "password": "Password@123",
+      "fullName": formData.name,
+      "gender": formData.gender,
+      "dateOfBirth": formData.dob,
+      "currentStatus": "ACTIVE",
+      "employmentStatus": "FT",
+      "educationalDetails": {
+        "grade": selectedOptions.grade,
+        "subjects": subjects,
+        "boardOfEducation": selectedOptions.boardeducation
+      },
+      "roleId": "f9848546-b96c-4a61-a8cc-7ebb847fbe57",
+      "parentId": memberAuthToken?.user?.id
+    }
+    dispatch(getCreateUser(memberAuthToken?.token, data));
 
-    router.push(`/createPackage/${formData?.studentId}`);
+    // router.push(`/createPackage/${formData?.studentId}`);
 
   }
-  // const classesData = useAppSelector((state: { auth: any }) => state.auth.createUser);
+  const classesData = useAppSelector((state: { auth: any }) => state.auth.createUser);
 
-  // useEffect(() => {
-  //   if (classesData && classesData?.id) {
+  useEffect(() => {
+    if (classesData && classesData?.id) {
 
-  //     router.push(`/createPackage/${formData?.studentId}`);
+      router.push(`/createPackage/${classesData?.id}`);
 
-  //   }
-  // }, [classesData, router]);
-  // const isLoading = useAppSelector(state => state.auth.loading);
-  // const isError = useAppSelector(state => state.auth.error);
+    }
+  }, [classesData, router]);
+  const isLoading = useAppSelector(state => state.auth.loading);
+  const isError = useAppSelector(state => state.auth.error);
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (isError) {
-  //     toast.error(isError)
+    if (isError) {
+      toast.error(isError);
+      dispatch(setAuthError(null));
 
-  //   }
-  // }, [isError])
+    }
+  }, [isError])
 
   const setSelectedIds = (options: any) => {
     setSelectedId(options);
@@ -158,9 +160,9 @@ const StudentRequirementForm: React.FC = () => {
   return (
     <>
       <TabNavigator>
-        {/* {
+        {
           isLoading ? <Spinner /> : ""
-        } */}
+        }
         <div className='flex justify-center items-center mt-20 '>
           <div className='w-full max-w-xl bg-[#F8F5F5] shadow-xl border  rounded-[19px] p-6'>
             <span className='font-medium text-xl text-[#707070] block mb-4 opacity-100'>Student Requirements</span>

@@ -52,6 +52,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
   const [tabValue, setTabValue] = useState('Create new class');
   const [showNewContent, setShowNewContent] = useState(false);
   const students = useAppSelector((state: { student: any }) => state.student?.getStudents?.students || []);
+  const userID = useAppSelector((state: { auth: any }) => state.auth.login?.user?.id);
 
   useEffect(() => {
     if (open) {
@@ -63,7 +64,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     if (showNewContent) {
       const page = "1";
       const limit = "10";
-      dispatch(getStudents(memberAuthToken, page, limit));
+      dispatch(getStudents(memberAuthToken, userID, page, limit));
     }
   }, [dispatch, memberAuthToken, showNewContent]);
 

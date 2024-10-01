@@ -90,44 +90,47 @@ const OnboardingPage: React.FC = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      dispatch(getValidateStudent(token, formData))
+      // dispatch(getValidateStudent(token, formData));
+      const queryParams = new URLSearchParams(formData as any).toString();
+
+      router.push(`/studentRequirements?${queryParams}`);
     }
   };
 
-  useEffect(() => {
-    if (receivedStudentValidate?.status === true) {
+  // useEffect(() => {
+  //   if (receivedStudentValidate?.status === true) {
 
-      // toast.success("Student verification completed successfully.");
-      Swal.fire({
-        title: 'Success!',
-        text: 'Student verification completed successfully.',
-        icon: 'success',
-        confirmButtonText: 'Done'
-      });
+  //     // toast.success("Student verification completed successfully.");
+  //     Swal.fire({
+  //       title: 'Success!',
+  //       text: 'Student verification completed successfully.',
+  //       icon: 'success',
+  //       confirmButtonText: 'Done'
+  //     });
 
-      const queryParams = new URLSearchParams(formData as any).toString();
+  //     const queryParams = new URLSearchParams(formData as any).toString();
 
-      const studentIdReceived = {
-        studentId: receivedStudentValidate?.data?.id || 0
-      }
+  //     const studentIdReceived = {
+  //       studentId: receivedStudentValidate?.data?.id || 0
+  //     }
 
-      const studentId = new URLSearchParams(studentIdReceived as any).toString();
+  //     const studentId = new URLSearchParams(studentIdReceived as any).toString();
 
-      router.push(`/studentRequirements?${queryParams}&${studentId}`);
+  //     router.push(`/studentRequirements?${queryParams}&${studentId}`);
 
-      dispatch(setValidateStudent(null));
+  //     dispatch(setValidateStudent(null));
 
-    }
-  }, [receivedStudentValidate])
+  //   }
+  // }, [receivedStudentValidate])
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (error) {
-      toast.error(error);
-      dispatch(setStudentError(null))
-    }
+  //   if (error) {
+  //     toast.error(error);
+  //     dispatch(setStudentError(null))
+  //   }
 
-  }, [error])
+  // }, [error])
 
   return (
     <>

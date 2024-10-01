@@ -49,7 +49,7 @@ const CreateNewAssignment = () => {
     if (memberAuthToken) {
       const page = "1";
       const limit = "10"
-      dispatch(getStudents(memberAuthToken, page, limit));
+      dispatch(getStudents(memberAuthToken, token?.user?.id, page, limit));
     }
 
   }, [dispatch, memberAuthToken]);
@@ -64,7 +64,6 @@ const CreateNewAssignment = () => {
   const [checkboxInput, setCheckboxInput] = useState<string>('');
   const [showInput, setInput] = useState(false);
   const token = useAppSelector((state: { auth: any }) => state.auth.login);
-  console.log("token:::::::::::token", token)
 
   const [cards, setCards] = useState([
     {

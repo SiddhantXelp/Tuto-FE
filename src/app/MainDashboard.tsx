@@ -31,6 +31,10 @@ interface UserInfo {
   name: string;
   email: string;
   picture: string;
+  responseSignUp: {
+    fullName: string
+
+  }
 }
 
 export default function Home() {
@@ -48,6 +52,7 @@ export default function Home() {
   const viewStudentData = useAppSelector((state: { student: any }) => state.student?.getStudents || []);
   const assignmentData = useAppSelector((state: { assignment: any }) => state?.assignment?.setAssignments?.data || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state?.auth.login?.token);
+  const loginData = useAppSelector((state: { auth: any }) => state?.auth.login);
 
   const eventDates = viewClassData.map((date: any) => new Date(date?.classSchedule?.scheduleDate || date));
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -61,11 +66,11 @@ export default function Home() {
       const page = "1";
       const assignmentLimit = "4"
       dispatch(getClasses(memberAuthToken));
-      dispatch(getStudents(memberAuthToken, page, "1"));
+      dispatch(getStudents(memberAuthToken, loginData?.user?.id, page, "1"));
       dispatch(getAssignments(memberAuthToken, page, assignmentLimit, "completed"));
     }
 
-  }, [dispatch, open, memberAuthToken])
+  }, [dispatch, open, memberAuthToken, loginData])
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo")
@@ -196,7 +201,11 @@ export default function Home() {
               />
             </div>
             <span className="text-[#000000] mt-2 text-sm">Hello</span>
-            <span className="text-black font-bold">{userInfo ? userInfo.name : ""}</span>
+            {/* <span className="text-black font-bold">{userInfo ? userInfo.responseSignUp?.fullName : userInfo?.name}</span> */}
+            <span className="text-black font-bold">
+              {userInfo?.responseSignUp?.fullName || userInfo?.name}
+            </span>
+
           </div>
         </div>
       </div>

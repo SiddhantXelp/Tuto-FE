@@ -144,9 +144,13 @@ const MyFilesPage = () => {
                                 onClick={handleCardClick}
                             />
                         ))}
+
+
                     </div>
                 </div>
-
+                {filteredFiles.length === 0 && filteredChildren.length === 0 && (
+                    <div className='mt-auto flex justify-center'>There are no files or folders.</div>
+                )}
                 <div className="fixed bottom-10 right-4">
                     {openDropdown && (
                         <div className="absolute bottom-14 right-0 w-48 bg-gray-200 shadow-lg rounded-lg border border-gray-200 mb-2">
