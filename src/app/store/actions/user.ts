@@ -13,6 +13,20 @@ export const setUsersList = (setUsers: any) => ({
 
 
 
+export const getOnBoardTutor  = (token: string, data: any, id: string) => ({
+  type: actionTypes.GET_ON_BOARD_TUTOR,
+  token,
+  data,
+  id
+});
+
+
+export const setOnBoardTutor = (setOnBoardTutor: any) => ({
+  type: actionTypes.SET_ON_BOARD_TUTOR,
+  setOnBoardTutor,
+});
+
+
 
 
 export const setUsersError = (error: any) => ({

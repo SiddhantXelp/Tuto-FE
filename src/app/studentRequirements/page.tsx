@@ -134,9 +134,9 @@ const StudentRequirementForm: React.FC = () => {
   const classesData = useAppSelector((state: { auth: any }) => state.auth.createUser);
 
   useEffect(() => {
-    if (classesData && classesData?.id) {
+    if (classesData && classesData?.user?.id) {
 
-      router.push(`/createPackage/${classesData?.id}`);
+      router.push(`/createPackage/${classesData?.user?.id}`);
 
     }
   }, [classesData, router]);

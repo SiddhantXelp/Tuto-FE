@@ -32,7 +32,7 @@ interface UserInfo {
   email: string;
   picture: string;
   user: {
-    fullName: string
+    username: string
 
   }
 }
@@ -204,7 +204,7 @@ export default function Home() {
             <span className="text-[#000000] mt-2 text-sm">Hello</span>
             {/* <span className="text-black font-bold">{userInfo ? userInfo.responseSignUp?.fullName : userInfo?.name}</span> */}
             <span className="text-black font-bold">
-              {userInfo?.user?.fullName || userInfo?.name}
+              {userInfo?.user?.username || userInfo?.name}
             </span>
 
           </div>

@@ -2,8 +2,8 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actionTypes/assignment';
 
-import { createAssignment, getAssignments, getAssignmentById, completeAssignment, createStudentAssignment } from '../../api/assignment.service';
-import { setAssignmentError, setAssignmentLoading, setCreateAssignment, setAssignments, setAssignmentById, setCompleteAssignment, setCreateStudentAssignment, setStudentAssignments } from '../actions/assignment';
+import { createAssignment, getAssignments, getAssignmentById, completeAssignment, createStudentAssignment, getSubjects } from '../../api/assignment.service';
+import { setAssignmentError, setAssignmentLoading, setCreateAssignment, setAssignments, setAssignmentById, setCompleteAssignment, setCreateStudentAssignment, setStudentAssignments, setSubjects } from '../actions/assignment';
 
 
 function* getCreateAssignmentEffect(action: any): Generator<any, any, any> {
@@ -151,6 +151,29 @@ function* getStudentAssignmentsEffect(action: any): Generator<any, any, any> {
     }
 }
 
+function* getSubjectsEffect(action: any): Generator<any, any, any> {
+    try {
+        yield put(setAssignmentLoading(true));
+        yield put(setAssignmentError(''));
+        yield put(setSubjects(null));
+
+        const response = yield call(getSubjects, action.token);
+        yield put(setSubjects(response));
+
+        yield put(setAssignmentLoading(false));
+    } catch (e: any) {
+        yield put(setAssignmentLoading(false));
+        // yield put(setAssignmentError(e.response));
+        if (e.response) {
+            yield put(setAssignmentError(e.response?.data?.message));
+        } else if (e.request) {
+            yield put(setAssignmentError('Server not working. Please try again later.'));
+        } else {
+            yield put(setAssignmentError('Network error. Please check your connection.'));
+        }
+    }
+}
+
 
 export function* AssignmentSaga() {
     yield takeEvery(actionTypes.GET_CREATE_ASSIGNMENT, getCreateAssignmentEffect);
@@ -159,5 +182,7 @@ export function* AssignmentSaga() {
     yield takeEvery(actionTypes.GET_COMPLETED_ASSIGNMENT, getCompletedAssignmentEffect);
     yield takeEvery(actionTypes.GET_CREATE_STUDENT_ASSIGNMENT, getStudentCreateAssignmentEffect);
     yield takeEvery(actionTypes.GET_STUDENT_ASSIGNMENTS, getStudentAssignmentsEffect);
+    yield takeEvery(actionTypes.GET_SUBJECTS, getSubjectsEffect);
+
 
 }

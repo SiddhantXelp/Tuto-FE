@@ -1,10 +1,11 @@
 "use client";
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import InputMain from '@/common/InputMain';
 import Link from 'next/link';
 import TabNavigator from "../TabNavigator/page";
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useAppSelector } from '../store/hooks';
 
 interface Field {
     labelName: string;
@@ -62,13 +63,15 @@ const fields: Field[] = [
 
 const OnboardingPage: React.FC = () => {
     const router = useRouter();
+    const loginResponse = useAppSelector(state => state?.auth?.login);
 
+    console.log("Email Id", loginResponse?.user?.email);
     const [formData, setFormData] = useState<{ [key: string]: string }>({
         name: '',
         gender: '',
         dob: '',
         mobileNumber: '',
-        email: ''
+        email: loginResponse?.user?.email
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -123,9 +126,12 @@ const OnboardingPage: React.FC = () => {
     };
 
     const handleSubmit = () => {
-        // if (validateForm()) {
-        router.push(`/onBoardTutor/educationDetails`);
-        // }
+        if (validateForm()) {
+            const query = new URLSearchParams(formData).toString();
+            // sessionStorage.setItem('formData', JSON.stringify(formData));
+
+            router.push(`/onBoardTutor/educationDetails?${query}`);
+        }
     };
 
     return (

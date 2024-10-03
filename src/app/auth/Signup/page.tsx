@@ -17,7 +17,6 @@ const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -45,11 +44,6 @@ const Signup: React.FC = () => {
 
     if (!username) {
       toast.error("Username is required");
-      isValid = false;
-    }
-
-    if (!fullName) {
-      toast.error("FullName is required");
       isValid = false;
     }
 
@@ -159,9 +153,8 @@ const Signup: React.FC = () => {
       const data = {
         username,
         email,
-        phoneNumber: 1234567890,
-        password,
-        fullName
+        // phoneNumber: 1234567890,
+        password
       };
 
       const queryString = new URLSearchParams(data as any).toString();
@@ -199,20 +192,6 @@ const Signup: React.FC = () => {
             className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-700 mb-2 text-sm/[14px]">
-            Full Name
-          </label>
-          <input
-            type="text"
-            id="username"
-            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
             required
           />
         </div>
@@ -286,7 +265,7 @@ const Signup: React.FC = () => {
 
         <p className='text-center mt-5 text-sm/[14px]'>or sign up with</p>
 
-        <div className='flex justify-between mt-5 mx-5'>
+        {/* <div className='flex justify-between mt-5 mx-5'>
           <button
             className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
             style={{
@@ -310,7 +289,7 @@ const Signup: React.FC = () => {
           >
             Apple Id
           </button>
-        </div>
+        </div> */}
 
         <Link href="/auth/Login">
           <p className='text-center mt-5 text-sm/[14px]'>Already having account?  <b> Login here</b></p>
