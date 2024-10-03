@@ -31,7 +31,7 @@ interface UserInfo {
   name: string;
   email: string;
   picture: string;
-  responseSignUp: {
+  user: {
     fullName: string
 
   }
@@ -54,6 +54,7 @@ export default function Home() {
   const memberAuthToken = useAppSelector((state: { auth: any }) => state?.auth.login?.token);
   const loginData = useAppSelector((state: { auth: any }) => state?.auth.login);
 
+  console.log("::::::::::::loginData", loginData)
   const eventDates = viewClassData.map((date: any) => new Date(date?.classSchedule?.scheduleDate || date));
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const imageUrl = userInfo && userInfo?.picture ? userInfo?.picture : "/profile.png";
@@ -203,7 +204,7 @@ export default function Home() {
             <span className="text-[#000000] mt-2 text-sm">Hello</span>
             {/* <span className="text-black font-bold">{userInfo ? userInfo.responseSignUp?.fullName : userInfo?.name}</span> */}
             <span className="text-black font-bold">
-              {userInfo?.responseSignUp?.fullName || userInfo?.name}
+              {userInfo?.user?.fullName || userInfo?.name}
             </span>
 
           </div>

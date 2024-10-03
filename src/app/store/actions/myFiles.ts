@@ -77,6 +77,36 @@ export const setDeleteFiles = (setDeleteFile: any) => ({
 });
 
 
+export const getUpdateFolder = (token: string, data: any, id: string) => ({
+    type: actionTypes.GET_UPDATE_FOLDER,
+    token,
+    data,
+    id
+});
+
+
+export const setUpdateFolder = (setUpdateFolder: any) => ({
+    type: actionTypes.SET_UPDATE_FOLDER,
+    setUpdateFolder,
+});
+
+
+
+export const getUpdateFiles = (token: string, data: any, id: string) => ({
+    type: actionTypes.GET_UPDATE_FILE,
+    token,
+    data,
+    id
+});
+
+
+export const setUpdateFiles = (setUpdateFile: any) => ({
+    type: actionTypes.SET_UPDATE_FILE,
+    setUpdateFile,
+});
+
+
+
 export const setMyFilesError = (error: any) => ({
     type: actionTypes.SET_MYFILE_ERROR,
     error,

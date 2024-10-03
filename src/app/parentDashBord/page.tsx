@@ -17,7 +17,7 @@ const SplashScreen: React.FC = () => {
     if (step < 3) {
       setStep(step + 1 as Step);
     } else {
-      router.push("/")
+      router.push("/onBoardTutor")
     }
   };
 
@@ -73,7 +73,7 @@ const SplashScreen: React.FC = () => {
         </div>
       </div>
       <div className="absolute right-4 bottom-10">
-        <Link href='/'>
+        <Link href='/onBoardTutor'>
           <button className="text-[#8A70D6]">
             Skip to dashboard
           </button>

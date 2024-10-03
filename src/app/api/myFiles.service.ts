@@ -165,3 +165,60 @@ export const deleteFiles = async (token: string, id: any) => {
         throw e;
     }
 };
+
+export const updateFolder = async (token: string, data: any, id: string) => {
+    try {
+        const response = await axios.put(
+            apis.updateFolderName(id),
+            data,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};
+
+
+export const updateFile = async (token: string, data: any, id: string) => {
+    try {
+        const response = await axios.put(
+            apis.updateFileName(id),
+            data,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};

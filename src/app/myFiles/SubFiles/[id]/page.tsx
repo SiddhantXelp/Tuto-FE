@@ -8,7 +8,7 @@ import { data } from "../../data";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFiles, setDeleteFolder } from '@/app/store/actions/myFiles';
+import { getMyFilesByID, setCreateFolder, setCreateFiles, setDeleteFiles, setDeleteFolder, setUpdateFiles, setUpdateFolder } from '@/app/store/actions/myFiles';
 import Spinner from "@/common/Spinner";
 import AddFolderModel from "@/common/Myfiles/AddFolderModel";
 
@@ -28,6 +28,8 @@ const MyFilesPage = () => {
     const [isFile, setIsFile] = useState(false);
     const [isFolder, setIsFolder] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false);
+    const updateFileResponse = useAppSelector(state => state?.myFiles?.setUpdateFile)
+    const updateFolderResponse = useAppSelector(state => state?.myFiles?.setUpdateFolder)
 
     useEffect(() => {
         if (paramId) {
@@ -48,16 +50,16 @@ const MyFilesPage = () => {
     }, []);
 
     useEffect(() => {
-        if (createFolder || createFiles || deleteFolderResponse) {
+        if (createFolder || createFiles || deleteFolderResponse || updateFileResponse || updateFolderResponse) {
             dispatch(getMyFilesByID(memberAuthToken, id ?? ''));
             dispatch(setCreateFolder(null));
             dispatch(setCreateFiles(null));
             dispatch(setDeleteFiles(null));
             dispatch(setDeleteFolder(null));
-
-
+            dispatch(setUpdateFiles(null));
+            dispatch(setUpdateFolder(null));
         }
-    }, [createFolder, createFiles, deleteFolderResponse]);
+    }, [createFolder, createFiles, deleteFolderResponse, updateFileResponse, updateFolderResponse]);
 
 
     const handleCardClick = (id: any) => {
@@ -132,6 +134,7 @@ const MyFilesPage = () => {
                                 data={subFile.fileName}
                                 id={subFile.id}
                                 type="pdf"
+                                mainData={subFile}
                             />
                         ))}
 
@@ -142,6 +145,8 @@ const MyFilesPage = () => {
                                 id={subFile.id}
                                 type="folder"
                                 onClick={handleCardClick}
+                                mainData={subFile}
+
                             />
                         ))}
 

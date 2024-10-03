@@ -8,6 +8,8 @@ export interface IMyFiles {
     setCreateFiles: any;
     setDeleteFolders: any;
     setDeleteFile: any;
+    setUpdateFolder: any;
+    setUpdateFile: any;
     error: any;
     loading: any;
 
@@ -19,6 +21,8 @@ const initialState: IMyFiles = {
     setCreateFiles: null,
     setDeleteFolders: null,
     setDeleteFile: null,
+    setUpdateFolder: null,
+    setUpdateFile: null,
     error: null,
     loading: null,
 
@@ -57,6 +61,15 @@ const setDeleteFiles = ({ setDeleteFile }: { setDeleteFile: any }, state: IMyFil
     setDeleteFile,
 });
 
+const setUpdateFiles = ({ setUpdateFile }: { setUpdateFile: any }, state: IMyFiles) => ({
+    ...state,
+    setUpdateFile,
+});
+const setUpdateFolder = ({ setUpdateFolder }: { setUpdateFolder: any }, state: IMyFiles) => ({
+    ...state,
+    setUpdateFolder,
+});
+
 const setMyFilesError = (
     { error }: { error: any },
     state: IMyFiles,
@@ -81,6 +94,8 @@ export const actionReducers = {
     [actionTypes.SET_CREATE_FILES]: setCreateFile,
     [actionTypes.SET_DELETE_FOLDER]: setDeleteFolder,
     [actionTypes.SET_DELETE_FILES]: setDeleteFiles,
+    [actionTypes.SET_UPDATE_FOLDER]: setUpdateFolder,
+    [actionTypes.SET_UPDATE_FILE]: setUpdateFiles,
     [actionTypes.SET_MYFILE_ERROR]: setMyFilesError,
     [actionTypes.SET_MYFILE_LOADING]: setMyFilesLoading,
 };

@@ -63,7 +63,7 @@ const ScheduleModel: React.FC = () => {
     useEffect(() => {
         if (responseSignUp) {
             const userData = {
-                responseSignUp,
+                user: responseSignUp,
                 token: "njksndkjnjjksndjksndsndasd"
             };
 
