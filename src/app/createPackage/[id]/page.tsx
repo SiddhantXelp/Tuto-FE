@@ -17,6 +17,8 @@ const CreatePackage: React.FC = () => {
   const params = useParams();
   const router = useRouter();
 
+  const receivedSubjects = useAppSelector(state => state?.user?.setTutorSubjects?.data?.subjects || []);
+
   const id = params.id;
   const dispatch = useAppDispatch();
 
@@ -128,10 +130,10 @@ const CreatePackage: React.FC = () => {
   }
   const filteredPricingInputs = filterPricingInputs(formData.pricingInputs);
 
-  const optionsSubjects = handelSubjects?.map((group: any) => ({
+  const optionsSubjects = receivedSubjects?.map((group: any) => ({
     id: group?.id,
-    label: group.label,
-    value: group.value
+    label: group.name,
+    value: group.name
   })) ?? [];
 
   type PricingInput = {

@@ -84,7 +84,7 @@ const ScheduleModel: React.FC = () => {
                 <DialogComponent open={open} setOpen={setOpen}>
                     <div className='p-5'>
                         <h1 className='text-center text-[#767676] text-2xl mb-10'>Who are You?</h1>
-                        {roles && roles.map((data: any, index: number) => (
+                        {/* {roles && roles.map((data: any, index: number) => (
                             <div key={data?.id}>
                                 <button
                                     className='bg-primaryColor p-3 w-full rounded-lg text-white mb-2'
@@ -96,7 +96,21 @@ const ScheduleModel: React.FC = () => {
                                     <h1 className='text-center text-[#767676] my-2'>or</h1>
                                 )}
                             </div>
+                        ))} */}
+                        {roles && roles.filter((data: any) => data?.roleName === "Tutor").map((data: any, index: number) => (
+                            <div key={data?.id}>
+                                <button
+                                    className='bg-primaryColor p-3 w-full rounded-lg text-white mb-2'
+                                    onClick={() => handleRoleClick(data?.id, data?.roleName)}
+                                >
+                                    {data?.roleName}
+                                </button>
+                                {/* {index < roles.length - 1 && (
+                                    <h1 className='text-center text-[#767676] my-2'>or</h1>
+                                )} */}
+                            </div>
                         ))}
+
                     </div>
                 </DialogComponent>
             </div>
