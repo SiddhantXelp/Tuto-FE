@@ -50,10 +50,7 @@ const pdfTemplate = (data: {
           <td class="${tableHeaderClasses}">Due Date:</td>
           <td class="${tableDataClasses}">${data.dueDate}</td>
         </tr>
-        <tr >
-          <td class="${tableHeaderClasses}">Remark:</td>
-          <td class="${tableDataClasses}">${data.remark}</td>
-        </tr>
+
       </tbody>
     </table>
 

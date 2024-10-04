@@ -176,7 +176,7 @@ const Login: React.FC = () => {
 
                         <p className='text-center mt-5 text-sm/[14px]'>or login with</p>
 
-                        <div className='flex justify-between mt-5 mx-5'>
+                        {/* <div className='flex justify-between mt-5 mx-5'>
                             <button
                                 className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
                                 style={{
@@ -201,7 +201,7 @@ const Login: React.FC = () => {
                                 Apple ID
                             </button>
 
-                        </div>
+                        </div> */}
 
                         <Link href="/auth/Signup">
                             <p className="text-center mt-5 text-sm/[14px]">

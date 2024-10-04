@@ -8,6 +8,7 @@ import Spinner from "@/common/Spinner";
 import { cardData } from "./data"
 import { getStudentGroup } from '@/app/store/actions/classes';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const TabNavigator = dynamic(() => import("../TabNavigator/page"), {
   loading: () => <Spinner />,
@@ -32,17 +33,33 @@ const CompletedTable = dynamic(() => import("./CompletedTable"), {
 type Tab = 'Submitted' | 'Pending' | 'Completed';
 
 const ClassManagementPage: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<Tab>('Pending');
   const dispatch = useAppDispatch();
   const token = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const studentGroups = useAppSelector((state: { classes: any }) => state.classes.getstudentgroup?.data || []);
+  const searchParams = useSearchParams();
+  const tabs = searchParams.get('tab') as Tab | null;
+  const router = useRouter();
+  const [selectedTab, setSelectedTab] = useState<Tab>(tabs || "Pending");
 
   useEffect(() => {
     if (token) {
       dispatch(getStudentGroup(token));
 
     }
-  }, [token])
+  }, [token]);
+
+  useEffect(() => {
+    if (tabs && ['Submitted', 'Pending', 'Completed'].includes(tabs)) {
+      setSelectedTab(tabs);
+    }
+  }, [tabs]);
+
+
+  useEffect(() => {
+
+    router.push(`?tab=${selectedTab}`);
+
+  }, [selectedTab, router]);
 
   const renderContent = () => {
     switch (selectedTab) {

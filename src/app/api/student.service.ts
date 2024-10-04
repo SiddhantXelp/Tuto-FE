@@ -38,7 +38,7 @@ export const createPackage = async (token: string, data: any) => {
 export const getStudent = async (token: string, id: string, page: string, limit: string) => {
     try {
         const response = await axios.get(
-            apis.getStudents(id,page, limit),
+            apis.getStudents(id, page, limit),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;
@@ -108,7 +108,6 @@ export const createStudentGroup = async (token: string, data: any) => {
 
 
 export const validateStudentCredentials = async (token: string, data: any) => {
-    console.log(data, "data>>>>>>>>>>")
     try {
         const response = await axios.get(
             apis.validateCredentials(data?.email, data?.dob, data?.name, data?.gender),
@@ -129,3 +128,31 @@ export const validateStudentCredentials = async (token: string, data: any) => {
     }
 };
 
+
+export const onBoardStudent = async (token: string, data: any) => {
+    try {
+        const response = await axios.post(
+            apis.onBoardStudent,
+            data,
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'User-Agent': 'PostmanRuntime/7.36.1',
+                    Accept: '/',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    Connection: 'keep-alive',
+                },
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};

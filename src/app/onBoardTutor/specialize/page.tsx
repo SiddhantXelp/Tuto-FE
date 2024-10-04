@@ -180,6 +180,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getSubjects } from '@/app/store/actions/assignment';
 import { getOnBoardTutor, setOnBoardTutor } from '@/app/store/actions/user';
 import { toast } from 'react-toastify';
+import Spinner from '@/common/Spinner';
 
 const StudentRequirementForm: React.FC = () => {
     const router = useRouter();
@@ -187,7 +188,8 @@ const StudentRequirementForm: React.FC = () => {
     const token = useAppSelector(state => state?.auth?.login);
     const ReceivedSubjects = useAppSelector(state => state?.assignment?.setSubjects?.data || []);
     const ReceivedOnBoardTutor = useAppSelector(state => state?.user?.setOnBoardTutor || []);
-
+    const Loading = useAppSelector(state => state?.auth?.loading);
+    const assignmentLoading = useAppSelector(state => state?.assignment?.loading);
     useEffect(() => {
         if (ReceivedOnBoardTutor?.status === true) {
             Swal.fire({
@@ -196,6 +198,12 @@ const StudentRequirementForm: React.FC = () => {
                 icon: 'success',
                 confirmButtonText: 'Done'
             });
+
+            const userData = {
+                name: ReceivedOnBoardTutor?.data?.fullName
+            };
+            console.log(":::::userData", userData);
+            localStorage.setItem('user', JSON.stringify(userData));
 
             router.push("/");
             dispatch(setOnBoardTutor(null));
@@ -228,32 +236,7 @@ const StudentRequirementForm: React.FC = () => {
         setBoardEducation(selectedBoardEducation);
     };
 
-    const handleSubjectsChange = (selectedSubjects: string[]) => {
-        if (selectedSubjects.includes('Other')) {
 
-            Swal.fire({
-                title: 'Enter the Other Subject Name',
-                input: 'text',
-                inputPlaceholder: 'Type your subject here...',
-                showCancelButton: true,
-                confirmButtonText: 'Add Subject',
-                cancelButtonText: 'Cancel',
-                preConfirm: (value) => {
-                    if (!value) {
-                        Swal.showValidationMessage('Please enter a subject name');
-                    }
-                    return value;
-                }
-            }).then((result) => {
-                if (result.isConfirmed && result.value) {
-                    const otherSubject = result.value;
-                    setSubjects((prevSubjects) => [...prevSubjects, otherSubject]);
-                }
-            });
-        } else {
-            setSubjects(selectedSubjects);
-        }
-    };
 
     const setGradeSelectedIds = (selectedIds: string[]) => {
         setGradeIds(selectedIds);
@@ -269,23 +252,27 @@ const StudentRequirementForm: React.FC = () => {
 
     const handleSubmit = () => {
 
-        if (!skills) {
-            toast.error("Skills are required!");
-            return;
-        }
+
+
         if (grade.length === 0) {
             toast.error("Please select at least one grade!");
             return;
         }
-        if (boardEducation.length === 0) {
-            toast.error("Please select at least one board of education!");
-            return;
-        }
+
         if (subjects.length === 0) {
             toast.error("Please select at least one subject!");
             return;
         }
 
+        if (boardEducation.length === 0) {
+            toast.error("Please select at least one board of education!");
+            return;
+        }
+
+        if (!skills) {
+            toast.error("Skills are required!");
+            return;
+        }
         const data = {
             fullName: queryParams?.name,
             phoneNumber: queryParams?.mobileNumber,
@@ -296,8 +283,9 @@ const StudentRequirementForm: React.FC = () => {
                 grade: grade,
                 skills: skills.split(',').map(skill => skill.trim()),
                 boardEducation: boardEducation,
-                courses: queryParams?.courses,
-                highestEducation: queryParams['Highest Education']
+                courses: queryParams?.Course,
+                highestEducation: queryParams['Highest Education'],
+                // employmentStatus: queryParams?.employmentStatus
             },
             specialSubjects: subjects
         };
@@ -335,8 +323,51 @@ const StudentRequirementForm: React.FC = () => {
         setQueryParams(params);
     }, [searchParams]);
 
+    const handleSubjectsChange = (selectedSubjects: string[]) => {
+        if (selectedSubjects.includes('Other')) {
+
+
+            Swal.fire({
+                title: 'Subject Name',
+                input: 'text',
+                inputPlaceholder: 'Type your subject here...',
+                showCancelButton: true,
+                confirmButtonText: 'Add Subject',
+                cancelButtonText: 'Cancel',
+                preConfirm: (value) => {
+                    if (!value) {
+                        Swal.showValidationMessage('Please enter a subject name');
+                    }
+                    return value;
+                }
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    const otherSubject = result.value.trim();
+                    const subjectExists = optionsSubjects.some(
+                        (item: any) => item?.value.toLowerCase() === otherSubject.toLowerCase());
+                    if (subjectExists) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Subject already exists',
+                            text: `The subject "${otherSubject}" is already in the list.`
+                        });
+                    } else {
+                        setSubjects((prevSubjects) => [...prevSubjects, otherSubject]);
+                    }
+                }
+            });
+        } else {
+            setSubjects(selectedSubjects);
+        }
+    };
+
+
     return (
         <>
+            {Loading && <Spinner />}
+
+            {assignmentLoading && <Spinner />}
+
             <TabNavigator>
                 <div className='flex justify-center items-center mt-20 '>
                     <div className='w-full max-w-xl bg-[#F8F5F5] shadow-xl border rounded-[19px] p-6'>

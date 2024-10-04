@@ -13,7 +13,7 @@ export const setUsersList = (setUsers: any) => ({
 
 
 
-export const getOnBoardTutor  = (token: string, data: any, id: string) => ({
+export const getOnBoardTutor = (token: string, data: any, id: string) => ({
   type: actionTypes.GET_ON_BOARD_TUTOR,
   token,
   data,
@@ -24,6 +24,19 @@ export const getOnBoardTutor  = (token: string, data: any, id: string) => ({
 export const setOnBoardTutor = (setOnBoardTutor: any) => ({
   type: actionTypes.SET_ON_BOARD_TUTOR,
   setOnBoardTutor,
+});
+
+
+export const getTutorSubjects = (token: string, id: string) => ({
+  type: actionTypes.GET_TUTOR_SUBJECTS,
+  token,
+  id
+});
+
+
+export const setTutorSubjects = (setTutorSubjects: any) => ({
+  type: actionTypes.SET_TUTOR_SUBJECTS,
+  setTutorSubjects,
 });
 
 
