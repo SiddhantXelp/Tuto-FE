@@ -131,7 +131,7 @@ export default function Home() {
             <div className="bg-white shadow-lg rounded-xl p-4 flex flex-col justify-between h-full">
               <div className="flex-1">
                 <div className="text-[#707070] text-sm break-words font-semibold">{upcomingClassesInNext7Days?.length || 0} classes scheduled for next 7 days</div>
-                <div className="text-[#707070] text-sm">2 classes available</div>
+                <div className="text-white text-sm">.</div>
 
                 <div className="text-[#707070] text-sm flex justify-end items-center mb-2">
                   <BiSolidBarChartAlt2 size={18} color="gray" className="ml-2" />
