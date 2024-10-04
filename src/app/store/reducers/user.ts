@@ -4,6 +4,7 @@ import { GenericAction, reducingFunction } from '../helpers/createReducer';
 export interface IStudents {
   setUsers: any;
   setOnBoardTutor: any;
+  setTutorSubjects: any;
   error: any;
   loading: any;
 
@@ -12,6 +13,7 @@ export interface IStudents {
 const initialState: IStudents = {
   setUsers: null,
   setOnBoardTutor: null,
+  setTutorSubjects: null,
   error: null,
   loading: null,
 
@@ -26,6 +28,12 @@ const setOnBoardTutor = ({ setOnBoardTutor }: { setOnBoardTutor: any }, state: I
   ...state,
   setOnBoardTutor,
 });
+
+const setTutorSubjects = ({ setTutorSubjects }: { setTutorSubjects: any }, state: IStudents) => ({
+  ...state,
+  setTutorSubjects,
+});
+
 
 const setUsersError = (
   { error }: { error: any },
@@ -47,6 +55,8 @@ const setUsersLoading = (
 export const actionReducers = {
   [actionTypes.SET_USER_LIST]: setUserList,
   [actionTypes.SET_ON_BOARD_TUTOR]: setOnBoardTutor,
+  [actionTypes.SET_TUTOR_SUBJECTS]: setTutorSubjects,
+
   [actionTypes.SET_USER_ERROR]: setUsersError,
   [actionTypes.SET_USER_LOADING]: setUsersLoading
 };

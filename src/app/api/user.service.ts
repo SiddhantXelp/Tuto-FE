@@ -61,3 +61,25 @@ export const onBoardTutor = async (token: string, data: any, id: any) => {
 
 
 
+
+
+export const getTutorSubjects = async (token: string, id: string) => {
+  try {
+    const response = await axios.get(
+      apis.getTutorSubjects(id),
+      // {},
+      {
+        cancelToken: new CancelToken(c => {
+          cancelAuth = c;
+        }),
+      },
+    );
+
+    return response.data;
+  } catch (e) {
+    if (axios.isCancel(e)) {
+      throw new Error(DISCLOSURE_CANCEL);
+    }
+    throw e;
+  }
+};

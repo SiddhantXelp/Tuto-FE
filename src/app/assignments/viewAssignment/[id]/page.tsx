@@ -68,12 +68,13 @@ const ViewAssignmentDetails = () => {
         if (getAssignmentResponse) {
             setRemark(getAssignmentResponse?.assignment?.remark === null ? "" : getAssignmentResponse?.assignment?.remark)
         }
-
     }, [getAssignmentResponse])
 
     useEffect(() => {
         if (getCompletedAssignmentResponse?.status) {
-            router.push("/assignments/subjects");
+            // router.push("/assignments/subjects");
+            router.push("/assignments?tab=Completed")
+
             Swal.fire({
                 title: 'Success!',
                 text: 'Assignment completed!',
@@ -272,7 +273,6 @@ const ViewAssignmentDetails = () => {
             {
                 (isLoading || loading) && <Spinner />
             }
-
             <CommonModel open={open} setOpen={setOpen}>
 
                 <button

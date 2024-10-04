@@ -10,6 +10,9 @@ import { getCreateUser, setAuthError, setCreateUser } from "@/app/store/actions/
 import Spinner from "../../common/Spinner"
 import { toast } from 'react-toastify';
 import { options, handelSubjects } from "./data";
+import { getOnboardStudent, setOnboardStudent, setStudentError } from '../store/actions/student';
+import { getTutorSubjects } from '../store/actions/user';
+import Swal from 'sweetalert2';
 
 const StudentRequirementForm: React.FC = () => {
   const router = useRouter();
@@ -47,10 +50,12 @@ const StudentRequirementForm: React.FC = () => {
     setSubjects(options);
   };
 
-  const optionsSubjects = handelSubjects?.map((group: any) => ({
+  const receivedSubjects = useAppSelector(state => state?.user?.setTutorSubjects?.data?.subjects || []);
+
+  const optionsSubjects = receivedSubjects?.map((group: any) => ({
     id: group?.id,
-    label: group.label,
-    value: group.value
+    label: group.name,
+    value: group.name
   })) ?? [];
 
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login);
@@ -108,47 +113,48 @@ const StudentRequirementForm: React.FC = () => {
     }
 
     const data = {
-      "username": formData.email,
-      "email": formData.email,
-      "phoneNumber": formData.mobileNumber,
-      // "phoneNumber": 1234567890,
-      "password": "Password@123",
-      "fullName": formData.name,
-      "gender": formData.gender,
-      "dateOfBirth": formData.dob,
-      "currentStatus": "ACTIVE",
-      "employmentStatus": "FT",
-      "educationalDetails": {
-        "grade": selectedOptions.grade,
-        "subjects": subjects,
-        "boardOfEducation": selectedOptions.boardeducation
+      email: formData.email,
+      phoneNumber: formData.mobileNumber,
+      fullName: formData.name,
+      gender: formData.gender,
+      dateOfBirth: formData.dob,
+      educationalDetails: {
+        grade: [selectedOptions.grade],
+        boardEducation: [selectedOptions.boardeducation]
       },
-      "roleId": "f9848546-b96c-4a61-a8cc-7ebb847fbe57",
-      "parentId": memberAuthToken?.user?.id
+      roleId: "4672eb7e-4e43-412f-bcfc-5940efc42bef",
+      parentId: memberAuthToken?.user?.id,
+      specialSubjects: subjects
     }
-    dispatch(getCreateUser(memberAuthToken?.token, data));
-
-    // router.push(`/createPackage/${formData?.studentId}`);
+    dispatch(getOnboardStudent(memberAuthToken?.token, data));
 
   }
-  const classesData = useAppSelector((state: { auth: any }) => state.auth.createUser);
+  const onBoardStudentResponse = useAppSelector((state: { student: any }) => state?.student?.getOnboardStudent);
 
   useEffect(() => {
-    if (classesData && classesData?.user?.id) {
+    if (onBoardStudentResponse && onBoardStudentResponse?.data?.id) {
+      router.push(`/createPackage/${onBoardStudentResponse?.data?.id}`);
 
-      router.push(`/createPackage/${classesData?.user?.id}`);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Student On-Board Successfully.',
+        icon: 'success',
+        confirmButtonText: 'Done'
+      });
 
+      dispatch(setOnboardStudent(null));
     }
-  }, [classesData, router]);
-  const isLoading = useAppSelector(state => state.auth.loading);
-  const isError = useAppSelector(state => state.auth.error);
+  }, [onBoardStudentResponse, router]);
+
+  const isLoading = useAppSelector(state => state.student.loading);
+  const isError = useAppSelector(state => state.student.error);
 
 
   useEffect(() => {
 
     if (isError) {
       toast.error(isError);
-      dispatch(setAuthError(null));
+      dispatch(setStudentError(null));
 
     }
   }, [isError])
@@ -157,6 +163,10 @@ const StudentRequirementForm: React.FC = () => {
     setSelectedId(options);
   }
 
+  useEffect(() => {
+    dispatch(getTutorSubjects(memberAuthToken?.token, memberAuthToken?.user?.id))
+
+  }, [dispatch])
   return (
     <>
       <TabNavigator>

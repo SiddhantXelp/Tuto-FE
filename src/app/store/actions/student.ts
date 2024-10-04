@@ -61,6 +61,18 @@ export const setValidateStudent = (getValidateStudent: any) => ({
     getValidateStudent,
 });
 
+export const getOnboardStudent = (token: string, data: any) => ({
+    type: actionTypes.GET_ONBOARD_STUDENT,
+    token,
+    data,
+});
+
+export const setOnboardStudent = (getOnboardStudent: any) => ({
+    type: actionTypes.SET_ONBOARD_STUDENT,
+    getOnboardStudent,
+});
+
+
 
 export const setStudentError = (error: any) => ({
     type: actionTypes.SET_STUDENT_ERROR,

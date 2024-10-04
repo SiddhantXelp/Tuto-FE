@@ -8,7 +8,7 @@ import { IoMdPricetag } from "react-icons/io";
 import TabNavigator from "../TabNavigator/page";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { setCreateUser } from "@/app/store/actions/auth";
-import { setCreateStudentPackages } from "@/app/store/actions/student";
+import { setCreateStudentPackages, setOnboardStudent } from "@/app/store/actions/student";
 import Swal from 'sweetalert2'
 import { useSearchParams } from 'next/navigation';
 
@@ -30,7 +30,7 @@ const OnboardSubmit = () => {
 
 
   const handleSubmit = () => {
-    dispatch(setCreateUser(null));
+    dispatch(setOnboardStudent(null));
     dispatch(setCreateStudentPackages(null));
     Swal.fire({
       title: 'Success!',

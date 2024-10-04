@@ -6,7 +6,7 @@ import { Dialog, DialogPanel } from '@headlessui/react';
 import SelectWithCheckboxes from '@/common/SelectWithCheckboxes';
 import InputMain from './InputMain';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { getStudentGroup, getCreateclass, setCreateClasses } from '@/app/store/actions/classes';
+import { getStudentGroup, getCreateclass, setCreateClasses, setClassesError } from '@/app/store/actions/classes';
 import CustomDropDown from './CustomDropDown';
 import Spinner from "../common/Spinner"
 import { toast } from 'react-toastify';
@@ -199,7 +199,6 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
           classStartTime: formData.startTime,
           classEndTime: formData.endTime,
         },
-        scheduleId: "66b69b7e-79bb-4890-b456-0a9ae9593f7d"
       }
       dispatch(getCreateclass(memberAuthToken, data))
     } else {
@@ -241,7 +240,8 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(isError)
+      toast.error(isError);
+      dispatch(setClassesError(null));
     }
   }, [isError]);
 

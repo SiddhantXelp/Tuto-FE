@@ -53,8 +53,6 @@ export default function Home() {
   const assignmentData = useAppSelector((state: { assignment: any }) => state?.assignment?.setAssignments?.data || []);
   const memberAuthToken = useAppSelector((state: { auth: any }) => state?.auth.login?.token);
   const loginData = useAppSelector((state: { auth: any }) => state?.auth.login);
-
-  console.log("::::::::::::loginData", loginData)
   const eventDates = viewClassData.map((date: any) => new Date(date?.classSchedule?.scheduleDate || date));
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const imageUrl = userInfo && userInfo?.picture ? userInfo?.picture : "/profile.png";
@@ -122,7 +120,7 @@ export default function Home() {
                 <div className="text-[#707070] text-sm break-words font-semibold">{viewStudentData?.totalItems || 0} students</div>
                 <div className="text-[#707070] text-sm mt-1">{viewStudentData?.totalItems || 0}  Active students</div>
                 <div className="text-[#707070] text-sm flex justify-between items-center mt-1">
-                  <span>14 Newly registered</span>
+                  <span></span>
                   <TiGroup size={20} color="gray" className="ml-2" />
                 </div>
               </div>

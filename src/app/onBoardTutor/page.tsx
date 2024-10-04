@@ -64,8 +64,6 @@ const fields: Field[] = [
 const OnboardingPage: React.FC = () => {
     const router = useRouter();
     const loginResponse = useAppSelector(state => state?.auth?.login);
-
-    console.log("Email Id", loginResponse?.user?.email);
     const [formData, setFormData] = useState<{ [key: string]: string }>({
         name: '',
         gender: '',
@@ -129,7 +127,6 @@ const OnboardingPage: React.FC = () => {
         if (validateForm()) {
             const query = new URLSearchParams(formData).toString();
             // sessionStorage.setItem('formData', JSON.stringify(formData));
-
             router.push(`/onBoardTutor/educationDetails?${query}`);
         }
     };
