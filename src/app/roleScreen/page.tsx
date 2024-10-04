@@ -48,9 +48,7 @@ const ScheduleModel: React.FC = () => {
             email,
             phoneNumber,
             password,
-            roleId,
-            fullName,
-            // "dateOfBirth": "1990-01-01",
+            roleId
         };
 
         dispatch(getSignup("AUTH", data));
@@ -62,14 +60,10 @@ const ScheduleModel: React.FC = () => {
 
     useEffect(() => {
         if (responseSignUp) {
-            const userData = {
-                user: responseSignUp,
-                token: "njksndkjnjjksndjksndsndasd"
-            };
 
-            localStorage.setItem('user', JSON.stringify(userData));
+            localStorage.setItem('user', JSON.stringify(responseSignUp));
 
-            dispatch(setLogin(userData));
+            dispatch(setLogin(responseSignUp));
 
             const role = {
                 roleName

@@ -34,10 +34,10 @@ export const createAssignment = async (token: string, data: any) => {
 };
 
 
-export const getAssignments = async (token: string, page: string, limit: string,status:string) => {
+export const getAssignments = async (token: string, page: string, limit: string, status: string) => {
     try {
         const response = await axios.get(
-            apis.getAssignments(page, limit,status),
+            apis.getAssignments(page, limit, status),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;
@@ -57,11 +57,11 @@ export const getAssignments = async (token: string, page: string, limit: string,
 
 
 
-export const getAssignmentById = async (token: string, id: string,studentId:string) => {
+export const getAssignmentById = async (token: string, id: string, studentId: string) => {
 
     try {
         const response = await axios.get(
-            apis.getAssignmentById(id,studentId),
+            apis.getAssignmentById(id, studentId),
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;
@@ -80,10 +80,10 @@ export const getAssignmentById = async (token: string, id: string,studentId:stri
 
 
 
-export const completeAssignment = async (token: string, status: any, id: any,studentId:string) => {
+export const completeAssignment = async (token: string, status: any, id: any, studentId: string) => {
     try {
         const response = await axios.patch(
-            apis.completeAssignment(id,studentId),
+            apis.completeAssignment(id, studentId),
             status,
             {
                 cancelToken: new CancelToken(c => {
@@ -144,6 +144,28 @@ export const getStudentsAssignments = async (token: string, page: string, limit:
     try {
         const response = await axios.get(
             apis.getAssignmentStudents(page, limit, status),
+            {
+                cancelToken: new CancelToken(c => {
+                    cancelAuth = c;
+                }),
+            },
+        );
+
+        return response.data;
+    } catch (e) {
+        if (axios.isCancel(e)) {
+            throw new Error(DISCLOSURE_CANCEL);
+        }
+        throw e;
+    }
+};
+
+
+export const getSubjects = async (token: string) => {
+
+    try {
+        const response = await axios.get(
+            apis.getSubjects,
             {
                 cancelToken: new CancelToken(c => {
                     cancelAuth = c;

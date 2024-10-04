@@ -12,6 +12,14 @@ import { IoMdPersonAdd } from "react-icons/io";
 import CommonModel from "./CommonModel";
 import Link from 'next/link';
 import Spinner from '@/common/Spinner';
+import { FaRegChartBar } from "react-icons/fa";
+import { BiLoaderCircle } from "react-icons/bi";
+import { BiVideoRecording } from "react-icons/bi";
+import { FaCalendar } from "react-icons/fa";
+import { TbClockHour9Filled } from "react-icons/tb";
+import { IoNewspaperSharp } from "react-icons/io5";
+import { TfiBarChartAlt } from "react-icons/tfi";
+import { PiStudentFill } from "react-icons/pi";
 
 const ClassDetails = () => {
     const router = useRouter();
@@ -100,16 +108,34 @@ const ClassDetails = () => {
 
                 <div className="flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2">
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Class title:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{viewClassData?.title || "NA"}</span>
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <FaRegChartBar className="mr-2" />
+                            <span>Class title:</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {viewClassData?.title || "NA"}
+                        </span>
                     </div>
+
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Status:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">NA</span>
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <BiLoaderCircle className="mr-2" />
+                            <span>Status:</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {"NA"}
+                        </span>
                     </div>
+
                     <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer" onClick={() => setRecordingModel(!openRecordingModel)}>
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Recording:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">NA</span>
+
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <BiVideoRecording className="mr-2" />
+                            <span>Recording:</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {"NA"}
+                        </span>
                         <CommonModel isOpen={openRecordingModel} onClose={() => setRecordingModel(false)}>
                             <div className='flex justify-between'>
                                 <button className='border border-gray-400 p-2 rounded-md w-24'>Allow</button>
@@ -121,8 +147,14 @@ const ClassDetails = () => {
 
                 <div className="relative flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2">
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto cursor-pointer" onClick={() => setTimeDateModel(!openTimeDateModel)}>
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Time & Date:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{formattedDateTime}</span>
+
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <FaCalendar className="mr-2" />
+                            <span>Time & Date:</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {formattedDateTime}
+                        </span>
                         <CommonModel isOpen={openTimeDateModel} onClose={() => setTimeDateModel(false)}>
                             <div>
                                 <h1 className='text-sm'>Edit Time & Date</h1>
@@ -148,13 +180,26 @@ const ClassDetails = () => {
                             </div>
                         </CommonModel>
                     </div>
-                    <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Duration:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{viewClassData ? duration : ""}</span>
+
+                    <div className="flex flex-col  md:mx-4 mb-4 md:mb-0 w-full md:w-auto">
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <TbClockHour9Filled className="mr-2" />
+                            <span>Duration:</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {viewClassData ? duration : ""}
+                        </span>
                     </div>
+
                     <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer" onClick={() => setAssignmentModel(!openAssignmentModel)} >
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Assignments:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">Chapter 1 Homework</span>
+
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <IoNewspaperSharp className="mr-2" />
+                            <span>Assignments:</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {"N/A"}
+                        </span>
                         <CommonModel isOpen={openAssignmentModel} onClose={() => setAssignmentModel(false)}>
                             <button className='w-full bg-gray-500 rounded-md p-2 text-white text-sm'>Create new Assignment</button>
                             <button className='w-full bg-gray-500 rounded-md p-2 text-white mt-5 text-sm'>View and Correct</button>
@@ -162,8 +207,14 @@ const ClassDetails = () => {
 
                     </div>
                     <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer" onClick={() => setClassModel(!openClassModel)} >
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Class Materials:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{viewClassData?.materialUrl || "NA"}</span>
+
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <TfiBarChartAlt className="mr-2" />
+                            <span>Class Materials:</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {viewClassData?.materialUrl || "NA"}
+                        </span>
                         <CommonModel isOpen={openClassModel} onClose={() => setClassModel(false)}>
                             <button className='w-full bg-gray-500 rounded-md p-2 text-white text-sm'>Upload Material</button>
                             <button className='w-full bg-gray-500 rounded-md p-2 text-white mt-5 text-sm'>View and Edit</button>
@@ -172,7 +223,10 @@ const ClassDetails = () => {
                 </div>
                 <div className="flex flex-col md:flex-row items-start md:items-center pb-4 md:pb-2 w-full">
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Students</span>
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <PiStudentFill className="mr-2" />
+                            <span>Students</span>
+                        </span>
                         <div className="overflow-x-auto w-full mt-5 justify-between flex">
                             <table className="w-full text-left text-sm">
                                 <thead>

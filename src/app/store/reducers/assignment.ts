@@ -8,6 +8,7 @@ export interface IAssignment {
     setCompletedAssignment: any;
     setStudentCreateAssignment: any;
     setStudentAssignments: any;
+    setSubjects: any;
     error: any;
     loading: any;
 
@@ -19,6 +20,7 @@ const initialState: IAssignment = {
     setCompletedAssignment: null,
     setStudentCreateAssignment: null,
     setStudentAssignments: null,
+    setSubjects: null,
     error: null,
     loading: null,
 
@@ -57,6 +59,11 @@ const setStudentAssignment = ({ setStudentAssignments }: { setStudentAssignments
     setStudentAssignments,
 });
 
+const setSubjects = ({ setSubjects }: { setSubjects: any }, state: IAssignment) => ({
+    ...state,
+    setSubjects,
+});
+
 
 const setAssignmentError = (
     { error }: { error: any },
@@ -84,7 +91,9 @@ export const actionReducers = {
     [actionTypes.SET_ASSIGNMENT_BY_ID]: setAssignmentById,
     [actionTypes.SET_COMPLETED_ASSIGNMENT]: setCompletedAssignment,
     [actionTypes.SET_CREATE_STUDENT_ASSIGNMENT]: setStudentCreateAssignment,
-    [actionTypes.SET_STUDENT_ASSIGNMENTS]: setStudentAssignment
+    [actionTypes.SET_STUDENT_ASSIGNMENTS]: setStudentAssignment,
+    [actionTypes.SET_SUBJECTS]: setSubjects
+
 
 
 
