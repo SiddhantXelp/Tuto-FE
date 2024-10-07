@@ -13,13 +13,16 @@ import { options, handelSubjects } from "./data";
 import { getOnboardStudent, setOnboardStudent, setStudentError } from '../store/actions/student';
 import { getTutorSubjects } from '../store/actions/user';
 import Swal from 'sweetalert2';
-
+import NavigationString from '@/common/NavigationString';
+import { getRoles } from '@/app/store/actions/auth';
 const StudentRequirementForm: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [subjects, setSubjects] = useState<string[]>([]);
   const [selectedStudentId, setSelectedId] = useState([]);
+  const roles = useAppSelector(state => state?.auth?.roles?.data || []);
+  const roleId = roles.find((role: any) => role.roleName.toLowerCase() === "student")?.id ?? "";
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -122,7 +125,7 @@ const StudentRequirementForm: React.FC = () => {
         grade: [selectedOptions.grade],
         boardEducation: [selectedOptions.boardeducation]
       },
-      roleId: "4672eb7e-4e43-412f-bcfc-5940efc42bef",
+      roleId: roleId,
       parentId: memberAuthToken?.user?.id,
       specialSubjects: subjects
     }
@@ -137,7 +140,7 @@ const StudentRequirementForm: React.FC = () => {
 
       Swal.fire({
         title: 'Success!',
-        text: 'Student On-Board Successfully.',
+        text: NavigationString.ON_BOARD_STUDENT,
         icon: 'success',
         confirmButtonText: 'Done'
       });
@@ -165,6 +168,7 @@ const StudentRequirementForm: React.FC = () => {
 
   useEffect(() => {
     dispatch(getTutorSubjects(memberAuthToken?.token, memberAuthToken?.user?.id))
+    dispatch(getRoles());
 
   }, [dispatch])
   return (

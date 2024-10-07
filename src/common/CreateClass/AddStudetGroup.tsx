@@ -5,6 +5,8 @@ import Spinner from "@/common/Spinner";
 import { FaChevronDown } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getAddStudentGroup, setAddStudentGroup } from '@/app/store/actions/classes';
+import Swal from 'sweetalert2';
+import NavigationString from '../NavigationString';
 interface Student {
     id: string;
     fullName: string;
@@ -128,6 +130,12 @@ const AddStudentPanel: React.FC<AddStudentPanelProps> = ({
         if (addGroupResponse?.data != null) {
             const formattedOutput = transformData(finalSelection);
             handelAddStudent(formattedOutput);
+            Swal.fire({
+                title: 'Success!',
+                text: NavigationString.STUDENT_ADDED_ON_GROUP,
+                icon: 'success',
+                confirmButtonText: 'Done'
+            });
             dispatch(setAddStudentGroup(null));
         }
 
@@ -135,7 +143,13 @@ const AddStudentPanel: React.FC<AddStudentPanelProps> = ({
 
     useEffect(() => {
         if (addGroupResponse?.alreadyAssigned === true) {
-            alert(addGroupResponse?.message);
+            // alert(addGroupResponse?.message);
+            Swal.fire({
+                title: 'Error!',
+                text: addGroupResponse?.message,
+                icon: 'error',
+                confirmButtonText: 'Cancel'
+            });
             dispatch(setAddStudentGroup(null));
 
         }
@@ -171,7 +185,7 @@ const AddStudentPanel: React.FC<AddStudentPanelProps> = ({
                             {filteredStudents.map((student) => (
                                 <tr
                                     key={student.id}
-                                    className={`w-full h-12 border-b border-gray-300 hover:bg-gray-200 ${selectedStudentIds.has(student.id) ? 'bg-gray-300' : ''
+                                    className={`cursor-pointer w-full h-12 border-b border-gray-300 ${selectedStudentIds.has(student.id) ? 'bg-gray-500' : ''
                                         }`}
                                     onClick={() => handleStudentClick(student)}
                                 >
@@ -196,7 +210,7 @@ const AddStudentPanel: React.FC<AddStudentPanelProps> = ({
                         <select
                             name="addGroupStudent"
                             onChange={handleGroupSelection} // Your function to handle group selection
-                            className="block w-full h-10 md:h-12 p-2 pr-8 text-buttonGray bg-white border border-[#707070] rounded-[8px] shadow-sm focus:ring-indigo-500 focus:border-gray-300 text-sm md:text-base opacity-100 appearance-none"
+                            className="cursor-pointer block w-full h-10 md:h-12 p-2 pr-8 text-buttonGray bg-white border border-[#707070] rounded-[8px] shadow-sm focus:ring-indigo-500 focus:border-gray-300 text-sm md:text-base opacity-100 appearance-none"
                         >
                             <option value="">Select Group</option>
                             {optionsGroup.map(option => (
