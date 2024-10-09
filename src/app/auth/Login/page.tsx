@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import BackgroundComponent from "../../../common/BackgroundComponent";
 import Link from "next/link";
 import { useGoogleLogin } from '@react-oauth/google';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Spinner from "../../../common/Spinner";
 import { getLogin, setAuthError, setLogin } from "../../store/actions/auth";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -16,6 +16,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import the icons
 
 const Login: React.FC = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+
     const dispatch = useAppDispatch();
     const [showLogin, setLoginGoogle] = useState(true);
     const [isLoading, setisLoading] = useState(false);
@@ -45,42 +47,87 @@ const Login: React.FC = () => {
 
 
 
-    const login = useGoogleLogin({
-        onSuccess: async (response) => {
-            const accessToken = response?.access_token;
-            setisLoading(true);
+    // const login = useGoogleLogin({
+    //     onSuccess: async (response) => {
+    //         const accessToken = response?.access_token;
+    //         setisLoading(true);
 
-            if (accessToken) {
-                try {
-                    const profileResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
+    //         if (accessToken) {
+    //             try {
+    //                 const profileResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+    //                     headers: {
+    //                         Authorization: `Bearer ${accessToken}`,
+    //                     },
+    //                 });
 
-                    const profileData = await profileResponse.json();
-                    const userData = {
-                        name: profileData.name,
-                        email: profileData.email,
-                        picture: profileData.picture
-                    };
+    //                 const profileData = await profileResponse.json();
+    //                 const userData = {
+    //                     name: profileData.name,
+    //                     email: profileData.email,
+    //                     picture: profileData.picture
+    //                 };
 
-                    localStorage.setItem('userInfo', JSON.stringify(userData));
-                    router.push('/');
-                } catch (error) {
-                    console.error('Failed to fetch user profile', error);
-                    setisLoading(false)
-                }
-                finally {
-                    setisLoading(false);
-                }
+    //                 localStorage.setItem('userInfo', JSON.stringify(userData));
+    //                 router.push('/');
+    //             } catch (error) {
+    //                 console.error('Failed to fetch user profile', error);
+    //                 setisLoading(false)
+    //             }
+    //             finally {
+    //                 setisLoading(false);
+    //             }
+    //         }
+    //     },
+    //     onError: (error) => {
+    //         console.error('Google login failed', error);
+    //     },
+    // });
+
+
+    const login = () => {
+        window.location.href = 'http://localhost:6800/api/v1/auth/google?state=login';
+
+    }
+
+
+    const handleAuthSuccess = () => {
+        const tokenSSO = searchParams.get('token');
+        const userName = searchParams.get('username');
+        const email = searchParams.get('email');
+        const userId = searchParams.get('id')
+
+        if (tokenSSO) {
+            // ave token to localStorage
+            const userData = {
+                name: userName,
+                email: email
+            }; tokenSSO
+
+            // Update token state
+
+            const responseSignUp = {
+                "user": {
+                    "id": userId,
+                    "username": userName,
+                    "email": email
+                },
+                "token": tokenSSO
             }
-        },
-        onError: (error) => {
-            console.error('Google login failed', error);
-        },
-    });
 
+            localStorage.setItem('user', JSON.stringify(responseSignUp));
+
+            dispatch(setLogin(responseSignUp));
+
+
+            // Navigate to a different page if required (e.g., dashboard)
+            router.push('/'); // Assuming you have a dashboard route
+        }
+    };
+
+    // Call handleAuthSuccess when the component mounts
+    useEffect(() => {
+        handleAuthSuccess();
+    }, []);
 
     const handelLogin = () => {
 
@@ -111,6 +158,7 @@ const Login: React.FC = () => {
             // if (token) {
             //     document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=${60 * 60 * 24};`;
             // }
+
 
             router.push('/');
 
@@ -176,7 +224,7 @@ const Login: React.FC = () => {
 
                         <p className='text-center mt-5 text-sm/[14px]'>or login with</p>
 
-                        {/* <div className='flex justify-between mt-5 mx-5'>
+                        <div className='flex justify-between mt-5 mx-5'>
                             <button
                                 className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
                                 style={{
@@ -201,7 +249,7 @@ const Login: React.FC = () => {
                                 Apple ID
                             </button>
 
-                        </div> */}
+                        </div>
 
                         <Link href="/auth/Signup">
                             <p className="text-center mt-5 text-sm/[14px]">

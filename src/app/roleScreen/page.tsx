@@ -22,10 +22,12 @@ const ScheduleModel: React.FC = () => {
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch();
     const responseSignUp = useAppSelector((state: { auth: any }) => state.auth.signupData);
-    const roles = useAppSelector(state => state?.auth?.roles);
+    const roles = useAppSelector(state => state?.auth?.roles?.data);
     const [roleName, setRoleName] = useState("");
     const isError = useAppSelector((state: { auth: any }) => state.auth.error);
     const isLoading = useAppSelector(state => state.auth.loading);
+
+    console.log(">>>>>>.roles",roles)
 
     useEffect(() => {
 
@@ -105,9 +107,7 @@ const ScheduleModel: React.FC = () => {
                                 >
                                     {data?.roleName}
                                 </button>
-                                {/* {index < roles.length - 1 && (
-                                    <h1 className='text-center text-[#767676] my-2'>or</h1>
-                                )} */}
+                          
                             </div>
                         ))}
 
