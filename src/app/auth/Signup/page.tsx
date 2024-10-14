@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import BackgroundComponent from '../../../common/BackgroundComponent';
 import Link from 'next/link';
 import { useGoogleLogin } from '@react-oauth/google';
-import { useRouter } from 'next/navigation';
-import { getSignup, setSignup, setAuthError } from "../../store/actions/auth";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { getSignup, setSignup, setAuthError, setLogin } from "../../store/actions/auth";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import Spinner from "../../../common/Spinner"
 import { toast } from 'react-toastify'; // Import toast
@@ -21,7 +21,7 @@ const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState<boolean>(false);
-
+  const searchParams = useSearchParams()
   // const responsesignup = useAppSelector((state: { auth: any }) => state.auth.signupData);
   const isLoading = useAppSelector(state => state.auth.loading);
 
@@ -162,6 +162,52 @@ const Signup: React.FC = () => {
     }
   };
 
+  const handleAuthSuccess = () => {
+    const token = new URLSearchParams(window.location.search).get('token'); // Extract token from URL
+    console.log("token", token);
+    const tokenSSO = searchParams.get('token');
+    const userName = searchParams.get('username');
+    const email = searchParams.get('email')
+    const userId = searchParams.get('id')
+
+    if (tokenSSO) {
+      console.log('Successfully signed in or signed up:', tokenSSO);
+      const userData = {
+        name: userName,
+        email: email,
+      };
+
+      const responseSignUp = {
+        "user": {
+          "id": userId,
+          "username": userName,
+          "email": email
+        },
+        "token": tokenSSO
+      }
+      localStorage.setItem('user', JSON.stringify(responseSignUp));
+
+      dispatch(setLogin(responseSignUp));
+
+      console.log("><PPPPPPPPPPPPPPresponseSignUp", responseSignUp);
+
+      // Update token state
+
+      // Navigate to a different page if required (e.g., dashboard)
+      router.push('/onBoardTutor'); // Assuming you have a dashboard route
+    }
+  };
+
+  // Call handleAuthSuccess when the component mounts
+  useEffect(() => {
+    handleAuthSuccess();
+  }, []);
+
+  const SignUp = () => {
+    window.location.href = 'http://localhost:6800/api/v1/auth/google?state=signup';
+
+  }
+
 
   return (
     <BackgroundComponent className="flex items-center justify-center">
@@ -265,7 +311,7 @@ const Signup: React.FC = () => {
 
         <p className='text-center mt-5 text-sm/[14px]'>or sign up with</p>
 
-        {/* <div className='flex justify-between mt-5 mx-5'>
+        <div className='flex justify-between mt-5 mx-5'>
           <button
             className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
             style={{
@@ -274,7 +320,7 @@ const Signup: React.FC = () => {
               borderRadius: '8px',
               backgroundColor: 'transparent'
             }}
-            onClick={() => login()}
+            onClick={() => SignUp()}
           >
             Google
           </button>
@@ -289,7 +335,7 @@ const Signup: React.FC = () => {
           >
             Apple Id
           </button>
-        </div> */}
+        </div>
 
         <Link href="/auth/Login">
           <p className='text-center mt-5 text-sm/[14px]'>Already having account?  <b> Login here</b></p>
