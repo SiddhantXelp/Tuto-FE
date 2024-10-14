@@ -13,7 +13,8 @@ import { toast } from 'react-toastify';
 import Swal from 'sweetalert2'
 import { buttons, TabButtons, options, groups } from './commonData';
 import { getStudents } from '@/app/store/actions/student';
-import AddStudentGroup from "./CreateClass/AddStudetGroup"
+import AddStudentGroup from "./CreateClass/AddStudetGroup";
+import NavigationString from '@/common/NavigationString';
 interface DialogComponentProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -228,7 +229,7 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     if (receivedCreatedClass) {
       Swal.fire({
         title: 'Success!',
-        text: 'Class Created Successfully.',
+        text: NavigationString.CREATE_CLASS,
         icon: 'success',
         confirmButtonText: 'Done'
       });

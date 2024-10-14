@@ -21,7 +21,7 @@
 //   message: string;
 //   time: string;
 //   image: string;
-//   messages: Message[];
+//   messagesBASE_URL: Message[];
 //   gender: string;
 // }
 
@@ -260,8 +260,7 @@ import { FaSmile, FaPaperclip, FaTimes } from 'react-icons/fa';
 import { IoSendSharp } from "react-icons/io5";
 import { socket } from "@/app/api/socket";
 import { useAppSelector } from '@/app/store/hooks';
-import { BASE_URL } from '@/app/api/api';
-
+import { BASE_URL } from "@/app/api/api"
 interface Message {
   id: string;
   content: string;
@@ -331,8 +330,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
       });
 
       try {
-        const response = await fetch(`${BASE_URL}/api/v1/chat`
-        , {
+        const response = await fetch(`${BASE_URL}/api/v1/chat`, {
           method: 'POST',
           body: formData,
         });
@@ -562,6 +560,11 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedChat }) => {
                 className="w-full px-3 py-2 border border-[#D1D1D1] rounded-[26px] pr-16 md:pr-24 text-sm md:text-base focus:outline-none"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSendMessage();
+                  }
+                }}
               />
               <label htmlFor="file-upload" className="absolute right-14 top-1/2 transform -translate-y-1/2 cursor-pointer text-lg md:text-xl">
                 <FaPaperclip className='text-[#707070]' />

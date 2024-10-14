@@ -226,7 +226,7 @@ const Signup: React.FC = () => {
               className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
-              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              {passwordVisible ? <FaEye /> : <FaEyeSlash />}
             </span>
           </div>
         </div>
@@ -248,7 +248,7 @@ const Signup: React.FC = () => {
               className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
               onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
             >
-              {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
             </span>
           </div>
         </div>

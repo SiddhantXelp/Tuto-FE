@@ -242,7 +242,7 @@ const Login: React.FC = () => {
                                     className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
                                     onClick={() => setPasswordVisible(!passwordVisible)}
                                 >
-                                    {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                                    {passwordVisible ? <FaEye /> : <FaEyeSlash />}
                                 </span>
                             </div>
                         </div>

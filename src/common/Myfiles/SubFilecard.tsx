@@ -11,7 +11,7 @@ import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import CommonModel from "@/common/CommonModel";
 import InputMain from '../InputMain';
-
+import NavigationString from '@/common/NavigationString';
 interface CardProps {
     data: any;
     id: any;
@@ -61,7 +61,7 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick, mainData }) => {
         //     dispatch(getDeleteFiles(token, String(id)))
         // }
         Swal.fire({
-            title: 'Are you sure?',
+            title: NavigationString.DO_YOU_WANT_PROCEED,
             text: 'Do you really want to delete this item?',
             icon: 'warning',
             showCancelButton: true,

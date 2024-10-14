@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation';
 import { handelStudents, formFields } from "./data";
 import { getStudents } from '@/app/store/actions/student';
+import NavigationString from '@/common/NavigationString';
 
 interface FormData {
   titleName: string;
@@ -399,7 +400,7 @@ const CreateNewAssignment = () => {
     if (createAssignmentResponse) {
       Swal.fire({
         title: 'Success!',
-        text: 'Assignment Created Successfully.',
+        text: NavigationString.CREATE_ASSIGNMENT,
         icon: 'success',
         confirmButtonText: 'Done'
       });
