@@ -15,7 +15,7 @@ const Home: React.FC = () => {
     const token = localStorage.getItem("user") || localStorage.getItem("userInfo");
 
     if (!token) {
-      router.push("/auth/Login");
+      router.push("/auth/login");
     } else {
       setIsLoading(false);
     }

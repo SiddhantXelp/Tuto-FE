@@ -27,10 +27,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ children }) => {
                         {children}
                     </PageWrapper>
                 </MarginWidthWrapper>
-                <ToastContainer
-                    className="mt-20"
-
-                />
+                <ToastContainer className="mt-20" />
             </main>
         </div>
     );

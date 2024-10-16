@@ -14,6 +14,7 @@ interface Field {
     id: string;
     value: string;
     radioOptions?: { label: string; value: string }[];
+    disable: boolean
 }
 
 const fields: Field[] = [
@@ -22,21 +23,24 @@ const fields: Field[] = [
         type: "text",
         name: "name",
         id: "username",
-        value: ""
+        value: "",
+        disable: false
     },
     {
         labelName: "Email ID",
         type: "email",
         name: "email",
         id: "email",
-        value: ""
+        value: "",
+        disable: true
     },
     {
         labelName: "Phone Number",
         type: "number",
         name: "mobileNumber",
         id: "mobileNumber",
-        value: ""
+        value: "",
+        disable: false
     },
     {
         labelName: "Gender",
@@ -48,14 +52,16 @@ const fields: Field[] = [
             { label: "Male", value: "M" },
             { label: "Female", value: "F" },
             { label: "Prefer not to disclose", value: "Prefer not to disclose" }
-        ]
+        ],
+        disable: false
     },
     {
         labelName: "DOB",
         type: "date",
         name: "dob",
         id: "dob",
-        value: ""
+        value: "",
+        disable: false
     },
 
 
@@ -154,7 +160,9 @@ const OnboardingPage: React.FC = () => {
                                     id={field.id}
                                     value={formData[field.name]}
                                     onChange={handleInputChange}
-                                    radioOptions={field.radioOptions} placeholder={''} />
+                                    radioOptions={field.radioOptions}
+                                    placeholder={''}
+                                    disable={field?.disable} />
                                 {/* {errors[field.name] && <p className='text-red-500 text-sm'>{errors[field.name]}</p>} */}
                             </div>
                         ))}

@@ -13,17 +13,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const clientId = "1020761794196-ljge7kn6ircqd3ai4jmon6uamgog9nh9.apps.googleusercontent.com";
 
   return (
     <html lang="en">
       <body>
         <StoreProvider>
-          <GoogleOAuthProvider clientId={clientId}>
-            <Middleware>
-              {children}
-            </Middleware>
-          </GoogleOAuthProvider>
+          <Middleware>
+            {children}
+          </Middleware>
         </StoreProvider>
       </body>
     </html>

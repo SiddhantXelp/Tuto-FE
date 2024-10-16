@@ -16,6 +16,7 @@ interface InputMainProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   radioOptions?: RadioOption[];
+  disable:boolean
 }
 
 const InputMain: React.FC<InputMainProps> = ({
@@ -26,7 +27,8 @@ const InputMain: React.FC<InputMainProps> = ({
   value,
   placeholder,
   onChange,
-  radioOptions
+  radioOptions,
+  disable
 }) => {
   return (
     <div className='flex flex-col mb-4'>
@@ -44,6 +46,7 @@ const InputMain: React.FC<InputMainProps> = ({
                 onChange={onChange}
                 placeholder={placeholder}
                 className='mr-2'
+                disabled={disable}
 
               />
               <label htmlFor={option.value} className='ml-2 text-sm'>{option.label}</label>
@@ -57,7 +60,10 @@ const InputMain: React.FC<InputMainProps> = ({
           id={id}
           value={value}
           onChange={onChange}
-          className="h-auto w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100" />
+          className="h-auto w-auto bg-white border border-[#707070] rounded-md p-2 opacity-100"
+          disabled={disable}
+          />
+
       )}
     </div>
   );

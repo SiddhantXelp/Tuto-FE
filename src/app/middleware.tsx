@@ -13,7 +13,7 @@ const Middleware = ({ children }: { children: ReactNode }) => {
             const token = localStorage.getItem("user") || localStorage.getItem("userInfo");
 
             if (!token) {
-                router.push("/auth/Login");
+                router.push("/auth/login");
                 setIsLoading(false);
             } else {
                 setIsLoading(false);

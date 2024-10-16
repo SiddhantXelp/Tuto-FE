@@ -44,49 +44,8 @@ const Login: React.FC = () => {
     const responsesLogin = useAppSelector((state: { auth: any }) => state.auth.login);
     const isLoadingLogin = useAppSelector((state: { auth: any }) => state.auth.loading);
 
-
-
-
-    // const login = useGoogleLogin({
-    //     onSuccess: async (response) => {
-    //         const accessToken = response?.access_token;
-    //         setisLoading(true);
-
-    //         if (accessToken) {
-    //             try {
-    //                 const profileResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-    //                     headers: {
-    //                         Authorization: `Bearer ${accessToken}`,
-    //                     },
-    //                 });
-
-    //                 const profileData = await profileResponse.json();
-    //                 const userData = {
-    //                     name: profileData.name,
-    //                     email: profileData.email,
-    //                     picture: profileData.picture
-    //                 };
-
-    //                 localStorage.setItem('userInfo', JSON.stringify(userData));
-    //                 router.push('/');
-    //             } catch (error) {
-    //                 console.error('Failed to fetch user profile', error);
-    //                 setisLoading(false)
-    //             }
-    //             finally {
-    //                 setisLoading(false);
-    //             }
-    //         }
-    //     },
-    //     onError: (error) => {
-    //         console.error('Google login failed', error);
-    //     },
-    // });
-
-
     const login = () => {
         window.location.href = 'http://localhost:6800/api/v1/auth/google?state=login';
-
     }
 
 
@@ -97,14 +56,13 @@ const Login: React.FC = () => {
         const userId = searchParams.get('id')
 
         if (tokenSSO) {
-            // ave token to localStorage
+
             const userData = {
                 name: userName,
-                email: email
-            }; tokenSSO
+                email: email,
+            };
 
-            // Update token state
-
+            localStorage.setItem('user', JSON.stringify(userData));
             const responseSignUp = {
                 "user": {
                     "id": userId,
@@ -114,17 +72,12 @@ const Login: React.FC = () => {
                 "token": tokenSSO
             }
 
-            localStorage.setItem('user', JSON.stringify(responseSignUp));
-
             dispatch(setLogin(responseSignUp));
 
-
-            // Navigate to a different page if required (e.g., dashboard)
-            router.push('/'); // Assuming you have a dashboard route
+            router.push('/');
         }
     };
 
-    // Call handleAuthSuccess when the component mounts
     useEffect(() => {
         handleAuthSuccess();
     }, []);
@@ -143,7 +96,6 @@ const Login: React.FC = () => {
         dispatch(getLogin(data));
     }
 
-
     useEffect(() => {
         if (responsesLogin) {
             console.log("responsesLogin", responsesLogin);
@@ -153,12 +105,6 @@ const Login: React.FC = () => {
                 picture: responsesLogin?.user?.picture
             };
             localStorage.setItem('user', JSON.stringify(userData));
-
-            // const token = responsesLogin?.token
-            // if (token) {
-            //     document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=${60 * 60 * 24};`;
-            // }
-
 
             router.push('/');
 
@@ -251,7 +197,7 @@ const Login: React.FC = () => {
 
                         </div>
 
-                        <Link href="/auth/Signup">
+                        <Link href="/auth/signup">
                             <p className="text-center mt-5 text-sm/[14px]">
                                 Not having account? <b>sign up here</b>
                             </p>
@@ -309,7 +255,7 @@ const Login: React.FC = () => {
                             Login
                         </button>
 
-                        <Link href="/auth/Signup">
+                        <Link href="/auth/signup">
                             <p className="text-center mt-5 text-sm/[14px]">
                                 Not having account? <b>sign up here</b>
                             </p>

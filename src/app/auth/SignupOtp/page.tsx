@@ -63,7 +63,7 @@ const SignupOtp: React.FC = () => {
                     Next
                 </button>
 
-                <Link href="/auth/Signup">
+                <Link href="/auth/signup">
                     <p className="text-center mt-5 text-sm/[14px]">
                         Not having account? <b>sign up here</b>
                     </p>

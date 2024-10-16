@@ -55,7 +55,7 @@ const Header: React.FC = () => {
     localStorage.removeItem('user');
     dispatch(setLogin(null));
     dispatch(setSignup(null))
-    router.push('/auth/Login');
+    router.push('/auth/login');
   };
 
   const handleClickOutside = (event: any) => {

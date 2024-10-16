@@ -27,15 +27,15 @@ import ScheduleModel from "@/common/ScheduleModel";
 import CommonCalendar from "@/common/CommonCalendar";
 import { processClassData } from "@/utils/classUtils";
 
-interface UserInfo {
-  name: string;
-  email: string;
-  picture: string;
-  user: {
-    username: string
+// interface UserInfo {
+//   name: string;
+//   email: string;
+//   picture: string;
+//   user: {
+//     username: string
 
-  }
-}
+//   }
+// }
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -54,8 +54,9 @@ export default function Home() {
   const memberAuthToken = useAppSelector((state: { auth: any }) => state?.auth.login?.token);
   const loginData = useAppSelector((state: { auth: any }) => state?.auth.login);
   const eventDates = viewClassData.map((date: any) => new Date(date?.classSchedule?.scheduleDate || date));
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const imageUrl = userInfo && userInfo?.picture ? userInfo?.picture : "/profile.png";
+  // const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  // const imageUrl = userInfo && userInfo?.picture ? userInfo?.picture : "/profile.png";
+  const imageUrl = "/profile.png"
 
   useEffect(() => {
   }, [viewClassData]);
@@ -71,12 +72,12 @@ export default function Home() {
 
   }, [dispatch, open, memberAuthToken, loginData])
 
-  useEffect(() => {
-    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo")
-    if (storedUserInfo) {
-      setUserInfo(JSON.parse(storedUserInfo));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo")
+  //   if (storedUserInfo) {
+  //     setUserInfo(JSON.parse(storedUserInfo));
+  //   }
+  // }, []);
 
   const assignment = useMemo(() => {
     return (assignmentData || [])
@@ -104,6 +105,7 @@ export default function Home() {
 
   } = useMemo(() => processClassData(viewClassData, currentDate), [viewClassData, currentDate]);
 
+  console.log(" userInfo?.name", loginData);
   return (
     <div className="pt-2 px-4 mt-5">
       {
@@ -178,7 +180,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6 mt-6">
+        <div className="flex flex-col lg:flex-row  mt-6">
           <div className="flex flex-col gap-2 mx-4 lg:mx-10 mt-5">
             <button className="bg-[#707070] w-full lg:w-44 py-2 px-4 rounded-2xl text-white text-sm flex" onClick={() => setOpen(true)}>
               Create new class <FiPlus className="mt-1 ml-2" color="white" />
@@ -202,7 +204,8 @@ export default function Home() {
             <span className="text-[#000000] mt-2 text-sm">Hello</span>
             {/* <span className="text-black font-bold">{userInfo ? userInfo.responseSignUp?.fullName : userInfo?.name}</span> */}
             <span className="text-black font-bold">
-              {userInfo?.user?.username || userInfo?.name}
+              {/* {userInfo?.user?.username || userInfo?.name} */}
+              {loginData?.user?.username || ""}
             </span>
 
           </div>

@@ -23,16 +23,7 @@ const Signup: React.FC = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState<boolean>(false);
   const searchParams = useSearchParams()
   // const responsesignup = useAppSelector((state: { auth: any }) => state.auth.signupData);
-  const isLoading = useAppSelector(state => state.auth.loading);
-
-  useEffect(() => {
-    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
-
-    if (storedUserInfo) {
-      router.push('/auth/Login');
-    }
-  }, [router]);
-
+  const isLoading = useAppSelector(state => state.auth.loading)
 
   const validateForm = () => {
     let isValid = true; // Track whether the form is valid
@@ -100,61 +91,27 @@ const Signup: React.FC = () => {
 
   }, [isError])
 
-  const login = useGoogleLogin({
-    onSuccess: async (response) => {
-      const accessToken = response?.access_token;
-
-      if (accessToken) {
-        try {
-          const profileResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-
-          const profileData = await profileResponse.json();
-          const userData = {
-            name: profileData.name,
-            email: profileData.email,
-            picture: profileData.picture
-          };
-
-          localStorage.setItem('userInfo', JSON.stringify(userData));
-          router.push('/');
-        } catch (error) {
-          console.error('Failed to fetch user profile', error);
-        }
-      }
-    },
-    onError: (error) => {
-      console.error('Google login failed', error);
-    },
-  });
-
-  // const handleSubmit = () => {
-  //   if (validateForm()) {
-  //     // const data = {
-  //     //   username,
-  //     //   email,
-  //     //   phoneNumber: 1234567890,
-  //     //   password,
-  //     //   roleId: "046294f6-0555-4f87-9562-da798b09ec23"
-  //     // };
-
-  //     // dispatch(getSignup(memberAuthToken, data));
-  //     router.push("/roleScreen");
-  //   }
-
-  // };
-
-
   const handleSubmit = () => {
     if (validateForm()) {
       const data = {
         username,
         email,
-        // phoneNumber: 1234567890,
         password
+      };
+      const queryString = new URLSearchParams(data as any).toString();
+      router.push(`/roleScreen?${queryString}`);
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    const tokenSSO = searchParams.get('token');
+    const userName = searchParams.get('username');
+    const email = searchParams.get('email')
+
+    if (tokenSSO) {
+      const data = {
+        username: email,
+        email,
       };
 
       const queryString = new URLSearchParams(data as any).toString();
@@ -162,50 +119,12 @@ const Signup: React.FC = () => {
     }
   };
 
-  const handleAuthSuccess = () => {
-    const token = new URLSearchParams(window.location.search).get('token'); // Extract token from URL
-    console.log("token", token);
-    const tokenSSO = searchParams.get('token');
-    const userName = searchParams.get('username');
-    const email = searchParams.get('email')
-    const userId = searchParams.get('id')
-
-    if (tokenSSO) {
-      console.log('Successfully signed in or signed up:', tokenSSO);
-      const userData = {
-        name: userName,
-        email: email,
-      };
-
-      const responseSignUp = {
-        "user": {
-          "id": userId,
-          "username": userName,
-          "email": email
-        },
-        "token": tokenSSO
-      }
-      localStorage.setItem('user', JSON.stringify(responseSignUp));
-
-      dispatch(setLogin(responseSignUp));
-
-      console.log("><PPPPPPPPPPPPPPresponseSignUp", responseSignUp);
-
-      // Update token state
-
-      // Navigate to a different page if required (e.g., dashboard)
-      router.push('/onBoardTutor'); // Assuming you have a dashboard route
-    }
-  };
-
-  // Call handleAuthSuccess when the component mounts
   useEffect(() => {
     handleAuthSuccess();
   }, []);
 
   const SignUp = () => {
     window.location.href = 'http://localhost:6800/api/v1/auth/google?state=signup';
-
   }
 
 
@@ -337,7 +256,7 @@ const Signup: React.FC = () => {
           </button>
         </div>
 
-        <Link href="/auth/Login">
+        <Link href="/auth/login">
           <p className='text-center mt-5 text-sm/[14px]'>Already having account?  <b> Login here</b></p>
         </Link>
       </div>

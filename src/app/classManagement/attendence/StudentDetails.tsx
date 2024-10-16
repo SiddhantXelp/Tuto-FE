@@ -2,11 +2,19 @@
 
 import React, { useState, useEffect } from 'react';;
 import Link from 'next/link';
-import { FaCaretDown } from 'react-icons/fa';
+import { FaCalendar, FaCaretDown, FaRegChartBar } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { getClassesWithStudentDetails } from '@/app/store/actions/classes';
 import Spinner from '@/common/Spinner';
 import { duration } from "@/common/DateAndTimeCommon";
+import { BiLoaderCircle } from 'react-icons/bi';
+import { TbClockHour9Filled } from 'react-icons/tb';
+import { IoNewspaperSharp } from 'react-icons/io5';
+import { TfiBarChartAlt } from 'react-icons/tfi';
+import { FaCalendarCheck } from "react-icons/fa";
+import { MdOutlineStar } from "react-icons/md";
+import { IoPeopleSharp } from "react-icons/io5";
+
 interface StudentClassDetailsProps {
     studentId: string;
     classId: string;
@@ -101,48 +109,97 @@ const StudentClassDetails: React.FC<StudentClassDetailsProps> = ({ studentId, cl
 
                 <div className="flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2">
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Class title:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{receivedStudentWithClasses?.title || "N/A"}</span>
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <FaRegChartBar className="mr-2" />
+                            <span>Class title</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {receivedStudentWithClasses?.title || "NA"}
+                        </span>
                     </div>
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Status:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <BiLoaderCircle className="mr-2" />
+                            <span>Status</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {"N/A"}
+                        </span>
                     </div>
                 </div>
 
                 <div className="relative flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2">
-                    <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto cursor-pointer" >
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Time & Date:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">10t june 2:30 - 3:00pm</span>
-
-                    </div>
                     <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Duration:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{duration(receivedStudentWithClasses?.classSchedule?.classStartTime, receivedStudentWithClasses?.classSchedule?.classEndTime)}</span>
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <FaCalendar className="mr-2" />
+                            <span>Time & Date</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {receivedStudentWithClasses?.title || "NA"}
+                        </span>
                     </div>
-                    <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Assignments:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
-                    </div>
-                    <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Class Materials:</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">{receivedStudentWithClasses?.materialUrl}</span>
 
+                    <div className="flex flex-col  md:mx-4 mb-4 md:mb-0 w-full md:w-auto">
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <TbClockHour9Filled className="mr-2" />
+                            <span>Duration</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {duration(receivedStudentWithClasses?.classSchedule?.classStartTime, receivedStudentWithClasses?.classSchedule?.classEndTime)}
+                        </span>
+                    </div>
+
+                    <div className="flex flex-col  md:mx-4 mb-4 md:mb-0 w-full md:w-auto">
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <IoNewspaperSharp className="mr-2" />
+                            <span>Assignments</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            N/A
+                        </span>
+                    </div>
+
+                    <div className="flex flex-col  md:mx-4 mb-4 md:mb-0 w-full md:w-auto">
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <TfiBarChartAlt className="mr-2" />
+                            <span>Class Materials</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            {receivedStudentWithClasses?.materialUrl}
+                        </span>
                     </div>
                 </div>
 
-                <div className="relative flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2">
-                    <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto cursor-pointer" >
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Attendance</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
+                <div className="relative flex flex-col md:flex-row items-start md:items-center border-b border-gray-300 pb-4 md:pb-2 ml-5">
+
+                    <div className="flex flex-col  md:mx-4 mb-4 md:mb-0 w-full md:w-auto ">
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <FaCalendarCheck className="mr-2" />
+                            <span>Attendance</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            N/A
+                        </span>
                     </div>
-                    <div className="flex flex-col mx-4 md:mx-8 mb-4 md:mb-0 w-full md:w-auto">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Remarks</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
+
+                    <div className="flex flex-col  md:mx-4 mb-4 md:mb-0 w-full md:w-auto">
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <MdOutlineStar className="mr-2" />
+                            <span>Remarks</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            N/A
+                        </span>
                     </div>
-                    <div className="relative flex flex-col mx-4 md:mx-8 w-full md:w-auto cursor-pointer">
-                        <span className="text-xs md:text-sm font-semibold text-[#565656]">Parent Contact</span>
-                        <span className="text-xs md:text-sm text-gray-500 mt-2">N/A</span>
+
+                    <div className="flex flex-col  md:mx-4 mb-4 md:mb-0 w-full md:w-auto">
+                        <span className="text-xs md:text-sm font-semibold text-[#565656] flex items-center">
+                            <IoPeopleSharp className="mr-2" />
+                            <span>Parent Contact</span>
+                        </span>
+                        <span className="text-xs md:text-sm text-gray-500 mt-2 ml-4 md:ml-6">
+                            N/A
+                        </span>
                     </div>
                 </div>
             </div>
