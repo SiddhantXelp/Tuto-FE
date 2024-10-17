@@ -72,7 +72,7 @@ const ScheduleModel: React.FC = () => {
             }
             const queryString = new URLSearchParams(role as any).toString();
 
-            router.push(`/parentDashBord?${queryString}`);
+            router.push(`/tutorDashBoard?${queryString}`);
         }
     }, [responseSignUp]);
 
