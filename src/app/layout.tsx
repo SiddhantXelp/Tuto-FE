@@ -1,7 +1,5 @@
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import '../styles/globals.css'
 import StoreProvider from "./StoreProvider";
-import Middleware from "./middleware"
 
 export const metadata = {
   title: 'TutorNow',
@@ -18,9 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StoreProvider>
-          <Middleware>
-            {children}
-          </Middleware>
+          {children}
         </StoreProvider>
       </body>
     </html>

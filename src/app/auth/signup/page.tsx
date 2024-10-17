@@ -110,7 +110,7 @@ const Signup: React.FC = () => {
 
     if (tokenSSO) {
       const data = {
-        username: email,
+        username: userName,
         email,
       };
 

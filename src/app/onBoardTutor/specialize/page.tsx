@@ -181,6 +181,7 @@ import { getSubjects } from '@/app/store/actions/assignment';
 import { getOnBoardTutor, setOnBoardTutor } from '@/app/store/actions/user';
 import { toast } from 'react-toastify';
 import Spinner from '@/common/Spinner';
+import Cookies from 'js-cookie';  // Import js-cookie
 
 const StudentRequirementForm: React.FC = () => {
     const router = useRouter();
@@ -203,7 +204,8 @@ const StudentRequirementForm: React.FC = () => {
                 name: ReceivedOnBoardTutor?.data?.fullName
             };
             console.log(":::::userData", userData);
-            localStorage.setItem('user', JSON.stringify(userData));
+            // localStorage.setItem('user', JSON.stringify(userData));
+            Cookies.set('user', JSON.stringify(userData), { expires: 7 });
 
             router.push("/");
             dispatch(setOnBoardTutor(null));

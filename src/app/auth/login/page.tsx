@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import BackgroundComponent from "../../../common/BackgroundComponent";
 import Link from "next/link";
-import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Spinner from "../../../common/Spinner";
 import { getLogin, setAuthError, setLogin } from "../../store/actions/auth";
@@ -11,7 +10,8 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import the icons
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Cookies from 'js-cookie';
 
 
 const Login: React.FC = () => {
@@ -23,16 +23,7 @@ const Login: React.FC = () => {
     const [isLoading, setisLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [passwordVisible, setPasswordVisible] = useState(false); // State to toggle visibility
-
-
-    useEffect(() => {
-        const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
-
-        if (storedUserInfo) {
-            router.push('/');
-        }
-    }, [router]);
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const handleshowpassword = () => {
         if (!username) {
@@ -53,7 +44,10 @@ const Login: React.FC = () => {
         const tokenSSO = searchParams.get('token');
         const userName = searchParams.get('username');
         const email = searchParams.get('email');
-        const userId = searchParams.get('id')
+        const userId = searchParams.get('id');
+        console.log(">?>>>>>>>>>>userName", userName);
+        console.log(">>>>>>>>>>>>>>>email", email);
+        console.log(">>>>>>>>>>>userId", userId)
 
         if (tokenSSO) {
 
@@ -62,7 +56,8 @@ const Login: React.FC = () => {
                 email: email,
             };
 
-            localStorage.setItem('user', JSON.stringify(userData));
+            Cookies.set('user', JSON.stringify(userData), { expires: 7 });
+
             const responseSignUp = {
                 "user": {
                     "id": userId,
@@ -83,7 +78,6 @@ const Login: React.FC = () => {
     }, []);
 
     const handelLogin = () => {
-
         if (!password) {
             toast.error("Enter Password");
             return;
@@ -98,16 +92,14 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (responsesLogin) {
-            console.log("responsesLogin", responsesLogin);
             const userData = {
                 name: responsesLogin?.user?.fullName,
                 email: responsesLogin?.user?.email,
                 picture: responsesLogin?.user?.picture
             };
-            localStorage.setItem('user', JSON.stringify(userData));
+            Cookies.set('user', JSON.stringify(userData), { expires: 7 });
 
             router.push('/');
-
         }
     }, [responsesLogin, router]);
 

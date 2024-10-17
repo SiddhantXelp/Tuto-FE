@@ -8,6 +8,7 @@ import { getRoles, getSignup, setAuthError, setLogin } from '../store/actions/au
 import { useAppSelector } from '../store/hooks';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';  // Import js-cookie
 
 import Spinner from '@/common/Spinner';
 
@@ -63,7 +64,8 @@ const ScheduleModel: React.FC = () => {
     useEffect(() => {
         if (responseSignUp) {
 
-            localStorage.setItem('user', JSON.stringify(responseSignUp));
+            // localStorage.setItem('user', JSON.stringify(responseSignUp));
+            Cookies.set('user', JSON.stringify(responseSignUp), { expires: 7 });
 
             dispatch(setLogin(responseSignUp));
 

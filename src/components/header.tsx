@@ -17,6 +17,7 @@ import InputMain from '@/common/InputMain';
 import { getCreateGroup, setCreateGroup } from '@/app/store/actions/student';
 import Swal from 'sweetalert2';
 import { FaUserGroup } from "react-icons/fa6";
+import Cookies from 'js-cookie';
 
 interface UserInfo {
   name: string;
@@ -49,10 +50,7 @@ const Header: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // console.log('Logged out');
-    // document.cookie = 'token=; path=/; max-age=0;';
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('user');
+    Cookies.remove('user');
     dispatch(setLogin(null));
     dispatch(setSignup(null))
     router.push('/auth/login');
