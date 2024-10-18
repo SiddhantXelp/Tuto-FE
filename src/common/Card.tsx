@@ -186,19 +186,25 @@ const DialogComponent: React.FC<DialogComponentProps> = ({ open, setOpen }) => {
     if (validateFormFinal() && validateForm()) {
       const data = {
         title: formData.classTitle,
+        tutor_id: userID,
         groups: [formData.selectedGroup],
         materialUrl: formData.material,
-        platform: formData.typeMeeting[0],
-        videoCallLink: formData.videoLink,
+        platform: formData.typeMeeting[0] === 'Zoom'
+          ? 'ZO'
+          : formData.typeMeeting[0] === 'Google Meet'
+            ? 'GM'
+            : '', videoCallLink: formData.videoLink,
         repeatClass: formData.selectedOptions,
         subject: {
           name: formData.subject,
           description: formData.description
         },
         classSchedule: {
-          scheduleDate: formData.startDate,
-          classStartTime: formData.startTime,
-          classEndTime: formData.endTime,
+          // scheduleDate: formData.startDate,
+          // classStartTime: formData.startTime,
+          // classEndTime: formData.endTime,
+          start_time: new Date(`${formData.startDate}T${formData.startTime}:00Z`).toISOString(),
+          end_time: new Date(`${formData.startDate}T${formData.endTime}:00Z`).toISOString()
         },
       }
       dispatch(getCreateclass(memberAuthToken, data))

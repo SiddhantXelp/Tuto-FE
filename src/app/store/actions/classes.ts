@@ -1,8 +1,9 @@
 import * as actionTypes from '../actionTypes/classes';
 
-export const getClasses = (token: string) => ({
+export const getClasses = (token: string, id: string) => ({
   type: actionTypes.GET_CLASSES,
   token,
+  id
 });
 
 

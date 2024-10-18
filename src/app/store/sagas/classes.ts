@@ -12,7 +12,7 @@ function* getClassesEffect(action: any): Generator<any, any, any> {
     yield put(setClassesError(''));
     yield put(setClasses(null));
 
-    const response = yield call(getClasses, action.token);
+    const response = yield call(getClasses, action.token,action.id);
     yield put(setClasses(response));
 
     yield put(setClassesLoading(false));

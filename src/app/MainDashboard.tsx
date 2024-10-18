@@ -27,16 +27,6 @@ import ScheduleModel from "@/common/ScheduleModel";
 import CommonCalendar from "@/common/CommonCalendar";
 import { processClassData } from "@/utils/classUtils";
 
-// interface UserInfo {
-//   name: string;
-//   email: string;
-//   picture: string;
-//   user: {
-//     username: string
-
-//   }
-// }
-
 export default function Home() {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -54,8 +44,6 @@ export default function Home() {
   const memberAuthToken = useAppSelector((state: { auth: any }) => state?.auth.login?.token);
   const loginData = useAppSelector((state: { auth: any }) => state?.auth.login);
   const eventDates = viewClassData.map((date: any) => new Date(date?.classSchedule?.scheduleDate || date));
-  // const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  // const imageUrl = userInfo && userInfo?.picture ? userInfo?.picture : "/profile.png";
   const imageUrl = "/profile.png"
 
   useEffect(() => {
@@ -65,19 +53,12 @@ export default function Home() {
     if (!open) {
       const page = "1";
       const assignmentLimit = "4"
-      dispatch(getClasses(memberAuthToken));
+      dispatch(getClasses(memberAuthToken, loginData?.user?.id));
       dispatch(getStudents(memberAuthToken, loginData?.user?.id, page, "1"));
       dispatch(getAssignments(memberAuthToken, page, assignmentLimit, "completed"));
     }
 
   }, [dispatch, open, memberAuthToken, loginData])
-
-  // useEffect(() => {
-  //   const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo")
-  //   if (storedUserInfo) {
-  //     setUserInfo(JSON.parse(storedUserInfo));
-  //   }
-  // }, []);
 
   const assignment = useMemo(() => {
     return (assignmentData || [])
@@ -95,6 +76,17 @@ export default function Home() {
       }));
   }, [assignmentData]);
 
+
+  // const classData = viewClassData.map((item: any) => ({
+  //   ...item,
+  //   classSchedule: {
+  //     "classEndTime": "11:00",
+  //     "scheduleDate": "2024-10-10",
+  //     "classStartTime": "10:00"
+  //   }
+
+  // }));
+
   const {
     previousTime,
     nextClassTime,
@@ -105,7 +97,6 @@ export default function Home() {
 
   } = useMemo(() => processClassData(viewClassData, currentDate), [viewClassData, currentDate]);
 
-  console.log(" userInfo?.name", loginData);
   return (
     <div className="pt-2 px-4 mt-5">
       {

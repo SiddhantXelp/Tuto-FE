@@ -19,14 +19,7 @@ import Swal from 'sweetalert2';
 import { FaUserGroup } from "react-icons/fa6";
 import Cookies from 'js-cookie';
 
-interface UserInfo {
-  name: string;
-  email: string;
-  picture: string;
-}
-
 const Header: React.FC = () => {
-
   const dispatch = useAppDispatch();
   const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
@@ -69,18 +62,6 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-
-  useEffect(() => {
-    const storedUserInfo = localStorage.getItem("user") || localStorage.getItem("userInfo");
-
-    if (storedUserInfo) {
-      setUserInfo(JSON.parse(storedUserInfo));
-    }
-  }, []);
-
-  const imageUrl = userInfo && userInfo.picture ? userInfo.picture : "/profile.png";
-
   const toggleNotificationDrawer = () => {
 
     setIsNotificationDrawerOpen(!isNotificationDrawerOpen);
@@ -110,7 +91,10 @@ const Header: React.FC = () => {
       setGroupTitle("")
     }
 
-  }, [createGroupResponce])
+  }, [createGroupResponce]);
+
+  const imageUrl = "/profile.png"
+
   return (
     <div
       className={cn(
@@ -164,16 +148,12 @@ const Header: React.FC = () => {
               type="button"
             >
               <span className="font-semibold text-sm">
-                {userInfo ? (
-                  <Image
-                    src={imageUrl}
-                    alt="Profile"
-                    width={100}
-                    height={100}
-                  />
-                ) : (
-                  <p></p>
-                )}
+                <Image
+                  src={imageUrl}
+                  alt="Profile"
+                  width={100}
+                  height={100}
+                />
               </span>
             </button>
             {isDropdownOpen && (

@@ -22,9 +22,11 @@ const OverviewTabContent: React.FC = () => {
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
   const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
   const [classLink, setClassLink] = useState("");
+  const loginData = useAppSelector((state: { auth: any }) => state?.auth.login);
+
   useEffect(() => {
     if (!open) {
-      dispatch(getClasses(memberAuthToken));
+      dispatch(getClasses(memberAuthToken, loginData?.user?.id));
     }
   }, [dispatch, memberAuthToken, open]);
 

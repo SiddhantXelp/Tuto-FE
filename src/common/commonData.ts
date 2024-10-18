@@ -1,14 +1,15 @@
 interface ButtonItem {
   id: number;
   name: string;
+  subName: string
 }
 
 
 
 
 export const buttons: ButtonItem[] = [
-  { id: 1, name: 'Zoom' },
-  { id: 2, name: 'Google meet' },
+  { id: 1, name: 'Zoom', subName: "ZO" },
+  { id: 2, name: 'Google meet', subName: "GM" },
 ];
 
 export const options = [
@@ -39,8 +40,8 @@ export const Selectoptions = [
 
 
 export const TabButtons: ButtonItem[] = [
-  { id: 1, name: 'Create new class' },
-  { id: 2, name: 'Virtual platform' },
+  { id: 1, name: 'Create new class', subName: "" },
+  { id: 2, name: 'Virtual platform', subName: "" },
 ];
 
 

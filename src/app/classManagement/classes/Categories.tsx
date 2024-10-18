@@ -28,9 +28,10 @@ export const CategoriesPage: React.FC = () => {
   const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
   const classesData = useAppSelector((state: { classes: any }) => state.classes.setClasses?.data);
   const [tableData, setTableData] = useState([]);
+  const loginData = useAppSelector((state: { auth: any }) => state?.auth.login);
 
   useEffect(() => {
-    dispatch(getClasses(memberAuthToken));
+    dispatch(getClasses(memberAuthToken, loginData?.user?.id));
   }, [dispatch, memberAuthToken]);
 
 
