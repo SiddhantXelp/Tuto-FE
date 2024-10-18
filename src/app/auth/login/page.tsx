@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Cookies from 'js-cookie';
+import { BASE_URL } from "@/app/api/api"
 
 
 const Login: React.FC = () => {
@@ -36,7 +37,7 @@ const Login: React.FC = () => {
     const isLoadingLogin = useAppSelector((state: { auth: any }) => state.auth.loading);
 
     const login = () => {
-        window.location.href = 'http://localhost:6800/api/v1/auth/google?state=login';
+        window.location.href = `${BASE_URL}/api/v1/auth/google?state=login`;
     }
 
 

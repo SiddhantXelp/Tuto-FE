@@ -164,7 +164,7 @@ const Header: React.FC = () => {
               type="button"
             >
               <span className="font-semibold text-sm">
-                {userInfo ? (
+                {/* {userInfo ? (
                   <Image
                     src={imageUrl}
                     alt="Profile"
@@ -173,7 +173,13 @@ const Header: React.FC = () => {
                   />
                 ) : (
                   <p></p>
-                )}
+                )} */}
+                <Image
+                  src={imageUrl}
+                  alt="Profile"
+                  width={100}
+                  height={100}
+                />
               </span>
             </button>
             {isDropdownOpen && (

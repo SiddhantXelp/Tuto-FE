@@ -62,7 +62,7 @@ const Card: React.FC<CardProps> = ({ data, id, type, onClick, mainData }) => {
         // }
         Swal.fire({
             title: NavigationString.DO_YOU_WANT_PROCEED,
-            text: 'Do you really want to delete this item?',
+            // text: 'Do you really want to delete this item?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',

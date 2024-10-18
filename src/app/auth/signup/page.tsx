@@ -11,6 +11,7 @@ import { toast } from 'react-toastify'; // Import toast
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { BASE_URL } from "@/app/api/api"
 
 const Signup: React.FC = () => {
   const router = useRouter();
@@ -124,7 +125,7 @@ const Signup: React.FC = () => {
   }, []);
 
   const SignUp = () => {
-    window.location.href = 'http://localhost:6800/api/v1/auth/google?state=signup';
+    window.location.href = `${BASE_URL}/api/v1/auth/google?state=signup`;
   }
 
 

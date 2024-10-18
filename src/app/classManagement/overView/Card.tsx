@@ -50,7 +50,7 @@ const OverviewTabContent: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-between">
+        <div className="flex flex-wrap gap-5">
           {classesData && classesData.slice(0, 5).map((card: any, index: number) => (
             <div
               key={index}
