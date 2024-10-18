@@ -30,7 +30,10 @@ const ClassDetails = () => {
     const [openTimeDateModel, setTimeDateModel] = useState(false);
     const params = useParams();
     const dispatch = useAppDispatch();
-    const viewClassData = useAppSelector((state: { classes: any }) => state.classes.ClassById?.data[0]);
+    const viewClassData = useAppSelector((state: { classes: any }) =>
+        state?.classes?.ClassById?.data?.[0] || ''
+    );
+    console.log(":::::::::::viewClassData", viewClassData);
     const classLoading = useAppSelector((state: { classes: any }) => state.classes.setClassesLoading);
     const id = params.id || 0
     const memberAuthToken = useAppSelector((state: { auth: any }) => state.auth.login?.token);
