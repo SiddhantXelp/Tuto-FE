@@ -230,7 +230,7 @@ const Signup: React.FC = () => {
 
         <p className='text-center mt-5 text-sm/[14px]'>or sign up with</p>
 
-        <div className='flex justify-between mt-5 mx-5'>
+        <div className='flex justify-center mt-5 mx-5'>
           <button
             className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
             style={{
@@ -243,7 +243,7 @@ const Signup: React.FC = () => {
           >
             Google
           </button>
-          <button
+          {/* <button
             className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
             style={{
               borderColor: '#101415',
@@ -253,7 +253,7 @@ const Signup: React.FC = () => {
             }}
           >
             Apple Id
-          </button>
+          </button> */}
         </div>
 
         <Link href="/auth/login">

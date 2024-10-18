@@ -162,7 +162,7 @@ const Login: React.FC = () => {
 
                         <p className='text-center mt-5 text-sm/[14px]'>or login with</p>
 
-                        <div className='flex justify-between mt-5 mx-5'>
+                        <div className='flex  mt-5 mx-5 justify-center'>
                             <button
                                 className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
                                 style={{
@@ -175,7 +175,7 @@ const Login: React.FC = () => {
                             >
                                 Google
                             </button>
-                            <button
+                            {/* <button
                                 className="border border-solid rounded-lg opacity-100 px-10 py-2 text-center"
                                 style={{
                                     borderColor: '#101415',
@@ -185,7 +185,7 @@ const Login: React.FC = () => {
                                 }}
                             >
                                 Apple ID
-                            </button>
+                            </button> */}
 
                         </div>
 
