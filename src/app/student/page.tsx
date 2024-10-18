@@ -88,8 +88,8 @@ const Student: React.FC = () => {
                   <h1 className='text-[30px] text-black-400 font-bold text-[#565656] opacity-100'>{studentData?.totalItems || 0}</h1>
                 </div>
                 <div className='flex justify-between'>
-                  <p className='text-sm text-[#565656]'>Newly joined: 5</p>
-                  <p className='text-sm text-[#565656]'>Recently Left: 0</p>
+                  {/* <p className='text-sm text-[#565656]'>Newly joined: 1</p> */}
+                  {/* <p className='text-sm text-[#565656]'>Recently Left: 0</p> */}
                 </div>
               </div>
             </div>

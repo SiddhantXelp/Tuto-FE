@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import BackgroundComponent from '../../../common/BackgroundComponent';
 import Link from 'next/link';
-import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getSignup, setSignup, setAuthError, setLogin } from "../../store/actions/auth";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
